@@ -48,7 +48,7 @@ Repo ini berisi konfigurasi lengkap untuk menjalankan OpenCode agent di Termux:
 | 12 | DEPS AUDIT | npm audit, pip check |
 | 13 | AUTO MODEL GATE | Kalibrasi otomatis 6 skenario |
 
-### Command (10 command)
+### Command (11 command)
 | Command | Fungsi |
 |---------|--------|
 | `mulai` | Mulai sesi baru |
@@ -61,6 +61,7 @@ Repo ini berisi konfigurasi lengkap untuk menjalankan OpenCode agent di Termux:
 | `audit` | Audit kode |
 | `rapor` | Laporan hasil |
 | `autodev` | Jalankan AUTODEV |
+| `import` | Import session dari file JSON/URL (verifikasi + backup dulu) |
 
 ## Struktur Folder
 
