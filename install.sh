@@ -9,8 +9,8 @@
 # ============================================================
 set -u
 
-REPO_URL="https://github.com/nemoobc/Agent"
-TARBALL_URL="https://github.com/nemoobc/Agent/archive/refs/heads/master.tar.gz"
+REPO_URL="https://github.com/nemoobc/agent-ai"
+TARBALL_URL="https://github.com/nemoobc/agent-ai/archive/refs/heads/master.tar.gz"
 SRC="$(cd "$(dirname "$0")" && pwd)"
 MODE="install"
 [ "${1:-}" = "--check" ] && MODE="check"

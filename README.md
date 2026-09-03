@@ -100,7 +100,7 @@ Tanpa root. Aman diulang.
 **Langkah 1 — Unduh skrip (salin blok ini):**
 
 ```bash
-curl -fsSL -o install.sh https://raw.githubusercontent.com/nemoobc/Agent/master/install.sh
+curl -fsSL -o install.sh https://raw.githubusercontent.com/nemoobc/agent-ai/master/install.sh
 ```
 
 **Langkah 2 — Baca dulu (jangan pipa buta), lalu jalanin (salin blok ini):**
@@ -113,7 +113,7 @@ bash install.sh
 **Alternatif — via git clone (salin blok ini):**
 
 ```bash
-git clone https://github.com/nemoobc/Agent.git ~/Agent
+git clone https://github.com/nemoobc/agent-ai.git ~/Agent
 bash ~/Agent/install.sh
 ```
 
@@ -152,7 +152,7 @@ pkg install -y curl
 
 1. **Clone repo ini:**
 ```bash
-git clone https://github.com/nemoobc/Agent.git ~/Agent
+git clone https://github.com/nemoobc/agent-ai.git ~/Agent
 ```
 
 2. **Copy agent & skills ke Termux:**
