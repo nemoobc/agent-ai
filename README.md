@@ -10,7 +10,7 @@ Repo ini berisi konfigurasi lengkap untuk menjalankan OpenCode agent di Termux:
 - **AUTODEV** - Agent utama autonomous engineering (primary mode)
 - **REVIEWER** - Red team reviewer untuk security + correctness check
 
-### Skill (18 skill)
+### Skill (17 skill folders + 13 autodev skills)
 | Skill | Fungsi |
 |-------|--------|
 | `automation-integrations` | Script, scheduler, webhook, API integration |
@@ -30,6 +30,23 @@ Repo ini berisi konfigurasi lengkap untuk menjalankan OpenCode agent di Termux:
 | `security-defensive` | Secure coding, threat model, remediation |
 | `software-engineering` | Production-quality implementation |
 | `testing-qa` | Unit, integration, E2E testing |
+
+### Autodev Skills (13 skills di autodev.md)
+| # | Skill | Fungsi |
+|---|-------|--------|
+| 1 | READ BEFORE EVERYTHING | Anti-hallucination, verify sebelum claim |
+| 2 | AUTO STACK DETECT | Auto deteksi Node/Python/Go/Rust/etc |
+| 3 | AUTODEV LOOP | Mandatory: detect→plan→build→audit→test→fix→report |
+| 4 | SAFE SHELL | No root, no proot, quote var |
+| 5 | HONESTY MODULE | Ga bohong, ga nebak, paste error asli |
+| 6 | GIT CHECKPOINT | Safety net sebelum refactor |
+| 7 | NOTIFY | termux-notification best effort |
+| 8 | MEMORY | LOG.md + ~/.autodev/memory.md |
+| 9 | TERMUX GOTCHA | Error patterns, jangan cari ulang |
+| 10 | RED TEAM GATE | Wajib reviewer sebelum done |
+| 11 | SMART READ | Hemat context file gede |
+| 12 | DEPS AUDIT | npm audit, pip check |
+| 13 | AUTO MODEL GATE | Kalibrasi otomatis 6 skenario |
 
 ### Command (10 command)
 | Command | Fungsi |
@@ -55,11 +72,9 @@ Agent/
 ├── autodev/
 │   └── memory.md          # Memory global AUTODEV
 ├── agents/
-│   ├── opencode-agents/   # Agent dari ~/.opencode
-│   │   └── autodev.md
 │   └── config-agents/     # Agent dari ~/.config/opencode
-│       ├── autodev.md
-│       └── reviewer.md
+│       ├── autodev.md     # AUTODEV + 13 skills + caveman ultra
+│       └── reviewer.md    # Red team reviewer
 ├── command/               # Custom commands
 │   ├── mulai.md
 │   ├── lanjut.md
@@ -72,8 +87,8 @@ Agent/
 │   ├── rapor.md
 │   └── autodev.md
 └── skills/
+    ├── config-skills/     # Skills dari ~/.config/opencode (17 skill)
     ├── opencode-skills/   # Skills dari ~/.opencode
-    ├── config-skills/     # Skills dari ~/.config/opencode
     └── agents-skills/     # Skills dari ~/.agents
 ```
 
@@ -162,19 +177,16 @@ File `opencode.json`:
 ```json
 {
   "$schema": "https://opencode.ai/config.json",
-  "model": "opencode/big-pickle"
+  "share": "disabled"
 }
 ```
 
-Ganti `model` sesuai kebutuhan. Model gratis tersedia:
-- `opencode/mimo-v2.5-free` (default, recommended)
-- `opencode/deepseek-v4-flash-free`
-- `opencode/nemotron-3.5-lightning-free` (tercepat)
+Model default: `opencode/mimo-v2.5-free` (gratis, recommended).
 
 ## Tips
 
 - **Bahasa**: Agent default pakai Bahasa Indonesia
-- **Caveman style**: Komunikasi langsung, tanpa basa-basi
+- **Caveman Ultra**: Komunikasi super pendek, stak, tanpa basa-basi
 - **No root**: Semua berjalan di Termux tanpa root
 - **Port aman**: Hanya pakai port >= 1024
 
