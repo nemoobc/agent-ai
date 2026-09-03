@@ -93,54 +93,53 @@ Agent/
     └── agents-skills/     # Skills dari ~/.agents
 ```
 
-## Instalasi Instan (Linux + Termux)
+## Instalasi Instan
 
-Skrip `install.sh` otomatis deteksi OS, backup config lama, copy semua file, lalu verifikasi.
-Tanpa root. Aman diulang.
+Pilih OS-mu. Tiap langkah blok terpisah biar gampang salin. Tanpa root.
 
-**Langkah 1 — Unduh skrip (salin blok ini):**
+### Termux
 
-```bash
-curl -fsSL -o install.sh https://raw.githubusercontent.com/nemoobc/agent-ai/master/install.sh
-```
-
-**Langkah 2 — Baca dulu (jangan pipa buta), lalu jalanin (salin blok ini):**
+**Unduh (salin ini):**
 
 ```bash
-less install.sh
-bash install.sh
+curl -fsSL -o install-termux.sh https://raw.githubusercontent.com/nemoobc/agent-ai/master/install-termux.sh
 ```
 
-**Alternatif — via git clone (salin blok ini):**
+**Jalankan (salin ini):**
 
 ```bash
-git clone https://github.com/nemoobc/agent-ai.git ~/Agent
-bash ~/Agent/install.sh
+less install-termux.sh
+bash install-termux.sh
 ```
 
-**Cek status kapan saja:**
+Butuh `curl` sekali: `pkg install -y curl`. Binary Termux: [opencode-termux](https://github.com/nemoobc/opencode-termux).
+
+### Linux
+
+**Unduh (salin ini):**
 
 ```bash
-bash install.sh --check
+curl -fsSL -o install-linux.sh https://raw.githubusercontent.com/nemoobc/agent-ai/master/install-linux.sh
 ```
 
-### Catatan Linux
+**Jalankan (salin ini):**
 
-- Jalur config sama: `~/.config/opencode/` — skrip otomatis pakai jalur itu.
-- Pastikan binary `opencode` ada. Kalau belum:
 ```bash
-npm install -g opencode-ai
+less install-linux.sh
+bash install-linux.sh
 ```
-- Tidak perlu sudo/root untuk instalasi config ini.
 
-### Catatan Termux (disesuaikan)
+Butuh binary `opencode`: `npm install -g opencode-ai`. Tanpa sudo.
 
-- Butuh `curl` sekali saja:
+### Cek status (salin ini)
+
 ```bash
-pkg install -y curl
+bash install-termux.sh --check
 ```
-- Binary `opencode` Termux beda (musl patched) — ikut panduan repo [opencode-termux](https://github.com/nemoobc/opencode-termux). Skrip config ini tetap sama, otomatis deteksi Termux.
-- Jangan pakai `sudo`/`apt` — pakai `pkg`.
+
+```bash
+bash install-linux.sh --check
+```
 
 ## Instalasi (Manual Lama)
 
@@ -153,7 +152,7 @@ pkg install -y curl
 
 1. **Clone repo ini:**
 ```bash
-git clone https://github.com/nemoobc/agent-ai.git ~/Agent
+git clone https://github.com/nemoobc/agent-ai.git ~/agent-ai
 ```
 
 2. **Copy agent & skills ke Termux:**
@@ -163,19 +162,19 @@ mv ~/.config/opencode/agent ~/.config/opencode/agent.bak 2>/dev/null
 mv ~/.config/opencode/skills ~/.config/opencode/skills.bak 2>/dev/null
 
 # Copy agent baru
-cp -r ~/Agent/agents/config-agents ~/.config/opencode/agent
+cp -r ~/agent-ai/agents/config-agents ~/.config/opencode/agent
 
 # Copy skills baru
-cp -r ~/Agent/skills/config-skills/* ~/.config/opencode/skills/
+cp -r ~/agent-ai/skills/config-skills/* ~/.config/opencode/skills/
 
 # Copy command
-cp -r ~/Agent/command ~/.config/opencode/command
+cp -r ~/agent-ai/command ~/.config/opencode/command
 
 # Copy AGENTS.md
-cp ~/Agent/AGENTS.md ~/.config/opencode/AGENTS.md
+cp ~/agent-ai/AGENTS.md ~/.config/opencode/AGENTS.md
 
 # Copy autodev memory
-cp -r ~/Agent/autodev ~/.autodev
+cp -r ~/agent-ai/autodev ~/.autodev
 ```
 
 3. **Verifikasi:**
