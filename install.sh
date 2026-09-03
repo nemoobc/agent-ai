@@ -43,7 +43,7 @@ if ! need_dir; then
   mkdir -p "$TMPD"
   curl -fsSL -o "$TMPD/agent.tgz" "$TARBALL_URL" || die "unduh gagal. cek internet / URL: $TARBALL_URL"
   tar -xzf "$TMPD/agent.tgz" -C "$TMPD" || die "ekstrak tarball gagal"
-  SRC="$(find "$TMPD" -maxdepth 1 -type d -name 'Agent-*' | head -1)"
+  SRC="$(find "$TMPD" -maxdepth 1 -type d \( -name 'agent-ai-*' -o -name 'Agent-*' \) | head -1)"
   [ -n "$SRC" ] || die "isi tarball aneh"
   need_dir || die "isi repo tidak lengkap"
   ok "sumber: tarball $TARBALL_URL"
