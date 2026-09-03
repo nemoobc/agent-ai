@@ -92,7 +92,56 @@ Agent/
     └── agents-skills/     # Skills dari ~/.agents
 ```
 
-## Instalasi
+## Instalasi Instan (Linux + Termux)
+
+Skrip `install.sh` otomatis deteksi OS, backup config lama, copy semua file, lalu verifikasi.
+Tanpa root. Aman diulang.
+
+**Langkah 1 — Unduh skrip (salin blok ini):**
+
+```bash
+curl -fsSL -o install.sh https://raw.githubusercontent.com/nemoobc/Agent/master/install.sh
+```
+
+**Langkah 2 — Baca dulu (jangan pipa buta), lalu jalanin (salin blok ini):**
+
+```bash
+less install.sh
+bash install.sh
+```
+
+**Alternatif — via git clone (salin blok ini):**
+
+```bash
+git clone https://github.com/nemoobc/Agent.git ~/Agent
+bash ~/Agent/install.sh
+```
+
+**Cek status kapan saja:**
+
+```bash
+bash install.sh --check
+```
+
+### Catatan Linux
+
+- Jalur config sama: `~/.config/opencode/` — skrip otomatis pakai jalur itu.
+- Pastikan binary `opencode` ada. Kalau belum:
+```bash
+npm install -g opencode-ai
+```
+- Tidak perlu sudo/root untuk instalasi config ini.
+
+### Catatan Termux (disesuaikan)
+
+- Butuh `curl` sekali saja:
+```bash
+pkg install -y curl
+```
+- Binary `opencode` Termux beda (musl patched) — ikut panduan repo [opencode-termux](https://github.com/nemoobc/opencode-termux). Skrip config ini tetap sama, otomatis deteksi Termux.
+- Jangan pakai `sudo`/`apt` — pakai `pkg`.
+
+## Instalasi (Manual Lama)
 
 ### Prasyarat
 - Android 8+ dengan Termux terinstall
