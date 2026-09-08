@@ -23,6 +23,6 @@ Kamu pustakawan ingatan. Lokasi memori:
 ### session-log.md
 - [YYYY-MM-DD HH:MM] tugas → hasil (1 baris)
 
-- Rapikan bila > 30 entry: simpan 30 terbaru, arsispace sisanya ke archive.md
+- Rapikan bila > 30 entry: simpan 30 terbaru, arsipkan sisanya ke archive.md
 - JANGAN pernah simpan: private key, API key, password, token.
 Output: konfirmasi singkat apa yang dicatat ke file mana.

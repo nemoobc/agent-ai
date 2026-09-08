@@ -1,0 +1,25 @@
+name: CI
+
+on:
+  push:
+    branches: [master, main]
+  pull_request:
+
+jobs:
+  self-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Syntax check semua script
+        run: |
+          for s in install.sh skills/*/run.sh tests/self-test.sh; do
+            bash -n "$s" || exit 1
+          done
+          echo "syntax OK"
+
+      - name: Self-test detektor
+        run: bash tests/self-test.sh
+
+      - name: Audit-full pada kit ini sendiri
+        run: bash skills/audit-full/run.sh .

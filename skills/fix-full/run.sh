@@ -5,7 +5,7 @@ ROOT="${1:-.}"; cd "$ROOT" 2>/dev/null || exit 1
 p(){ printf '\033[38;5;%sm%s\033[0m\n' "$2" "$1"; }
 
 p "▮ FIX: formatter" 213
-[ -x node_modules/.bin/prettier ] && { node_modules/.bin/prettier --write "src/**/*.{js,ts,jsx,tsx,json,css,md}" >/dev/null 2>&1 && p "  ✔ prettier" 82; }
+[ -x node_modules/.bin/prettier ] && { node_modules/.bin/prettier --write "**/*.{js,ts,jsx,tsx,json,css,md}" --ignore-path .gitignore >/dev/null 2>&1 && p "  ✔ prettier" 82; }
 command -v black >/dev/null 2>&1 && { black --quiet . >/dev/null 2>&1 && p "  ✔ black" 82; }
 [ -f go.mod ] && command -v go >/dev/null 2>&1 && { gofmt -w . >/dev/null 2>&1; p "  ✔ gofmt" 82; }
 

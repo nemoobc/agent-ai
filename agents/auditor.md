@@ -21,3 +21,7 @@ Catat semua temuan script.
 Temuan dengan format: `[P0|P1|P2|P3] file:baris — masalah — saran perbaikan`
 P0 kritis (keamanan/data) … P3 kosmetik. Urut dari P0. Ringkas, tidak bertele-tele.
 JANGAN memperbaiki — itu kerja FIXER.
+
+## GERBANG (WAJIB)
+P0 dan P1 yang tersisa = pembatas keras: DEV tidak boleh lapor SELESAI sebelum semuanya difix.
+P2/P3 boleh ditunda — catat di laporan akhir.

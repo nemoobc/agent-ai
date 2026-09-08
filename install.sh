@@ -54,7 +54,8 @@ banner(){
   pc 69  '   ██████╔╝███████║██║     '
   pc 33  '   ╚═════╝ ╚══════╝╚═╝     B R A I N'
   echo
-  pc 45 "   otak utama: DEV • caveman mode permanen • ultronomatis"
+  pc 45 "   otak utama: DEV • caveman mode ULTRA • ultronomatis"
+  [ -f "$SCRIPT_DIR/VERSION" ] && pc 45 "   versi: $(cat "$SCRIPT_DIR/VERSION" | tr -d '[:space:]')"
   pc 45 "   auto test/audit/fix ✓ • memori persisten ✓"
   echo
 }
@@ -65,7 +66,10 @@ uninstall(){
   rm -rf "$CFG/agent" "$CFG/skill" "$CFG/command"
   rm -f "$CFG/AGENTS.md"
   BAK=$(ls -1t "$CFG"/opencode.json.bak.* 2>/dev/null | head -n1)
-  if [ -n "${BAK:-}" ]; then mv "$BAK" "$CFG/opencode.json"; ok "opencode.json dipulihkan dari backup"; fi
+  if [ -n "${BAK:-}" ]; then mv "$BAK" "$CFG/opencode.json"; ok "opencode.json dipulihkan dari backup"
+  elif [ -f "$CFG/opencode.json" ] && grep -q '"devbrain"' "$CFG/opencode.json" 2>/dev/null; then
+    rm -f "$CFG/opencode.json"; ok "opencode.json buatan DEV-BRAIN dihapus"
+  fi
   wrn "folder memory/ DIPERTAHANKAN (isi ingatan kamu)"
   ok "uninstall selesai — DEV-BRAIN dilepas"
   exit 0
@@ -74,21 +78,37 @@ uninstall(){
 # ── tulis file dari script dir ke CFG ──
 write_brain(){
   step "TULIS OTAK → ~/.config/opencode"
+  # prune instalasi lama biar tidak ada file sisa dari versi sebelumnya
+  rm -rf "$CFG/agent" "$CFG/skill" "$CFG/command"
   mkdir -p "$CFG/agent" "$CFG/command" "$CFG/memory" \
     "$CFG/skill/think" "$CFG/skill/imagine" "$CFG/skill/remember" "$CFG/skill/recall" \
-    "$CFG/skill/caveman" "$CFG/skill/test-full" "$CFG/skill/audit-full" "$CFG/skill/fix-full"
+    "$CFG/skill/caveman" "$CFG/skill/scan" "$CFG/skill/plan" "$CFG/skill/debug" "$CFG/skill/doc-full" \
+    "$CFG/skill/test-full" "$CFG/skill/audit-full" "$CFG/skill/fix-full"
 
-  # backup config lama
-  [ -f "$CFG/opencode.json" ] && cp "$CFG/opencode.json" "$CFG/opencode.json.bak.$(date +%s)"
+  # backup config lama HANYA bila itu bukan tulisan DEV-BRAIN (marker)
+  if [ -f "$CFG/opencode.json" ] && ! grep -q '"devbrain"' "$CFG/opencode.json" 2>/dev/null; then
+    cp "$CFG/opencode.json" "$CFG/opencode.json.bak.$(date +%s)"
+  fi
 
-  # opencode.json: auto-allow semua permission
+  # opencode.json: izin granular — script kit & git read-only boleh,
+  # command lain tetap minta konfirmasi (blast radius kecil)
   cat > "$CFG/opencode.json" <<'EOF'
 {
+  "devbrain": true,
   "permission": {
     "edit": "allow",
     "write": "allow",
-    "bash": "allow",
-    "webfetch": "allow"
+    "webfetch": "allow",
+    "bash": {
+      "*skill*/run.sh*": "allow",
+      "*test-full/run.sh*": "allow",
+      "*audit-full/run.sh*": "allow",
+      "*fix-full/run.sh*": "allow",
+      "git status": "allow",
+      "git diff*": "allow",
+      "git log*": "allow",
+      "*": "ask"
+    }
   }
 }
 EOF
@@ -150,7 +170,7 @@ finish(){
   pc 177 '  ║   D E V — B R A I N   O N L I N E      ║'
   pc 141 '  ╚════════════════════════════════════════╝'
   echo
-  ok "7 agent • 8 skill (3 dengan bash script) • 3 command • memori persisten"
+  ok "7 agent • 12 skill (3 dengan bash script) • 4 command • memori persisten"
   echo
   pc 45  "  CARA PAKAI:"
   pc 45  "  1) buka folder project apa saja"

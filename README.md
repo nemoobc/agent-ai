@@ -13,8 +13,8 @@
 
 ![Pipeline](https://img.shields.io/badge/PIPELINE-MIKIR→BAYANG→GODOK→BANGUN→TEST→AUDIT→FIX→INGAT-ff69b4?style=for-the-badge)
 ![Agents](https://img.shields.io/badge/AGENTS-7-00d2ff?style=for-the-badge)
-![Skills](https://img.shields.io/badge/SKILLS-8-82d815?style=for-the-badge)
-![Commands](https://img.shields.io/badge/COMMANDS-3-ffd700?style=for-the-badge)
+![Skills](https://img.shields.io/badge/SKILLS-12-82d815?style=for-the-badge)
+![Commands](https://img.shields.io/badge/COMMANDS-4-ffd700?style=for-the-badge)
 ![Memory](https://img.shields.io/badge/MEMORY-PERSISTENT-ff6b6b?style=for-the-badge)
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](LICENSE)
@@ -69,7 +69,7 @@ User: "buat login page, testnya sekalian"
     └────┬─────┘
          ▼
     ┌──────────┐
-    │  GODOK   │  ← rencana detail
+    │  GODOK   │  ← skill plan (file, urutan, dependensi)
     └────┬─────┘
          ▼
     ┌──────────┐
@@ -121,7 +121,10 @@ User: "buat login page, testnya sekalian"
 | imagine | — | Bayangkan hasil akhir sebelum bangun |
 | remember | — | Simpan keputusan & pembelajaran |
 | recall | — | Muat ingatan di awal sesi |
-| caveman | — | Gaya bicara: pendek, kata kerja dulu |
+| caveman | — | Gaya bicara ULTRA: pendek, marker wajib, tanpa kata lunak |
+| scan | — | Peta project saat BOOT: bahasa, framework, entry, test |
+| plan | — | Rencana eksekusi: file, urutan, dependensi, definisi selesai |
+| debug | — | Debug sistematis: reproduksi → isolasi → bukti → fix |
 | **test-full** | ✅ | Auto deteksi bahasa & jalankan semua test |
 | **audit-full** | ✅ | Auto audit deps, lint, secret, higiene |
 | **fix-full** | ✅ | Auto format, lint-fix, re-test |
@@ -134,6 +137,7 @@ User: "buat login page, testnya sekalian"
 |---------|--------|
 | `/ship <tugas>` | Pipeline penuh: think→architect→coder→test→audit→fix→memory→lapor |
 | `/fix` | Auto repair: test→audit→fix loop sampai hijau |
+| `/audit` | Audit penuh: test→audit-full→review manual→fix sampai CLEAN |
 | `/memory` | Tampilkan ingatan DEV-BRAIN |
 
 ---
@@ -143,7 +147,7 @@ User: "buat login page, testnya sekalian"
 ```
 ~/.config/opencode/
 ├── AGENTS.md              ← doctrine permanen (6 hukum)
-├── opencode.json          ← permission auto-allow
+├── opencode.json          ← permission granular (skill + git read-only auto, sisanya ask)
 ├── agent/
 │   ├── dev.md             ← otak utama
 │   ├── architect.md
@@ -157,13 +161,18 @@ User: "buat login page, testnya sekalian"
 │   ├── imagine/SKILL.md
 │   ├── remember/SKILL.md
 │   ├── recall/SKILL.md
-│   ├── caveman/SKILL.md
+│   ├── caveman/SKILL.md          ← caveman ULTRA
+│   ├── scan/SKILL.md
+│   ├── plan/SKILL.md
+│   ├── debug/SKILL.md
+│   ├── doc-full/SKILL.md
 │   ├── test-full/  (SKILL.md + run.sh)
 │   ├── audit-full/ (SKILL.md + run.sh)
 │   └── fix-full/   (SKILL.md + run.sh)
 ├── command/
 │   ├── ship.md
 │   ├── fix.md
+│   ├── audit.md
 │   └── memory.md
 └── memory/
     ├── MEMORY.md

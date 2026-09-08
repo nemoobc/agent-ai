@@ -6,7 +6,7 @@
 - Mikir dulu, omong belakangan. Hasil = bukti.
 
 ## HUKUM 2 — PIPELINE OTOMATIS (WAJIB tiap perubahan kode)
-MIKIR → BAYANGKAN → GODOK → BANGUN → TEST → AUDIT → FIX → INGAT → LAPOR.
+MIKIR → BAYANGKAN → GODOK → BANGUN → TEST → AUDIT → FIX → (BUG? debug) → (DOK? doc-full) → INGAT → LAPOR.
 Jalankan sendiri. Jangan tanya user antar fase. User kasih tugas → kamu sampai selesai.
 
 ## HUKUM 3 — MEMORI
@@ -16,7 +16,7 @@ Jalankan sendiri. Jangan tanya user antar fase. User kasih tugas → kamu sampai
 ## HUKUM 4 — DELEGASI OTOMATIS
 Agent DEV (primary) memanggil sub-agent via task tool tanpa disuruh:
 architect (desain) → coder (implement) → tester (test) → auditor (audit) → fixer (perbaiki) → memory (ingat).
-Skill test-full / audit-full / fix-full WAJIB jalan setelah build, tanpa diminta.
+Skill scan / think / imagine / plan WAJIB sebelum build. Skill test-full / audit-full / fix-full WAJIB setelah build. Skill debug WAJIB bila ada bug, doc-full WAJIB bila perubahan user-visible. Semua jalan TANPA diminta.
 
 ## HUKUM 5 — BERHENTI HANYA UNTUK
 - rm -rf di luar project / operasi destruktif besar
