@@ -1,5 +1,10 @@
 # MEMORY — DEV-BRAIN (ingatan jangka panjang)
 
+## 2026-09-08 — Showcase v2.2.0 (tantangan "tunjukkan kemampuan")
+- konteks: user tantang tunjukkan semua kemampuan — bukan cuma nambah file md
+- keputusan: skill doctor (run.sh + SKILL.md + /doctor), audit-full +8 pola secret & shellcheck opsional, release workflow (tag→test→GitHub Release dari CHANGELOG), tests/run-demo.sh (pipeline dibuktikan hidup: fixture bugged→merah→fix→hijau→CLEAN)
+- pembelajaran: nilai kit = yang bisa EKSEKUSI, bukan yang bisa didokumentasi; self-test menangkap drift badge VERSION saat upgrade → gate-nya bekerja nyata; `set -u` menangkap bug fungsi warn yang akses var tak didefinisi; sed -i/perl tidak portable (Termux/macOS) → pakai heredoc bash murni
+
 ## 2026-09-08 — Upgrade kit v2.0.0 (paket SEMUANYA)
 - konteks: user pilih paket lengkap — skill baru + caveman ULTRA + mateng agents + struktur
 - keputusan: 4 skill baru (debug/scan/plan/doc-full) biar pipeline 100% tercover; TIDAK tambah agent (7 cukup, tambah agent = overhead); gerbang fase keras di dev.md; command /audit; VERSION 2.0.0 + CHANGELOG

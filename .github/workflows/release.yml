@@ -1,0 +1,39 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Syntax + self-test (gate)
+        run: |
+          for s in install.sh skills/*/run.sh tests/self-test.sh; do
+            bash -n "$s" || exit 1
+          done
+          bash tests/self-test.sh
+
+      - name: Ekstrak catatan dari CHANGELOG
+        id: notes
+        run: |
+          VER="${GITHUB_REF_NAME#v}"
+          awk -v ver="$VER" '
+            $0 ~ "^## \\[" ver "\\]" {on=1; next}
+            on && /^## \[/ {exit}
+            on {print}
+          ' CHANGELOG.md > release-notes.md
+          head -40 release-notes.md
+
+      - name: Buat GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          body_path: release-notes.md
+          generate_release_notes: true

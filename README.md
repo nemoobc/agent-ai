@@ -1,20 +1,21 @@
 <h1 align="center">
 <pre>
-   ██████╗ ███████╗██████╗      ██████╗ ██╗██████╗
-   ██╔══██╗██╔════╝██╔══██╗    ██╔════╝ ██║██╔══██╗
-   ██║  ██║███████╗██████╔╝    ██║  ███╗██║██████╔╝
-   ██║  ██║╚════██║██╔═══╝     ██║   ██║██║██╔══██╗
-   ██████╔╝███████║██║         ╚██████╔╝██║██║  ██║
-   ╚═════╝ ╚══════╝╚═╝          ╚═════╝ ╚═╝╚═╝  ╚═╝
+   ██████╗ ███████╗██████╗ 
+   ██╔══██╗██╔════╝██╔══██╗
+   ██║  ██║███████╗██████╔╝
+   ██║  ██║╚════██║██╔═══╝ 
+   ██████╔╝███████║██║     
+   ╚═════╝ ╚══════╝╚═╝     
 </pre>
-<strong>A G E N T — A I</strong><br>
-<em>otak permanen • caveman mode ULTRA • ultronomatis</em>
+<strong>DEV — B R A I N</strong><br>
+<em>otak utama AGENT AI • caveman mode permanen • ultronomatis</em>
 </h1>
 
-![Pipeline](https://img.shields.io/badge/PIPELINE-MIKIR→BAYANG→GODOK→BANGUN→TEST→AUDIT→FIX→INGAT-ff69b4?style=for-the-badge)
+![Pipeline](https://img.shields.io/badge/PIPELINE-SCAN→MIKIR→BAYANG→GODOK→BANGUN→TEST→AUDIT→FIX→BUG→DOK→INGAT-ff69b4?style=for-the-badge)
+![Version](https://img.shields.io/badge/VERSION-2.2.0-ff69b4?style=for-the-badge)
 ![Agents](https://img.shields.io/badge/AGENTS-7-00d2ff?style=for-the-badge)
-![Skills](https://img.shields.io/badge/SKILLS-12-82d815?style=for-the-badge)
-![Commands](https://img.shields.io/badge/COMMANDS-4-ffd700?style=for-the-badge)
+![Skills](https://img.shields.io/badge/SKILLS-13-82d815?style=for-the-badge)
+![Commands](https://img.shields.io/badge/COMMANDS-5-ffd700?style=for-the-badge)
 ![Memory](https://img.shields.io/badge/MEMORY-PERSISTENT-ff6b6b?style=for-the-badge)
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](LICENSE)
@@ -125,6 +126,7 @@ User: "buat login page, testnya sekalian"
 | scan | — | Peta project saat BOOT: bahasa, framework, entry, test |
 | plan | — | Rencana eksekusi: file, urutan, dependensi, definisi selesai |
 | debug | — | Debug sistematis: reproduksi → isolasi → bukti → fix |
+| **doctor** | ✅ | Diagnosa lingkungan, dependensi, typecheck, memori (deteksi secret) |
 | **test-full** | ✅ | Auto deteksi bahasa & jalankan semua test |
 | **audit-full** | ✅ | Auto audit deps, lint, secret, higiene |
 | **fix-full** | ✅ | Auto format, lint-fix, re-test |
@@ -138,6 +140,7 @@ User: "buat login page, testnya sekalian"
 | `/ship <tugas>` | Pipeline penuh: think→architect→coder→test→audit→fix→memory→lapor |
 | `/fix` | Auto repair: test→audit→fix loop sampai hijau |
 | `/audit` | Audit penuh: test→audit-full→review manual→fix sampai CLEAN |
+| `/doctor` | Diagnosa kesehatan kit: lingkungan, dependensi, memori |
 | `/memory` | Tampilkan ingatan DEV-BRAIN |
 
 ---
@@ -156,7 +159,7 @@ User: "buat login page, testnya sekalian"
 │   ├── auditor.md
 │   ├── fixer.md
 │   └── memory.md
-├── skills/
+├── skill/
 │   ├── think/SKILL.md
 │   ├── imagine/SKILL.md
 │   ├── remember/SKILL.md
@@ -166,6 +169,7 @@ User: "buat login page, testnya sekalian"
 │   ├── plan/SKILL.md
 │   ├── debug/SKILL.md
 │   ├── doc-full/SKILL.md
+│   ├── doctor/     (SKILL.md + run.sh)
 │   ├── test-full/  (SKILL.md + run.sh)
 │   ├── audit-full/ (SKILL.md + run.sh)
 │   └── fix-full/   (SKILL.md + run.sh)
@@ -173,6 +177,7 @@ User: "buat login page, testnya sekalian"
 │   ├── ship.md
 │   ├── fix.md
 │   ├── audit.md
+│   ├── doctor.md
 │   └── memory.md
 └── memory/
     ├── MEMORY.md
@@ -184,8 +189,8 @@ User: "buat login page, testnya sekalian"
 
 ## HUKUM DEV-BRAIN
 
-1. **CAVEMAN MODE** — bicara pendek, kata kerja dulu, hasil = bukti
-2. **PIPELINE OTOMATIS** — MIKIR→BAYANG→GODOK→BANGUN→TEST→AUDIT→FIX→INGAT→LAPOR
+1. **CAVEMAN ULTRA** — bicara pendek, marker wajib, tanpa kata lunak, hasil = bukti
+2. **PIPELINE OTOMATIS** — SCAN→MIKIR→BAYANG→GODOK→BANGUN→TEST→AUDIT→FIX→(BUG? debug)→(DOK? doc-full)→INGAT→LAPOR
 3. **MEMORI** — awal sesi recall, akhir tugas remember
 4. **DELEGASI** — DEV panggil sub-agent otomatis via task tool
 5. **BERHENTI** — hanya untuk destruktif besar, force push, install sistem, biaya
@@ -213,6 +218,16 @@ DEV: [MIKIR] ... [BANGUN] ...
      ✔ test PASS (5/5)
      ✔ audit CLEAN
 ```
+
+---
+
+## DEMO 60 DETIK
+
+```bash
+bash tests/run-demo.sh
+```
+
+Bangun project fixture dengan bug disengaja → test-full MENANGKAP → perbaiki akar masalah → test HIJAU → audit CLEAN. Pipeline terbukti hidup, bukan cuma dokumen.
 
 ---
 

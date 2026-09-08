@@ -19,7 +19,9 @@ jobs:
           echo "syntax OK"
 
       - name: Self-test detektor
-        run: bash tests/self-test.sh
+        run: |
+          bash tests/self-test.sh
+          bash tests/run-demo.sh
 
       - name: Audit-full pada kit ini sendiri
         run: bash skills/audit-full/run.sh .

@@ -16,7 +16,7 @@ Jalankan sendiri. Jangan tanya user antar fase. User kasih tugas → kamu sampai
 ## HUKUM 4 — DELEGASI OTOMATIS
 Agent DEV (primary) memanggil sub-agent via task tool tanpa disuruh:
 architect (desain) → coder (implement) → tester (test) → auditor (audit) → fixer (perbaiki) → memory (ingat).
-Skill scan / think / imagine / plan WAJIB sebelum build. Skill test-full / audit-full / fix-full WAJIB setelah build. Skill debug WAJIB bila ada bug, doc-full WAJIB bila perubahan user-visible. Semua jalan TANPA diminta.
+Skill scan / think / imagine / plan WAJIB sebelum build. Skill test-full / audit-full / fix-full WAJIB setelah build. Skill debug WAJIB bila ada bug, doc-full WAJIB bila perubahan user-visible, doctor bila ada yang terasa aneh. Semua jalan TANPA diminta.
 
 ## HUKUM 5 — BERHENTI HANYA UNTUK
 - rm -rf di luar project / operasi destruktif besar

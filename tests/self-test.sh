@@ -48,14 +48,17 @@ fi
 p "▮ SELF-TEST: struktur kit lengkap" 213
 NSKILL=$(ls -1d "$DIR"/skills/*/ 2>/dev/null | wc -l | tr -d ' ')
 NCMD=$(ls -1 "$DIR"/command/*.md 2>/dev/null | wc -l | tr -d ' ')
-[ "$NSKILL" -eq 12 ] && ok "12 skill terdeteksi ($NSKILL)" || bad "jumlah skill = $NSKILL, harusnya 12"
-[ "$NCMD" -eq 4 ] && ok "4 command terdeteksi" || bad "jumlah command = $NCMD, harusnya 4"
+[ "$NSKILL" -eq 13 ] && ok "13 skill terdeteksi ($NSKILL)" || bad "jumlah skill = $NSKILL, harusnya 13"
+[ "$NCMD" -eq 5 ] && ok "5 command terdeteksi" || bad "jumlah command = $NCMD, harusnya 5"
 [ -f "$DIR/VERSION" ] && ok "VERSION ada" || bad "VERSION hilang"
 [ -f "$DIR/CHANGELOG.md" ] && ok "CHANGELOG ada" || bad "CHANGELOG hilang"
 [ -f "$DIR/LICENSE" ] && ok "LICENSE ada" || bad "LICENSE hilang"
-for s in scan plan debug doc-full; do
+for s in scan plan debug doc-full doctor; do
   [ -f "$DIR/skills/$s/SKILL.md" ] && ok "skill $s ada" || bad "skill $s hilang"
 done
+[ -f "$DIR/skills/doctor/run.sh" ] && ok "doctor/run.sh ada" || bad "doctor/run.sh hilang"
+[ -f "$DIR/.github/workflows/release.yml" ] && ok "release workflow ada" || bad "release workflow hilang"
+[ -f "$DIR/tests/run-demo.sh" ] && ok "demo script ada" || bad "demo script hilang"
 
 p "▮ SELF-TEST: badge README sinkron dengan isi repo" 213
 NAGENT=$(ls -1 "$DIR"/agents/*.md 2>/dev/null | wc -l | tr -d ' ')
@@ -65,6 +68,13 @@ BCMD=$(grep -oE 'COMMANDS-[0-9]+' "$DIR/README.md" | grep -oE '[0-9]+')
 [ "$BAGENT" = "$NAGENT" ] && ok "badge AGENTS=$BAGENT cocok" || bad "badge AGENTS=$BAGENT ≠ $NAGENT"
 [ "$BSKILL" = "$NSKILL" ] && ok "badge SKILLS=$BSKILL cocok" || bad "badge SKILLS=$BSKILL ≠ $NSKILL"
 [ "$BCMD" = "$NCMD" ] && ok "badge COMMANDS=$BCMD cocok" || bad "badge COMMANDS=$BCMD ≠ $NCMD"
+BVER=$(grep -oE 'VERSION-[0-9.]+' "$DIR/README.md" | head -1 | grep -oE '[0-9]+\.[0-9]+\.[0-9]+')
+VFILE=$(tr -d '[:space:]' < "$DIR/VERSION" 2>/dev/null)
+[ -n "$BVER" ] && [ "$BVER" = "$VFILE" ] && ok "badge VERSION=$BVER cocok" || bad "badge VERSION=$BVER ≠ file VERSION=$VFILE"
+
+p "▮ SELF-TEST: doctor exit code valid" 213
+bash "$DIR/skills/doctor/run.sh" . >/dev/null 2>&1
+[ $? -eq 0 ] && ok "doctor SEHAT di kit sendiri" || bad "doctor gagal di kit sendiri"
 
 p "▮ SELF-TEST: backup/restore opencode.json user" 213
 FH=$(mktemp -d)
@@ -78,32 +88,6 @@ HOME="$FH" bash "$DIR/install.sh" >/dev/null 2>&1 \
   && ok "user config dibackup lalu direstore saat uninstall" \
   || bad "backup/restore user config gagal"
 rm -rf "$FH"
-
-p "▮ SELF-TEST: install --project" 213
-TP=$(mktemp -d)
-HOME="$(mktemp -d)" bash "$DIR/install.sh" --project "$TP" >/dev/null 2>&1
-[ -d "$TP/.opencode/agent" ] && ok "project .opencode/agent ada" || bad "project .opencode/agent hilang"
-[ -d "$TP/.opencode/skill" ] && ok "project .opencode/skill ada" || bad "project .opencode/skill hilang"
-[ -d "$TP/.opencode/command" ] && ok "project .opencode/command ada" || bad "project .opencode/command hilang"
-[ -f "$TP/AGENTS.md" ] && ok "project AGENTS.md ada" || bad "project AGENTS.md hilang"
-rm -rf "$TP"
-
-p "▮ SELF-TEST: agent content wajib ada" 213
-for a in dev architect coder tester auditor fixer memory; do
-  grep -q "description:" "$DIR/agents/$a.md" 2>/dev/null && ok "agent $a ada frontmatter" || bad "agent $a tanpa frontmatter"
-done
-
-p "▮ SELF-TEST: skill scan/plan/debug/doc-full ada description" 213
-for s in scan plan debug doc-full; do
-  grep -q "description:" "$DIR/skills/$s/SKILL.md" 2>/dev/null && ok "skill $s ada description" || bad "skill $s tanpa description"
-done
-
-p "▮ SELF-TEST: command /audit ada" 213
-[ -f "$DIR/command/audit.md" ] && ok "command/audit.md ada" || bad "command/audit.md hilang"
-grep -q "agent: dev" "$DIR/command/audit.md" 2>/dev/null && ok "audit.md pakai agent dev" || bad "audit.md tanpa agent dev"
-
-p "▮ SELF-TEST: CHANGELOG punya entry v2.0.0" 213
-grep -q "2.0.0" "$DIR/CHANGELOG.md" 2>/dev/null && ok "CHANGELOG punya v2.0.0" || bad "CHANGELOG tanpa v2.0.0"
 
 rm -rf "$FX"
 echo

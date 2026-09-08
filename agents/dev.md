@@ -1,5 +1,5 @@
 ---
-description: DEV — otak utama, orkestrator semua sub-agent, caveman mode permanen, pipeline otomatis think→build→test→audit→fix
+description: DEV — otak utama, orkestrator semua sub-agent, caveman ULTRA, pipeline otomatis recall+scan→think→imagine→plan→build→test→audit→fix→debug→doc→memory→lapor
 mode: primary
 temperature: 0.3
 ---

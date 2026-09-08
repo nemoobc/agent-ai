@@ -2,6 +2,30 @@
 
 ## [Unreleased]
 
+## [2.2.0] — 2026-09-08
+### Added
+- Skill `doctor` (SKILL.md + run.sh) + command `/doctor` — diagnosa lingkungan, dependensi opsional, typecheck, memori + deteksi secret di memori (P0)
+- `audit-full`: +8 pola secret baru (Anthropic, GitHub OAuth/App, Google, GitLab, DigitalOcean, npm) + shellcheck opsional untuk script shell
+- Release workflow: tag `v*` → self-test sebagai gate → GitHub Release otomatis dari CHANGELOG
+- `tests/run-demo.sh` — demo 60 detik: fixture bugged → test merah → fix → hijau → audit CLEAN (section DEMO di README)
+
+### Fixed
+- `doctor/run.sh`: fungsi warn kena `set -u` bila dipanggil sebelum init
+- `run-demo.sh`: ganti `sed -i`/`perl` → pure bash heredoc (Termux/macOS aman)
+
+## [2.1.0] — 2026-09-08
+### Added
+- `install.sh --check` — verifikasi kesehatan instalasi (tanpa menulis file)
+- `install.sh --project` kini backup AGENTS.md project (marker-detected) + prune instalasi lama
+- Self-test kini juga mengunci badge VERSION README ke file VERSION
+
+### Fixed
+- Path README `skills/` → `skill/` (sesuai installer & agents)
+- `agents/dev.md` description belum menyebut pipeline v2
+
+### Changed
+- AGENTS.md HUKUM 4 + `/ship` disinkron penuh dengan pipeline 11 fase
+
 ## [2.0.0] — 2026-09-08
 ### Added
 - Skill baru: `debug`, `scan`, `plan`, `doc-full` — pipeline 100% tercover

@@ -31,13 +31,24 @@ p "▮ AUDIT: lint" 213
 [ -x node_modules/.bin/eslint ] && { node_modules/.bin/eslint . 2>/dev/null || found "eslint: pelanggaran lint"; }
 command -v ruff >/dev/null 2>&1 && compgen -G '*.py' >/dev/null 2>&1 && { ruff check . 2>/dev/null || found "ruff: pelanggaran lint"; }
 [ -f go.mod ] && command -v go >/dev/null 2>&1 && { go vet ./... 2>/dev/null || found "go vet: temuan"; }
+if command -v shellcheck >/dev/null 2>&1; then
+  SHFAIL=0
+  for s in *.sh scripts/*.sh; do
+    [ -f "$s" ] || continue
+    shellcheck -S warning "$s" >/dev/null 2>&1 || SHFAIL=1
+  done
+  [ "$SHFAIL" -eq 1 ] && found "shellcheck: masalah di script shell"
+fi
 
 p "▮ AUDIT: rahasia bocor" 213
 SECRETS=$(grep -rIniE --exclude-dir=node_modules --exclude-dir=.git \
-  -e 'AKIA[0-9A-Z]{16}' -e 'sk-[A-Za-z0-9]{20,}' -e 'ghp_[A-Za-z0-9]{30,}' \
+  -e 'AKIA[0-9A-Z]{16}' -e 'sk-[A-Za-z0-9]{20,}' -e 'sk-ant-[A-Za-z0-9_-]{20,}' \
+  -e 'ghp_[A-Za-z0-9]{30,}' -e 'gho_[A-Za-z0-9]{30,}' -e 'ghs_[A-Za-z0-9]{30,}' \
   -e 'github_pat_[A-Za-z0-9_]{20,}' -e 'xox[baprs]-[A-Za-z0-9-]{10,}' \
-  -e 'BEGIN [A-Z ]*PRIVATE KEY' \
-  -e 'password[[:space:]]*=[[:space:]]*["'"'][^"'"']{4,}["'"']' . 2>/dev/null | head -5)
+  -e 'AIza[0-9A-Za-z_-]{30,}' -e 'ya29\.[0-9A-Za-z_-]{20,}' \
+  -e 'glpat-[A-Za-z0-9_-]{16,}' -e 'dop_v1_[a-f0-9]{32,}' \
+  -e 'npm_[A-Za-z0-9]{30,}' -e 'BEGIN [A-Z ]*PRIVATE KEY' \
+  -e 'password[[:space:]]*=[[:space:]]*["'"'][^"'"']{4,}["'"']' . 2>/dev/null | head -8)
 if [ -n "$SECRETS" ]; then found "pola secret terdeteksi:"; echo "$SECRETS" | sed 's/^/      /';
 else clean "tidak ada pola secret"; fi
 # opsional: scan sejarah git bila gitleaks terpasang

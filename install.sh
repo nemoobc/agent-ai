@@ -31,16 +31,18 @@ usage(){ cat <<'X'
 Pemakaian:
   bash install.sh                 install global (~/.config/opencode)
   bash install.sh --project DIR   sekalian pasang ke project (DIR/.opencode)
+  bash install.sh --check         cek kesehatan instalasi (tanpa menulis)
   bash install.sh --uninstall     buang agent & doctrine (memori DIPERTAHANKAN)
 X
 }
 
 # ── argumen ──
-PROJECT=""; UNINSTALL=0
+PROJECT=""; UNINSTALL=0; CHECK=0
 while [ $# -gt 0 ]; do
   case "$1" in
     --project) [ $# -ge 2 ] || { err "--project butuh path folder"; exit 1; }; PROJECT="$2"; shift 2 ;;
     --uninstall) UNINSTALL=1; shift ;;
+    --check) CHECK=1; shift ;;
     -h|--help) usage; exit 0 ;;
     *) wrn "arg tak dikenal: $1 (diabaikan)"; shift ;;
   esac
@@ -83,6 +85,7 @@ write_brain(){
   mkdir -p "$CFG/agent" "$CFG/command" "$CFG/memory" \
     "$CFG/skill/think" "$CFG/skill/imagine" "$CFG/skill/remember" "$CFG/skill/recall" \
     "$CFG/skill/caveman" "$CFG/skill/scan" "$CFG/skill/plan" "$CFG/skill/debug" "$CFG/skill/doc-full" \
+    "$CFG/skill/doctor" \
     "$CFG/skill/test-full" "$CFG/skill/audit-full" "$CFG/skill/fix-full"
 
   # backup config lama HANYA bila itu bukan tulisan DEV-BRAIN (marker)
@@ -148,6 +151,13 @@ EOF
 install_project(){
   step "PASANG KE PROJECT: $PROJECT"
   if [ ! -d "$PROJECT" ]; then err "folder tidak ditemukan: $PROJECT"; return 1; fi
+  # backup AGENTS.md project bila bukan tulisan DEV-BRAIN (marker)
+  if [ -f "$PROJECT/AGENTS.md" ] && ! grep -q 'DEV-BRAIN (project ini)' "$PROJECT/AGENTS.md" 2>/dev/null; then
+    cp "$PROJECT/AGENTS.md" "$PROJECT/AGENTS.md.bak.$(date +%s)"
+    wrn "AGENTS.md project dibackup (isi asli dipertahankan di .bak)"
+  fi
+  # prune instalasi lama di project biar tidak ada file sisa
+  rm -rf "$PROJECT/.opencode/agent" "$PROJECT/.opencode/skill" "$PROJECT/.opencode/command"
   mkdir -p "$PROJECT/.opencode/memory"
   cp -r "$CFG/agent"   "$PROJECT/.opencode/" 2>/dev/null
   cp -r "$CFG/skill"   "$PROJECT/.opencode/" 2>/dev/null
@@ -155,11 +165,31 @@ install_project(){
   [ -f "$PROJECT/.opencode/memory/MEMORY.md" ] || cp "$CFG/memory/MEMORY.md" "$PROJECT/.opencode/memory/"
   cat > "$PROJECT/AGENTS.md" <<'EOF'
 # DEV-BRAIN (project ini)
-Otak utama: DEV — caveman mode permanen, pipeline otomatis think→build→test→audit→fix.
+Otak utama: DEV — caveman mode ULTRA, pipeline otomatis:
+recall+scan → think → imagine+architect → plan → coder → test → audit → fix → (BUG? debug) → (DOK? doc-full) → memory → lapor.
 Memori project: `.opencode/memory/`. Doctrine lengkap: `~/.config/opencode/AGENTS.md`.
 Tidak perlu command manual — ketik tugas, DEV mengorkestrasi sendiri.
 EOF
   ok "terpasang di $PROJECT/.opencode + AGENTS.md"
+}
+
+# ── verifikasi instalasi ──
+check_install(){
+  step "CHECK INSTALASI DEV-BRAIN"
+  BAD=0
+  [ -f "$CFG/AGENTS.md" ] || { err "doctrine hilang: $CFG/AGENTS.md"; BAD=1; }
+  [ -f "$CFG/opencode.json" ] || { err "config hilang: $CFG/opencode.json"; BAD=1; }
+  grep -q '"devbrain"' "$CFG/opencode.json" 2>/dev/null || { wrn "opencode.json tanpa marker devbrain (bukan tulisan installer)"; }
+  for d in agent command memory skill; do
+    [ -d "$CFG/$d" ] || { err "folder hilang: $CFG/$d"; BAD=1; }
+  done
+  N=$(find "$CFG/agent" "$CFG/skill" "$CFG/command" -type f 2>/dev/null | wc -l | tr -d ' ')
+  [ "${N:-0}" -ge 20 ] || { err "file otak cuma $N — install ulang"; BAD=1; }
+  for s in "$CFG"/skill/*/run.sh; do
+    [ -f "$s" ] || continue
+    bash -n "$s" 2>/dev/null || { err "script rusak: $s"; BAD=1; }
+  done
+  if [ "$BAD" -eq 0 ]; then ok "instalasi sehat — $N file otak, semua script valid"; return 0; else return 1; fi
 }
 
 # ── verifikasi & banner akhir ──
@@ -170,7 +200,7 @@ finish(){
   pc 177 '  ║   D E V — B R A I N   O N L I N E      ║'
   pc 141 '  ╚════════════════════════════════════════╝'
   echo
-  ok "7 agent • 12 skill (3 dengan bash script) • 4 command • memori persisten"
+  ok "7 agent • 13 skill (4 dengan bash script) • 5 command • memori persisten"
   echo
   pc 45  "  CARA PAKAI:"
   pc 45  "  1) buka folder project apa saja"
@@ -188,6 +218,7 @@ finish(){
 # ═══ MAIN ═══
 banner
 [ "$UNINSTALL" -eq 1 ] && { uninstall; }
+[ "$CHECK" -eq 1 ] && { check_install; exit $?; }
 write_brain
 [ -n "$PROJECT" ] && install_project
 finish
