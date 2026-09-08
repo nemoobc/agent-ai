@@ -21,11 +21,19 @@ Gunakan skill ini ketika tugas melibatkan:
 
 ## Standar Kerja
 
-- Sesuaikan dengan audiens: developer, operator, pengguna, atau maintainer.\n- Dokumentasikan prerequisite, install, config, usage, validation, troubleshooting, dan limitation bila relevan.\n- Gunakan command yang sesuai project.\n- Jangan tulis command yang belum diverifikasi sebagai pasti berhasil.\n- Jaga dokumentasi selaras dengan code actual.\n- Hindari narasi panjang tanpa instruksi yang dapat ditindaklanjuti.
+- Sesuaikan dengan audiens: developer, operator, pengguna, atau maintainer.
+- Dokumentasikan prerequisite, install, config, usage, validation, troubleshooting, dan limitation bila relevan.
+- Gunakan command yang sesuai project.
+- Jangan tulis command yang belum diverifikasi sebagai pasti berhasil.
+- Jaga dokumentasi selaras dengan code actual.
+- Hindari narasi panjang tanpa instruksi yang dapat ditindaklanjuti.
 
 ## Validasi
 
-1. Cross-check nama file, command, environment variable, dan endpoint terhadap code.\n2. Pastikan langkah bisa diikuti berurutan.\n3. Periksa contoh tidak membocorkan secret.\n4. Perbarui docs yang terdampak behavior change.
+1. Cross-check nama file, command, environment variable, dan endpoint terhadap code.
+2. Pastikan langkah bisa diikuti berurutan.
+3. Periksa contoh tidak membocorkan secret.
+4. Perbarui docs yang terdampak behavior change.
 
 ## Output
 

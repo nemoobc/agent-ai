@@ -9,7 +9,9 @@ description: Repository discovery, conventions, dependencies, and change-scope a
 
 Gunakan skill ini ketika tugas melibatkan:
 
-- Memulai pekerjaan pada repository baru.\n- Mencari struktur, entry point, command, convention, atau file terkait.\n- Sebelum perubahan lintas modul.
+- Memulai pekerjaan pada repository baru.
+- Mencari struktur, entry point, command, convention, atau file terkait.
+- Sebelum perubahan lintas modul.
 
 ## Sebelum Bekerja
 
@@ -21,11 +23,17 @@ Gunakan skill ini ketika tugas melibatkan:
 
 ## Standar Kerja
 
-- Gunakan `rg --files` dan `rg` untuk menemukan file.\n- Baca manifest, konfigurasi, test, dan dokumentasi.\n- Identifikasi package manager, runtime, command validasi, dan batas ownership modul.\n- Periksa `git status --short` sebelum edit signifikan.\n- Perlakukan perubahan yang sudah ada sebagai milik pengguna.
+- Gunakan `rg --files` dan `rg` untuk menemukan file.
+- Baca manifest, konfigurasi, test, dan dokumentasi.
+- Identifikasi package manager, runtime, command validasi, dan batas ownership modul.
+- Periksa `git status --short` sebelum edit signifikan.
+- Perlakukan perubahan yang sudah ada sebagai milik pengguna.
 
 ## Validasi
 
-1. Pastikan file yang diedit benar-benar relevan.\n2. Pastikan instruksi lokal sudah dibaca.\n3. Nyatakan asumsi jika struktur atau command tidak tersedia.
+1. Pastikan file yang diedit benar-benar relevan.
+2. Pastikan instruksi lokal sudah dibaca.
+3. Nyatakan asumsi jika struktur atau command tidak tersedia.
 
 ## Output
 

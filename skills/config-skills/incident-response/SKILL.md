@@ -21,11 +21,20 @@ Gunakan skill ini ketika tugas melibatkan:
 
 ## Standar Kerja
 
-- Utamakan keselamatan, containment, data integrity, dan bukti.\n- Jangan melakukan aksi destruktif tanpa approval.\n- Tentukan impact, scope, timeline, dan service dependency.\n- Pertahankan log dan evidence yang relevan.\n- Gunakan rollback atau mitigasi terkecil yang menurunkan impact.\n- Pisahkan fakta, hipotesis, dan keputusan.\n- Buat postmortem berorientasi perbaikan sistem, bukan menyalahkan individu.
+- Utamakan keselamatan, containment, data integrity, dan bukti.
+- Jangan melakukan aksi destruktif tanpa approval.
+- Tentukan impact, scope, timeline, dan service dependency.
+- Pertahankan log dan evidence yang relevan.
+- Gunakan rollback atau mitigasi terkecil yang menurunkan impact.
+- Pisahkan fakta, hipotesis, dan keputusan.
+- Buat postmortem berorientasi perbaikan sistem, bukan menyalahkan individu.
 
 ## Validasi
 
-1. Verifikasi service recovery dan data integrity.\n2. Catat timestamp, tindakan, dan hasil.\n3. Pastikan monitoring/alert tidak terus memicu setelah recovery.\n4. Buat follow-up untuk root cause dan pencegahan.
+1. Verifikasi service recovery dan data integrity.
+2. Catat timestamp, tindakan, dan hasil.
+3. Pastikan monitoring/alert tidak terus memicu setelah recovery.
+4. Buat follow-up untuk root cause dan pencegahan.
 
 ## Output
 

@@ -21,11 +21,21 @@ Gunakan skill ini ketika tugas melibatkan:
 
 ## Standar Kerja
 
-- Gunakan tipe data, constraint, primary key, foreign key, unique constraint, dan check constraint yang sesuai.\n- Parameterize query.\n- Gunakan transaction ketika perubahan multi-step wajib atomik.\n- Tambahkan index berdasarkan query path nyata.\n- Hindari N+1 query.\n- Rancang migration agar reversible bila praktis.\n- Jangan menghapus data atau kolom produksi tanpa persetujuan eksplisit.\n- Jangan menyimpan secret atau data sensitif tanpa perlindungan yang tepat.
+- Gunakan tipe data, constraint, primary key, foreign key, unique constraint, dan check constraint yang sesuai.
+- Parameterize query.
+- Gunakan transaction ketika perubahan multi-step wajib atomik.
+- Tambahkan index berdasarkan query path nyata.
+- Hindari N+1 query.
+- Rancang migration agar reversible bila praktis.
+- Jangan menghapus data atau kolom produksi tanpa persetujuan eksplisit.
+- Jangan menyimpan secret atau data sensitif tanpa perlindungan yang tepat.
 
 ## Validasi
 
-1. Periksa migration secara manual.\n2. Jalankan migration pada environment aman bila tersedia.\n3. Jalankan test query atau integration test.\n4. Periksa efek pada data existing, rollback, constraint, dan performance path.
+1. Periksa migration secara manual.
+2. Jalankan migration pada environment aman bila tersedia.
+3. Jalankan test query atau integration test.
+4. Periksa efek pada data existing, rollback, constraint, dan performance path.
 
 ## Output
 

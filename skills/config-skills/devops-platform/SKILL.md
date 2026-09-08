@@ -21,11 +21,21 @@ Gunakan skill ini ketika tugas melibatkan:
 
 ## Standar Kerja
 
-- Buat konfigurasi reproducible.\n- Gunakan environment variable dan secret manager bila tersedia.\n- Tambahkan health check.\n- Terapkan least privilege dan minimalkan port terbuka.\n- Jangan embed secret di image atau repository.\n- Jelaskan persistent storage, migration, backup, dan rollback.\n- Hindari command production destruktif tanpa konfirmasi.\n- Optimalkan image secara wajar tanpa mengorbankan debugability.
+- Buat konfigurasi reproducible.
+- Gunakan environment variable dan secret manager bila tersedia.
+- Tambahkan health check.
+- Terapkan least privilege dan minimalkan port terbuka.
+- Jangan embed secret di image atau repository.
+- Jelaskan persistent storage, migration, backup, dan rollback.
+- Hindari command production destruktif tanpa konfirmasi.
+- Optimalkan image secara wajar tanpa mengorbankan debugability.
 
 ## Validasi
 
-1. Validasi syntax Docker/CI/IaC.\n2. Build image atau jalankan config validation bila tersedia.\n3. Periksa environment variable, volume, port, health check, dan rollback.\n4. Pastikan command tidak menghapus data tanpa konfirmasi.
+1. Validasi syntax Docker/CI/IaC.
+2. Build image atau jalankan config validation bila tersedia.
+3. Periksa environment variable, volume, port, health check, dan rollback.
+4. Pastikan command tidak menghapus data tanpa konfirmasi.
 
 ## Output
 

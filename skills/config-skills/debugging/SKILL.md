@@ -21,11 +21,20 @@ Gunakan skill ini ketika tugas melibatkan:
 
 ## Standar Kerja
 
-- Mulai dari bukti: error, log, stack trace, test, reproduction step.\n- Reproduksi masalah bila memungkinkan.\n- Cari root cause terkecil yang menjelaskan gejala.\n- Uji hipotesis secara sempit.\n- Perbaiki penyebab, bukan hanya gejala.\n- Tambahkan regression test bila cocok.\n- Jangan menebak jika bukti dapat diinspeksi.
+- Mulai dari bukti: error, log, stack trace, test, reproduction step.
+- Reproduksi masalah bila memungkinkan.
+- Cari root cause terkecil yang menjelaskan gejala.
+- Uji hipotesis secara sempit.
+- Perbaiki penyebab, bukan hanya gejala.
+- Tambahkan regression test bila cocok.
+- Jangan menebak jika bukti dapat diinspeksi.
 
 ## Validasi
 
-1. Reproduksi ulang atau jalankan test gagal.\n2. Jalankan test setelah perbaikan.\n3. Verifikasi edge case yang menyebabkan masalah.\n4. Catat root cause, fix, dan status validasi.
+1. Reproduksi ulang atau jalankan test gagal.
+2. Jalankan test setelah perbaikan.
+3. Verifikasi edge case yang menyebabkan masalah.
+4. Catat root cause, fix, dan status validasi.
 
 ## Output
 

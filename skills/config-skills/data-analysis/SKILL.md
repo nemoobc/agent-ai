@@ -21,11 +21,21 @@ Gunakan skill ini ketika tugas melibatkan:
 
 ## Standar Kerja
 
-- Tentukan pertanyaan analitis terlebih dahulu.\n- Inspeksi schema, missing values, duplicate, invalid values, dan outlier.\n- Jelaskan transformasi data.\n- Gunakan code atau formula reproducible.\n- Bedakan correlation dan causation.\n- Hindari false precision.\n- Lindungi data pribadi dan sensitif.\n- Nyatakan ukuran sample dan batasan bila relevan.
+- Tentukan pertanyaan analitis terlebih dahulu.
+- Inspeksi schema, missing values, duplicate, invalid values, dan outlier.
+- Jelaskan transformasi data.
+- Gunakan code atau formula reproducible.
+- Bedakan correlation dan causation.
+- Hindari false precision.
+- Lindungi data pribadi dan sensitif.
+- Nyatakan ukuran sample dan batasan bila relevan.
 
 ## Validasi
 
-1. Validasi total, agregasi, filter, dan join.\n2. Periksa hasil terhadap sample atau known values.\n3. Pastikan transformasi dapat direproduksi.\n4. Nyatakan data quality issue dan uncertainty.
+1. Validasi total, agregasi, filter, dan join.
+2. Periksa hasil terhadap sample atau known values.
+3. Pastikan transformasi dapat direproduksi.
+4. Nyatakan data quality issue dan uncertainty.
 
 ## Output
 

@@ -10,7 +10,7 @@
 #   bash install.sh --uninstall  # hapus
 #   bash install.sh --version X  # install versi tertentu
 # =============================================================================
-set -u
+set -euo pipefail
 
 REPO="nemoobc/agent-ai"
 REPO_URL="https://github.com/$REPO"
@@ -19,7 +19,6 @@ SRC="$(cd "$(dirname "$0")" && pwd)"
 MODE="install"
 VERSION=""
 
-# --- parse args ---
 while [ $# -gt 0 ]; do
   case "$1" in
     --check)     MODE="check"; shift ;;
@@ -54,20 +53,32 @@ else
 fi
 
 # --- check tools ---
-for t in cp mkdir rm find wc; do
-  command -v "$t" >/dev/null 2>&1 || die "tool '$t' tidak ada"
+for t in cp mkdir rm find wc tar; do
+  command -v "$t" >/dev/null 2>&1 || die "tool '$t' tidak ada. Install: pkg install $t (Termux) atau apt install $t (Linux)"
 done
 
+command -v git >/dev/null 2>&1 || warn "git tidak ada — update check tidak tersedia"
+
+# --- check disk space (min 50MB) ---
+AVAIL_KB=$(df -k "$HOME" 2>/dev/null | awk 'NR==2{print $4}' || echo 0)
+if [ "$AVAIL_KB" -gt 0 ] && [ "$AVAIL_KB" -lt 51200 ]; then
+  warn "disk space rendah: $(( AVAIL_KB / 1024 ))MB tersedia (min 50MB)"
+fi
+
 # --- source files (local or download) ---
-need_dir() { [ -d "$SRC/agents/config-agents" ] && [ -d "$SRC/skills/config-skills" ] && [ -d "$SRC/command" ]; }
+need_dir() { [ -d "$SRC/agents" ] && [ -d "$SRC/skills" ] && [ -d "$SRC/command" ]; }
+
+TMPD=""
+cleanup() { [ -n "$TMPD" ] && [ -d "$TMPD" ] && rm -rf "$TMPD"; }
+trap cleanup EXIT
 
 if ! need_dir; then
   say "File repo tidak lengkap di $SRC — unduh otomatis..."
-  command -v curl >/dev/null 2>&1 || die "butuh 'curl' atau clone manual: git clone $REPO_URL"
+  command -v curl >/dev/null 2>&1 || die "butuh 'curl' atau clone: git clone $REPO_URL"
   [ -n "$VERSION" ] && TARBALL_URL="$REPO_URL/archive/refs/tags/v${VERSION}.tar.gz"
   TMPD="$(mktemp -d 2>/dev/null || echo "/tmp/agent-dl-$$")"
   mkdir -p "$TMPD"
-  curl -fsSL -o "$TMPD/agent.tgz" "$TARBALL_URL" || die "unduh gagal: $TARBALL_URL"
+  curl --proto '=https' --tlsv1.2 -fsSL -o "$TMPD/agent.tgz" "$TARBALL_URL" || die "unduh gagal: $TARBALL_URL"
   tar -xzf "$TMPD/agent.tgz" -C "$TMPD" || die "ekstrak gagal"
   SRC="$(find "$TMPD" -maxdepth 1 -type d -name 'agent-ai-*' | head -1)"
   [ -n "$SRC" ] || die "isi tarball aneh"
@@ -79,17 +90,20 @@ fi
 
 CFG="$HOME/.config/opencode"
 AUTODEV_HOME="$HOME/.autodev"
+SKILLS_HOME="$HOME/.agents/skills"
 TS="$(date +%Y%m%d-%H%M%S 2>/dev/null || echo backup)"
 count_md() { find "$1" -name '*.md' 2>/dev/null | wc -l; }
 
 # --- uninstall mode ---
-if [ "$MODE" = "uninstall" ]; say "=== UNINSTALL ===" &&
-   rm -rf "$CFG/agent" "$CFG/skills" "$CFG/command" "$CFG/AGENTS.md" "$AUTODEV_HOME" &&
-   rm -f "$HOME/.local/bin/agent-ai" 2>/dev/null &&
-   ok "config dihapus: $CFG/agent, $CFG/skills, $CFG/command" &&
-   ok "autodev dihapus: $AUTODEV_HOME" &&
-   ok "UNINSTALL SELESAI. Config user (~/.config/opencode/opencode.json) tidak disentuh." &&
-   exit 0; then
+if [ "$MODE" = "uninstall" ]; then
+  say "=== UNINSTALL ==="
+  rm -rf "$CFG/agent" "$CFG/skills" "$CFG/command" "$CFG/AGENTS.md" 2>/dev/null
+  rm -rf "$SKILLS_HOME" 2>/dev/null
+  rm -rf "$AUTODEV_HOME" 2>/dev/null
+  ok "config dihapus: $CFG/agent, $CFG/skills, $CFG/command"
+  ok "skills dihapus: $SKILLS_HOME"
+  ok "autodev dihapus: $AUTODEV_HOME"
+  ok "UNINSTALL SELESAI. Config user (~/.config/opencode/opencode.json) tidak disentuh."
   exit 0
 fi
 
@@ -97,14 +111,13 @@ fi
 if [ "$MODE" = "check" ]; then
   say "=== STATUS ==="
   say "agent:     $(count_md "$CFG/agent") file di $CFG/agent"
-  say "skills:    $(count_md "$CFG/skills") file di $CFG/skills"
+  say "skills:    $(count_md "$SKILLS_HOME") file di $SKILLS_HOME"
   say "command:   $(count_md "$CFG/command") file di $CFG/command"
   say "AGENTS.md: $([ -f "$CFG/AGENTS.md" ] && echo "ada" || echo "HILANG")"
   say "opencode.json: $([ -f "$CFG/opencode.json" ] && echo "ada" || echo "HILANG")"
   say "autodev:   $([ -d "$AUTODEV_HOME" ] && echo "ada" || echo "HILANG")"
   say ""
 
-  # check installed version from git or file
   if [ -f "$CFG/agent/autodev.md" ]; then
     say "agent-ai:  terpasang"
     [ -f "$CFG/agent/autodev-skills.md" ] && ok "autodev-skills: ada" || warn "autodev-skills: HILANG"
@@ -112,7 +125,6 @@ if [ "$MODE" = "check" ]; then
     say "agent-ai:  BELUM terpasang"
   fi
 
-  # check binary
   if [ "$IS_TERMUX" = 1 ]; then
     if command -v opencode-termux >/dev/null 2>&1; then
       ok "binary: $(command -v opencode-termux)"
@@ -131,7 +143,6 @@ if [ "$MODE" = "check" ]; then
     fi
   fi
 
-  # check for updates
   if command -v git >/dev/null 2>&1 && [ -d "$SRC/.git" ]; then
     cd "$SRC" 2>/dev/null && git fetch origin --quiet 2>/dev/null
     LOCAL=$(git rev-parse HEAD 2>/dev/null)
@@ -148,31 +159,42 @@ fi
 
 # --- backup ---
 if [ -d "$CFG" ]; then
-  cp -a "$CFG" "$CFG.bak.$TS" || die "backup gagal"
+  cp -a "$CFG" "$CFG.bak.$TS" 2>/dev/null || cp -r "$CFG" "$CFG.bak.$TS" || die "backup gagal"
   ok "backup: $CFG.bak.$TS"
 fi
 if [ -d "$AUTODEV_HOME" ]; then
-  cp -a "$AUTODEV_HOME" "$AUTODEV_HOME.bak.$TS" || die "backup autodev gagal"
+  cp -a "$AUTODEV_HOME" "$AUTODEV_HOME.bak.$TS" 2>/dev/null || cp -r "$AUTODEV_HOME" "$AUTODEV_HOME.bak.$TS" || die "backup autodev gagal"
   ok "backup: $AUTODEV_HOME.bak.$TS"
 fi
 
-# --- install ---
-mkdir -p "$CFG/agent" "$CFG/skills" "$CFG/command" "$AUTODEV_HOME" || die "mkdir gagal"
-cp -r "$SRC/agents/config-agents/." "$CFG/agent/" || die "copy agent gagal"
-cp -r "$SRC/skills/config-skills/." "$CFG/skills/" || die "copy skills gagal"
-cp -r "$SRC/command/." "$CFG/command/" || die "copy command gagal"
+# --- install agents + commands → ~/.config/opencode/ ---
+mkdir -p "$CFG/agent" "$CFG/command" "$AUTODEV_HOME" || die "mkdir gagal"
+cp -r "$SRC/agents/"* "$CFG/agent/" || die "copy agent gagal"
+cp -r "$SRC/command/"* "$CFG/command/" || die "copy command gagal"
 cp "$SRC/AGENTS.md" "$CFG/AGENTS.md" || die "copy AGENTS.md gagal"
 [ -f "$SRC/opencode.json" ] && cp "$SRC/opencode.json" "$CFG/opencode.json"
-cp -r "$SRC/autodev/." "$AUTODEV_HOME/" || die "copy autodev gagal"
+cp -r "$SRC/autodev/"* "$AUTODEV_HOME/" || die "copy autodev gagal"
+
+# --- install skills → ~/.agents/skills/ ---
+mkdir -p "$SKILLS_HOME" || die "mkdir skills gagal"
+for skill_dir in "$SRC/skills/"*/; do
+  skill_name=$(basename "$skill_dir")
+  skill_file="$skill_dir/SKILL.md"
+  if [ -f "$skill_file" ]; then
+    mkdir -p "$SKILLS_HOME/$skill_name"
+    cp "$skill_file" "$SKILLS_HOME/$skill_name/SKILL.md"
+  fi
+done
+ok "skills terpasang ke $SKILLS_HOME"
 
 # --- verify ---
 say "--- verifikasi ---"
 n_agent="$(count_md "$CFG/agent")"
-n_skill="$(count_md "$CFG/skills")"
+n_skill="$(count_md "$SKILLS_HOME")"
 n_cmd="$(count_md "$CFG/command")"
-[ "$n_agent" -ge 2 ] || die "agent kurang ($n_agent file)"
-[ "$n_skill" -ge 10 ] || die "skills kurang ($n_skill file)"
-[ "$n_cmd" -ge 5 ] || die "command kurang ($n_cmd file)"
+[ "$n_agent" -ge 2 ] || die "agent kurang ($n_agent file, minimal 2: autodev + reviewer)"
+[ "$n_skill" -ge 10 ] || die "skills kurang ($n_skill file, minimal 10)"
+[ "$n_cmd" -ge 5 ] || die "command kurang ($n_cmd file, minimal 5)"
 [ -f "$CFG/AGENTS.md" ] || die "AGENTS.md hilang"
 ok "agent: $n_agent file"
 ok "skills: $n_skill file"

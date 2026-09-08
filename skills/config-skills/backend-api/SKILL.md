@@ -9,7 +9,8 @@ description: Backend services, APIs, authentication, authorization, and integrat
 
 Gunakan skill ini ketika tugas melibatkan:
 
-- REST, GraphQL, gRPC, webhook, service layer, auth, queue, atau server-side logic.\n- Endpoint baru atau perubahan kontrak API.
+- REST, GraphQL, gRPC, webhook, service layer, auth, queue, atau server-side logic.
+- Endpoint baru atau perubahan kontrak API.
 
 ## Sebelum Bekerja
 
@@ -21,11 +22,22 @@ Gunakan skill ini ketika tugas melibatkan:
 
 ## Standar Kerja
 
-- Definisikan request, response, error, dan authorization contract.\n- Validasi input pada boundary.\n- Jangan bocorkan stack trace, secret, atau detail internal.\n- Gunakan status code dan format error yang konsisten.\n- Terapkan pagination pada collection yang dapat tumbuh tanpa batas.\n- Gunakan idempotency untuk endpoint atau webhook yang membutuhkan.\n- Tambahkan rate limit atau abuse protection bila relevan.\n- Tambahkan structured logging tanpa secret.\n- Dokumentasikan environment variable dan dependency eksternal.
+- Definisikan request, response, error, dan authorization contract.
+- Validasi input pada boundary.
+- Jangan bocorkan stack trace, secret, atau detail internal.
+- Gunakan status code dan format error yang konsisten.
+- Terapkan pagination pada collection yang dapat tumbuh tanpa batas.
+- Gunakan idempotency untuk endpoint atau webhook yang membutuhkan.
+- Tambahkan rate limit atau abuse protection bila relevan.
+- Tambahkan structured logging tanpa secret.
+- Dokumentasikan environment variable dan dependency eksternal.
 
 ## Validasi
 
-1. Jalankan test endpoint atau integration test.\n2. Uji input invalid, unauthorized, forbidden, not found, dan failure dependency.\n3. Periksa kontrak response dan backward compatibility.\n4. Jalankan typecheck/build bila relevan.
+1. Jalankan test endpoint atau integration test.
+2. Uji input invalid, unauthorized, forbidden, not found, dan failure dependency.
+3. Periksa kontrak response dan backward compatibility.
+4. Jalankan typecheck/build bila relevan.
 
 ## Output
 

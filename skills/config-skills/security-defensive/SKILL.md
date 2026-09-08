@@ -21,11 +21,20 @@ Gunakan skill ini ketika tugas melibatkan:
 
 ## Standar Kerja
 
-- Terapkan least privilege, input validation, output encoding, parameterized query, secure secret handling, dan audit logging.\n- Periksa OWASP risks sesuai konteks.\n- Jangan log secret atau personal data sensitif.\n- Gunakan secure transport dan secure cookie setting bila relevan.\n- Hindari wildcard CORS, disabled TLS verification, unsafe deserialization, insecure random generator, dan authorization bypass.\n- Pastikan dependency dan konfigurasi tidak memperlebar attack surface.\n- Bantu hanya scope defensif dan berizin.
+- Terapkan least privilege, input validation, output encoding, parameterized query, secure secret handling, dan audit logging.
+- Periksa OWASP risks sesuai konteks.
+- Jangan log secret atau personal data sensitif.
+- Gunakan secure transport dan secure cookie setting bila relevan.
+- Hindari wildcard CORS, disabled TLS verification, unsafe deserialization, insecure random generator, dan authorization bypass.
+- Pastikan dependency dan konfigurasi tidak memperlebar attack surface.
+- Bantu hanya scope defensif dan berizin.
 
 ## Validasi
 
-1. Periksa input boundary, authN, authZ, secret management, dan error exposure.\n2. Jalankan security-oriented test atau static check bila tersedia.\n3. Dokumentasikan risiko residual dan mitigasi.\n4. Pastikan tidak ada secret baru di diff.
+1. Periksa input boundary, authN, authZ, secret management, dan error exposure.
+2. Jalankan security-oriented test atau static check bila tersedia.
+3. Dokumentasikan risiko residual dan mitigasi.
+4. Pastikan tidak ada secret baru di diff.
 
 ## Output
 

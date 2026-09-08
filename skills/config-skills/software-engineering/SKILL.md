@@ -9,7 +9,9 @@ description: Production-quality implementation, refactoring, architecture, and m
 
 Gunakan skill ini ketika tugas melibatkan:
 
-- Menambah, mengubah, atau memperbaiki kode.\n- Mendesain modul, service, library, CLI, atau feature.\n- Refactor yang diminta.
+- Menambah, mengubah, atau memperbaiki kode.
+- Mendesain modul, service, library, CLI, atau feature.
+- Refactor yang diminta.
 
 ## Sebelum Bekerja
 
@@ -21,11 +23,21 @@ Gunakan skill ini ketika tugas melibatkan:
 
 ## Standar Kerja
 
-- Pilih solusi paling kecil yang lengkap.\n- Ikuti style, struktur, dan dependency project.\n- Validasi input serta tangani failure case.\n- Gunakan tipe bila ekosistem mendukung.\n- Hindari abstraction prematur.\n- Jangan hardcode secret atau konfigurasi environment.\n- Tambahkan test jika perilaku berubah dan test infrastructure tersedia.\n- Jangan melakukan refactor tidak terkait.
+- Pilih solusi paling kecil yang lengkap.
+- Ikuti style, struktur, dan dependency project.
+- Validasi input serta tangani failure case.
+- Gunakan tipe bila ekosistem mendukung.
+- Hindari abstraction prematur.
+- Jangan hardcode secret atau konfigurasi environment.
+- Tambahkan test jika perilaku berubah dan test infrastructure tersedia.
+- Jangan melakukan refactor tidak terkait.
 
 ## Validasi
 
-1. Inspeksi diff.\n2. Jalankan test paling relevan.\n3. Jalankan lint, typecheck, dan build jika tersedia serta relevan.\n4. Periksa error handling dan edge case.
+1. Inspeksi diff.
+2. Jalankan test paling relevan.
+3. Jalankan lint, typecheck, dan build jika tersedia serta relevan.
+4. Periksa error handling dan edge case.
 
 ## Output
 

@@ -21,11 +21,20 @@ Gunakan skill ini ketika tugas melibatkan:
 
 ## Standar Kerja
 
-- Identifikasi target user dan tugas utama.\n- Prioritaskan completion path dan kejelasan state.\n- Definisikan empty, loading, error, success, permission, dan edge states.\n- Buat flow ringkas sebelum menambah UI.\n- Terapkan accessibility dan responsive behavior.\n- Hindari feature creep.\n- Gunakan metric keberhasilan yang dapat diukur bila relevan.
+- Identifikasi target user dan tugas utama.
+- Prioritaskan completion path dan kejelasan state.
+- Definisikan empty, loading, error, success, permission, dan edge states.
+- Buat flow ringkas sebelum menambah UI.
+- Terapkan accessibility dan responsive behavior.
+- Hindari feature creep.
+- Gunakan metric keberhasilan yang dapat diukur bila relevan.
 
 ## Validasi
 
-1. Periksa user flow utama dan failure flow.\n2. Periksa label, hierarchy, responsive state, dan keyboard access.\n3. Pastikan requirements dapat diimplementasikan dan diuji.\n4. Nyatakan assumption tentang user, platform, dan metric.
+1. Periksa user flow utama dan failure flow.
+2. Periksa label, hierarchy, responsive state, dan keyboard access.
+3. Pastikan requirements dapat diimplementasikan dan diuji.
+4. Nyatakan assumption tentang user, platform, dan metric.
 
 ## Output
 

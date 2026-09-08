@@ -43,20 +43,14 @@ bash install.sh --uninstall
 bash install.sh --version 1.0.0
 ```
 
-## Struktur
+## Struktur Setelah Install
 
 ```
-agent-ai/
-├── install.sh              # Universal installer (auto-detect Termux/Linux)
-├── AGENTS.md               # Global rules
-├── opencode.json           # Config
-├── autodev/
-│   └── memory.md           # Template memory
-├── agents/
-│   └── config-agents/
-│       ├── autodev.md      # AUTODEV agent (definition)
-│       ├── autodev-skills.md # 13 autodev skills (detail)
-│       └── reviewer.md     # REVIEWER agent (red team)
+~/.config/opencode/
+├── agent/
+│   ├── autodev.md          # AUTODEV agent definition
+│   ├── autodev-skills.md   # 13 autodev skills (detail)
+│   └── reviewer.md         # REVIEWER agent (red team)
 ├── command/                # 11 custom commands
 │   ├── mulai.md
 │   ├── lanjut.md
@@ -69,25 +63,30 @@ agent-ai/
 │   ├── rapor.md
 │   ├── autodev.md
 │   └── import.md
-└── skills/
-    └── config-skills/      # 17 opencode skills
-        ├── automation-integrations/
-        ├── backend-api/
-        ├── code-review/
-        ├── codebase-discovery/
-        ├── data-analysis/
-        ├── database/
-        ├── debugging/
-        ├── devops-platform/
-        ├── documentation/
-        ├── frontend-ui/
-        ├── incident-response/
-        ├── observability/
-        ├── product-ux/
-        ├── research-docs/
-        ├── security-defensive/
-        ├── software-engineering/
-        └── testing-qa/
+├── AGENTS.md               # Global rules
+└── opencode.json           # Config
+
+~/.agents/skills/           # 17 opencode skills
+├── automation-integrations/
+├── backend-api/
+├── code-review/
+├── codebase-discovery/
+├── data-analysis/
+├── database/
+├── debugging/
+├── devops-platform/
+├── documentation/
+├── frontend-ui/
+├── incident-response/
+├── observability/
+├── product-ux/
+├── research-docs/
+├── security-defensive/
+├── software-engineering/
+└── testing-qa/
+
+~/.autodev/
+└── memory.md               # Global memory (template)
 ```
 
 ## Agent
@@ -122,7 +121,7 @@ Red team reviewer. Read-only, dipanggil AUTODEV untuk second opinion. Output: `[
 | frontend-ui | HTML, CSS, React, Vue |
 | incident-response | Triage, recovery, postmortem |
 | observability | Logging, metrics, tracing |
-| product-UX | UX, user flow, accessibility |
+| product-ux | UX, user flow, accessibility |
 | research-docs | Official docs research |
 | security-defensive | Secure coding, threat model |
 | software-engineering | Production implementation |

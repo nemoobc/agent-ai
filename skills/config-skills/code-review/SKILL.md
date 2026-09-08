@@ -21,11 +21,19 @@ Gunakan skill ini ketika tugas melibatkan:
 
 ## Standar Kerja
 
-- Utamakan bug, data integrity, security, performance, regression, dan test gap.\n- Bandingkan perubahan dengan behavior yang diharapkan.\n- Gunakan severity yang jelas: critical, high, medium, low.\n- Sertakan lokasi file dan line bila tersedia.\n- Jelaskan impact dan remediation praktis.\n- Jangan menghabiskan review untuk pujian atau style minor.
+- Utamakan bug, data integrity, security, performance, regression, dan test gap.
+- Bandingkan perubahan dengan behavior yang diharapkan.
+- Gunakan severity yang jelas: critical, high, medium, low.
+- Sertakan lokasi file dan line bila tersedia.
+- Jelaskan impact dan remediation praktis.
+- Jangan menghabiskan review untuk pujian atau style minor.
 
 ## Validasi
 
-1. Baca diff dan konteks pemanggil.\n2. Periksa test yang ada.\n3. Periksa failure path dan backward compatibility.\n4. Jika tidak ada temuan, nyatakan residual risk atau test gap.
+1. Baca diff dan konteks pemanggil.
+2. Periksa test yang ada.
+3. Periksa failure path dan backward compatibility.
+4. Jika tidak ada temuan, nyatakan residual risk atau test gap.
 
 ## Output
 

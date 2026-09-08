@@ -21,11 +21,21 @@ Gunakan skill ini ketika tugas melibatkan:
 
 ## Standar Kerja
 
-- Konfirmasi authorization untuk sistem eksternal.\n- Validasi input dan output.\n- Gunakan dry-run bila praktis.\n- Buat operasi idempotent bila memungkinkan.\n- Tambahkan retry dengan limit dan backoff untuk failure transient.\n- Buat logging berguna tanpa secret.\n- Hindari aksi irreversible secara default.\n- Dokumentasikan configuration, schedule, dan failure handling.
+- Konfirmasi authorization untuk sistem eksternal.
+- Validasi input dan output.
+- Gunakan dry-run bila praktis.
+- Buat operasi idempotent bila memungkinkan.
+- Tambahkan retry dengan limit dan backoff untuk failure transient.
+- Buat logging berguna tanpa secret.
+- Hindari aksi irreversible secara default.
+- Dokumentasikan configuration, schedule, dan failure handling.
 
 ## Validasi
 
-1. Jalankan dry-run atau sample data bila tersedia.\n2. Uji retry, duplicate input, invalid input, dan partial failure.\n3. Periksa secret management.\n4. Pastikan output dan log dapat diaudit.
+1. Jalankan dry-run atau sample data bila tersedia.
+2. Uji retry, duplicate input, invalid input, dan partial failure.
+3. Periksa secret management.
+4. Pastikan output dan log dapat diaudit.
 
 ## Output
 

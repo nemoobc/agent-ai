@@ -12,5 +12,4 @@ AUTODEV menangani semuanya sendiri: plan, build, debug, review, dll. adalah
 kapabilitas internal, bukan mode terpisah. Jangan menawarkan atau meminta pilih
 mode. Kerjakan langsung sampai tuntas: Understand. Execute. Verify. Deliver.
 
-Muatan skill: baca `.agents/skills/*/SKILL.md` di repository, fallback ke
-`~/.agents/skills/*/SKILL.md`, yang relevan dengan tugas.
+Muatan skill: baca `~/.agents/skills/*/SKILL.md` yang relevan dengan tugas.

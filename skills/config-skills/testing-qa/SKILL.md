@@ -9,7 +9,8 @@ description: Unit, integration, E2E, regression testing, quality checks, and val
 
 Gunakan skill ini ketika tugas melibatkan:
 
-- Perubahan perilaku kode.\n- Permintaan test, QA, coverage, regression, lint, typecheck, build, atau E2E.
+- Perubahan perilaku kode.
+- Permintaan test, QA, coverage, regression, lint, typecheck, build, atau E2E.
 
 ## Sebelum Bekerja
 
@@ -21,11 +22,19 @@ Gunakan skill ini ketika tugas melibatkan:
 
 ## Standar Kerja
 
-- Pilih level test paling sempit yang membuktikan perilaku.\n- Test public behavior, error case, dan edge case.\n- Hindari mock yang membuat test tidak bermakna.\n- Jaga test deterministik dan terisolasi.\n- Tambahkan regression test untuk bug yang diperbaiki.\n- Jangan mengklaim coverage atau test result tanpa menjalankannya.
+- Pilih level test paling sempit yang membuktikan perilaku.
+- Test public behavior, error case, dan edge case.
+- Hindari mock yang membuat test tidak bermakna.
+- Jaga test deterministik dan terisolasi.
+- Tambahkan regression test untuk bug yang diperbaiki.
+- Jangan mengklaim coverage atau test result tanpa menjalankannya.
 
 ## Validasi
 
-1. Jalankan test yang relevan.\n2. Jalankan lint dan typecheck bila tersedia.\n3. Jalankan build untuk perubahan yang memengaruhi artifact.\n4. Laporkan passed, failed, not run, dan alasan secara jujur.
+1. Jalankan test yang relevan.
+2. Jalankan lint dan typecheck bila tersedia.
+3. Jalankan build untuk perubahan yang memengaruhi artifact.
+4. Laporkan passed, failed, not run, dan alasan secara jujur.
 
 ## Output
 

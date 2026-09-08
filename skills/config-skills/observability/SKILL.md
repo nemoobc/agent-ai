@@ -21,11 +21,19 @@ Gunakan skill ini ketika tugas melibatkan:
 
 ## Standar Kerja
 
-- Gunakan structured logs dengan request/correlation ID bila relevan.\n- Jangan log secret, token, password, atau data pribadi sensitif.\n- Tambahkan health/readiness check yang bermakna.\n- Pilih metric dari user impact, error rate, latency, throughput, saturation, dan dependency health.\n- Buat alert actionable dan hindari alert noise.\n- Dokumentasikan cara diagnosis dan recovery.
+- Gunakan structured logs dengan request/correlation ID bila relevan.
+- Jangan log secret, token, password, atau data pribadi sensitif.
+- Tambahkan health/readiness check yang bermakna.
+- Pilih metric dari user impact, error rate, latency, throughput, saturation, dan dependency health.
+- Buat alert actionable dan hindari alert noise.
+- Dokumentasikan cara diagnosis dan recovery.
 
 ## Validasi
 
-1. Periksa bahwa log memiliki context tanpa data sensitif.\n2. Uji endpoint health bila tersedia.\n3. Pastikan metric dan alert dapat dipetakan ke tindakan.\n4. Periksa failure dependency path.
+1. Periksa bahwa log memiliki context tanpa data sensitif.
+2. Uji endpoint health bila tersedia.
+3. Pastikan metric dan alert dapat dipetakan ke tindakan.
+4. Periksa failure dependency path.
 
 ## Output
 

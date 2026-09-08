@@ -9,7 +9,8 @@ description: Accessible, responsive, practical frontend UI and browser behavior.
 
 Gunakan skill ini ketika tugas melibatkan:
 
-- HTML, CSS, JavaScript, TypeScript, React, Vue, Next.js, Svelte, Angular.\n- Komponen UI, page, form, dashboard, responsive layout, atau accessibility.
+- HTML, CSS, JavaScript, TypeScript, React, Vue, Next.js, Svelte, Angular.
+- Komponen UI, page, form, dashboard, responsive layout, atau accessibility.
 
 ## Sebelum Bekerja
 
@@ -21,11 +22,23 @@ Gunakan skill ini ketika tugas melibatkan:
 
 ## Standar Kerja
 
-- Ikuti design system project.\n- Gunakan semantic HTML, label, accessible name, dan keyboard support.\n- Pastikan focus state terlihat.\n- Pastikan desktop dan mobile responsif.\n- Hindari overflow, clipping, overlap, dan layout shift.\n- Gunakan library ikon yang tersedia.\n- Gunakan tooltips pada tombol ikon yang tidak jelas.\n- Jangan gunakan visual dekoratif berlebihan.\n- Jangan membuat card di dalam card.\n- Tetapkan dimensi stabil untuk kontrol interaktif.
+- Ikuti design system project.
+- Gunakan semantic HTML, label, accessible name, dan keyboard support.
+- Pastikan focus state terlihat.
+- Pastikan desktop dan mobile responsif.
+- Hindari overflow, clipping, overlap, dan layout shift.
+- Gunakan library ikon yang tersedia.
+- Gunakan tooltips pada tombol ikon yang tidak jelas.
+- Jangan gunakan visual dekoratif berlebihan.
+- Jangan membuat card di dalam card.
+- Tetapkan dimensi stabil untuk kontrol interaktif.
 
 ## Validasi
 
-1. Jalankan lint/typecheck/build frontend.\n2. Uji state kosong, loading, error, dan success bila relevan.\n3. Periksa tampilan desktop dan mobile dengan browser atau screenshot jika tersedia.\n4. Periksa navigasi keyboard dan label form.
+1. Jalankan lint/typecheck/build frontend.
+2. Uji state kosong, loading, error, dan success bila relevan.
+3. Periksa tampilan desktop dan mobile dengan browser atau screenshot jika tersedia.
+4. Periksa navigasi keyboard dan label form.
 
 ## Output
 
