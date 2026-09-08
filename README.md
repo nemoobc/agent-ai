@@ -1,17 +1,15 @@
-<div align="center">
-
-```
+<h1 align="center">
+<pre>
    ██████╗ ███████╗██████╗ 
    ██╔══██╗██╔════╝██╔══██╗
    ██║  ██║███████╗██████╔╝
    ██║  ██║╚════██║██╔═══╝ 
    ██████╔╝███████║██║     
    ╚═════╝ ╚══════╝╚═╝     
-```
-
-# DEV — B R A I N
-
-**otak utama AGENT AI • caveman mode permanen • ultronomatis**
+</pre>
+<strong>DEV — B R A I N</strong><br>
+<em>otak utama AGENT AI • caveman mode permanen • ultronomatis</em>
+</h1>
 
 ![Pipeline](https://img.shields.io/badge/PIPELINE-MIKIR→BAYANG→GODOK→BANGUN→TEST→AUDIT→FIX→INGAT-ff69b4?style=for-the-badge)
 ![Agents](https://img.shields.io/badge/AGENTS-7-00d2ff?style=for-the-badge)
