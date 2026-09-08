@@ -1,14 +1,13 @@
 <h1 align="center">
 <pre>
-   ██████╗ ███████╗██████╗ 
-   ██╔══██╗██╔════╝██╔══██╗
-   ██║  ██║███████╗██████╔╝
-   ██║  ██║╚════██║██╔═══╝ 
-   ██████╔╝███████║██║     
-   ╚═════╝ ╚══════╝╚═╝     
+    ██████  ███████ ███████      ██████  ██████  ██████ ███████ 
+   ██      ██      ██           ██      ██    ██ ██      ██      
+   ██  ███ █████   ███████      ██      ██    ██ ██      █████   
+   ██   ██ ██           ██      ██      ██    ██ ██      ██      
+    ██████  ███████ ███████       ██████  ██████  ██████ ███████ 
 </pre>
-<strong>DEV — B R A I N</strong><br>
-<em>otak utama AGENT AI • caveman mode permanen • ultronomatis</em>
+<strong>A G E N T — A I</strong><br>
+<em>otak permanen • caveman mode ULTRA • ultronomatis</em>
 </h1>
 
 ![Pipeline](https://img.shields.io/badge/PIPELINE-MIKIR→BAYANG→GODOK→BANGUN→TEST→AUDIT→FIX→INGAT-ff69b4?style=for-the-badge)
