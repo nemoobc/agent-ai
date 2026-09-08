@@ -1,248 +1,173 @@
 #!/usr/bin/env bash
-# =============================================================================
-# install.sh — agent-ai universal installer (Termux + Linux)
-# -----------------------------------------------------------------------------
-# Auto-detect OS. Backup otomatis. Idempoten (aman diulang).
-#
-# Cara pakai:
-#   bash install.sh              # install
-#   bash install.sh --check      # cek status
-#   bash install.sh --uninstall  # hapus
-#   bash install.sh --version X  # install versi tertentu
-# =============================================================================
-set -euo pipefail
+# ═════════════════════════════════════════════════════════════════
+#   ██████╗ ███████╗██████╗
+#   ██╔══██╗██╔════╝██╔══██╗     D E V — B R A I N
+#   ██║  ██║███████╗██████╔╝     agent-ai full-agent installer
+#   ██║  ██║╚════██║██╔═══╝      caveman mode • permanen • ultronomatis
+#   ██████╔╝███████║██║          auto: think→build→test→audit→fix
+#   ╚═════╝ ╚══════╝╚═╝
+# ─────────────────────────────────────────────────────────────────
+# Pakai  : bash install.sh [--project DIR] [--uninstall]
+# ═════════════════════════════════════════════════════════════════
+set -u
 
-REPO="nemoobc/agent-ai"
-REPO_URL="https://github.com/$REPO"
-TARBALL_URL="$REPO_URL/archive/refs/heads/master.tar.gz"
-SRC="$(cd "$(dirname "$0")" && pwd)"
-MODE="install"
-VERSION=""
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 
+# ── warna ──
+if [ -t 1 ]; then pc(){ printf '\033[38;5;%sm%s\033[0m\n' "$1" "$2"; }
+else pc(){ printf '%s\n' "$2"; }; fi
+ok(){ pc 82  "  ✔ $1"; }
+inf(){ pc 45  "  ▸ $1"; }
+wrn(){ pc 214 "  ⚠ $1"; }
+err(){ pc 196 "  ✖ $1"; }
+step(){ printf '\n'; pc 213 "══════ $1 ══════"; }
+
+CFG="$HOME/.config/opencode"
+IS_TERMUX=0
+[ -n "${TERMUX_VERSION:-}" ] && IS_TERMUX=1
+[ -d /data/data/com.termux ] && IS_TERMUX=1
+
+usage(){ cat <<'X'
+Pemakaian:
+  bash install.sh                 install global (~/.config/opencode)
+  bash install.sh --project DIR   sekalian pasang ke project (DIR/.opencode)
+  bash install.sh --uninstall     buang agent & doctrine (memori DIPERTAHANKAN)
+X
+}
+
+# ── argumen ──
+PROJECT=""; UNINSTALL=0
 while [ $# -gt 0 ]; do
   case "$1" in
-    --check)     MODE="check"; shift ;;
-    --uninstall) MODE="uninstall"; shift ;;
-    --version)   VERSION="${2:-}"; shift 2 || shift ;;
-    -h|--help)
-      echo "Usage: bash install.sh [--check|--uninstall|--version X]"
-      exit 0 ;;
-    *) shift ;;
+    --project) [ $# -ge 2 ] || { err "--project butuh path folder"; exit 1; }; PROJECT="$2"; shift 2 ;;
+    --uninstall) UNINSTALL=1; shift ;;
+    -h|--help) usage; exit 0 ;;
+    *) wrn "arg tak dikenal: $1 (diabaikan)"; shift ;;
   esac
 done
 
-say()  { printf '%s\n' "$*"; }
-ok()   { printf '  [ok] %s\n' "$*"; }
-warn() { printf '  [!!] %s\n' "$*"; }
-die()  { printf '[GAGAL] %s\n' "$*" >&2; exit 1; }
+banner(){
+  pc 213 '   ██████╗ ███████╗██████╗ '
+  pc 177 '   ██╔══██╗██╔════╝██╔══██╗'
+  pc 141 '   ██║  ██║███████╗██████╔╝'
+  pc 105 '   ██║  ██║╚════██║██╔═══╝ '
+  pc 69  '   ██████╔╝███████║██║     '
+  pc 33  '   ╚═════╝ ╚══════╝╚═╝     B R A I N'
+  echo
+  pc 45 "   otak utama: DEV • caveman mode permanen • ultronomatis"
+  pc 45 "   auto test/audit/fix ✓ • memori persisten ✓"
+  echo
+}
 
-# --- detect OS ---
-IS_TERMUX=0
-if [ -n "${PREFIX:-}" ] && printf '%s' "$PREFIX" | grep -q "com.termux"; then
-  IS_TERMUX=1
-elif [ -d "/data/data/com.termux" ]; then
-  IS_TERMUX=1
-elif [ -n "${AGENT_OS:-}" ] && [ "$AGENT_OS" = "linux" ]; then
-  IS_TERMUX=0
-fi
-
-if [ "$IS_TERMUX" = 1 ]; then
-  say "OS: Termux (Android)"
-else
-  say "OS: Linux"
-fi
-
-# --- check tools ---
-for t in cp mkdir rm find wc tar; do
-  command -v "$t" >/dev/null 2>&1 || die "tool '$t' tidak ada. Install: pkg install $t (Termux) atau apt install $t (Linux)"
-done
-
-command -v git >/dev/null 2>&1 || warn "git tidak ada — update check tidak tersedia"
-
-# --- check disk space (min 50MB) ---
-AVAIL_KB=$(df -k "$HOME" 2>/dev/null | awk 'NR==2{print $4}' || echo 0)
-if [ "$AVAIL_KB" -gt 0 ] && [ "$AVAIL_KB" -lt 51200 ]; then
-  warn "disk space rendah: $(( AVAIL_KB / 1024 ))MB tersedia (min 50MB)"
-fi
-
-# --- source files (local or download) ---
-need_dir() { [ -d "$SRC/agents" ] && [ -d "$SRC/skills" ] && [ -d "$SRC/command" ]; }
-
-TMPD=""
-cleanup() { [ -n "$TMPD" ] && [ -d "$TMPD" ] && rm -rf "$TMPD"; }
-trap cleanup EXIT
-
-if ! need_dir; then
-  say "File repo tidak lengkap di $SRC — unduh otomatis..."
-  command -v curl >/dev/null 2>&1 || die "butuh 'curl' atau clone: git clone $REPO_URL"
-  [ -n "$VERSION" ] && TARBALL_URL="$REPO_URL/archive/refs/tags/v${VERSION}.tar.gz"
-  TMPD="$(mktemp -d 2>/dev/null || echo "/tmp/agent-dl-$$")"
-  mkdir -p "$TMPD"
-  curl --proto '=https' --tlsv1.2 -fsSL -o "$TMPD/agent.tgz" "$TARBALL_URL" || die "unduh gagal: $TARBALL_URL"
-  tar -xzf "$TMPD/agent.tgz" -C "$TMPD" || die "ekstrak gagal"
-  SRC="$(find "$TMPD" -maxdepth 1 -type d -name 'agent-ai-*' | head -1)"
-  [ -n "$SRC" ] || die "isi tarball aneh"
-  need_dir || die "isi repo tidak lengkap"
-  ok "sumber: tarball $TARBALL_URL"
-else
-  ok "sumber: $SRC"
-fi
-
-CFG="$HOME/.config/opencode"
-AUTODEV_HOME="$HOME/.autodev"
-SKILLS_HOME="$HOME/.agents/skills"
-TS="$(date +%Y%m%d-%H%M%S 2>/dev/null || echo backup)"
-count_md() { find "$1" -name '*.md' 2>/dev/null | wc -l; }
-
-# --- uninstall mode ---
-if [ "$MODE" = "uninstall" ]; then
-  say "=== UNINSTALL ==="
-  rm -rf "$CFG/agent" "$CFG/skills" "$CFG/command" "$CFG/AGENTS.md" 2>/dev/null
-  rm -rf "$SKILLS_HOME" 2>/dev/null
-  rm -rf "$AUTODEV_HOME" 2>/dev/null
-  ok "config dihapus: $CFG/agent, $CFG/skills, $CFG/command"
-  ok "skills dihapus: $SKILLS_HOME"
-  ok "autodev dihapus: $AUTODEV_HOME"
-  ok "UNINSTALL SELESAI. Config user (~/.config/opencode/opencode.json) tidak disentuh."
+# ── uninstall ──
+uninstall(){
+  step "UNINSTALL DEV-BRAIN"
+  rm -rf "$CFG/agent" "$CFG/skill" "$CFG/command"
+  rm -f "$CFG/AGENTS.md"
+  BAK=$(ls -1t "$CFG"/opencode.json.bak.* 2>/dev/null | head -n1)
+  if [ -n "${BAK:-}" ]; then mv "$BAK" "$CFG/opencode.json"; ok "opencode.json dipulihkan dari backup"; fi
+  wrn "folder memory/ DIPERTAHANKAN (isi ingatan kamu)"
+  ok "uninstall selesai — DEV-BRAIN dilepas"
   exit 0
-fi
+}
 
-# --- check mode ---
-if [ "$MODE" = "check" ]; then
-  say "=== STATUS ==="
-  say "agent:     $(count_md "$CFG/agent") file di $CFG/agent"
-  say "skills:    $(count_md "$SKILLS_HOME") file di $SKILLS_HOME"
-  say "command:   $(count_md "$CFG/command") file di $CFG/command"
-  say "AGENTS.md: $([ -f "$CFG/AGENTS.md" ] && echo "ada" || echo "HILANG")"
-  say "opencode.json: $([ -f "$CFG/opencode.json" ] && echo "ada" || echo "HILANG")"
-  say "autodev:   $([ -d "$AUTODEV_HOME" ] && echo "ada" || echo "HILANG")"
-  say ""
+# ── tulis file dari script dir ke CFG ──
+write_brain(){
+  step "TULIS OTAK → ~/.config/opencode"
+  mkdir -p "$CFG/agent" "$CFG/command" "$CFG/memory" \
+    "$CFG/skill/think" "$CFG/skill/imagine" "$CFG/skill/remember" "$CFG/skill/recall" \
+    "$CFG/skill/caveman" "$CFG/skill/test-full" "$CFG/skill/audit-full" "$CFG/skill/fix-full"
 
-  if [ -f "$CFG/agent/dev.md" ]; then
-    say "agent-ai:  terpasang"
-    [ -f "$CFG/agent/dev.md" ] && ok "dev agent: ada" || warn "dev agent: HILANG"
-    [ -f "$CFG/agent/build.md" ] && ok "build agent: ada" || warn "build agent: HILANG"
-    [ -f "$CFG/agent/plan.md" ] && ok "plan agent: ada" || warn "plan agent: HILANG"
-    [ -f "$CFG/agent/reviewer.md" ] && ok "reviewer agent: ada" || warn "reviewer agent: HILANG"
-  else
-    say "agent-ai:  BELUM terpasang"
-  fi
+  # backup config lama
+  [ -f "$CFG/opencode.json" ] && cp "$CFG/opencode.json" "$CFG/opencode.json.bak.$(date +%s)"
 
-  if [ "$IS_TERMUX" = 1 ]; then
-    if command -v opencode-termux >/dev/null 2>&1; then
-      ok "binary: $(command -v opencode-termux)"
-    elif command -v opencode >/dev/null 2>&1; then
-      ok "binary: $(command -v opencode)"
-    else
-      warn "binary opencode TIDAK ada di PATH"
-      say "  Install: https://github.com/nemoobc/opencode-termux"
-    fi
-  else
-    if command -v opencode >/dev/null 2>&1; then
-      ok "binary: $(command -v opencode)"
-    else
-      warn "binary opencode TIDAK ada di PATH"
-      say "  Install: npm install -g opencode-ai"
-    fi
-  fi
+  # opencode.json: auto-allow semua permission
+  cat > "$CFG/opencode.json" <<'EOF'
+{
+  "permission": {
+    "edit": "allow",
+    "write": "allow",
+    "bash": "allow",
+    "webfetch": "allow"
+  }
+}
+EOF
 
-  if command -v git >/dev/null 2>&1 && [ -d "$SRC/.git" ]; then
-    cd "$SRC" 2>/dev/null && git fetch origin --quiet 2>/dev/null
-    LOCAL=$(git rev-parse HEAD 2>/dev/null)
-    REMOTE=$(git rev-parse origin/master 2>/dev/null || git rev-parse origin/main 2>/dev/null)
-    if [ -n "$LOCAL" ] && [ -n "$REMOTE" ] && [ "$LOCAL" != "$REMOTE" ]; then
-      say "update:    ADA versi baru (jalankan bash install.sh lagi)"
-    else
-      say "update:    sudah terbaru"
-    fi
-    cd - >/dev/null
-  fi
-  exit 0
-fi
+  # copy agents
+  for f in "$SCRIPT_DIR/agents/"*.md; do
+    [ -f "$f" ] && cp "$f" "$CFG/agent/" && ok "agent: $(basename "$f")"
+  done
 
-# --- backup ---
-if [ -d "$CFG" ]; then
-  cp -a "$CFG" "$CFG.bak.$TS" 2>/dev/null || cp -r "$CFG" "$CFG.bak.$TS" || die "backup gagal"
-  ok "backup: $CFG.bak.$TS"
-fi
-if [ -d "$AUTODEV_HOME" ]; then
-  cp -a "$AUTODEV_HOME" "$AUTODEV_HOME.bak.$TS" 2>/dev/null || cp -r "$AUTODEV_HOME" "$AUTODEV_HOME.bak.$TS" || die "backup autodev gagal"
-  ok "backup: $AUTODEV_HOME.bak.$TS"
-fi
+  # copy skills (SKILL.md + run.sh)
+  for skill_dir in "$SCRIPT_DIR/skills/"*/; do
+    skill_name=$(basename "$skill_dir")
+    mkdir -p "$CFG/skill/$skill_name"
+    [ -f "$skill_dir/SKILL.md" ] && cp "$skill_dir/SKILL.md" "$CFG/skill/$skill_name/"
+    [ -f "$skill_dir/run.sh" ] && { cp "$skill_dir/run.sh" "$CFG/skill/$skill_name/"; chmod +x "$CFG/skill/$skill_name/run.sh"; }
+    ok "skill: $skill_name"
+  done
 
-# --- install agents (flat copy) ---
-mkdir -p "$CFG/agent" "$CFG/command" "$AUTODEV_HOME" || die "mkdir gagal"
-for agent_file in "$SRC/agents/"*.md; do
-  [ -f "$agent_file" ] || continue
-  cp "$agent_file" "$CFG/agent/" || die "copy agent gagal: $agent_file"
-done
-ok "agents terpasang: $(ls "$CFG/agent/"*.md 2>/dev/null | wc -l) file"
+  # copy commands
+  for f in "$SCRIPT_DIR/command/"*.md; do
+    [ -f "$f" ] && cp "$f" "$CFG/command/" && ok "command: $(basename "$f")"
+  done
 
-# --- install commands ---
-for cmd_file in "$SRC/command/"*.md; do
-  [ -f "$cmd_file" ] || continue
-  cp "$cmd_file" "$CFG/command/" || die "copy command gagal: $cmd_file"
-done
-ok "commands terpasang: $(ls "$CFG/command/"*.md 2>/dev/null | wc -l) file"
+  # copy AGENTS.md (doctrine)
+  [ -f "$SCRIPT_DIR/AGENTS.md" ] && cp "$SCRIPT_DIR/AGENTS.md" "$CFG/" && ok "doctrine: AGENTS.md"
 
-# --- install AGENTS.md ---
-cp "$SRC/AGENTS.md" "$CFG/AGENTS.md" || die "copy AGENTS.md gagal"
-[ -f "$SRC/opencode.json" ] && cp "$SRC/opencode.json" "$CFG/opencode.json"
+  # copy memory seed
+  for f in "$SCRIPT_DIR/memory/"*.md; do
+    [ -f "$f" ] && [ ! -f "$CFG/memory/$(basename "$f")" ] && cp "$f" "$CFG/memory/"
+  done
 
-# --- install autodev memory ---
-cp -r "$SRC/autodev/"* "$AUTODEV_HOME/" || die "copy autodev gagal"
-ok "autodev memory terpasang"
+  N=$(find "$CFG/agent" "$CFG/skill" "$CFG/command" -type f 2>/dev/null | wc -l | tr -d ' ')
+  ok "total $N file otak ditulis"
+}
 
-# --- install skills (flat: skills/NAME/SKILL.md) ---
-mkdir -p "$SKILLS_HOME" || die "mkdir skills gagal"
-for skill_dir in "$SRC/skills/"*/; do
-  [ -d "$skill_dir" ] || continue
-  skill_name=$(basename "$skill_dir")
-  skill_file="$skill_dir/SKILL.md"
-  if [ -f "$skill_file" ]; then
-    mkdir -p "$SKILLS_HOME/$skill_name"
-    cp "$skill_file" "$SKILLS_HOME/$skill_name/SKILL.md"
-  fi
-done
-ok "skills terpasang ke $SKILLS_HOME"
+# ── pasang ke project ──
+install_project(){
+  step "PASANG KE PROJECT: $PROJECT"
+  if [ ! -d "$PROJECT" ]; then err "folder tidak ditemukan: $PROJECT"; return 1; fi
+  mkdir -p "$PROJECT/.opencode/memory"
+  cp -r "$CFG/agent"   "$PROJECT/.opencode/" 2>/dev/null
+  cp -r "$CFG/skill"   "$PROJECT/.opencode/" 2>/dev/null
+  cp -r "$CFG/command" "$PROJECT/.opencode/" 2>/dev/null
+  [ -f "$PROJECT/.opencode/memory/MEMORY.md" ] || cp "$CFG/memory/MEMORY.md" "$PROJECT/.opencode/memory/"
+  cat > "$PROJECT/AGENTS.md" <<'EOF'
+# DEV-BRAIN (project ini)
+Otak utama: DEV — caveman mode permanen, pipeline otomatis think→build→test→audit→fix.
+Memori project: `.opencode/memory/`. Doctrine lengkap: `~/.config/opencode/AGENTS.md`.
+Tidak perlu command manual — ketik tugas, DEV mengorkestrasi sendiri.
+EOF
+  ok "terpasang di $PROJECT/.opencode + AGENTS.md"
+}
 
-# --- verify ---
-say "--- verifikasi ---"
-n_agent="$(count_md "$CFG/agent")"
-n_skill="$(count_md "$SKILLS_HOME")"
-n_cmd="$(count_md "$CFG/command")"
-[ "$n_agent" -ge 3 ] || die "agent kurang ($n_agent file, minimal 3: dev + build + plan)"
-[ "$n_skill" -ge 10 ] || die "skills kurang ($n_skill file, minimal 10)"
-[ "$n_cmd" -ge 5 ] || die "command kurang ($n_cmd file, minimal 5)"
-[ -f "$CFG/AGENTS.md" ] || die "AGENTS.md hilang"
-[ -f "$CFG/agent/dev.md" ] || die "dev agent hilang"
-[ -f "$CFG/agent/build.md" ] || die "build agent hilang"
-[ -f "$CFG/agent/plan.md" ] || die "plan agent hilang"
-[ -f "$CFG/agent/reviewer.md" ] || die "reviewer agent hilang"
-ok "agent: $n_agent file (dev, build, plan, reviewer)"
-ok "skills: $n_skill file"
-ok "command: $n_cmd file"
-ok "AGENTS.md + autodev terpasang"
+# ── verifikasi & banner akhir ──
+finish(){
+  step "VERIFIKASI"
+  echo
+  pc 213 '  ╔════════════════════════════════════════╗'
+  pc 177 '  ║   D E V — B R A I N   O N L I N E      ║'
+  pc 141 '  ╚════════════════════════════════════════╝'
+  echo
+  ok "7 agent • 8 skill (3 dengan bash script) • 3 command • memori persisten"
+  echo
+  pc 45  "  CARA PAKAI:"
+  pc 45  "  1) buka folder project apa saja"
+  pc 45  "  2) jalankan:  opencode"
+  pc 45  "  3) DEV otomatis aktif (satu-satunya primary)"
+  pc 45  "  4) ketik tugas bahasa bebas, contoh:"
+  pc 213 "     \"buat halaman login, testnya sekalian, audit juga\""
+  pc 45  "  5) DEV jalan: mikir→bayang→bangun→test→audit→fix→ingat"
+  echo
+  pc 45  "  SHORTCUT : /ship <tugas>   /fix   /memory"
+  pc 214 "  API key  : jalankan  opencode auth login  bila belum"
+  echo
+}
 
-if [ "$IS_TERMUX" = 1 ]; then
-  if command -v opencode-termux >/dev/null 2>&1; then
-    ok "binary: $(command -v opencode-termux)"
-  elif command -v opencode >/dev/null 2>&1; then
-    ok "binary: $(command -v opencode)"
-  else
-    warn "binary opencode TIDAK ada."
-    say "  Install: https://github.com/nemoobc/opencode-termux"
-  fi
-else
-  if command -v opencode >/dev/null 2>&1; then
-    ok "binary: $(command -v opencode)"
-  else
-    warn "binary opencode TIDAK ada."
-    say "  Install: npm install -g opencode-ai"
-  fi
-fi
-
-say ""
-say "SELESAI. Jalankan: opencode"
-say "Cek status: bash install.sh --check"
-say "Uninstall:  bash install.sh --uninstall"
+# ═══ MAIN ═══
+banner
+[ "$UNINSTALL" -eq 1 ] && { uninstall; }
+write_brain
+[ -n "$PROJECT" ] && install_project
+finish
