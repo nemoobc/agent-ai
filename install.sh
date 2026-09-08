@@ -66,7 +66,7 @@ banner(){
   pc 141 '   ██║  ██║███████╗██████╔╝'
   pc 105 '   ██║  ██║╚════██║██╔═══╝ '
   pc 69  '   ██████╔╝███████║██║     '
-  pc 33  '   ╚═════╝ ╚══════╝╚═╝     B R A I N'
+  pc 33  '   ╚═════╝ ╚══════╝╚═╝     A G E N T   A I'
   echo
   pc 45 "   otak utama: DEV • caveman mode ULTRA • ultronomatis"
   [ -f "$SCRIPT_DIR/VERSION" ] && pc 45 "   versi: $(cat "$SCRIPT_DIR/VERSION" | tr -d '[:space:]')"
