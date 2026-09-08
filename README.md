@@ -11,7 +11,7 @@
 
 # DEV — B R A I N
 
-**otak utama opencode • caveman mode permanen • ultronomatis**
+**otak utama AGENT AI • caveman mode permanen • ultronomatis**
 
 ![Pipeline](https://img.shields.io/badge/PIPELINE-MIKIR→BAYANG→GODOK→BANGUN→TEST→AUDIT→FIX→INGAT-ff69b4?style=for-the-badge)
 ![Agents](https://img.shields.io/badge/AGENTS-7-00d2ff?style=for-the-badge)
@@ -52,7 +52,7 @@ bash install.sh --project ~/my-app
 
 ## APA INI
 
-DEV-BRAIN adalah **otak permanen** untuk [opencode](https://github.com/nemoobc/opencode-termux). Sekali install, selalu aktif di semua sesi. Tidak perlu pilih agent. Ketik tugas → DEV jalan sendiri.
+DEV-BRAIN adalah **otak permanen** untuk AGENT AI. Sekali install, selalu aktif di semua sesi. Tidak perlu pilih agent. Ketik tugas → DEV jalan sendiri.
 
 ---
 
