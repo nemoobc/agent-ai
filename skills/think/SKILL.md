@@ -9,3 +9,7 @@ Godok dengan struktur ini (jangan lewati satu pun):
 4. RISIKO  : apa yang bisa hancur / efek samping
 5. PUTUSAN : pilih satu, alasan satu kalimat
 Tulis hasil maksimal ~10 baris, lalu LANGSUNG eksekusi. Jangan berhenti untuk bertanya.
+
+## ATURAN
+- Format 5 bagian di atas WAJIB utuh — putusan tanpa opsi = dugaan, dilarang.
+- Output think = input skill spec & plan. Rantai: think → spec → imagine → plan.

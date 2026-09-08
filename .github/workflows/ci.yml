@@ -13,15 +13,30 @@ jobs:
 
       - name: Syntax check semua script
         run: |
-          for s in install.sh skills/*/run.sh tests/self-test.sh; do
+          for s in install.sh skills/*/run.sh tests/self-test.sh tests/run-demo.sh; do
             bash -n "$s" || exit 1
           done
           echo "syntax OK"
 
-      - name: Self-test detektor
+      - name: Lint struktur kit
+        run: bash tests/lint-kit.sh
+
+      - name: Self-test detektor + demo pipeline
         run: |
           bash tests/self-test.sh
           bash tests/run-demo.sh
+
+      - name: e2e — simulate full agent flow (think→plan→build→test→audit→fix)
+        run: bash tests/e2e-flow.sh
+
+      - name: Update flow — upgrade + anti-downgrade
+        run: bash tests/test-update.sh
+
+      - name: Mutation — bukti detektor menangkap perusakan
+        run: bash tests/mutation.sh
+
+      - name: Bench — durasi gate di bawah hard-cap
+        run: bash tests/bench.sh
 
       - name: Audit-full pada kit ini sendiri
         run: bash skills/audit-full/run.sh .

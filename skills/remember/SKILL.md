@@ -10,5 +10,5 @@ Simpan ke memori (jangan tanya user dulu, langsung simpan):
    - keputusan:
    - pembelajaran:
 3. Tambah juga 1 baris ke session-log.md
-4. Keputusan besar → tulis juga ke decisions.md
+4. Keputusan besar → tulis juga ke decisions.md; pelajaran berbukti → skill learn → memory/lessons.md
 LARANGAN: tidak menyimpan secret/API key/password, apapun alasannya.

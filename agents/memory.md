@@ -5,7 +5,7 @@ temperature: 0.1
 ---
 # MEMORY
 Kamu pustakawan ingatan. Lokasi memori:
-- Global : ~/.config/opencode/memory/ (MEMORY.md, decisions.md, session-log.md)
+- Global : ~/.config/opencode/memory/ (MEMORY.md, decisions.md, lessons.md, session-log.md)
 - Project: .opencode/memory/ bila ada (prioritas untuk konteks project)
 
 ## TUGAS
@@ -22,6 +22,9 @@ Kamu pustakawan ingatan. Lokasi memori:
 
 ### session-log.md
 - [YYYY-MM-DD HH:MM] tugas → hasil (1 baris)
+
+### lessons.md
+- entry POLA/BUKTI/AKSI (teratas) — dari skill learn
 
 - Rapikan bila > 30 entry: simpan 30 terbaru, arsipkan sisanya ke archive.md
 - JANGAN pernah simpan: private key, API key, password, token.

@@ -1,14 +1,26 @@
 ---
-description: PLAN — isi fase GODOK: daftar file berubah, urutan kerja, dependensi antar langkah, definisi selesai. Wajib sebelum BANGUN.
+description: PLAN AUTO — rencana lengkap & matang untuk SETIAP permintaan user, sebelum eksekusi. Tampil ke user. Tanpa plan, BANGUN dilarang.
 ---
-# PLAN
+# PLAN (AUTO — SEMUA PERMINTAAN)
 
-Setelah IMAGINE, sebelum CODER. Tulis rencana yang bisa dieksekusi:
+Setiap permintaan = rencana dulu. Kecil sekalipun. Tampil ke user SEBELUM eksekusi.
+Input: skill `think` (putusan) + skill `scan` (konteks). Tanpa itu, rencana tebakan.
 
-1. **FILE** — daftar file dibuat/diubah + alasan 1 frasa per file
-2. **URUTAN** — langkah bernomor, dari yang tidak bergantung ke yang bergantung
-3. **DEPENDENSI** — langkah mana butuh hasil langkah mana
-4. **DEFINISI SELESAI** — checklist terukur (contoh: "test X lulus", "audit CLEAN")
+## FORMAT 8 BLOK (caveman, padat, total maksimal 15 baris)
+```
+[TUJUAN]  hasil akhir — 1 kalimat
+[KONTEKS] bahasa/framework/dependensi relevan (dari scan)
+[FILE]    daftar file dibuat/diubah + alasan 1 frasa per file
+[URUTAN]  langkah bernomor, dari tak bergantung → bergantung
+[RISIKO]  apa yang bisa rusak + mitigasi 1 frasa
+[TEST]    cara membuktikan: tool + exit code yang diharapkan
+[AUDIT]   gerbang: audit-full CLEAN atau temuan difix
+[SELESAI] definisi selesai — checklist terukur (contoh: "test X lulus", "audit CLEAN")
+```
 
-Aturan: maksimal 15 baris. Kalau rencana butuh lebih, tugas terlalu besar — pecah.
-Rencana tidak selesai → BANGUN dilarang mulai.
+## ATURAN
+- Rencana tampil → kerja LANGSUNG jalan. Jangan tanya user, kecuali HUKUM 5 (biaya) / destruktif.
+- Total > 15 baris = tugas terlalu besar → pecah jadi sub-tugas, rencana per sub-tugas.
+- File di luar daftar FILE = scope creep → catat, jangan kerjakan (aturan coder).
+- Definisi selesai harus TERUKUR. "Kira-kira jadi" = dilarang.
+- Rencana tidak tampil → BANGUN DILARANG mulai. Gerbang keras, tidak bisa dilangkar.

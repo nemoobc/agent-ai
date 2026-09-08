@@ -1,11 +1,14 @@
 #!/usr/bin/env bash
 # ═════════════════════════════════════════════════════════════════
 #  DOCTOR — diagnosa instalasi + kesehatan kit DEV-BRAIN
-#  Jalankan: bash ~/.config/opencode/skill/doctor/run.sh .
+#  Jalankan: bash ~/.config/opencode/skill/doctor/run.sh . [--fix]
 #  Exit 0 = sehat, 1 = ada masalah
 # ═════════════════════════════════════════════════════════════════
 set -u
-ROOT="${1:-.}"; cd "$ROOT" 2>/dev/null || exit 1
+ROOT="${1:-.}"; shift 2>/dev/null || true
+FIX=0
+[ "${1:-}" = "--fix" ] && FIX=1
+cd "$ROOT" 2>/dev/null || exit 1
 p(){ printf '\033[38;5;%sm%s\033[0m\n' "$2" "$1"; }
 ok(){ p "  ✔ $1" 82; }
 bad(){ p "  ✖ $1" 196; ISSUES=$((ISSUES+1)); }
@@ -32,7 +35,12 @@ elif [ -f tsconfig.json ]; then
   warn "tsconfig ada tapi tsc tidak terinstall — typecheck dilewati"
 fi
 if [ -f package.json ] && [ ! -d node_modules ]; then
-  warn "package.json ada, node_modules belum — jalankan install dulu"
+  if [ "$FIX" -eq 1 ] && command -v npm >/dev/null 2>&1; then
+    p "  ↻ --fix: npm install..." 45
+    npm install --no-audit --no-fund >/dev/null 2>&1 && ok "npm install selesai (--fix)" || bad "npm install gagal"
+  else
+    warn "package.json ada, node_modules belum — jalankan install dulu (atau doctor --fix)"
+  fi
 fi
 [ -d .git ] && ok "git repo: branch $(git branch --show-current 2>/dev/null || echo '?')" || p "  · bukan git repo" 245
 [ -f AGENTS.md ] && ok "AGENTS.md ada (doctrine project)" || p "  · AGENTS.md tidak ada (opsional)" 245
@@ -64,5 +72,7 @@ else
 fi
 
 echo
+echo
 if [ "$ISSUES" -eq 0 ]; then p "DOCTOR_RESULT: SEHAT ✓" 82; exit 0; fi
+[ "$FIX" -eq 1 ] && p "DOCTOR_RESULT: $ISSUES MASALAH SISA — yang bisa difix sudah dicoba" 214 && exit 1
 p "DOCTOR_RESULT: $ISSUES MASALAH ✗" 196; exit 1

@@ -1,6 +1,84 @@
 # CHANGELOG
 
-## [Unreleased]
+## [6.0.0] — 2026-09-08
+### Added
+- HUKUM 10 — KONSISTENSI: satu sumber kebenaran per fakta; VERSION = badge README = CHANGELOG (diuji); hitungan tulisan = kenyataan folder (diuji lint-kit); struktur baru = detektor baru
+- 4 skill baru: `hotfix` (produksi rusak: freeze fitur → patch terkecil → bukti → rilis), `recovery` (data rusak: snapshot + skrip mundur + verifikasi), `convention` (konvensi repo tertulis sebelum kerja besar), `coverage` (+run.sh: peta cakupan test → gap) — total 45 skill, 11 skill bash
+- 3 command baru: `/hotfix` (penanganan insiden produksi berurutan), `/coverage` (peta cakupan test + putusan), `/blame` (siapa/kenapa/kapan untuk regresi) — total 23 command
+- `tests/mutation.sh` — bukti DETEKTOR mendeteksi: 6 perusakan disengaja (frontmatter hilang, badge tua, hukum dihapus, hitungan ngaco, command tanpa frontmatter, VERSION nyasar) → tiap perusakan WAJIB ditangkap gate; deterministik pakai salinan repo; masuk CI
+- `tests/bench.sh` — ukur durasi tiap gerbang (lint/self-test/update/install/doctor), soft-warn 30s + hard-cap 90s, deteksi drift; masuk CI
+- `Makefile` — satu tombol semua gerbang: `make verify` (lint+test+e2e+demo+update+mutation+bench), target lint/test/e2e/demo/update/mutation/bench/audit/doctor/install-check/zip/help
+- `docs/ARCHITECTURE.md` — arsitektur tertulis: 6 lapisan, alur pipeline, kontrak antar komponen, aliran keamanan, lapisan memori, aturan perubahan arsitektur
+- `docs/ROADMAP.md` — arah kit sendiri: ringkas v1–v6, prioritas v6.1–v6.5 (dampak × usaha), backlog, aturan roadmap (tiap item wajib bukti selesai)
+- Pipeline dev.md kini 16 fase + fase KONSISTENSI; gerbang krisis (hotfix/recovery/convention) dan konsistensi angka
+- PLAYBOOKS + resep 15 (produksi rusak/hotfix), 16 (data rusak/recovery), 17 (satu tombol verify/konsistensi)
+
+## [5.0.0] — 2026-09-08
+### Added
+- HUKUM 9 — VERIFIKASI PENUH: SELESAI hanya setelah semua gerbang hijau (/verify); update flow wajib diuji dua arah
+- 4 script baru: `scan/run.sh` (peta project dari shell: bahasa/framework/test/entry), `changelog/run.sh` (validasi sinkron VERSION/badge/CHANGELOG + ringkas git log), `env-guard/run.sh` (.env tidak ke-commit, .env.example ada, secret tidak di-track), `backup/run.sh` (snapshot tarball bertanggal, keep N, verifikasi) — total 10 skill bash
+- 2 skill baru: `env-guard`, `backup`, `dependency` (upgrade dependensi aman: inventory → changelog → lockfile → rollback) — total 41 skill
+- 1 command baru: `/verify` (satu tombol semua gerbang, HUKUM 9) — total 20 command
+- `tests/test-update.sh` — update flow DIUJI otomatis tanpa jaringan (DEV_BRAIN_UPDATE_URL → file://): upgrade naik 9.9.9 & anti-downgrade tetap 9.9.9; masuk CI
+- install.sh: `DEV_BRAIN_UPDATE_URL` override (testable), `--hook` (pasang pre-commit hook git-guard ke project), `--lint` (verifikasi setelah install)
+- PLAYBOOKS + resep 13 (upgrade deps) & 14 (operasi berisiko/rollback)
+
+### Fixed
+- Akar exit code 1 di install biasa: ekspresi `[ "$LINT" -eq 1 ] && ...` jadi baris terakhir MAIN → bungkus `if` + `exit 0` eksplisit
+- test-update menangkap bug nyata: nama folder tarball `remote/` tidak cocok `find -name 'agent-ai*'` → update gagal senyap lalu write_brain menimpa dengan versi lama — folder remote WAJIB `agent-ai*`; ini bukti HUKUM 9 bekerja
+
+## [4.0.0] — 2026-09-08
+### Added
+- HUKUM 8 — KONTEKS: baca file sekali → ringkas 1 paragraf, compact saat penuh, handoff sebelum hilang; ilusi konteks dilarang
+- 3 skill baru: `context` (disiplin konteks), `pr` (siapkan PR dari diff), `git-guard` — total 38 skill
+- 2 SCRIPT JALAN baru: `git-guard/run.sh` (gerbang commit: blokir secret/merge-marker/debug/diff raksasa di staged diff — exit 0/1) dan `metrics/run.sh` (angka nyata: ukuran, file terbesar, test ratio, TODO) — total 6 skill bash
+- 3 command baru: `/pr` (PR siap tempel), `/context` (lapor status konteks + saran compact), `/upgrade` (update kit aman: --update → --check → lint) — total 19 command
+- `memory/archive.md` — lapisan arsip memori (>30 entry); `README.en.md` — versi Inggris
+- Pipeline v4 di dev.md: fase GIT GUARD sebelum INGAT; BOOT mulai disiplin konteks; gerbang guard & konteks
+- PLAYBOOKS + resep 11 (commit) & 12 (kirim PR)
+
+## [3.0.0] — 2026-09-08
+### Added
+- HUKUM 7 — TINGKAT KEMANDIRIAN: PENUH default, TITIK-PUTUS dengan opsi bernomor + angka, tidak pernah setengah jalan; laporan kini 3 status (SELESAI/TITIK-PUTUS/GAGAL)
+- 8 skill baru: `spec` (spesifikasi sebelum arsitektur: input/output/aturan/error/non-goal), `research` (riset bersumber: klaim wajib URL + tanggal), `red-team` (serang sendiri: input jahat, batas, IDOR, kegagalan berantai — wajib untuk auth/pembayaran/data/publik), `team` (paralel: unit tak-bergantung + verifikasi ulang), `autonomy` (PENUH/TITIK/JANGAN per tugas), `metrics` (kesehatan terukur → putusan), `handoff` (kontinuitas lintas sesi), `a11y` (aksesibilitas = bagian dari SELESAI) — total 35 skill
+- 4 command baru: `/backlog` (antrian terukur), `/handoff`, `/metrics`, `/team` — total 16 command
+- `tests/lint-kit.sh` — linter struktur kit (135 cek): frontmatter SKILL.md, gerbang/aturan, command valid, doctrine, installer sinkron, double-line heredoc, marker sisa; masuk CI
+- `doctor --fix` — perbaiki otomatis yang bisa difix (npm install)
+- `docs/PLAYBOOKS.md` — 10 resep skenario nyata: fitur besar, rewrite, review PR, perf, migrasi data, rilis, handoff, ambigu, tool baru, UI — ikut ter-install
+- Pipeline v3 di dev.md: MIKIR+spec → RISET → BAYANG+api-design → GODOK+test-design/milestone/team → BANGUN+a11y → TEST → AUDIT+red-team → FIX → BUG+postmortem → DOK → COST → INGAT+learn → LAPOR+handoff
+
+### Fixed
+- lint menangkap frontmatter `---` bawa spasi ekstra di skill refactor + 5 skill lama tanpa kata kunci struktur — semua dirapikan
+- lint-kit tidak lagi menangkap dirinya sendiri (marker check)
+
+## [2.6.0] — 2026-09-08
+### Added
+- 6 skill baru: `learn` (pelajaran terukur POLA/BUKTI/AKSI → memory/lessons.md), `milestone` (tugas besar = deretan milestone berbukti + papan status), `test-design` (desain kasus test sebelum koding: pos/neg/edge/limit/regresi), `api-design` (kontrak API sebelum implementasi: skema, error, versi, curl), `migrate` (ubah skema/data: snapshot wajib, skrip mundur, bertahap), `postmortem` (bedah gagal keras: garis waktu, akar, mengapa lolos, pencegahan) — total 27 skill
+- 4 command baru: `/status` (papan kondisi satu layar), `/learn` (ekstrak pelajaran sesi), `/release` (gerbang rilis: test→audit→changelog→version→siap tag), `/onboard` (peta project untuk anggota baru) — total 12 command
+- `memory/lessons.md` — lapisan memori baru: pelajaran berbukti terpisah dari keputusan; recall & remember kini mengenalnya
+- AGENTS.md HUKUM 3 (learn) & HUKUM 4 (test-design/milestone/api-design/migrate/postmortem) disinkron
+- Polish repo: CONTRIBUTING.md, .gitignore, issue templates (bug/feature), PR template dengan checklist gerbang
+
+## [2.5.0] — 2026-09-08
+### Added
+- Auto plan untuk SEMUA permintaan: skill `plan` di-upgrade jadi rencana 8 blok (TUJUAN/KONTEKS/FILE/URUTAN/RISIKO/TEST/AUDIT/SELESAI) yang TAMPIL ke user sebelum eksekusi — gerbang keras di dev.md: tanpa plan tampil, BANGUN dilarang
+- `install.sh --offline` — install tanpa cek jaringan (offline/CI aman, deterministik); self-test & update-flow inner-install kini pakai --offline
+
+### Fixed
+- Akar masalah install menggantung (timeout 120s di shell agent): curl `--update` tanpa batas waktu → kini connect-timeout 5s + max-time 60s; `check_remote_version` kena connect-timeout 2s; `update()` kini `exit 0` setelah inner-install (sebelumnya write_brain jalan 2x — file lama menimpa hasil update)
+
+## [2.4.0] — 2026-09-08
+### Added
+- 8 skill baru: `caveman-warmup` (jembatan tone awal sesi), `cost` (estimasi biaya bersumber angka sebelum aksi berbiaya — HUKUM 5), `review` (PR/branch/diff sebelum merge), `refactor` (restrukturisasi aman, gerbang test baseline), `perf` (N+1, loop berat, bundle, IO blocking), `explain` (bedah pemula: analogi + diagram), `i18n` (teks user-visible lewat key), `changelog` (sinkron VERSION + badge README) — total 21 skill
+- 3 command baru: `/roadmap` (skor dampak × usaha, NOW/NEXT/LATER), `/report` (ringkasan sesi untuk handoff), `/bootstrap` (pasang DEV-BRAIN ke project tanpa install global) — total 8 command
+- `tests/e2e-flow.sh` — simulasi alur agent penuh: plan→build→test→regresi→fix→doc→audit secret; masuk CI sebagai job terpisah
+- `docs/USAGE.md` — panduan lengkap: 7 agent, 21 skill, 8 command, 4 contoh nyata, struktur instalasi; ikut ter-install ke ~/.config/opencode/docs/
+- `agents/dev.md`: fase COST di pipeline + gerbang aksi berbiaya & refactor; BOOT kini atur tone via caveman-warmup
+- AGENTS.md HUKUM 2 & 4 disinkron dengan skill situasional
+- Installer: usage /bootstrap, uninstall ikut buang docs/
+
+### Fixed
+- Hitungan badge & self-test: 13+8 skill = 21 (bukan 16)
 
 ## [2.3.0] — 2026-09-08
 ### Added

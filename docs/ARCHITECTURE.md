@@ -1,0 +1,101 @@
+# ARSITEKTUR DEV-BRAIN DOCTRINE v6
+
+Dokumen ini menjelaskan **cara kit bekerja**, bukan sekadar daftar file. Siapa pun (atau agent apa pun) yang membaca ini harus bisa menjawab: *apa yang terjadi ketika sebuah permintaan masuk, dan siapa yang menjamin kualitasnya?*
+
+---
+
+## 1. LAPISAN (dari dalam ke luar)
+
+```
+┌────────────────────────────────────────────────────────────┐
+│  L1  OTORITAS  — AGENTS.md (10 HUKUM)                      │
+│       aturan yang TIDAK BISA ditawar; semuanya merujuk ke sini │
+├────────────────────────────────────────────────────────────┤
+│  L2  OTAK  — agents/dev.md (pipeline 16 fase)              │
+│       urutan kerja default; gerbang keras antar fase        │
+├────────────────────────────────────────────────────────────┤
+│  L3  KEMAMPUAN  — skills/ (45) + command/ (23)             │
+│       skill = KAPAN dipakai + BAGAIMANA; command = perintah │
+├────────────────────────────────────────────────────────────┤
+│  L4  EKSEKUSI  — skills/*/run.sh (11 script jalan)         │
+│       nilai yang terukur: gate, guard, scan, backup, metrik │
+├────────────────────────────────────────────────────────────┤
+│  L5  PEMBUKTIAN  — tests/ (7 suite + CI)                   │
+│       setiap klaim punya test; mutation membuktikan detektor│
+├────────────────────────────────────────────────────────────┤
+│  L6  MEMORI  — memory/ (4 lapisan + arsip)                 │
+│       keputusan, pelajaran, log sesi — lintas sesi          │
+└────────────────────────────────────────────────────────────┘
+```
+
+**Aturan lapisan**: L2 tidak boleh memanggil skill yang tidak ada di L3; L3 tidak boleh mengklaim hal yang tidak dibuktikan di L5; L5 tidak boleh menguji hal yang tidak didefinisikan di L1–L2.
+
+---
+
+## 2. ALUR SATU PERMINTAAN (pipeline)
+
+```
+masuk ──► scan (kenali project)
+        ──► recall (baca memori)         [L6]
+        ──► think / imagine / plan       [L3] rencana 8 blok TAMPIL ke user
+        ──► spec + research + cost       [L3] batas, bukti, biaya
+        ──► GODOK = plan + test-design + milestone + team
+        ──► BANGUN (+ a11y, convention)  [L3]
+        ──► TEST   (suite L5)
+        ──► AUDIT + red-team + coverage  [L3]
+        ──► FIX / debug / postmortem     [L3]
+        ──► DOK (changelog, docs)        [L3]
+        ──► COST (metrics)               [L3]
+        ──► GIT GUARD (git-guard run)    [L4]
+        ──► INGAT (remember, learn)      [L6]
+        ──► LAPOR + handoff              [L3]
+keluar ──► status jelas: SELESAI / TITIK-PUTUS / GAGAL
+```
+
+**Kontrak**: setiap fase membutuhkan output fase sebelumnya. BANGUN tanpa GODOK = pelanggaran HUKUM 2. LAPOR tanpa TEST = pelanggaran HUKUM 9.
+
+---
+
+## 3. KONTRAK ANTAR KOMPONEN
+
+| Komponen | Input | Output | Dikonsumsi oleh |
+|---|---|---|---|
+| `install.sh` | HOME, flags (`--offline`, `--hook`, `--lint`, `--update`) | instalasi kit + pre-commit hook | user / CI |
+| `skills/*/run.sh` | cwd project, argumen | exit code 0/1 + output teks | pipeline, hook, CI |
+| `tests/*.sh` | repo bersih | exit code + hitungan PASS/FAIL | `make verify`, CI |
+| `tests/mutation.sh` | repo bersih | bukti tiap perusakan ditangkap | CI, rilis |
+| `memory/*.md` | catatan sesi | konteks sesi berikutnya | recall di awal sesi |
+| `VERSION` + `CHANGELOG.md` + badge README | bump versi | **harus sinkron** (diuji `changelog/run.sh`) | rilis |
+
+---
+
+## 4. ALIRAN KEAMANAN (data sensitif)
+
+```
+.env / secret ──► env-guard/run.sh (blokir commit, cek .env.example)
+staged diff  ──► git-guard/run.sh (blokir secret, marker, debug, diff besar)
+produksi rusak ──► hotfix skill (freeze fitur → patch terkecil → bukti → rilis)
+data rusak    ──► recovery skill (backup → skrip mundur → verifikasi)
+```
+
+Tidak ada jalur yang melewati guard ini kecuali user eksplisit.
+
+---
+
+## 5. LAPISAN MEMORI
+
+```
+memory/MEMORY.md      — peta utama (apa yang diketahui)
+memory/decisions.md   — keputusan + alasannya (ADR ringan)
+memory/lessons.md     — pelajaran terukur POLA/BUKTI/AKSI
+memory/session-log.md — log tiap sesi
+memory/archive.md     — entry > 30 dipindah ke sini, bukan dihapus
+```
+
+Recall di awal sesi membaca MEMORY + lessons; sesi baru = lanjut, bukan mulai dari nol.
+
+---
+
+## 6. PERUBAHAN ARSITEKTUR
+
+Ubah arsitektur = edit dokumen ini + sinkron lint-kit + jalankan mutation. Kalau lint-kit tidak menangkap perusakan struktur baru, **tambahkan cek dulu** — itulah kontrak L5: setiap struktur punya detektor.

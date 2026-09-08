@@ -35,11 +35,16 @@ Pemakaian:
   bash install.sh --update        update ke versi terbaru dari GitHub (memori aman)
   bash install.sh --version       tampilkan versi
   bash install.sh --uninstall     buang agent & doctrine (memori DIPERTAHANKAN)
+  bash install.sh --offline       tanpa cek jaringan (offline/CI aman, tanpa menunggu)
+  bash install.sh --hook          pasang pre-commit hook git-guard ke project ini (.git/hooks)
+  bash install.sh --lint          jalankan lint-kit + self-test setelah install (verifikasi)
+  env DEV_BRAIN_UPDATE_URL=...    override URL update (untuk tes/file://)
+
+Di dalam opencode (tanpa install global di project ini):
+  /bootstrap                      pasang DEV-BRAIN ke project ini (.opencode/)
 X
 }
-
-# ── argumen ──
-PROJECT=""; UNINSTALL=0; CHECK=0; UPDATE=0; SHOWVER=0
+PROJECT=""; UNINSTALL=0; CHECK=0; UPDATE=0; SHOWVER=0; OFFLINE=0; HOOK=0; LINT=0
 while [ $# -gt 0 ]; do
   case "$1" in
     --project) [ $# -ge 2 ] || { err "--project butuh path folder"; exit 1; }; PROJECT="$2"; shift 2 ;;
@@ -47,6 +52,9 @@ while [ $# -gt 0 ]; do
     --check) CHECK=1; shift ;;
     --update) UPDATE=1; shift ;;
     --version) SHOWVER=1; shift ;;
+    --offline) OFFLINE=1; shift ;;
+    --hook) HOOK=1; shift ;;
+    --lint) LINT=1; shift ;;
     -h|--help) usage; exit 0 ;;
     *) wrn "arg tak dikenal: $1 (diabaikan)"; shift ;;
   esac
@@ -68,12 +76,15 @@ banner(){
 
 # ── update dari GitHub ──
 REPO="nemoobc/agent-ai"
+# URL override: untuk tes lokal (file://) — set DEV_BRAIN_UPDATE_URL
+UPDATE_URL="${DEV_BRAIN_UPDATE_URL:-https://codeload.github.com/$REPO/tar.gz/refs/heads/master}"
 update(){
   step "UPDATE DEV-BRAIN"
   command -v curl >/dev/null 2>&1 || { err "curl tidak ada — update manual: git clone $REPO"; exit 1; }
   TMP=$(mktemp -d)
   inf "unduh master terbaru…"
-  curl -fsSL "https://codeload.github.com/$REPO/tar.gz/refs/heads/master" -o "$TMP/kit.tgz" \
+  # timeout wajib: connect 5s, total 60s — offline/nyangkut tetap selesai, tidak menggantung shell agent
+  curl -fsSL --connect-timeout 5 --max-time 60 "$UPDATE_URL" -o "$TMP/kit.tgz" \
     || { err "unduh gagal — cek koneksi"; rm -rf "$TMP"; exit 1; }
   tar -xzf "$TMP/kit.tgz" -C "$TMP" || { err "ekstrak gagal"; rm -rf "$TMP"; exit 1; }
   SRC=$(find "$TMP" -maxdepth 1 -type d -name 'agent-ai*' | head -1)
@@ -88,14 +99,17 @@ update(){
     rm -rf "$TMP"; exit 0
   fi
   if [ "$NEWV" = "$OLDV" ]; then ok "sudah versi terbaru"; rm -rf "$TMP"; exit 0; fi
-  if bash "$SRC/install.sh"; then ok "update ke $NEWV selesai — memori tetap aman"; else err "update gagal di tengah — instalasi lama utuh"; fi
+  if bash "$SRC/install.sh" --offline; then ok "update ke $NEWV selesai — memori tetap aman"; else err "update gagal di tengah — instalasi lama utuh"; fi
   rm -rf "$TMP"
+  # penting: jangan lanjut write_brain ulang — inner install sudah menulis semuanya
+  exit 0
 }
 
 # ── cek versi remote (non-blokir, offline aman) ──
 check_remote_version(){
+  [ "$OFFLINE" -eq 1 ] && return 0
   command -v curl >/dev/null 2>&1 || return 0
-  REMOTE=$(curl -fsSL --max-time 3 "https://raw.githubusercontent.com/$REPO/master/VERSION" 2>/dev/null | tr -d '[:space:]')
+  REMOTE=$(curl -fsSL --connect-timeout 2 --max-time 3 "https://raw.githubusercontent.com/$REPO/master/VERSION" 2>/dev/null | tr -d '[:space:]')
   [ -n "$REMOTE" ] || return 0
   LOCALV=$(tr -d '[:space:]' < "$SCRIPT_DIR/VERSION" 2>/dev/null)
   if [ -n "$LOCALV" ] && [ "$REMOTE" != "$LOCALV" ]; then
@@ -106,7 +120,7 @@ check_remote_version(){
 # ── uninstall ──
 uninstall(){
   step "UNINSTALL DEV-BRAIN"
-  rm -rf "$CFG/agent" "$CFG/skill" "$CFG/command"
+  rm -rf "$CFG/agent" "$CFG/skill" "$CFG/command" "$CFG/docs"
   rm -f "$CFG/AGENTS.md"
   BAK=$(ls -1t "$CFG"/opencode.json.bak.* 2>/dev/null | head -n1)
   if [ -n "${BAK:-}" ]; then mv "$BAK" "$CFG/opencode.json"; ok "opencode.json dipulihkan dari backup"
@@ -125,8 +139,16 @@ write_brain(){
   rm -rf "$CFG/agent" "$CFG/skill" "$CFG/command"
   mkdir -p "$CFG/agent" "$CFG/command" "$CFG/memory" \
     "$CFG/skill/think" "$CFG/skill/imagine" "$CFG/skill/remember" "$CFG/skill/recall" \
-    "$CFG/skill/caveman" "$CFG/skill/scan" "$CFG/skill/plan" "$CFG/skill/debug" "$CFG/skill/doc-full" \
-    "$CFG/skill/doctor" \
+    "$CFG/skill/caveman" "$CFG/skill/caveman-warmup" "$CFG/skill/scan" "$CFG/skill/plan" \
+    "$CFG/skill/debug" "$CFG/skill/doc-full" \
+    "$CFG/skill/doctor" "$CFG/skill/review" "$CFG/skill/refactor" "$CFG/skill/cost" \
+    "$CFG/skill/perf" "$CFG/skill/explain" "$CFG/skill/i18n" "$CFG/skill/changelog" \
+    "$CFG/skill/learn" "$CFG/skill/milestone" "$CFG/skill/test-design" "$CFG/skill/api-design" \
+    "$CFG/skill/migrate" "$CFG/skill/postmortem" "$CFG/skill/spec" "$CFG/skill/research" \
+    "$CFG/skill/red-team" "$CFG/skill/team" "$CFG/skill/autonomy" "$CFG/skill/metrics" \
+    "$CFG/skill/handoff" "$CFG/skill/a11y"    "$CFG/skill/context" "$CFG/skill/pr" \
+    "$CFG/skill/git-guard" "$CFG/skill/env-guard" "$CFG/skill/backup" "$CFG/skill/dependency" \
+    "$CFG/skill/hotfix" "$CFG/skill/recovery" "$CFG/skill/convention" "$CFG/skill/coverage" \
     "$CFG/skill/test-full" "$CFG/skill/audit-full" "$CFG/skill/fix-full"
 
   # backup config lama HANYA bila itu bukan tulisan DEV-BRAIN (marker)
@@ -179,6 +201,13 @@ EOF
   # copy AGENTS.md (doctrine)
   [ -f "$SCRIPT_DIR/AGENTS.md" ] && cp "$SCRIPT_DIR/AGENTS.md" "$CFG/" && ok "doctrine: AGENTS.md"
 
+  # copy panduan lengkap
+  mkdir -p "$CFG/docs"
+  [ -f "$SCRIPT_DIR/docs/USAGE.md" ] && cp "$SCRIPT_DIR/docs/USAGE.md" "$CFG/docs/" && ok "panduan: docs/USAGE.md"
+  [ -f "$SCRIPT_DIR/docs/PLAYBOOKS.md" ] && cp "$SCRIPT_DIR/docs/PLAYBOOKS.md" "$CFG/docs/" && ok "playbook: docs/PLAYBOOKS.md"
+  [ -f "$SCRIPT_DIR/docs/ARCHITECTURE.md" ] && cp "$SCRIPT_DIR/docs/ARCHITECTURE.md" "$CFG/docs/" && ok "arsitektur: docs/ARCHITECTURE.md"
+  [ -f "$SCRIPT_DIR/docs/ROADMAP.md" ] && cp "$SCRIPT_DIR/docs/ROADMAP.md" "$CFG/docs/" && ok "roadmap: docs/ROADMAP.md"
+
   # copy memory seed
   for f in "$SCRIPT_DIR/memory/"*.md; do
     [ -f "$f" ] && [ ! -f "$CFG/memory/$(basename "$f")" ] && cp "$f" "$CFG/memory/"
@@ -209,7 +238,7 @@ install_project(){
   cat > "$PROJECT/AGENTS.md" <<'EOF'
 # DEV-BRAIN (project ini)
 Otak utama: DEV — caveman mode ULTRA, pipeline otomatis:
-recall+scan → think → imagine+architect → plan → coder → test → audit → fix → (BUG? debug) → (DOK? doc-full) → memory → lapor.
+recall+scan → think → imagine+architect → plan (rencana 8 blok TAMPIL dulu) → coder → test → audit → fix → (BUG? debug) → (DOK? doc-full) → (MAHAL? cost) → memory → lapor.
 Memori project: `.opencode/memory/`. Doctrine lengkap: `~/.config/opencode/AGENTS.md`.
 Tidak perlu command manual — ketik tugas, DEV mengorkestrasi sendiri.
 EOF
@@ -237,6 +266,25 @@ check_install(){
   if [ "$BAD" -eq 0 ]; then ok "instalasi sehat — $N file otak, semua script valid"; return 0; else return 1; fi
 }
 
+# ── pasang pre-commit hook git-guard ──
+install_hook(){
+  step "HOOK GIT-GUARD"
+  [ -d .git ] || { err "bukan git repo — jalankan dari root project"; return 1; }
+  mkdir -p .git/hooks
+  if [ -f .git/hooks/pre-commit ] && ! grep -q 'devbrain' .git/hooks/pre-commit 2>/dev/null; then
+    cp .git/hooks/pre-commit ".git/hooks/pre-commit.bak.$(date +%s)"
+    wrn "pre-commit lama dibackup (.bak)"
+  fi
+  cat > .git/hooks/pre-commit <<'EOF'
+#!/usr/bin/env bash
+# DEV-BRAIN git-guard (marker: devbrain) — blokir secret/marker/debug di staged diff
+GUARD="$HOME/.config/opencode/skill/git-guard/run.sh"
+[ -f "$GUARD" ] && exec bash "$GUARD"
+EOF
+  chmod +x .git/hooks/pre-commit
+  ok "pre-commit → git-guard terpasang (setiap commit otomatis di-scan)"
+}
+
 # ── verifikasi & banner akhir ──
 finish(){
   step "VERIFIKASI"
@@ -245,7 +293,7 @@ finish(){
   pc 177 '  ║   D E V — B R A I N   O N L I N E      ║'
   pc 141 '  ╚════════════════════════════════════════╝'
   echo
-  ok "7 agent • 13 skill (4 dengan bash script) • 5 command • memori persisten"
+  ok "7 agent • 41 skill (10 dengan bash script) • 20 command • memori + pelajaran persisten"
   echo
   pc 45  "  CARA PAKAI:"
   pc 45  "  1) buka folder project apa saja"
@@ -253,7 +301,7 @@ finish(){
   pc 45  "  3) DEV otomatis aktif (satu-satunya primary)"
   pc 45  "  4) ketik tugas bahasa bebas, contoh:"
   pc 213 "     \"buat halaman login, testnya sekalian, audit juga\""
-  pc 45  "  5) DEV jalan: mikir→bayang→bangun→test→audit→fix→ingat"
+  pc 45  "  5) DEV jalan: mikir→bayang→rencana tampil→bangun→test→audit→ingat"
   echo
   pc 45  "  SHORTCUT : /ship <tugas>   /fix   /memory"
   pc 214 "  API key  : jalankan  opencode auth login  bila belum"
@@ -269,4 +317,11 @@ banner
 check_remote_version
 write_brain
 [ -n "$PROJECT" ] && install_project
+[ "$HOOK" -eq 1 ] && install_hook
 finish
+if [ "$LINT" -eq 1 ] && [ -f "$SCRIPT_DIR/tests/lint-kit.sh" ]; then
+  step "LINT VERIFIKASI"
+  bash "$SCRIPT_DIR/tests/lint-kit.sh" && bash "$SCRIPT_DIR/tests/self-test.sh"
+  echo
+fi
+exit 0
