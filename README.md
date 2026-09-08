@@ -1,12 +1,5 @@
 <h1 align="center">
-<pre>
-    ╦─┐┌─┐┌─┐┌─┐┌─┐┬─┐┌┬┐
-    │┌┘├┤ ├─┘├┤ ││││ │││
-    ┴└─└─┘┴  └─┘└┘┘└─┘┴ ┴
-    ╦═╗┌─┐┬  ┌─┐┌─┐┬─┐┌┬┐
-    ╠╦╝├┤ │  │  ││││ ││││
-    ╩╚═└─┘┴─┘└─┘└┘┘└─┘┴ ┴
-</pre>
+<strong>AGENT AI</strong><br>
 <em>otak utama • caveman mode permanen • ultronomatis</em>
 </h1>
 
