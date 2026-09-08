@@ -1,82 +1,63 @@
-# Agent - OpenCode Termux Configuration
+# agent-ai
 
-Konfigurasi agent, skill, dan command untuk OpenCode di Termux Android.
+Konfigurasi agent, skill, dan command untuk OpenCode — Linux + Termux Android. Instalasi instan 1 script.
 
-## Ringkasan
+## Apa Ini
 
-Repo ini berisi konfigurasi lengkap untuk menjalankan OpenCode agent di Termux:
+- **2 agent**: AUTODEV (primary, full-stack + security + QA) + REVIEWER (red team subagent)
+- **17 skill**: code-review, debugging, security, devops, frontend, backend, dll
+- **11 command**: mulai, lanjut, selesai, cek, fix, bersih, kalibrasi, audit, rapor, autodev, import
+- **13 autodev skills**: anti-hallucination, auto stack detect, git checkpoint, caveman ultra, dll
 
-### Agent
-- **AUTODEV** - Agent utama autonomous engineering (primary mode)
-- **REVIEWER** - Red team reviewer untuk security + correctness check
+## Install
 
-### Skill (17 skill folders + 13 autodev skills)
-| Skill | Fungsi |
-|-------|--------|
-| `automation-integrations` | Script, scheduler, webhook, API integration |
-| `backend-api` | Service, API, auth, webhook, queue |
-| `code-review` | Risk-focused code review |
-| `codebase-discovery` | Repository discovery & conventions |
-| `data-analysis` | CSV, JSON, SQL analysis, metrics |
-| `database` | SQL, schema, migrations, ORM |
-| `debugging` | Evidence-based debugging, root cause |
-| `devops-platform` | Docker, CI/CD, Linux, deployment |
-| `documentation` | README, API docs, ADR, runbook |
-| `frontend-ui` | HTML, CSS, React, Vue, browser UI |
-| `incident-response` | Incident triage, recovery, postmortem |
-| `observability` | Logging, metrics, tracing, health check |
-| `product-ux` | UX, user flow, interaction design |
-| `research-docs` | Official docs research, fact-check |
-| `security-defensive` | Secure coding, threat model, remediation |
-| `software-engineering` | Production-quality implementation |
-| `testing-qa` | Unit, integration, E2E testing |
+### Termux
 
-### Autodev Skills (13 skills di autodev.md)
-| # | Skill | Fungsi |
-|---|-------|--------|
-| 1 | READ BEFORE EVERYTHING | Anti-hallucination, verify sebelum claim |
-| 2 | AUTO STACK DETECT | Auto deteksi Node/Python/Go/Rust/etc |
-| 3 | AUTODEV LOOP | Mandatory: detect→plan→build→audit→test→fix→report |
-| 4 | SAFE SHELL | No root, no proot, quote var |
-| 5 | HONESTY MODULE | Ga bohong, ga nebak, paste error asli |
-| 6 | GIT CHECKPOINT | Safety net sebelum refactor |
-| 7 | NOTIFY | termux-notification best effort |
-| 8 | MEMORY | LOG.md + ~/.autodev/memory.md |
-| 9 | TERMUX GOTCHA | Error patterns, jangan cari ulang |
-| 10 | RED TEAM GATE | Wajib reviewer sebelum done |
-| 11 | SMART READ | Hemat context file gede |
-| 12 | DEPS AUDIT | npm audit, pip check |
-| 13 | AUTO MODEL GATE | Kalibrasi otomatis 6 skenario |
+```bash
+curl -fsSL -o install.sh https://raw.githubusercontent.com/nemoobc/agent-ai/master/install.sh
+bash install.sh
+```
 
-### Command (11 command)
-| Command | Fungsi |
-|---------|--------|
-| `mulai` | Mulai sesi baru |
-| `lanjut` | Lanjut sesi sebelumnya |
-| `selesai` | Selesai & wrap up |
-| `cek` | Cek status project |
-| `fix` | Fix masalah |
-| `bersih` | Bersihkan file |
-| `kalibrasi` | Kalibrasi agent |
-| `audit` | Audit kode |
-| `rapor` | Laporan hasil |
-| `autodev` | Jalankan AUTODEV |
-| `import` | Import session dari file JSON/URL (verifikasi + backup dulu) |
+### Linux
 
-## Struktur Folder
+```bash
+curl -fsSL -o install.sh https://raw.githubusercontent.com/nemoobc/agent-ai/master/install.sh
+bash install.sh
+```
+
+### Check Status
+
+```bash
+bash install.sh --check
+```
+
+### Uninstall
+
+```bash
+bash install.sh --uninstall
+```
+
+### Install Versi Tertentu
+
+```bash
+bash install.sh --version 1.0.0
+```
+
+## Struktur
 
 ```
-Agent/
-├── README.md
-├── AGENTS.md              # Global rules untuk semua agent
-├── opencode.json          # Config OpenCode
+agent-ai/
+├── install.sh              # Universal installer (auto-detect Termux/Linux)
+├── AGENTS.md               # Global rules
+├── opencode.json           # Config
 ├── autodev/
-│   └── memory.md          # Memory global AUTODEV
+│   └── memory.md           # Template memory
 ├── agents/
-│   └── config-agents/     # Agent dari ~/.config/opencode
-│       ├── autodev.md     # AUTODEV + 13 skills + caveman ultra
-│       └── reviewer.md    # Red team reviewer
-├── command/               # Custom commands
+│   └── config-agents/
+│       ├── autodev.md      # AUTODEV agent (definition)
+│       ├── autodev-skills.md # 13 autodev skills (detail)
+│       └── reviewer.md     # REVIEWER agent (red team)
+├── command/                # 11 custom commands
 │   ├── mulai.md
 │   ├── lanjut.md
 │   ├── selesai.md
@@ -86,163 +67,76 @@ Agent/
 │   ├── kalibrasi.md
 │   ├── audit.md
 │   ├── rapor.md
-│   └── autodev.md
+│   ├── autodev.md
+│   └── import.md
 └── skills/
-    ├── config-skills/     # Skills dari ~/.config/opencode (17 skill)
-    ├── opencode-skills/   # Skills dari ~/.opencode
-    └── agents-skills/     # Skills dari ~/.agents
+    └── config-skills/      # 17 opencode skills
+        ├── automation-integrations/
+        ├── backend-api/
+        ├── code-review/
+        ├── codebase-discovery/
+        ├── data-analysis/
+        ├── database/
+        ├── debugging/
+        ├── devops-platform/
+        ├── documentation/
+        ├── frontend-ui/
+        ├── incident-response/
+        ├── observability/
+        ├── product-ux/
+        ├── research-docs/
+        ├── security-defensive/
+        ├── software-engineering/
+        └── testing-qa/
 ```
 
-## Instalasi Instan
+## Agent
 
-Pilih OS-mu. Tiap langkah blok terpisah biar gampang salin. Tanpa root.
+### AUTODEV (Primary)
 
-### Termux
+Senior full-stack engineer + security auditor + QA tester. CAVEMAN ULTRA mode — reply pendek, stak, langsung gas.
 
-**Unduh (salin ini):**
+Override: ketik `/normal` untuk mode normal, `/caveman` untuk balik ultra.
 
-```bash
-curl -fsSL -o install-termux.sh https://raw.githubusercontent.com/nemoobc/agent-ai/master/install-termux.sh
-```
+13 skills: anti-hallucination, auto stack detect, autodev loop, safe shell, honesty module, git checkpoint, notify, memory, termux gotcha, red team gate, smart read, deps audit, auto model gate.
 
-**Jalankan (salin ini):**
+### REVIEWER (Subagent)
 
-```bash
-less install-termux.sh
-bash install-termux.sh
-```
+Red team reviewer. Read-only, dipanggil AUTODEV untuk second opinion. Output: `[HIGH]`/`[MED]`/`[LOW]` per file:line.
 
-Butuh `curl` sekali: `pkg install -y curl`. Binary Termux: [opencode-termux](https://github.com/nemoobc/opencode-termux).
+## Skills
 
-### Linux
+17 skills untuk berbagai domain:
 
-**Unduh (salin ini):**
+| Skill | Fungsi |
+|-------|--------|
+| automation-integrations | Script, scheduler, webhook, API |
+| backend-api | Service, API, auth, queue |
+| code-review | Risk-focused code review |
+| codebase-discovery | Repo discovery & conventions |
+| data-analysis | CSV, JSON, SQL, metrics |
+| database | SQL, schema, migrations |
+| debugging | Evidence-based debugging |
+| devops-platform | Docker, CI/CD, Linux |
+| documentation | README, API docs, ADR |
+| frontend-ui | HTML, CSS, React, Vue |
+| incident-response | Triage, recovery, postmortem |
+| observability | Logging, metrics, tracing |
+| product-UX | UX, user flow, accessibility |
+| research-docs | Official docs research |
+| security-defensive | Secure coding, threat model |
+| software-engineering | Production implementation |
+| testing-qa | Unit, integration, E2E |
 
-```bash
-curl -fsSL -o install-linux.sh https://raw.githubusercontent.com/nemoobc/agent-ai/master/install-linux.sh
-```
+> Catatan: 17 skills ini mirip dengan yang sudah ada di opencode built-in. Yang membedakan adalah autodev agent dan 13 autodev skills yang lebih spesifik untuk workflow autonomous engineering.
 
-**Jalankan (salin ini):**
+## Binary
 
-```bash
-less install-linux.sh
-bash install-linux.sh
-```
+agent-ai cuma konfigurasi. Butuh binary opencode:
 
-Butuh binary `opencode`: `npm install -g opencode-ai`. Tanpa sudo.
-
-### Cek status (salin ini)
-
-```bash
-bash install-termux.sh --check
-```
-
-```bash
-bash install-linux.sh --check
-```
-
-## Instalasi (Manual Lama)
-
-### Prasyarat
-- Android 8+ dengan Termux terinstall
-- Node.js 18+ ( `pkg install nodejs` )
-- OpenCode CLI terinstall
-
-### Cara Install
-
-1. **Clone repo ini:**
-```bash
-git clone https://github.com/nemoobc/agent-ai.git ~/agent-ai
-```
-
-2. **Copy agent & skills ke Termux:**
-```bash
-# Backup config lama (opsional)
-mv ~/.config/opencode/agent ~/.config/opencode/agent.bak 2>/dev/null
-mv ~/.config/opencode/skills ~/.config/opencode/skills.bak 2>/dev/null
-
-# Copy agent baru
-cp -r ~/agent-ai/agents/config-agents ~/.config/opencode/agent
-
-# Copy skills baru
-cp -r ~/agent-ai/skills/config-skills/* ~/.config/opencode/skills/
-
-# Copy command
-cp -r ~/agent-ai/command ~/.config/opencode/command
-
-# Copy AGENTS.md
-cp ~/agent-ai/AGENTS.md ~/.config/opencode/AGENTS.md
-
-# Copy autodev memory
-cp -r ~/agent-ai/autodev ~/.autodev
-```
-
-3. **Verifikasi:**
-```bash
-# Cek agent
-ls ~/.config/opencode/agent/
-# Output: autodev.md reviewer.md
-
-# Cek skills
-ls ~/.config/opencode/skills/
-# Output: automation-integrations backend-api ...
-
-# Cek command
-ls ~/.config/opencode/command/
-# Output: mulai.md lanjut.md selesai.md ...
-```
-
-4. **Jalankan OpenCode:**
-```bash
-opencode
-```
-
-### Instalasi Manual (Tanpa Clone)
-
-Jika tidak ingin clone, copy folder secara manual:
-
-```bash
-# Buat direktori
-mkdir -p ~/.config/opencode/agent
-mkdir -p ~/.config/opencode/skills
-mkdir -p ~/.config/opencode/command
-
-# Copy file agent
-cp agents/config-agents/*.md ~/.config/opencode/agent/
-
-# Copy semua skills
-cp -r skills/config-skills/* ~/.config/opencode/skills/
-
-# Copy command
-cp command/*.md ~/.config/opencode/command/
-
-# Copy AGENTS.md
-cp AGENTS.md ~/.config/opencode/
-```
-
-## Config OpenCode
-
-File `opencode.json`:
-```json
-{
-  "$schema": "https://opencode.ai/config.json",
-  "share": "disabled"
-}
-```
-
-Model default: `opencode/mimo-v2.5-free` (gratis, recommended).
-
-## Tips
-
-- **Bahasa**: Agent default pakai Bahasa Indonesia
-- **Caveman Ultra**: Komunikasi super pendek, stak, tanpa basa-basi
-- **No root**: Semua berjalan di Termux tanpa root
-- **Port aman**: Hanya pakai port >= 1024
+- **Termux**: [opencode-termux](https://github.com/nemoobc/opencode-termux)
+- **Linux**: `npm install -g opencode-ai`
 
 ## Lisensi
 
-MIT - Bebas dipakai dan dimodifikasi.
-
-## Author
-
-**nemoobc** - [GitHub](https://github.com/nemoobc)
+MIT
