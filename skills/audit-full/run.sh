@@ -31,6 +31,7 @@ p "▮ AUDIT: lint" 213
 [ -x node_modules/.bin/eslint ] && { node_modules/.bin/eslint . 2>/dev/null || found "eslint: pelanggaran lint"; }
 command -v ruff >/dev/null 2>&1 && compgen -G '*.py' >/dev/null 2>&1 && { ruff check . 2>/dev/null || found "ruff: pelanggaran lint"; }
 [ -f go.mod ] && command -v go >/dev/null 2>&1 && { go vet ./... 2>/dev/null || found "go vet: temuan"; }
+[ -f Cargo.toml ] && command -v cargo >/dev/null 2>&1 && { cargo fmt --check >/dev/null 2>&1 || found "cargo fmt: formatting rust"; command -v cargo-clippy >/dev/null 2>&1 && { cargo clippy -q 2>/dev/null || found "clippy: linter rust"; }; }
 if command -v shellcheck >/dev/null 2>&1; then
   SHFAIL=0
   for s in *.sh scripts/*.sh; do

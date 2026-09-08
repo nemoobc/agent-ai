@@ -25,6 +25,17 @@ fi
 [ -f go.mod ] && { p "▮ Go project" 213; command -v go >/dev/null 2>&1 && try go test ./...; }
 [ -f Cargo.toml ] && { p "▮ Rust project" 213; command -v cargo >/dev/null 2>&1 && try cargo test -q; }
 [ -f composer.json ] && { p "▮ PHP project" 213; [ -x vendor/bin/phpunit ] && try vendor/bin/phpunit; }
+command -v bun >/dev/null 2>&1 && [ -f bunfig.toml ] && { p "▮ Bun project" 213; try bun test; }
+command -v deno >/dev/null 2>&1 && compgen -G '*_test.*' >/dev/null 2>&1 && { p "▮ Deno project" 213; try deno test; }
+if { [ -f Gemfile ] || compgen -G 'spec/*_spec.rb' >/dev/null 2>&1 || compgen -G 'test/*_test.rb' >/dev/null 2>&1; }; then
+  p "▮ Ruby project" 213
+  command -v rake >/dev/null 2>&1 && rake -n test >/dev/null 2>&1 && try rake test
+  command -v rspec >/dev/null 2>&1 && compgen -G 'spec/*_spec.rb' >/dev/null 2>&1 && try rspec
+fi
+[ -f mix.exs ] && { p "▮ Elixir project" 213; command -v mix >/dev/null 2>&1 && try mix test; }
+{ [ -f pom.xml ] || [ -f build.gradle ] || [ -f build.gradle.kts ]; } && { p "▮ JVM project" 213; [ -f mvnw ] && try sh ./mvnw -q test; [ -x gradlew ] && try sh ./gradlew -q test; [ -f pom.xml ] && command -v mvn >/dev/null 2>&1 && try mvn -q test; }
+compgen -G '*.csproj' >/dev/null 2>&1 || compgen -G '*.sln' >/dev/null 2>&1 && { p "▮ .NET project" 213; command -v dotnet >/dev/null 2>&1 && try dotnet test; }
+[ -f Package.swift ] && { p "▮ Swift project" 213; command -v swift >/dev/null 2>&1 && try swift test; }
 if [ -f Makefile ] && make -n test >/dev/null 2>&1; then p "▮ make test" 213; try make test; fi
 
 echo

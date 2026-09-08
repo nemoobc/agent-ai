@@ -1,5 +1,10 @@
 # MEMORY — DEV-BRAIN (ingatan jangka panjang)
 
+## 2026-09-08 — Distribusi v2.3.0 (auto-update + multi-bahasa)
+- konteks: user minta lagi — level berikutnya = jangkauan & distribusi
+- keputusan: install.sh --update (tarball GitHub, banding versi, memori aman), --version, cek versi remote non-blokir, VERSION tercatat di instalasi, test-full +7 stack (bun/deno/ruby/elixir/JVM/.NET/swift), audit-full + cargo fmt/clippy
+- pembelajaran: sort -V untuk compare semver di bash murni; UJI update-flow dengan remote ASLI langsung menangkap bug downgrade (remote 2.0.0 < lokal 2.3.0 tetap terinstall) — testing terhadap sistem nyata > testing terhadap mock
+
 ## 2026-09-08 — Showcase v2.2.0 (tantangan "tunjukkan kemampuan")
 - konteks: user tantang tunjukkan semua kemampuan — bukan cuma nambah file md
 - keputusan: skill doctor (run.sh + SKILL.md + /doctor), audit-full +8 pola secret & shellcheck opsional, release workflow (tag→test→GitHub Release dari CHANGELOG), tests/run-demo.sh (pipeline dibuktikan hidup: fixture bugged→merah→fix→hijau→CLEAN)

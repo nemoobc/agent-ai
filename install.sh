@@ -32,17 +32,21 @@ Pemakaian:
   bash install.sh                 install global (~/.config/opencode)
   bash install.sh --project DIR   sekalian pasang ke project (DIR/.opencode)
   bash install.sh --check         cek kesehatan instalasi (tanpa menulis)
+  bash install.sh --update        update ke versi terbaru dari GitHub (memori aman)
+  bash install.sh --version       tampilkan versi
   bash install.sh --uninstall     buang agent & doctrine (memori DIPERTAHANKAN)
 X
 }
 
 # ── argumen ──
-PROJECT=""; UNINSTALL=0; CHECK=0
+PROJECT=""; UNINSTALL=0; CHECK=0; UPDATE=0; SHOWVER=0
 while [ $# -gt 0 ]; do
   case "$1" in
     --project) [ $# -ge 2 ] || { err "--project butuh path folder"; exit 1; }; PROJECT="$2"; shift 2 ;;
     --uninstall) UNINSTALL=1; shift ;;
     --check) CHECK=1; shift ;;
+    --update) UPDATE=1; shift ;;
+    --version) SHOWVER=1; shift ;;
     -h|--help) usage; exit 0 ;;
     *) wrn "arg tak dikenal: $1 (diabaikan)"; shift ;;
   esac
@@ -60,6 +64,43 @@ banner(){
   [ -f "$SCRIPT_DIR/VERSION" ] && pc 45 "   versi: $(cat "$SCRIPT_DIR/VERSION" | tr -d '[:space:]')"
   pc 45 "   auto test/audit/fix ✓ • memori persisten ✓"
   echo
+}
+
+# ── update dari GitHub ──
+REPO="nemoobc/agent-ai"
+update(){
+  step "UPDATE DEV-BRAIN"
+  command -v curl >/dev/null 2>&1 || { err "curl tidak ada — update manual: git clone $REPO"; exit 1; }
+  TMP=$(mktemp -d)
+  inf "unduh master terbaru…"
+  curl -fsSL "https://codeload.github.com/$REPO/tar.gz/refs/heads/master" -o "$TMP/kit.tgz" \
+    || { err "unduh gagal — cek koneksi"; rm -rf "$TMP"; exit 1; }
+  tar -xzf "$TMP/kit.tgz" -C "$TMP" || { err "ekstrak gagal"; rm -rf "$TMP"; exit 1; }
+  SRC=$(find "$TMP" -maxdepth 1 -type d -name 'agent-ai*' | head -1)
+  [ -f "$SRC/install.sh" ] || { err "paket tidak valid"; rm -rf "$TMP"; exit 1; }
+  NEWV=$(tr -d '[:space:]' < "$SRC/VERSION" 2>/dev/null)
+  OLDV=$(tr -d '[:space:]' < "$CFG/VERSION" 2>/dev/null)
+  inf "terpasang: ${OLDV:-?} → tersedia: ${NEWV:-?}"
+  # anti-downgrade: hanya update bila remote LEBIH BARU (semver compare)
+  OLDER=$(printf '%s\n%s\n' "${OLDV:-0}" "${NEWV:-0}" | sort -V | head -1)
+  if [ -n "$OLDV" ] && [ "$OLDER" != "$OLDV" ]; then
+    ok "remote ($NEWV) tidak lebih baru dari terpasang ($OLDV) — skip"
+    rm -rf "$TMP"; exit 0
+  fi
+  if [ "$NEWV" = "$OLDV" ]; then ok "sudah versi terbaru"; rm -rf "$TMP"; exit 0; fi
+  if bash "$SRC/install.sh"; then ok "update ke $NEWV selesai — memori tetap aman"; else err "update gagal di tengah — instalasi lama utuh"; fi
+  rm -rf "$TMP"
+}
+
+# ── cek versi remote (non-blokir, offline aman) ──
+check_remote_version(){
+  command -v curl >/dev/null 2>&1 || return 0
+  REMOTE=$(curl -fsSL --max-time 3 "https://raw.githubusercontent.com/$REPO/master/VERSION" 2>/dev/null | tr -d '[:space:]')
+  [ -n "$REMOTE" ] || return 0
+  LOCALV=$(tr -d '[:space:]' < "$SCRIPT_DIR/VERSION" 2>/dev/null)
+  if [ -n "$LOCALV" ] && [ "$REMOTE" != "$LOCALV" ]; then
+    wrn "versi baru tersedia: $REMOTE (lokal $LOCALV) — update: bash install.sh --update"
+  fi
 }
 
 # ── uninstall ──
@@ -145,6 +186,8 @@ EOF
 
   N=$(find "$CFG/agent" "$CFG/skill" "$CFG/command" -type f 2>/dev/null | wc -l | tr -d ' ')
   ok "total $N file otak ditulis"
+  # catat versi terpasang (dipakai --check, doctor, --update)
+  [ -f "$SCRIPT_DIR/VERSION" ] && cp "$SCRIPT_DIR/VERSION" "$CFG/VERSION"
 }
 
 # ── pasang ke project ──
@@ -185,6 +228,8 @@ check_install(){
   done
   N=$(find "$CFG/agent" "$CFG/skill" "$CFG/command" -type f 2>/dev/null | wc -l | tr -d ' ')
   [ "${N:-0}" -ge 20 ] || { err "file otak cuma $N — install ulang"; BAD=1; }
+  V=$(tr -d '[:space:]' < "$CFG/VERSION" 2>/dev/null)
+  if [ -n "$V" ]; then ok "versi terpasang: $V"; else wrn "versi tidak tercatat (install lama) — update disarankan"; fi
   for s in "$CFG"/skill/*/run.sh; do
     [ -f "$s" ] || continue
     bash -n "$s" 2>/dev/null || { err "script rusak: $s"; BAD=1; }
@@ -217,8 +262,11 @@ finish(){
 
 # ═══ MAIN ═══
 banner
+[ "$SHOWVER" -eq 1 ] && { pc 45 "DEV-BRAIN v$(tr -d '[:space:]' < "$SCRIPT_DIR/VERSION" 2>/dev/null || echo '?')"; exit 0; }
 [ "$UNINSTALL" -eq 1 ] && { uninstall; }
 [ "$CHECK" -eq 1 ] && { check_install; exit $?; }
+[ "$UPDATE" -eq 1 ] && { update; }
+check_remote_version
 write_brain
 [ -n "$PROJECT" ] && install_project
 finish

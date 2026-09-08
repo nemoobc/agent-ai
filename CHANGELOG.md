@@ -2,6 +2,14 @@
 
 ## [Unreleased]
 
+## [2.3.0] — 2026-09-08
+### Added
+- `install.sh --update` — update otomatis dari GitHub (unduh tarball master, banding versi, install ulang, memori aman)
+- `install.sh --version` + cek versi remote non-blokir di tiap install (offline aman, timeout 3s)
+- VERSION tercatat di instalasi → `--check` dan doctor kini tampilkan versi terpasang + deteksi drift
+- `test-full`: +7 stack (bun, deno, ruby rake/rspec, elixir mix, JVM mvnw/gradlew/mvn, .NET dotnet, swift) — total 12
+- `audit-full`: cargo fmt --check + clippy (opsional) untuk project Rust
+
 ## [2.2.0] — 2026-09-08
 ### Added
 - Skill `doctor` (SKILL.md + run.sh) + command `/doctor` — diagnosa lingkungan, dependensi opsional, typecheck, memori + deteksi secret di memori (P0)

@@ -37,6 +37,15 @@ fi
 [ -d .git ] && ok "git repo: branch $(git branch --show-current 2>/dev/null || echo '?')" || p "  · bukan git repo" 245
 [ -f AGENTS.md ] && ok "AGENTS.md ada (doctrine project)" || p "  · AGENTS.md tidak ada (opsional)" 245
 
+p "▮ DOCTOR: devbrain itu sendiri" 213
+INSTV=$(tr -d '[:space:]' < "$HOME/.config/opencode/VERSION" 2>/dev/null)
+KITV=$(tr -d '[:space:]' < "$(cd "$(dirname "$0")/../.." 2>/dev/null && pwd)/VERSION" 2>/dev/null)
+if [ -n "$INSTV" ] && [ -n "$KITV" ]; then
+  if [ "$INSTV" = "$KITV" ]; then ok "versi terpasang = versi kit ($INSTV)"
+  else warn "versi terpasang $INSTV ≠ kit $KITV — jalankan: bash install.sh --update"; fi
+elif [ -n "$INSTV" ]; then ok "versi terpasang: $INSTV"
+else p "  · versi tidak tercatat (install lama) — update disarankan" 245; fi
+
 p "▮ DOCTOR: memori DEV-BRAIN" 213
 MEMDIR=""
 [ -f .opencode/memory/MEMORY.md ] && MEMDIR=".opencode/memory"

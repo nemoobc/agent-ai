@@ -12,7 +12,7 @@
 </h1>
 
 ![Pipeline](https://img.shields.io/badge/PIPELINE-SCAN→MIKIR→BAYANG→GODOK→BANGUN→TEST→AUDIT→FIX→BUG→DOK→INGAT-ff69b4?style=for-the-badge)
-![Version](https://img.shields.io/badge/VERSION-2.2.0-ff69b4?style=for-the-badge)
+![Version](https://img.shields.io/badge/VERSION-2.3.0-ff69b4?style=for-the-badge)
 ![Agents](https://img.shields.io/badge/AGENTS-7-00d2ff?style=for-the-badge)
 ![Skills](https://img.shields.io/badge/SKILLS-13-82d815?style=for-the-badge)
 ![Commands](https://img.shields.io/badge/COMMANDS-5-ffd700?style=for-the-badge)
@@ -228,6 +228,18 @@ bash tests/run-demo.sh
 ```
 
 Bangun project fixture dengan bug disengaja → test-full MENANGKAP → perbaiki akar masalah → test HIJAU → audit CLEAN. Pipeline terbukti hidup, bukan cuma dokumen.
+
+---
+
+## UPDATE OTOMATIS
+
+```bash
+bash install.sh --update     # unduh master terbaru, install ulang, memori aman
+bash install.sh --version    # lihat versi
+bash install.sh --check      # cek kesehatan + versi terpasang
+```
+
+Tiap install juga mengecek versi remote (timeout 3 detik, offline aman) dan memberi tahu bila ada versi baru.
 
 ---
 
