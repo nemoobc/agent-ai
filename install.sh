@@ -112,8 +112,17 @@ check_remote_version(){
   REMOTE=$(curl -fsSL --connect-timeout 2 --max-time 3 "https://raw.githubusercontent.com/$REPO/master/VERSION" 2>/dev/null | tr -d '[:space:]')
   [ -n "$REMOTE" ] || return 0
   LOCALV=$(tr -d '[:space:]' < "$SCRIPT_DIR/VERSION" 2>/dev/null)
+  # Simple semver compare: only warn if REMOTE is actually newer
   if [ -n "$LOCALV" ] && [ "$REMOTE" != "$LOCALV" ]; then
-    wrn "versi baru tersedia: $REMOTE (lokal $LOCALV) — update: bash install.sh --update"
+    # Compare major.minor.patch numerically
+    LOCAL_MAJOR=$(echo "$LOCALV" | cut -d. -f1); REMOTE_MAJOR=$(echo "$REMOTE" | cut -d. -f1)
+    LOCAL_MINOR=$(echo "$LOCALV" | cut -d. -f2); REMOTE_MINOR=$(echo "$REMOTE" | cut -d. -f2)
+    LOCAL_PATCH=$(echo "$LOCALV" | cut -d. -f3); REMOTE_PATCH=$(echo "$REMOTE" | cut -d. -f3)
+    if [ "${REMOTE_MAJOR:-0}" -gt "${LOCAL_MAJOR:-0}" ] 2>/dev/null || \
+       { [ "${REMOTE_MAJOR:-0}" -eq "${LOCAL_MAJOR:-0}" ] 2>/dev/null && [ "${REMOTE_MINOR:-0}" -gt "${LOCAL_MINOR:-0}" ] 2>/dev/null; } || \
+       { [ "${REMOTE_MAJOR:-0}" -eq "${LOCAL_MAJOR:-0}" ] 2>/dev/null && [ "${REMOTE_MINOR:-0}" -eq "${LOCAL_MINOR:-0}" ] 2>/dev/null && [ "${REMOTE_PATCH:-0}" -gt "${LOCAL_PATCH:-0}" ] 2>/dev/null; }; then
+      wrn "versi baru tersedia: $REMOTE (lokal $LOCALV) — update: bash install.sh --update"
+    fi
   fi
 }
 
