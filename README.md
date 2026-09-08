@@ -1,13 +1,5 @@
 <h1 align="center">
-<pre>
-   ██████╗ ███████╗██████╗ 
-   ██╔══██╗██╔════╝██╔══██╗
-   ██║  ██║███████╗██████╔╝
-   ██║  ██║╚════██║██╔═══╝ 
-   ██████╔╝███████║██║     
-   ╚═════╝ ╚══════╝╚═╝     
-</pre>
-<strong>DEV — B R A I N</strong><br>
+<strong>A G E N T   A I</strong><br>
 <em>otak utama AGENT AI • caveman mode permanen • ultronomatis</em>
 </h1>
 
