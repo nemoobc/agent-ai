@@ -118,9 +118,12 @@ if [ "$MODE" = "check" ]; then
   say "autodev:   $([ -d "$AUTODEV_HOME" ] && echo "ada" || echo "HILANG")"
   say ""
 
-  if [ -f "$CFG/agent/autodev.md" ]; then
+  if [ -f "$CFG/agent/dev.md" ]; then
     say "agent-ai:  terpasang"
-    [ -f "$CFG/agent/autodev-skills.md" ] && ok "autodev-skills: ada" || warn "autodev-skills: HILANG"
+    [ -f "$CFG/agent/dev.md" ] && ok "dev agent: ada" || warn "dev agent: HILANG"
+    [ -f "$CFG/agent/build.md" ] && ok "build agent: ada" || warn "build agent: HILANG"
+    [ -f "$CFG/agent/plan.md" ] && ok "plan agent: ada" || warn "plan agent: HILANG"
+    [ -f "$CFG/agent/reviewer.md" ] && ok "reviewer agent: ada" || warn "reviewer agent: HILANG"
   else
     say "agent-ai:  BELUM terpasang"
   fi
@@ -167,17 +170,33 @@ if [ -d "$AUTODEV_HOME" ]; then
   ok "backup: $AUTODEV_HOME.bak.$TS"
 fi
 
-# --- install agents + commands → ~/.config/opencode/ ---
+# --- install agents (flat copy) ---
 mkdir -p "$CFG/agent" "$CFG/command" "$AUTODEV_HOME" || die "mkdir gagal"
-cp -r "$SRC/agents/"* "$CFG/agent/" || die "copy agent gagal"
-cp -r "$SRC/command/"* "$CFG/command/" || die "copy command gagal"
+for agent_file in "$SRC/agents/"*.md; do
+  [ -f "$agent_file" ] || continue
+  cp "$agent_file" "$CFG/agent/" || die "copy agent gagal: $agent_file"
+done
+ok "agents terpasang: $(ls "$CFG/agent/"*.md 2>/dev/null | wc -l) file"
+
+# --- install commands ---
+for cmd_file in "$SRC/command/"*.md; do
+  [ -f "$cmd_file" ] || continue
+  cp "$cmd_file" "$CFG/command/" || die "copy command gagal: $cmd_file"
+done
+ok "commands terpasang: $(ls "$CFG/command/"*.md 2>/dev/null | wc -l) file"
+
+# --- install AGENTS.md ---
 cp "$SRC/AGENTS.md" "$CFG/AGENTS.md" || die "copy AGENTS.md gagal"
 [ -f "$SRC/opencode.json" ] && cp "$SRC/opencode.json" "$CFG/opencode.json"
-cp -r "$SRC/autodev/"* "$AUTODEV_HOME/" || die "copy autodev gagal"
 
-# --- install skills → ~/.agents/skills/ ---
+# --- install autodev memory ---
+cp -r "$SRC/autodev/"* "$AUTODEV_HOME/" || die "copy autodev gagal"
+ok "autodev memory terpasang"
+
+# --- install skills (flat: skills/NAME/SKILL.md) ---
 mkdir -p "$SKILLS_HOME" || die "mkdir skills gagal"
 for skill_dir in "$SRC/skills/"*/; do
+  [ -d "$skill_dir" ] || continue
   skill_name=$(basename "$skill_dir")
   skill_file="$skill_dir/SKILL.md"
   if [ -f "$skill_file" ]; then
@@ -192,11 +211,15 @@ say "--- verifikasi ---"
 n_agent="$(count_md "$CFG/agent")"
 n_skill="$(count_md "$SKILLS_HOME")"
 n_cmd="$(count_md "$CFG/command")"
-[ "$n_agent" -ge 2 ] || die "agent kurang ($n_agent file, minimal 2: autodev + reviewer)"
+[ "$n_agent" -ge 3 ] || die "agent kurang ($n_agent file, minimal 3: dev + build + plan)"
 [ "$n_skill" -ge 10 ] || die "skills kurang ($n_skill file, minimal 10)"
 [ "$n_cmd" -ge 5 ] || die "command kurang ($n_cmd file, minimal 5)"
 [ -f "$CFG/AGENTS.md" ] || die "AGENTS.md hilang"
-ok "agent: $n_agent file"
+[ -f "$CFG/agent/dev.md" ] || die "dev agent hilang"
+[ -f "$CFG/agent/build.md" ] || die "build agent hilang"
+[ -f "$CFG/agent/plan.md" ] || die "plan agent hilang"
+[ -f "$CFG/agent/reviewer.md" ] || die "reviewer agent hilang"
+ok "agent: $n_agent file (dev, build, plan, reviewer)"
 ok "skills: $n_skill file"
 ok "command: $n_cmd file"
 ok "AGENTS.md + autodev terpasang"

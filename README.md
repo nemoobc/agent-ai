@@ -4,10 +4,11 @@ Konfigurasi agent, skill, dan command untuk OpenCode — Linux + Termux Android.
 
 ## Apa Ini
 
-- **2 agent**: AUTODEV (primary, full-stack + security + QA) + REVIEWER (red team subagent)
+- **3 agent**: DEV (primary, full-stack + security + QA) + BUILD (build specialist) + PLAN (architecture planner)
+- **1 subagent**: REVIEWER (red team, read-only)
 - **17 skill**: code-review, debugging, security, devops, frontend, backend, dll
-- **11 command**: mulai, lanjut, selesai, cek, fix, bersih, kalibrasi, audit, rapor, autodev, import
-- **13 autodev skills**: anti-hallucination, auto stack detect, git checkpoint, caveman ultra, dll
+- **12 command**: mulai, lanjut, selesai, cek, fix, bersih, kalibrasi, audit, rapor, dev, import
+- **13 DEV skills**: anti-hallucination, auto stack detect, DEV loop, git checkpoint, caveman ultra, dll
 
 ## Install
 
@@ -48,10 +49,11 @@ bash install.sh --version 1.0.0
 ```
 ~/.config/opencode/
 ├── agent/
-│   ├── autodev.md          # AUTODEV agent definition
-│   ├── autodev-skills.md   # 13 autodev skills (detail)
-│   └── reviewer.md         # REVIEWER agent (red team)
-├── command/                # 11 custom commands
+│   ├── dev.md           # DEV agent (primary, full-stack + security + QA)
+│   ├── build.md         # BUILD agent (build specialist, subagent)
+│   ├── plan.md          # PLAN agent (architecture planner, subagent)
+│   └── reviewer.md      # REVIEWER agent (red team, read-only)
+├── command/              # 12 custom commands
 │   ├── mulai.md
 │   ├── lanjut.md
 │   ├── selesai.md
@@ -61,12 +63,12 @@ bash install.sh --version 1.0.0
 │   ├── kalibrasi.md
 │   ├── audit.md
 │   ├── rapor.md
-│   ├── autodev.md
+│   ├── dev.md
 │   └── import.md
-├── AGENTS.md               # Global rules
-└── opencode.json           # Config
+├── AGENTS.md             # Global rules
+└── opencode.json         # Config
 
-~/.agents/skills/           # 17 opencode skills
+~/.agents/skills/         # 17 opencode skills
 ├── automation-integrations/
 ├── backend-api/
 ├── code-review/
@@ -86,22 +88,30 @@ bash install.sh --version 1.0.0
 └── testing-qa/
 
 ~/.autodev/
-└── memory.md               # Global memory (template)
+└── memory.md             # Global memory (template)
 ```
 
 ## Agent
 
-### AUTODEV (Primary)
+### DEV (Primary)
 
 Senior full-stack engineer + security auditor + QA tester. CAVEMAN ULTRA mode — reply pendek, stak, langsung gas.
 
 Override: ketik `/normal` untuk mode normal, `/caveman` untuk balik ultra.
 
-13 skills: anti-hallucination, auto stack detect, autodev loop, safe shell, honesty module, git checkpoint, notify, memory, termux gotcha, red team gate, smart read, deps audit, auto model gate.
+13 skills: anti-hallucination, auto stack detect, DEV loop, safe shell, honesty module, git checkpoint, notify, memory, termux gotcha, red team gate, smart read, deps audit, auto model gate.
+
+### BUILD (Subagent)
+
+Build specialist. Compile, bundle, package, deploy. Called by DEV when build task needed.
+
+### PLAN (Subagent)
+
+Architecture planner. Analyze requirements, design structure, create roadmaps. Read-only.
 
 ### REVIEWER (Subagent)
 
-Red team reviewer. Read-only, dipanggil AUTODEV untuk second opinion. Output: `[HIGH]`/`[MED]`/`[LOW]` per file:line.
+Red team reviewer. Read-only, dipanggil DEV untuk second opinion. Output: `[HIGH]`/`[MED]`/`[LOW]` per file:line.
 
 ## Skills
 
@@ -127,7 +137,7 @@ Red team reviewer. Read-only, dipanggil AUTODEV untuk second opinion. Output: `[
 | software-engineering | Production implementation |
 | testing-qa | Unit, integration, E2E |
 
-> Catatan: 17 skills ini mirip dengan yang sudah ada di opencode built-in. Yang membedakan adalah autodev agent dan 13 autodev skills yang lebih spesifik untuk workflow autonomous engineering.
+> Catatan: 17 skills ini mirip dengan yang sudah ada di opencode built-in. Yang membedakan adalah DEV agent dan 13 DEV skills yang lebih spesifik untuk workflow autonomous engineering.
 
 ## Binary
 

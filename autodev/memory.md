@@ -1,4 +1,4 @@
-# AUTODEV MEMORY (global — jangan tulis secret di sini)
+# DEV MEMORY (global — jangan tulis secret di sini)
 
 > File ini di-copy ke `~/.autodev/memory.md` saat install.
 > Edit langsung di `~/.autodev/memory.md`, bukan di repo.
