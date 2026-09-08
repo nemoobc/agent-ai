@@ -79,6 +79,32 @@ HOME="$FH" bash "$DIR/install.sh" >/dev/null 2>&1 \
   || bad "backup/restore user config gagal"
 rm -rf "$FH"
 
+p "▮ SELF-TEST: install --project" 213
+TP=$(mktemp -d)
+HOME="$(mktemp -d)" bash "$DIR/install.sh" --project "$TP" >/dev/null 2>&1
+[ -d "$TP/.opencode/agent" ] && ok "project .opencode/agent ada" || bad "project .opencode/agent hilang"
+[ -d "$TP/.opencode/skill" ] && ok "project .opencode/skill ada" || bad "project .opencode/skill hilang"
+[ -d "$TP/.opencode/command" ] && ok "project .opencode/command ada" || bad "project .opencode/command hilang"
+[ -f "$TP/AGENTS.md" ] && ok "project AGENTS.md ada" || bad "project AGENTS.md hilang"
+rm -rf "$TP"
+
+p "▮ SELF-TEST: agent content wajib ada" 213
+for a in dev architect coder tester auditor fixer memory; do
+  grep -q "description:" "$DIR/agents/$a.md" 2>/dev/null && ok "agent $a ada frontmatter" || bad "agent $a tanpa frontmatter"
+done
+
+p "▮ SELF-TEST: skill scan/plan/debug/doc-full ada description" 213
+for s in scan plan debug doc-full; do
+  grep -q "description:" "$DIR/skills/$s/SKILL.md" 2>/dev/null && ok "skill $s ada description" || bad "skill $s tanpa description"
+done
+
+p "▮ SELF-TEST: command /audit ada" 213
+[ -f "$DIR/command/audit.md" ] && ok "command/audit.md ada" || bad "command/audit.md hilang"
+grep -q "agent: dev" "$DIR/command/audit.md" 2>/dev/null && ok "audit.md pakai agent dev" || bad "audit.md tanpa agent dev"
+
+p "▮ SELF-TEST: CHANGELOG punya entry v2.0.0" 213
+grep -q "2.0.0" "$DIR/CHANGELOG.md" 2>/dev/null && ok "CHANGELOG punya v2.0.0" || bad "CHANGELOG tanpa v2.0.0"
+
 rm -rf "$FX"
 echo
 if [ "$FAIL" -eq 0 ]; then p "SELF_TEST: PASS ($PASS ok)" 82; exit 0; fi
