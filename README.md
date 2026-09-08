@@ -51,7 +51,7 @@ bash install.sh --project ~/my-app
 
 ## APA INI
 
-DEV-BRAIN adalah **otak permanen** untuk AGENT AI. Sekali install, selalu aktif di semua sesi. Tidak perlu pilih agent. Ketik tugas → DEV jalan sendiri.
+AGENT AI adalah **otak permanen** untuk opencode. Sekali install, selalu aktif di semua sesi. Tidak perlu pilih agent. Ketik tugas → DEV jalan sendiri.
 
 ---
 
@@ -177,10 +177,10 @@ User: "buat login page, testnya sekalian"
 | `/fix` | Auto repair: test→audit→fix loop sampai hijau |
 | `/audit` | Audit penuh: test→audit-full→review manual→fix sampai CLEAN |
 | `/doctor` | Diagnosa kesehatan kit: lingkungan, dependensi, memori |
-| `/memory` | Tampilkan ingatan DEV-BRAIN |
+| `/memory` | Tampilkan ingatan Agent AI |
 | `/roadmap` | Prioritas langkah berikutnya: skor dampak × usaha, NOW/NEXT/LATER |
 | `/report` | Ringkasan sesi untuk handoff/tim: perubahan, test, audit, risiko, next |
-| `/bootstrap` | Pasang DEV-BRAIN ke project ini (.opencode/) tanpa install global |
+| `/bootstrap` | Pasang Agent AI ke project ini (.opencode/) tanpa install global |
 | `/status` | Papan kondisi satu layar: milestone, test, audit, risiko, next |
 | `/learn` | Ekstrak pelajaran sesi jadi lessons.md terukur |
 | `/release` | Gerbang rilis: test→audit→changelog→version→siap tag |
@@ -302,7 +302,7 @@ User: "buat login page, testnya sekalian"
 
 ---
 
-## HUKUM DEV-BRAIN
+## HUKUM Agent AI
 
 1. **CAVEMAN ULTRA** — bicara pendek, marker wajib, tanpa kata lunak, hasil = bukti
 2. **PIPELINE OTOMATIS** — SCAN→MIKIR→BAYANG→GODOK→BANGUN→TEST→AUDIT→FIX→(BUG? debug)→(DOK? doc-full)→(MAHAL? cost)→INGAT→LAPOR

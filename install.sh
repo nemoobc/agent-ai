@@ -41,7 +41,7 @@ Pemakaian:
   env DEV_BRAIN_UPDATE_URL=...    override URL update (untuk tes/file://)
 
 Di dalam opencode (tanpa install global di project ini):
-  /bootstrap                      pasang DEV-BRAIN ke project ini (.opencode/)
+  /bootstrap                      pasang AGENT AI ke project ini (.opencode/)
 X
 }
 PROJECT=""; UNINSTALL=0; CHECK=0; UPDATE=0; SHOWVER=0; OFFLINE=0; HOOK=0; LINT=0
@@ -79,7 +79,7 @@ REPO="nemoobc/agent-ai"
 # URL override: untuk tes lokal (file://) — set DEV_BRAIN_UPDATE_URL
 UPDATE_URL="${DEV_BRAIN_UPDATE_URL:-https://codeload.github.com/$REPO/tar.gz/refs/heads/master}"
 update(){
-  step "UPDATE DEV-BRAIN"
+  step "UPDATE AGENT AI"
   command -v curl >/dev/null 2>&1 || { err "curl tidak ada — update manual: git clone $REPO"; exit 1; }
   TMP=$(mktemp -d)
   inf "unduh master terbaru…"
@@ -119,16 +119,16 @@ check_remote_version(){
 
 # ── uninstall ──
 uninstall(){
-  step "UNINSTALL DEV-BRAIN"
+  step "UNINSTALL AGENT AI"
   rm -rf "$CFG/agent" "$CFG/skill" "$CFG/command" "$CFG/docs"
   rm -f "$CFG/AGENTS.md"
   BAK=$(ls -1t "$CFG"/opencode.json.bak.* 2>/dev/null | head -n1)
   if [ -n "${BAK:-}" ]; then mv "$BAK" "$CFG/opencode.json"; ok "opencode.json dipulihkan dari backup"
   elif [ -f "$CFG/opencode.json" ] && grep -q '"devbrain"' "$CFG/opencode.json" 2>/dev/null; then
-    rm -f "$CFG/opencode.json"; ok "opencode.json buatan DEV-BRAIN dihapus"
+    rm -f "$CFG/opencode.json"; ok "opencode.json buatan AGENT AI dihapus"
   fi
   wrn "folder memory/ DIPERTAHANKAN (isi ingatan kamu)"
-  ok "uninstall selesai — DEV-BRAIN dilepas"
+  ok "uninstall selesai — AGENT AI dilepas"
   exit 0
 }
 
@@ -151,7 +151,7 @@ write_brain(){
     "$CFG/skill/hotfix" "$CFG/skill/recovery" "$CFG/skill/convention" "$CFG/skill/coverage" \
     "$CFG/skill/test-full" "$CFG/skill/audit-full" "$CFG/skill/fix-full"
 
-  # backup config lama HANYA bila itu bukan tulisan DEV-BRAIN (marker)
+  # backup config lama HANYA bila itu bukan tulisan AGENT AI (marker)
   if [ -f "$CFG/opencode.json" ] && ! grep -q '"devbrain"' "$CFG/opencode.json" 2>/dev/null; then
     cp "$CFG/opencode.json" "$CFG/opencode.json.bak.$(date +%s)"
   fi
@@ -223,8 +223,8 @@ EOF
 install_project(){
   step "PASANG KE PROJECT: $PROJECT"
   if [ ! -d "$PROJECT" ]; then err "folder tidak ditemukan: $PROJECT"; return 1; fi
-  # backup AGENTS.md project bila bukan tulisan DEV-BRAIN (marker)
-  if [ -f "$PROJECT/AGENTS.md" ] && ! grep -q 'DEV-BRAIN (project ini)' "$PROJECT/AGENTS.md" 2>/dev/null; then
+  # backup AGENTS.md project bila bukan tulisan AGENT AI (marker)
+  if [ -f "$PROJECT/AGENTS.md" ] && ! grep -q 'AGENT AI (project ini)' "$PROJECT/AGENTS.md" 2>/dev/null; then
     cp "$PROJECT/AGENTS.md" "$PROJECT/AGENTS.md.bak.$(date +%s)"
     wrn "AGENTS.md project dibackup (isi asli dipertahankan di .bak)"
   fi
@@ -236,7 +236,7 @@ install_project(){
   cp -r "$CFG/command" "$PROJECT/.opencode/" 2>/dev/null
   [ -f "$PROJECT/.opencode/memory/MEMORY.md" ] || cp "$CFG/memory/MEMORY.md" "$PROJECT/.opencode/memory/"
   cat > "$PROJECT/AGENTS.md" <<'EOF'
-# DEV-BRAIN (project ini)
+# AGENT AI (project ini)
 Otak utama: DEV — caveman mode ULTRA, pipeline otomatis:
 recall+scan → think → imagine+architect → plan (rencana 8 blok TAMPIL dulu) → coder → test → audit → fix → (BUG? debug) → (DOK? doc-full) → (MAHAL? cost) → memory → lapor.
 Memori project: `.opencode/memory/`. Doctrine lengkap: `~/.config/opencode/AGENTS.md`.
@@ -247,7 +247,7 @@ EOF
 
 # ── verifikasi instalasi ──
 check_install(){
-  step "CHECK INSTALASI DEV-BRAIN"
+  step "CHECK INSTALASI AGENT AI"
   BAD=0
   [ -f "$CFG/AGENTS.md" ] || { err "doctrine hilang: $CFG/AGENTS.md"; BAD=1; }
   [ -f "$CFG/opencode.json" ] || { err "config hilang: $CFG/opencode.json"; BAD=1; }
@@ -277,7 +277,7 @@ install_hook(){
   fi
   cat > .git/hooks/pre-commit <<'EOF'
 #!/usr/bin/env bash
-# DEV-BRAIN git-guard (marker: devbrain) — blokir secret/marker/debug di staged diff
+# AGENT AI git-guard (marker: devbrain) — blokir secret/marker/debug di staged diff
 GUARD="$HOME/.config/opencode/skill/git-guard/run.sh"
 [ -f "$GUARD" ] && exec bash "$GUARD"
 EOF
@@ -310,7 +310,7 @@ finish(){
 
 # ═══ MAIN ═══
 banner
-[ "$SHOWVER" -eq 1 ] && { pc 45 "DEV-BRAIN v$(tr -d '[:space:]' < "$SCRIPT_DIR/VERSION" 2>/dev/null || echo '?')"; exit 0; }
+[ "$SHOWVER" -eq 1 ] && { pc 45 "AGENT AI v$(tr -d '[:space:]' < "$SCRIPT_DIR/VERSION" 2>/dev/null || echo '?')"; exit 0; }
 [ "$UNINSTALL" -eq 1 ] && { uninstall; }
 [ "$CHECK" -eq 1 ] && { check_install; exit $?; }
 [ "$UPDATE" -eq 1 ] && { update; }
