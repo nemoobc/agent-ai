@@ -58,7 +58,7 @@ if command -v gitleaks >/dev/null 2>&1 && [ -d .git ]; then
 fi
 
 p "▮ AUDIT: higiene" 213
-TD=$(grep -rIn --exclude-dir=node_modules --exclude-dir=.git -E '(TODO|FIXME|HACK)[[:space:]]*[:：]' . 2>/dev/null | wc -l | tr -d ' ')
+TD=$(grep -rIn --exclude-dir=node_modules --exclude-dir=.git --exclude='audit-full' -E '(TODO|FIXME|HACK)[[:space:]]*[:：]' . 2>/dev/null | wc -l | tr -d ' ')
 if [ "${TD:-0}" -gt 0 ]; then p "  ⚠ $TD TODO/FIXME belum tuntas" 214; else clean "tanpa TODO/FIXME"; fi
 
 echo

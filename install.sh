@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
-# ═══════════════════════════════════════════════════════════════
+# ═════════════════════════════════════════════════════════════════
 #   ██████╗ ███████╗██████╗
-#   ██╔══██╗██╔════╝██╔══██╗     A G E N T   A I
+#   ██╔══██╗██╔════╝██╔══██╗     D E V — B R A I N
 #   ██║  ██║███████╗██████╔╝     agent-ai full-agent installer
 #   ██║  ██║╚════██║██╔═══╝      caveman mode • permanen • ultronomatis
 #   ██████╔╝███████║██║          auto: think→build→test→audit→fix
@@ -9,7 +9,6 @@
 # ─────────────────────────────────────────────────────────────────
 # Pakai  : bash install.sh [--project DIR] [--uninstall]
 # ═════════════════════════════════════════════════════════════════
-clear
 set -u
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
@@ -42,7 +41,7 @@ Pemakaian:
   env DEV_BRAIN_UPDATE_URL=...    override URL update (untuk tes/file://)
 
 Di dalam opencode (tanpa install global di project ini):
-  /bootstrap                      pasang AGENT AI ke project ini (.opencode/)
+  /bootstrap                      pasang DEV-BRAIN ke project ini (.opencode/)
 X
 }
 PROJECT=""; UNINSTALL=0; CHECK=0; UPDATE=0; SHOWVER=0; OFFLINE=0; HOOK=0; LINT=0
@@ -62,29 +61,17 @@ while [ $# -gt 0 ]; do
 done
 
 banner(){
-  local v=$(cat "$SCRIPT_DIR/VERSION" 2>/dev/null | tr -d '[:space:]')
-  echo
-  pc 32 '  ╔═══════════════════════════════════╗'
-  pc 32 '  ║                                   ║'
-  pc 31 '  ║       A G E N T   A I             ║'
-  pc 32 '  ║                                   ║'
-  pc 32 '  ╚═══════════════════════════════════╝'
+  pc 213 '   ██████╗ ███████╗██████╗ '
+  pc 177 '   ██╔══██╗██╔════╝██╔══██╗'
+  pc 141 '   ██║  ██║███████╗██████╔╝'
+  pc 105 '   ██║  ██║╚════██║██╔═══╝ '
+  pc 69  '   ██████╔╝███████║██║     '
+  pc 33  '   ╚═════╝ ╚══════╝╚═╝     B R A I N'
   echo
   pc 45 "   otak utama: DEV • caveman mode ULTRA • ultronomatis"
-  [ -n "$v" ] && pc 45 "   versi: $v"
+  [ -f "$SCRIPT_DIR/VERSION" ] && pc 45 "   versi: $(cat "$SCRIPT_DIR/VERSION" | tr -d '[:space:]')"
   pc 45 "   auto test/audit/fix ✓ • memori persisten ✓"
   echo
-  echo
-}
-
-loading(){
-  local msg="${1:-Memuat}"
-  local i=0
-  local chars='⠋⠙⠹⠸⠼⠴⠦⠧⠇⠏'
-  while true; do
-    printf "\r  ${chars:i++%${#chars}:1} $msg"
-    sleep 0.1
-  done
 }
 
 # ── update dari GitHub ──
@@ -92,7 +79,7 @@ REPO="nemoobc/agent-ai"
 # URL override: untuk tes lokal (file://) — set DEV_BRAIN_UPDATE_URL
 UPDATE_URL="${DEV_BRAIN_UPDATE_URL:-https://codeload.github.com/$REPO/tar.gz/refs/heads/master}"
 update(){
-  step "UPDATE AGENT AI"
+  step "UPDATE DEV-BRAIN"
   command -v curl >/dev/null 2>&1 || { err "curl tidak ada — update manual: git clone $REPO"; exit 1; }
   TMP=$(mktemp -d)
   inf "unduh master terbaru…"
@@ -125,32 +112,23 @@ check_remote_version(){
   REMOTE=$(curl -fsSL --connect-timeout 2 --max-time 3 "https://raw.githubusercontent.com/$REPO/master/VERSION" 2>/dev/null | tr -d '[:space:]')
   [ -n "$REMOTE" ] || return 0
   LOCALV=$(tr -d '[:space:]' < "$SCRIPT_DIR/VERSION" 2>/dev/null)
-  # Simple semver compare: only warn if REMOTE is actually newer
   if [ -n "$LOCALV" ] && [ "$REMOTE" != "$LOCALV" ]; then
-    # Compare major.minor.patch numerically
-    LOCAL_MAJOR=$(echo "$LOCALV" | cut -d. -f1); REMOTE_MAJOR=$(echo "$REMOTE" | cut -d. -f1)
-    LOCAL_MINOR=$(echo "$LOCALV" | cut -d. -f2); REMOTE_MINOR=$(echo "$REMOTE" | cut -d. -f2)
-    LOCAL_PATCH=$(echo "$LOCALV" | cut -d. -f3); REMOTE_PATCH=$(echo "$REMOTE" | cut -d. -f3)
-    if [ "${REMOTE_MAJOR:-0}" -gt "${LOCAL_MAJOR:-0}" ] 2>/dev/null || \
-       { [ "${REMOTE_MAJOR:-0}" -eq "${LOCAL_MAJOR:-0}" ] 2>/dev/null && [ "${REMOTE_MINOR:-0}" -gt "${LOCAL_MINOR:-0}" ] 2>/dev/null; } || \
-       { [ "${REMOTE_MAJOR:-0}" -eq "${LOCAL_MAJOR:-0}" ] 2>/dev/null && [ "${REMOTE_MINOR:-0}" -eq "${LOCAL_MINOR:-0}" ] 2>/dev/null && [ "${REMOTE_PATCH:-0}" -gt "${LOCAL_PATCH:-0}" ] 2>/dev/null; }; then
-      wrn "versi baru tersedia: $REMOTE (lokal $LOCALV) — update: bash install.sh --update"
-    fi
+    wrn "versi baru tersedia: $REMOTE (lokal $LOCALV) — update: bash install.sh --update"
   fi
 }
 
 # ── uninstall ──
 uninstall(){
-  step "UNINSTALL AGENT AI"
+  step "UNINSTALL DEV-BRAIN"
   rm -rf "$CFG/agent" "$CFG/skill" "$CFG/command" "$CFG/docs"
   rm -f "$CFG/AGENTS.md"
   BAK=$(ls -1t "$CFG"/opencode.json.bak.* 2>/dev/null | head -n1)
   if [ -n "${BAK:-}" ]; then mv "$BAK" "$CFG/opencode.json"; ok "opencode.json dipulihkan dari backup"
   elif [ -f "$CFG/opencode.json" ] && grep -q '"devbrain"' "$CFG/opencode.json" 2>/dev/null; then
-    rm -f "$CFG/opencode.json"; ok "opencode.json buatan AGENT AI dihapus"
+    rm -f "$CFG/opencode.json"; ok "opencode.json buatan DEV-BRAIN dihapus"
   fi
   wrn "folder memory/ DIPERTAHANKAN (isi ingatan kamu)"
-  ok "uninstall selesai — AGENT AI dilepas"
+  ok "uninstall selesai — DEV-BRAIN dilepas"
   exit 0
 }
 
@@ -171,18 +149,12 @@ write_brain(){
     "$CFG/skill/handoff" "$CFG/skill/a11y"    "$CFG/skill/context" "$CFG/skill/pr" \
     "$CFG/skill/git-guard" "$CFG/skill/env-guard" "$CFG/skill/backup" "$CFG/skill/dependency" \
     "$CFG/skill/hotfix" "$CFG/skill/recovery" "$CFG/skill/convention" "$CFG/skill/coverage" \
-    "$CFG/skill/budget" "$CFG/skill/clean" "$CFG/skill/critique" "$CFG/skill/deliver" \
-    "$CFG/skill/estimate" "$CFG/skill/eval" "$CFG/skill/injection-guard" "$CFG/skill/profile" \
-    "$CFG/skill/threat-model" "$CFG/skill/trace" \
+    "$CFG/skill/critique" "$CFG/skill/injection-guard" "$CFG/skill/trace" "$CFG/skill/profile" \
+    "$CFG/skill/budget" "$CFG/skill/threat-model" "$CFG/skill/deliver" "$CFG/skill/eval" \
+    "$CFG/skill/clean" "$CFG/skill/estimate" "$CFG/skill/route" \
     "$CFG/skill/test-full" "$CFG/skill/audit-full" "$CFG/skill/fix-full"
 
-  # spinner
-  local sp='⠋⠙⠹⠸⠼⠴⠦⠧⠇⠏'
-  local i=0
-  (while true; do printf "\r  ${sp:i++%${#sp}:1} menyalin file otak..."; sleep 0.08; done) &
-  SPID=$!
-
-  # backup config lama HANYA bila itu bukan tulisan AGENT AI (marker)
+  # backup config lama HANYA bila itu bukan tulisan DEV-BRAIN (marker)
   if [ -f "$CFG/opencode.json" ] && ! grep -q '"devbrain"' "$CFG/opencode.json" 2>/dev/null; then
     cp "$CFG/opencode.json" "$CFG/opencode.json.bak.$(date +%s)"
   fi
@@ -352,11 +324,10 @@ write_brain(){
 }
 OPencodeEOF
 
-  # copy agents
+  # copy agents — 9 termasuk critic (adversarial) & hermes (utusan all-rounder)
   for f in "$SCRIPT_DIR/agents/"*.md; do
-    [ -f "$f" ] && cp "$f" "$CFG/agent/"
+    [ -f "$f" ] && cp "$f" "$CFG/agent/" && ok "agent: $(basename "$f")"
   done
-  local agent_count=$(ls "$CFG/agent/"*.md 2>/dev/null | wc -l)
 
   # copy skills (SKILL.md + run.sh)
   for skill_dir in "$SCRIPT_DIR/skills/"*/; do
@@ -364,21 +335,13 @@ OPencodeEOF
     mkdir -p "$CFG/skill/$skill_name"
     [ -f "$skill_dir/SKILL.md" ] && cp "$skill_dir/SKILL.md" "$CFG/skill/$skill_name/"
     [ -f "$skill_dir/run.sh" ] && { cp "$skill_dir/run.sh" "$CFG/skill/$skill_name/"; chmod +x "$CFG/skill/$skill_name/run.sh"; }
+    ok "skill: $skill_name"
   done
-  local skill_count=$(ls -d "$CFG/skill/"*/ 2>/dev/null | wc -l)
 
   # copy commands
   for f in "$SCRIPT_DIR/command/"*.md; do
-    [ -f "$f" ] && cp "$f" "$CFG/command/"
+    [ -f "$f" ] && cp "$f" "$CFG/command/" && ok "command: $(basename "$f")"
   done
-  local cmd_count=$(ls "$CFG/command/"*.md 2>/dev/null | wc -l)
-
-  # stop spinner
-  kill $SPID 2>/dev/null; wait $SPID 2>/dev/null
-  printf "\r\033[K"
-  ok "agent: $agent_count file"
-  ok "skill: $skill_count folder"
-  ok "command: $cmd_count file"
 
   # copy AGENTS.md (doctrine)
   [ -f "$SCRIPT_DIR/AGENTS.md" ] && cp "$SCRIPT_DIR/AGENTS.md" "$CFG/" && ok "doctrine: AGENTS.md"
@@ -405,8 +368,8 @@ OPencodeEOF
 install_project(){
   step "PASANG KE PROJECT: $PROJECT"
   if [ ! -d "$PROJECT" ]; then err "folder tidak ditemukan: $PROJECT"; return 1; fi
-  # backup AGENTS.md project bila bukan tulisan AGENT AI (marker)
-  if [ -f "$PROJECT/AGENTS.md" ] && ! grep -q 'AGENT AI (project ini)' "$PROJECT/AGENTS.md" 2>/dev/null; then
+  # backup AGENTS.md project bila bukan tulisan DEV-BRAIN (marker)
+  if [ -f "$PROJECT/AGENTS.md" ] && ! grep -q 'DEV-BRAIN (project ini)' "$PROJECT/AGENTS.md" 2>/dev/null; then
     cp "$PROJECT/AGENTS.md" "$PROJECT/AGENTS.md.bak.$(date +%s)"
     wrn "AGENTS.md project dibackup (isi asli dipertahankan di .bak)"
   fi
@@ -418,7 +381,7 @@ install_project(){
   cp -r "$CFG/command" "$PROJECT/.opencode/" 2>/dev/null
   [ -f "$PROJECT/.opencode/memory/MEMORY.md" ] || cp "$CFG/memory/MEMORY.md" "$PROJECT/.opencode/memory/"
   cat > "$PROJECT/AGENTS.md" <<'EOF'
-# AGENT AI (project ini)
+# DEV-BRAIN (project ini)
 Otak utama: DEV — caveman mode ULTRA, pipeline otomatis:
 recall+scan → think → imagine+architect → plan (rencana 8 blok TAMPIL dulu) → coder → test → audit → fix → (BUG? debug) → (DOK? doc-full) → (MAHAL? cost) → memory → lapor.
 Memori project: `.opencode/memory/`. Doctrine lengkap: `~/.config/opencode/AGENTS.md`.
@@ -429,7 +392,7 @@ EOF
 
 # ── verifikasi instalasi ──
 check_install(){
-  step "CHECK INSTALASI AGENT AI"
+  step "CHECK INSTALASI DEV-BRAIN"
   BAD=0
   [ -f "$CFG/AGENTS.md" ] || { err "doctrine hilang: $CFG/AGENTS.md"; BAD=1; }
   [ -f "$CFG/opencode.json" ] || { err "config hilang: $CFG/opencode.json"; BAD=1; }
@@ -459,7 +422,7 @@ install_hook(){
   fi
   cat > .git/hooks/pre-commit <<'EOF'
 #!/usr/bin/env bash
-# AGENT AI git-guard (marker: devbrain) — blokir secret/marker/debug di staged diff
+# DEV-BRAIN git-guard (marker: devbrain) — blokir secret/marker/debug di staged diff
 GUARD="$HOME/.config/opencode/skill/git-guard/run.sh"
 [ -f "$GUARD" ] && exec bash "$GUARD"
 EOF
@@ -469,18 +432,30 @@ EOF
 
 # ── verifikasi & banner akhir ──
 finish(){
+  step "VERIFIKASI"
   echo
-  pc 33 '  ╔═══════════════════════════════╗'
-  pc 33 '  ║                               ║'
-  pc 33 '  ║         S U K S E S           ║'
-  pc 33 '  ║                               ║'
-  pc 33 '  ╚═══════════════════════════════╝'
+  pc 213 '  ╔════════════════════════════════════════╗'
+  pc 177 '  ║   D E V — B R A I N   O N L I N E      ║'
+  pc 141 '  ╚════════════════════════════════════════╝'
+  echo
+  ok "9 agent • 56 skill (16 dengan bash script) • 31 command • memori + pelajaran persisten"
+  echo
+  pc 45  "  CARA PAKAI:"
+  pc 45  "  1) buka folder project apa saja"
+  pc 45  "  2) jalankan:  opencode"
+  pc 45  "  3) DEV otomatis aktif (satu-satunya primary)"
+  pc 45  "  4) ketik tugas bahasa bebas, contoh:"
+  pc 213 "     \"buat halaman login, testnya sekalian, audit juga\""
+  pc 45  "  5) DEV jalan: mikir→bayang→rencana tampil→bangun→test→audit→ingat"
+  echo
+  pc 45  "  SHORTCUT : /ship <tugas>   /fix   /memory"
+  pc 214 "  API key  : jalankan  opencode auth login  bila belum"
   echo
 }
 
 # ═══ MAIN ═══
 banner
-[ "$SHOWVER" -eq 1 ] && { pc 45 "AGENT AI v$(tr -d '[:space:]' < "$SCRIPT_DIR/VERSION" 2>/dev/null || echo '?')"; exit 0; }
+[ "$SHOWVER" -eq 1 ] && { pc 45 "DEV-BRAIN v$(tr -d '[:space:]' < "$SCRIPT_DIR/VERSION" 2>/dev/null || echo '?')"; exit 0; }
 [ "$UNINSTALL" -eq 1 ] && { uninstall; }
 [ "$CHECK" -eq 1 ] && { check_install; exit $?; }
 [ "$UPDATE" -eq 1 ] && { update; }

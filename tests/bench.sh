@@ -36,11 +36,12 @@ bench_gate(){ # $1=nama $2=command...
 p "▮ BENCH — durasi tiap gerbang (warn > ${WARN_S}s, gagal > ${CAP_S}s)" 213
 bench_gate "lint-kit"    bash "$DIR/tests/lint-kit.sh"
 bench_gate "self-test"   bash "$DIR/tests/self-test.sh"
+bench_gate "eval"       bash "$DIR/tests/eval.sh"
 bench_gate "update-flow" bash "$DIR/tests/test-update.sh"
 bench_gate "install --offline" bash -c "T=\$(mktemp -d); HOME=\"\$T\" bash \"$DIR/install.sh\" --offline; rm -rf \"\$T\""
 bench_gate "doctor"      bash "$DIR/skills/doctor/run.sh" .
 
-p "▮ BENCH — total ${total_s}s untuk 5 gerbang" 213
+p "▮ BENCH — total ${total_s}s untuk 6 gerbang" 213
 echo
 if [ "$FAIL" -eq 0 ]; then p "BENCH: PASS ($PASS gate aman)" 82; exit 0; fi
 p "BENCH: FAIL — $FAIL gate melewati hard-cap" 196; exit 1

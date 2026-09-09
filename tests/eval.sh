@@ -61,7 +61,31 @@ bash "$DIR/skills/clean/run.sh" "$FX2" >/dev/null 2>&1
   && ok "clean aman: node_modules/src selamat" || bad "clean merusak area terlarang"
 rm -rf "$FX2"
 
+# — 8. ROUTE: router intensitas NORMAL/FULL/ULTRA —
+bash "$DIR/skills/route/run.sh" "deploy backend hari ini" | grep -q "JALUR: NORMAL" \
+  && ok "route: prompt biasa → NORMAL" || bad "route: prompt biasa ≠ NORMAL"
+bash "$DIR/skills/route/run.sh" "lengkapin dashboard user" | grep -q "JALUR: FULL" \
+  && ok "route: 'lengkapin' → FULL" || bad "route: 'lengkapin' ≠ FULL"
+RULTRA=$(bash "$DIR/skills/route/run.sh" "LENGKAP FULL PANGGIL SEMUA AGENT + SKILL + CAVEMAN MODE ULTRA + HERMES")
+echo "$RULTRA" | grep -q "JALUR: ULTRA" \
+  && ok "route: pemicu maksimum → ULTRA" || bad "route: pemicu maksimum ≠ ULTRA"
+echo "$RULTRA" | grep -qE "9 agent|caveman ULTRA" \
+  && ok "route ULTRA: 'PANGGIL SEMUA' tercantum" || bad "route ULTRA: tidak menyebut panggil semua"
+R2=$(bash "$DIR/skills/route/run.sh" "bagusin halaman login")
+echo "$R2" | grep -q "JALUR: FULL" \
+  && ok "route: 'bagusin' → FULL" || bad "route: 'bagusin' ≠ FULL"
+bash "$DIR/skills/route/run.sh" "jelaskan cara kerja git rebase" | grep -q "JALUR: NORMAL" \
+  && ok "route: pertanyaan biasa → NORMAL (tanpa summon)" || bad "route: pertanyaan biasa ≠ NORMAL"
+bash "$DIR/skills/route/run.sh" "perbaiki bug login terus panggil semuanya" | grep -q "JALUR: ULTRA" \
+  && ok "route: tambahan 'panggil semuanya' → ULTRA" || bad "route: 'panggil semuanya' ≠ ULTRA"
+bash "$DIR/skills/route/run.sh" "summon all skills" | grep -q "JALUR: ULTRA" \
+  && ok "route: kosakata EN 'summon all skills' → ULTRA" || bad "route: 'summon all skills' ≠ ULTRA"
+bash "$DIR/skills/route/run.sh" "maksimalkan performa query" | grep -q "JALUR: FULL" \
+  && ok "route: kosakata baru 'maksimalkan' → FULL" || bad "route: 'maksimalkan' ≠ FULL"
+bash "$DIR/skills/route/run.sh" "dia punya bakat coding" | grep -q "JALUR: NORMAL" \
+  && ok "route: false-trigger 'bakat' di kalimat biasa → NORMAL" || bad "route: 'bakat' false-trigger ≠ NORMAL"
+
 rm -rf "$FX"
 echo
-if [ "$FAIL" -eq 0 ]; then p "EVAL: PASS ($PASS cek, 7 kasus)" 82; exit 0; fi
+if [ "$FAIL" -eq 0 ]; then p "EVAL: PASS ($PASS cek, 8 kasus)" 82; exit 0; fi
 p "EVAL: FAIL ($FAIL merah — versi tidak boleh dirilis)" 196; exit 1

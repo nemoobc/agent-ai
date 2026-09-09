@@ -33,9 +33,13 @@ for f in "$DIR"/command/*.md; do
     && ok "$name: valid" || bad "$name: frontmatter/agent/isi bermasalah"
 done
 
-p "▮ LINT: doctrine utuh (10 hukum, gerbang dev.md)" 213
-grep -q 'HUKUM 1' "$DIR/AGENTS.md" && grep -q 'HUKUM 10' "$DIR/AGENTS.md" \
-  && ok "AGENTS.md: 10 hukum ada" || bad "AGENTS.md: hukum 1..10 tidak lengkap"
+p "▮ LINT: doctrine utuh (12 hukum, gerbang dev.md)" 213
+grep -q 'HUKUM 1' "$DIR/AGENTS.md" && grep -q 'HUKUM 12' "$DIR/AGENTS.md" \
+  && ok "AGENTS.md: 12 hukum ada" || bad "AGENTS.md: hukum 1..12 tidak lengkap"
+grep -q 'RANTAI BUKTI' "$DIR/AGENTS.md" \
+  && ok "AGENTS.md: HUKUM 11 RANTAI BUKTI ada" || bad "AGENTS.md: HUKUM 11 hilang"
+grep -q 'ANTI-INJEKSI' "$DIR/AGENTS.md" \
+  && ok "AGENTS.md: HUKUM 12 ANTI-INJEKSI ada" || bad "AGENTS.md: HUKUM 12 hilang"
 grep -q 'KONSISTENSI' "$DIR/AGENTS.md" \
   && ok "AGENTS.md: HUKUM 10 KONSISTENSI ada" || bad "AGENTS.md: HUKUM 10 KONSISTENSI hilang"
 grep -q 'Makefile' "$DIR/AGENTS.md" \
@@ -65,8 +69,17 @@ grep -rnE '@codebuff[[:space:]]+del'""'ete|TODO:del'""'ete' "$DIR" --include='*.
   && bad "ada marker sisa" || ok "tanpa marker sisa"
 
 p "▮ LINT: file test & CI lengkap" 213
-for f in tests/self-test.sh tests/e2e-flow.sh tests/run-demo.sh tests/lint-kit.sh tests/test-update.sh tests/mutation.sh tests/bench.sh Makefile docs/ARCHITECTURE.md docs/ROADMAP.md .github/workflows/ci.yml .github/workflows/release.yml; do
+for f in tests/self-test.sh tests/e2e-flow.sh tests/run-demo.sh tests/lint-kit.sh tests/test-update.sh tests/mutation.sh tests/bench.sh tests/eval.sh Makefile docs/ARCHITECTURE.md docs/ROADMAP.md docs/THREAT-MODEL.md .github/workflows/ci.yml .github/workflows/release.yml; do
   [ -f "$DIR/$f" ] && ok "$f" || bad "$f hilang"
+done
+grep -q 'eval' "$DIR/.github/workflows/ci.yml" \
+  && ok "CI jalan eval" || bad "CI tidak jalan eval"
+grep -q 'injection-guard' "$DIR/install.sh" \
+  && ok "installer tulis injection-guard" || bad "installer lupa injection-guard"
+grep -q 'critic' "$DIR/install.sh" \
+  && ok "installer tulis agent critic" || bad "installer lupa critic"
+for c in critique trace deliver threat-model; do
+  [ -f "$DIR/command/$c.md" ] && ok "command $c ada" || bad "command $c hilang"
 done
 grep -q 'lint-kit' "$DIR/.github/workflows/ci.yml" \
   && ok "CI jalan lint-kit" || bad "CI tidak jalan lint-kit"

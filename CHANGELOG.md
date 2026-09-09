@@ -1,5 +1,40 @@
 # CHANGELOG
 
+## [8.1.3] — 2026-09-10
+### Fixed
+- install.sh finish message: angka benar "9 agent • 56 skill (16 dengan bash script) • 31 command" (sebelumnya 8/53/14/27 — HUKUM 10 pelanggaran)
+- README.en.md: "The 13 Laws" (sebelumnya "The 12 Laws")
+- README.en.md: mutation.sh "12 ways" (sebelumnya "10 ways")
+### Changed
+- opencode.json: permission system granular 3 tier (allow/ask/deny) ~150 pola dari nemoobc (sebelumnya 15 pola sederhana). Shell read-only aman, destructive operations konfirmasi, truly dangerous block.
+
+## [8.1.2] — 2026-09-09
+### Added
+- Kosakata pemicu router diperluas (ID + EN) biar user bisa panggil leluasa:
+  ULTRA = panggil/kerahkan/summon/eksekusi/hidupkan + semua/all (+ agent/skill/kemampuan/tim), tunjukkan/pamerin semua kemampuan/bakat(mu), gabungin semua, ultra mode, all-out, mode terkuat, gpt-5/6
+  FULL = lengkapi/lengkapin, bagusin/perbagus/perindah, matangkan, sempurnakan, upgrade, maksimalkan, pertajam/perdalam/pertebal/perkuat, rapikan, tuntaskan/kerjain abis, lebih detail/dalam/keren, paling powerful, super, polish/refine
+- Anti false-trigger: kalimat biasa yang kebetulan mengandung kata mirip ("dia punya bakat coding", "show off dikit") tetap NORMAL — dibuktikan eval
+### Fixed
+- 2 false-trigger ditemukan & dibasmi saat repro (kata tunggal "bakat", "show off" tanpa objek semua) → regex diperketat ke frasa summons
+- eval +3 cek (summon all skills → ULTRA; maksimalkan → FULL; false-trigger bakat → NORMAL) — total 18 cek / 8 kasus
+
+## [8.1.1] — 2026-09-09
+### Fixed
+- BUG ROUTER (semantik): prompt biasa sempat diklasifikasi FULL/ULTRA → sekarang NORMAL = respon BIASA (tanpa summon agent/skill/caveman/hermes; skill hanya bila dibutuhkan nyata)
+- "lengkapin/bagusin/matangkan/full" turun kelas dari ULTRA-adjacent → FULL = kerja lebih dalam, respon tetap biasa, TIDAK summon agent
+- ULTRA = hanya SUMMONS eksplisit user ("panggil semuanya/all", "semua agent", "tunjukkan semua kemampuan", "ultra")
+- HUKUM 1 diperjelas: caveman = mode KERJA (eksekusi tugas), bukan gaya bicara sepanjang waktu; percakapan biasa = gaya biasa
+- dev.md GAYA/FASE 0/MATRIKS/DELEGASI + caveman SKILL.md + route SKILL.md + AGENTS.md HUKUM 13 selaras semantik baru; eval +2 cek (pertanyaan biasa → NORMAL; "panggil semuanya" → ULTRA)
+
+## [8.1.0] — 2026-09-09
+### Added
+- HUKUM 13 — ROUTER INTENSITAS (FASE 0): tiap tugas diklasifikasi skill `route` → NORMAL / FULL / ULTRA; sumber kebenaran pemicu = `skills/route/run.sh` (satu tempat, tanpa duplikat)
+- Skill `route` (+run.sh): prompt biasa = jalur inti (tidak boros); pemicu (lengkapin/bagusin/matangkan/full/ultra/panggil semua/tunjukkan semua) = PANGGIL SEMUA — 9 agent + hermes + caveman ULTRA + skill gerbang wajib + verify 10 gerbang — total 56 skill, 16 script jalan
+- Command `/route` — total 31 command
+- dev.md: FASE 0 ROUTE di BOOT + MATRIKS JALUR 3 tingkat + gerbang "pemicu dieksekusi NORMAL DILARANG / prompt biasa dipaksa ULTRA DILARANG"; AGENTS.md HUKUM 4 + router
+- eval kasus 8 (route: biasa→NORMAL, lengkapin→FULL, pemicu maksimum→ULTRA + klaim PANGGIL SEMUA); mutation 11→12 (+route dibikin selalu-ULTRA → tertangkap)
+- docs sinkron 8 tempat (README ×2, USAGE, ARCHITECTURE, ROADMAP, CHANGELOG, install.sh, self-test)
+
 ## [8.0.0] — 2026-09-09
 ### Added
 - 1 agent baru: `hermes` — utusan all-rounder DEV untuk tugas lintas-domain (infra/integrasi/operasi/dokumen/riset/data); laporan wajib format STATUS/KERJA/FILE/BUKTI/SELAIN — total 9 agent
@@ -18,6 +53,9 @@
 - 4 command baru: `/critique`, `/trace`, `/deliver`, `/threat-model` — total 27 command
 - `tests/eval.sh` — eval regresi PERILAKU kit: 6 kasus (klaim tanpa bukti, hitungan salah, injeksi ditangkap, konten bersih lolos, guard blokir secret, doctor sehat); 1 merah = versi tidak boleh dirilis
 - mutation 6→10 sabotase: +HUKUM 11 dihapus, +HUKUM 12 dihapus, +injection-guard dibutakan, +agent critic dihapus — tiap perusakan WAJIB ditangkap gate
+- `docs/THREAT-MODEL.md` — model ancaman kit sendiri (aset/aktor/jalur/mitigasi/sisa, dogfood skill threat-model)
+- CI tambah job eval; Makefile target eval; dev.md pipeline 17 fase (CRITIQUE fase 15) + gerbang rantai bukti & anti-injeksi; BOOT baca PROFIL USER + budget aktif
+- README badge: AGENTS-8, SKILLS-53, COMMANDS-27, HUKUM-12; USAGE/PLAYBOOKS/ARCHITECTURE disinkron v7
 
 ## [6.0.0] — 2026-09-08
 ### Added

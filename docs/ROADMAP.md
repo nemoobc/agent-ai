@@ -6,7 +6,7 @@ Status: `[ ]` belum, `[~]` berjalan, `[x]` selesai.
 
 ---
 
-## TERPASANG (v1–v6) — ringkas
+## TERPASANG (v1–v7) — ringkas
 
 | Versi | Isi utama |
 |---|---|
@@ -18,28 +18,31 @@ Status: `[ ]` belum, `[~]` berjalan, `[x]` selesai.
 | v4.0 | HUKUM 8 konteks, script jalan (git-guard, metrics), /pr /context /upgrade |
 | v5.0 | HUKUM 9 verifikasi, update flow diuji, env-guard, backup, scan, /verify |
 | v6.0 | HUKUM 10 konsistensi, krisis (hotfix/recovery), mutation + bench, arsitektur tertulis, Makefile |
+| v7.0 | HUKUM 11 rantai bukti + HUKUM 12 anti-injeksi, agent critic (adversarial VETO), +8 skill (53), +4 command (27), tests/eval.sh (6 kasus perilaku), mutation 10 sabotase, THREAT-MODEL, profile+budget+deliver |
+| v8.0 | agent hermes (utusan all-rounder, 9 agent), skill clean (+run.sh: allowlist ketat) & estimate (S/M/L/XL dari angka nyata) → 55 skill/15 script, +3 command (/clean /estimate /hermes → 30), mutation 11 sabotase, clean masuk fase LAPOR sebelum deliver |
+| v8.1 | HUKUM 13 router intensitas: FASE 0 route (NORMAL/FULL/ULTRA, sumber pemicu run.sh tunggal), pemicu = PANGGIL SEMUA (9 agent + hermes + caveman ULTRA), skill route (+run.sh) → 56 skill/16 script, +1 command (/route → 31), eval 8 kasus, mutation 12 sabotase |
 
 ---
 
 ## BERIKUTNYA (prioritas dampak × usaha)
 
-### [~] v6.1 — KERJA LINTAS BAHASA
+### [ ] v8.1 — KERJA LINTAS BAHASA
 - **Dampak**: kit dipakai di project non-bash (Python, JS, Go) — sekarang masih bash-centric.
 - **Bukti selesai**: contoh integrasi minimal di 1 bahasa non-shell + lint-kit cek.
 
-### [ ] v6.2 — RILIS OTOMATIS
+### [ ] v8.2 — RILIS OTOMATIS
 - **Dampak**: `/release` jadi satu perintah: bump → changelog → test penuh → zip → upload.
 - **Bukti selesai**: test-update memverifikasi rilis palsu dari versi apa pun.
 
-### [ ] v6.3 — BENCH BERAMBAT
+### [ ] v8.3 — BENCH BERAMBAT
 - **Dampak**: kit tidak boleh makin lambat antar versi; drift = alarm.
 - **Bukti selesai**: bench.sh punya baseline tersimpan dan hard-cap bertingkat.
 
-### [ ] v6.4 — PLUGIN SKILL
+### [ ] v8.4 — PLUGIN SKILL
 - **Dampak**: skill pihak ketiga masuk via manifest, tanpa edit inti.
 - **Bukti selesai**: 1 skill contoh dimuat dari folder luar + diuji.
 
-### [ ] v6.5 — MEMORI TERSTRUKTUR
+### [ ] v8.5 — MEMORI TERSTRUKTUR
 - **Dampak**: recall tidak baca 5 file; index JSON + query.
 - **Bukti selesai**: recall/run.sh (jika ada) membaca index; migration test.
 

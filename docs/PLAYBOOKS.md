@@ -1,4 +1,4 @@
-# PLAYBOOKS — DEV-BRAIN v6.0
+# PLAYBOOKS — DEV-BRAIN v7.0
 
 Resep skenario nyata. Tiap resep = urutan skill/command + gerbang yang tidak boleh dilewati.
 Kamu tetap TIDAK PERLU hafal ini — DEV pilih otomatis. Ini untuk paham cara dia berpikir.
@@ -71,6 +71,29 @@ GERBANG: tanpa freeze → fix fitur dilarang; patch >1 fokus → ditolak; tanpa 
 GERBANG: tanpa snapshot → BERHENTI minta keputusan user (HUKUM 5); restore langsung ke produksi tanpa uji salinan → dilarang.
 
 ## 17. SATU TOMBOL VERIFIKASI (HUKUM 9 + 10)
-**make verify** (atau /verify): lint-kit → self-test → e2e → demo → test-update → mutation → bench → audit → doctor. Laporan SELESAI hanya setelah semua hijau
+**make verify** (atau /verify): lint-kit → self-test → eval → e2e → demo → test-update → mutation → bench → audit → doctor. Laporan SELESAI hanya setelah semua hijau
 GERBANG: satu merah → fix dulu → ulang. Hitungan nyasar (badge/tabel) → lint/self-test menolak laporan.
+
+## 18. LAPOR SELESAI (HUKUM 11 + CRITIC)
+**/critique**: klaim dikumpulkan → task critic (5 tembakan: spesifikasi/logika/bukti/skenario/gap) → VETO? task fixer → ulang → **/trace**: tiap klaim KLAIM→BENTUK→BUKTI→SELAIN → lapor ≤8 baris
+GERBANG: laporan tanpa rantai bukti ditolak; VETO tersisa → SELESAI DILARANG.
+
+## 19. SERAH KERJA TANPA GIT (user pegang repo)
+**/deliver [jam]**: skill clean dulu (artefak gak ikut zip) → git-guard (merah → BATAL) → deliver/run.sh (zip tanpa .git → upload tmpfiles.org) → lapor ukuran + jumlah file + link + masa hidup
+GERBANG: commit/push/upload TANPA perintah eksplisit user = DILARANG (HUKUM 5); secret lolos guard → tidak ada zip.
+
+## 20. TUGAS LINTAS-DOMAIN (infra/integrasi/operasi/riset)
+**/hermes <tugas>**: plan singkat → task hermes (lapor STATUS/KERJA/FILE/BUKTI/SELAIN) → test-full + audit-full atas hasil → fixer bila merah → DEV lapor rantai bukti
+GERBANG: aksi destruktif/berbiaya dari hermes → eskalasi user (HUKUM 5); laporan tanpa exit code → ditolak.
+
+## 21. TUGAS BESAR (SKALA SEBELUM KERJA)
+**/estimate <tugas>**: scan (angka nyata) → pecah item S/M/L/XL (risiko +1 tingkat) → total + rentang best/worst → masuk plan + milestone
+GERBANG: item tanpa file target = tebakan → scan dulu; XL tanpa milestone = DILARANG mulai.
+
+## 22. BERSIH-BERSIH AMAN
+**/clean [--dry]**: ragu → --dry dulu (target + ukuran, tanpa hapus) → REAL → lapor byte dibebaskan → deliver/zip jadi bersih
+
+## 23. ROUTE INTENSITAS (HUKUM 13, FASE 0)
+**/route <prompt>**: run.sh klasifikasi NORMAL/FULL/ULTRA → NORMAL = respon BIASA (tanpa summon agent/skill; skill hanya bila dibutuhkan); FULL = kerja lebih dalam (riset/test/dok/critic ringan), respon tetap biasa; ULTRA = PANGGIL SEMUA (9 agent + hermes + caveman ULTRA + skill gerbang wajib + verify 10 gerbang) — HANYA untuk summons eksplisit ("panggil semuanya", "summon all skills", "ultra", "all-out"). Kosakata pemicu luas ID+EN (v8.1.2); kalimat biasa yang kebetulan mirip pemicu tetap NORMAL (anti false-trigger, diuji eval). Konflik → tertinggi. Prompt biasa di-summon DILARANG; summons dijawab NORMAL DILARANG.
+GERBANG: node_modules/.git/.env/kode sumber TIDAK PERNAH disentuh — allowlist di script, bukan keputusan momen.
 
