@@ -7,6 +7,5 @@
     </linearGradient>
   </defs>
   <rect width="600" height="120" fill="#0a0a1a" rx="12"/>
-  <text x="300" y="75" font-family="Arial, sans-serif" font-size="52" font-weight="bold" fill="url(#grad)" text-anchor="middle" dominant-baseline="middle">AGENT AI</text>
-  <text x="300" y="105" font-family="Arial, sans-serif" font-size="12" fill="#8888aa" text-anchor="middle">otak utama • caveman mode permanen • ultronomatis</text>
+  <text x="300" y="65" font-family="Arial, sans-serif" font-size="52" font-weight="bold" fill="url(#grad)" text-anchor="middle" dominant-baseline="middle">AGENT AI</text>
 </svg>
