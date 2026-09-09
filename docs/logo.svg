@@ -8,21 +8,17 @@
         <animate attributeName="stop-color" values="#764ba2;#4facfe;#f093fb;#f5576c;#764ba2" dur="2s" repeatCount="indefinite"/>
       </stop>
     </linearGradient>
-    <linearGradient id="txt" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#ffffff">
-        <animate attributeName="stop-color" values="#ffffff;#ffff00;#00ff00;#ff00ff;#ffffff" dur="2s" repeatCount="indefinite"/>
-      </stop>
-      <stop offset="100%" stop-color="#ffffff">
-        <animate attributeName="stop-color" values="#ffffff;#00ffff;#ff0000;#00ff00;#ffffff" dur="2s" repeatCount="indefinite"/>
-      </stop>
-    </linearGradient>
   </defs>
   <rect x="5" y="5" width="490" height="110" fill="url(#bg)" rx="16">
     <animate attributeName="rx" values="16;20;16" dur="1s" repeatCount="indefinite"/>
   </rect>
   <rect x="10" y="10" width="480" height="100" fill="#0a0a1a" rx="12"/>
-  <text x="250" y="65" font-family="Arial,sans-serif" font-size="56" font-weight="900" fill="url(#txt)" text-anchor="middle" dominant-baseline="middle">
-    AGENT AI
+  <text x="250" y="65" font-family="Arial,sans-serif" font-size="56" font-weight="900" text-anchor="middle" dominant-baseline="middle">
+    <tspan fill="#ffffff">AGENT </tspan>
+    <tspan fill="#ffffff">
+      AI
+      <animate attributeName="fill" values="#ffffff;#4facfe;#ffffff;#f093fb;#ffffff;#f5576c;#ffffff;#764ba2;#ffffff" dur="1.5s" repeatCount="indefinite"/>
+    </tspan>
     <animate attributeName="font-size" values="56;60;56" dur="1s" repeatCount="indefinite"/>
   </text>
 </svg>
