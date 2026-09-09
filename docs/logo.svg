@@ -13,7 +13,7 @@
     </linearGradient>
   </defs>
   <rect width="800" height="150" fill="#0a0a1a" rx="12"/>
-  <text x="400" y="95" font-family="Arial,sans-serif" font-size="90" font-weight="900" fill="url(#g)" text-anchor="middle">
+  <text x="400" y="75" font-family="Arial,sans-serif" font-size="90" font-weight="900" fill="url(#g)" text-anchor="middle" dominant-baseline="middle">
     AGENT AI
     <animate attributeName="font-size" values="90;95;90" dur="1.5s" repeatCount="indefinite"/>
   </text>
