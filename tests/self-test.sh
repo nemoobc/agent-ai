@@ -48,12 +48,12 @@ fi
 p "▮ SELF-TEST: struktur kit lengkap" 213
 NSKILL=$(ls -1d "$DIR"/skills/*/ 2>/dev/null | wc -l | tr -d ' ')
 NCMD=$(ls -1 "$DIR"/command/*.md 2>/dev/null | wc -l | tr -d ' ')
-[ "$NSKILL" -eq 45 ] && ok "45 skill terdeteksi ($NSKILL)" || bad "jumlah skill = $NSKILL, harusnya 45"
-[ "$NCMD" -eq 23 ] && ok "23 command terdeteksi" || bad "jumlah command = $NCMD, harusnya 23"
+[ "$NSKILL" -eq 55 ] && ok "55 skill terdeteksi ($NSKILL)" || bad "jumlah skill = $NSKILL, harusnya 55"
+[ "$NCMD" -eq 30 ] && ok "30 command terdeteksi" || bad "jumlah command = $NCMD, harusnya 30"
 [ -f "$DIR/VERSION" ] && ok "VERSION ada" || bad "VERSION hilang"
 [ -f "$DIR/CHANGELOG.md" ] && ok "CHANGELOG ada" || bad "CHANGELOG hilang"
 [ -f "$DIR/LICENSE" ] && ok "LICENSE ada" || bad "LICENSE hilang"
-for s in scan plan debug doc-full doctor review refactor cost perf explain i18n changelog caveman-warmup learn milestone test-design api-design migrate postmortem spec research red-team team autonomy metrics handoff a11y context pr git-guard env-guard backup dependency hotfix recovery convention coverage; do
+for s in scan plan debug doc-full doctor review refactor cost perf explain i18n changelog caveman-warmup learn milestone test-design api-design migrate postmortem spec research red-team team autonomy metrics handoff a11y context pr git-guard env-guard backup dependency hotfix recovery convention coverage budget clean critique deliver estimate eval injection-guard profile threat-model trace; do
   [ -f "$DIR/skills/$s/SKILL.md" ] && ok "skill $s ada" || bad "skill $s hilang"
 done
 [ -f "$DIR/skills/doctor/run.sh" ] && ok "doctor/run.sh ada" || bad "doctor/run.sh hilang"

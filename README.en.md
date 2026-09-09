@@ -3,7 +3,7 @@
 A permanent brain for your AI agent. Install once, active in every session.
 No agent to pick. Type a task → DEV orchestrates on its own.
 
-- **Version**: 6.0.0 — 7 agents, 45 skills, 23 commands, 10 laws, 11 executable scripts
+- **Version**: 8.0.0 — 9 agents, 55 skills, 30 commands, 12 laws, 15 executable scripts
 - **Pipeline**: recall+scan → think+spec → research → imagine/architect → plan (8 blocks, shown first) → coder → test → audit+red-team → fix → (debug) → (doc) → (cost) → memory/learn → report
 - **Language**: follows the user. Default: Indonesian (full docs are Indonesian).
 

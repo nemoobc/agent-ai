@@ -171,6 +171,9 @@ write_brain(){
     "$CFG/skill/handoff" "$CFG/skill/a11y"    "$CFG/skill/context" "$CFG/skill/pr" \
     "$CFG/skill/git-guard" "$CFG/skill/env-guard" "$CFG/skill/backup" "$CFG/skill/dependency" \
     "$CFG/skill/hotfix" "$CFG/skill/recovery" "$CFG/skill/convention" "$CFG/skill/coverage" \
+    "$CFG/skill/budget" "$CFG/skill/clean" "$CFG/skill/critique" "$CFG/skill/deliver" \
+    "$CFG/skill/estimate" "$CFG/skill/eval" "$CFG/skill/injection-guard" "$CFG/skill/profile" \
+    "$CFG/skill/threat-model" "$CFG/skill/trace" \
     "$CFG/skill/test-full" "$CFG/skill/audit-full" "$CFG/skill/fix-full"
 
   # spinner
