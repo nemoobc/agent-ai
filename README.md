@@ -1,5 +1,5 @@
 <h1 align="center">
-<img src="docs/agent-ai-logo.svg" alt="AGENT AI" width="400">
+<img src="docs/logo.svg" alt="AGENT AI" width="400">
 </h1>
 
 ![Pipeline](https://img.shields.io/badge/PIPELINE-SCAN→MIKIR→BAYANG→GODOK→BANGUN→TEST→AUDIT→FIX→BUG→DOK→INGAT-ff69b4?style=for-the-badge)

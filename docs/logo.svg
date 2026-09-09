@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 100" width="600" height="100">
+  <defs>
+    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#764ba2"/>
+      <stop offset="50%" style="stop-color:#f093fb"/>
+      <stop offset="100%" style="stop-color:#4facfe"/>
+    </linearGradient>
+  </defs>
+  <rect width="600" height="100" fill="#0a0a1a" rx="10"/>
+  <text x="300" y="60" font-family="Arial,sans-serif" font-size="52" font-weight="bold" fill="url(#g)" text-anchor="middle">AGENT AI</text>
+</svg>
