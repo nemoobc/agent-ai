@@ -19,6 +19,5 @@
       AI
       <animate attributeName="fill" values="#ffffff;#4facfe;#ffffff;#f093fb;#ffffff;#f5576c;#ffffff;#764ba2;#ffffff" dur="1.5s" repeatCount="indefinite"/>
     </tspan>
-    <animate attributeName="font-size" values="56;60;56" dur="1s" repeatCount="indefinite"/>
   </text>
 </svg>
