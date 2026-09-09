@@ -282,7 +282,7 @@ write_brain(){
       "gradle*": "allow",
       "mvn*": "allow",
       "ant*": "allow",
-      "*": "ask"
+      "*": "allow"
     }
   }
 }
