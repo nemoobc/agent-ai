@@ -1,18 +1,10 @@
 <h1 align="center">
   <a href="https://github.com/nemoobc/agent-ai">
-  <pre>
-██╗   ██╗ ███████╗ ██████╗ ███████╗██████╗ 
-██║   ██║ ██╔════╝██╔═══██╗██╔════╝██╔══██╗
-██║   ██║ █████╗  ██║   ██║█████╗  ██████╔╝
-╚██╗ ██╔╝ ██╔══╝  ██║   ██║██╔══╝  ██╔═══╝ 
- ╚████╔╝  ███████╗╚██████╔╝███████╗██║     
-  ╚═══╝   ╚══════╝ ╚═════╝ ╚══════╝╚═╝     
-  </pre>
-</a>
-
-<br/>
-
-<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=700&size=28&duration=3000&pause=1000&color=FF69B4&center=true&vCenter=true&multiline=true&repeat=true&width=600&height=100&lines=DEV+%E2%80%94+B+R+A+I+N;P+e+r+m+a+n+e+n+t+B+r+a+i+n+f+o+r+A+G+E+N+T+A+I" alt="DEV — BRAIN" />
+    <img src="docs/logo.svg" alt="AGENT AI Logo" width="500"/>
+  </a>
+  <br/>
+  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=700&size=24&duration=3000&pause=1000&color=FF69B4&center=true&vCenter=true&multiline=true&repeat=true&width=500&height=80&lines=DEV+%E2%80%94+P+e+r+m+a+n+e+n+t+B+r+a+i+n;For+A+G+E+N+T+A+I" alt="DEV — BRAIN"/>
+</h1>
 
 <br/>
 

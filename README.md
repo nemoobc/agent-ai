@@ -1,23 +1,13 @@
 <h1 align="center">
   <a href="https://github.com/nemoobc/agent-ai">
-  <pre>
-██╗   ██╗ ███████╗ ██████╗ ███████╗██████╗ 
-██║   ██║ ██╔════╝██╔═══██╗██╔════╝██╔══██╗
-██║   ██║ █████╗  ██║   ██║█████╗  ██████╔╝
-╚██╗ ██╔╝ ██╔══╝  ██║   ██║██╔══╝  ██╔═══╝ 
- ╚████╔╝  ███████╗╚██████╔╝███████╗██║     
-  ╚═══╝   ╚══════╝ ╚═════╝ ╚══════╝╚═╝     
-  </pre>
-</a>
+    <img src="docs/logo.svg" alt="AGENT AI Logo" width="500"/>
+  </a>
+  <br/>
+  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=700&size=24&duration=3000&pause=1000&color=FF69B4&center=true&vCenter=true&multiline=true&repeat=true&width=500&height=80&lines=DEV+%E2%80%94+O.t.a.k+U.t.a.m.a;Caveman+Mode+%E2%9A%94%EF%B8%8F+ULTRA" alt="DEV — BRAIN"/>
+</h1>
 
 <br/>
 
-<!-- ANIMATED TITLE -->
-<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=700&size=28&duration=3000&pause=1000&color=FF69B4&center=true&vCenter=true&multiline=true&repeat=true&width=600&height=100&lines=DEV+%E2%80%94+B+R+A+I+N;O.t.a.k+U.t.a.m.a+A+G+E+N+T+A+I" alt="DEV — BRAIN" />
-
-<br/>
-
-<!-- SHIELD BADGES WITH ANIMATION -->
 <p align="center">
   <a href="#pipeline">
     <img src="https://img.shields.io/badge/🔄_PIPELINE-SCAN→MIKIR→BAYANG→GODOK→BANGUN→TEST→AUDIT→FIX-ff69b4?style=for-the-badge&logo=github&logoColor=white" alt="Pipeline"/>
@@ -41,7 +31,6 @@
 
 <br/>
 
-<!-- TYPING ANIMATION -->
 <p align="center">
   <img src="https://readme-typing-svg.demolab.com?font=Space+Mono&weight=400&size=14&duration=4000&pause=2000&color=82D815&center=true&vCenter=true&multiline=true&repeat=true&width=500&height=80&lines=Ketik+tugas+→+DEV+jalan+sendiri;Tidak+perlu+pilih+agent;Caveman+mode+→+ULTRA" alt="Typing"/>
 </p>
