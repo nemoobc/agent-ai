@@ -63,9 +63,11 @@ done
 banner(){
   local v=$(cat "$SCRIPT_DIR/VERSION" 2>/dev/null | tr -d '[:space:]')
   echo
-  echo "  ╔═══════════════════════════════╗"
-  echo "  ║         AGENT  AI             ║"
-  echo "  ╚═══════════════════════════════╝"
+  echo "  ╔═══════════════════════════════════╗"
+  echo "  ║                                   ║"
+  echo "  ║      A G E N T   A I              ║"
+  echo "  ║                                   ║"
+  echo "  ╚═══════════════════════════════════╝"
   echo
   pc 45 "   otak utama: DEV • caveman mode ULTRA • ultronomatis"
   [ -n "$v" ] && pc 45 "   versi: $v"
@@ -307,9 +309,9 @@ EOF
 finish(){
   step "VERIFIKASI"
   echo
-  pc 213 '  ╔════════════════════════════════════════╗'
-  pc 177 '  ║   D E V — B R A I N   O N L I N E      ║'
-  pc 141 '  ╚════════════════════════════════════════╝'
+  echo "  ╔═══════════════════════════════════╗"
+  echo "  ║      A G E N T   A I              ║"
+  echo "  ╚═══════════════════════════════════╝"
   echo
   ok "7 agent • 41 skill (10 dengan bash script) • 20 command • memori + pelajaran persisten"
   echo
