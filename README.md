@@ -2,8 +2,8 @@
 <a href="docs/logo.html"><img src="docs/logo.svg" alt="AGENT AI" width="400"></a>
 </h1>
 
-![Pipeline](https://img.shields.io/badge/PIPELINE-SCAN→MIKIR→BAYANG→GODOK→BANGUN→TEST→AUDIT→FIX→BUG→DOK→INGAT-ff69b4?style=for-the-badge)
-![Version](https://img.shields.io/badge/VERSION-6.0.0-ff69b4?style=for-the-badge)
+![Pipeline](https://img.shields.io/badge/PIPELINE-SCAN→MIKIR→BAYANG→GODOK→BANGUN→TEST→AUDIT→FIX→BUG→DOK→INGAT-764ba2?style=for-the-badge)
+![Version](https://img.shields.io/badge/VERSION-6.0.0-4facfe?style=for-the-badge)
 ![Agents](https://img.shields.io/badge/AGENTS-7-00d2ff?style=for-the-badge)
 ![Skills](https://img.shields.io/badge/SKILLS-45-82d815?style=for-the-badge)
 ![Commands](https://img.shields.io/badge/COMMANDS-23-ffd700?style=for-the-badge)
