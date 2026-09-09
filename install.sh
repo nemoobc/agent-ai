@@ -61,17 +61,30 @@ while [ $# -gt 0 ]; do
 done
 
 banner(){
-  pc 213 '   ██████╗ ███████╗██████╗ '
-  pc 177 '   ██╔══██╗██╔════╝██╔══██╗'
-  pc 141 '   ██║  ██║███████╗██████╔╝'
-  pc 105 '   ██║  ██║╚════██║██╔═══╝ '
-  pc 69  '   ██████╔╝███████║██║     '
-  pc 33  '   ╚═════╝ ╚══════╝╚═╝     A G E N T   A I'
+  local v=$(cat "$SCRIPT_DIR/VERSION" 2>/dev/null | tr -d '[:space:]')
+  echo
+  echo "  ╔═══════════════════════════════════════╗"
+  echo "  ║                                       ║"
+  echo "  ║      ▄▀▀▄ ▄▀▀▄ ▄▀▀▄ ▄▀▀▄ ▄▀▀▄       ║"
+  echo "  ║      █  █ █  █ █  █ █  █ █  █        ║"
+  echo "  ║      ▀▄▄▀ ▀▄▄▀ ▀▄▄▀ ▀▄▄▀ ▀▄▄▀        ║"
+  echo "  ║                                       ║"
+  echo "  ╚═══════════════════════════════════════╝"
   echo
   pc 45 "   otak utama: DEV • caveman mode ULTRA • ultronomatis"
-  [ -f "$SCRIPT_DIR/VERSION" ] && pc 45 "   versi: $(cat "$SCRIPT_DIR/VERSION" | tr -d '[:space:]')"
+  [ -n "$v" ] && pc 45 "   versi: $v"
   pc 45 "   auto test/audit/fix ✓ • memori persisten ✓"
   echo
+}
+
+loading(){
+  local msg="${1:-Memuat}"
+  local i=0
+  local chars='⠋⠙⠹⠸⠼⠴⠦⠧⠇⠏'
+  while true; do
+    printf "\r  ${chars:i++%${#chars}:1} $msg"
+    sleep 0.1
+  done
 }
 
 # ── update dari GitHub ──
