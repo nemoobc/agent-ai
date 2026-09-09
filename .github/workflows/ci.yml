@@ -29,6 +29,9 @@ jobs:
       - name: e2e — simulate full agent flow (think→plan→build→test→audit→fix)
         run: bash tests/e2e-flow.sh
 
+      - name: Eval — behavioral regression (klaim palsu, injeksi, guard)
+        run: bash tests/eval.sh
+
       - name: Update flow — upgrade + anti-downgrade
         run: bash tests/test-update.sh
 
