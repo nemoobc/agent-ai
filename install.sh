@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
-# ═════════════════════════════════════════════════════════════════
+# ═══════════════════════════════════════════════════════════════
 #   ██████╗ ███████╗██████╗
-#   ██╔══██╗██╔════╝██╔══██╗     D E V — B R A I N
+#   ██╔══██╗██╔════╝██╔══██╗     A G E N T   A I
 #   ██║  ██║███████╗██████╔╝     agent-ai full-agent installer
 #   ██║  ██║╚════██║██╔═══╝      caveman mode • permanen • ultronomatis
 #   ██████╔╝███████║██║          auto: think→build→test→audit→fix
@@ -9,6 +9,7 @@
 # ─────────────────────────────────────────────────────────────────
 # Pakai  : bash install.sh [--project DIR] [--uninstall]
 # ═════════════════════════════════════════════════════════════════
+clear
 set -u
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
@@ -63,15 +64,16 @@ done
 banner(){
   local v=$(cat "$SCRIPT_DIR/VERSION" 2>/dev/null | tr -d '[:space:]')
   echo
-  echo "  ╔═══════════════════════════════════╗"
-  echo "  ║                                   ║"
-  echo "  ║      A G E N T   A I              ║"
-  echo "  ║                                   ║"
-  echo "  ╚═══════════════════════════════════╝"
+  pc 32 '  ╔═══════════════════════════════════╗'
+  pc 32 '  ║                                   ║'
+  pc 31 '  ║       A G E N T   A I             ║'
+  pc 32 '  ║                                   ║'
+  pc 32 '  ╚═══════════════════════════════════╝'
   echo
   pc 45 "   otak utama: DEV • caveman mode ULTRA • ultronomatis"
   [ -n "$v" ] && pc 45 "   versi: $v"
   pc 45 "   auto test/audit/fix ✓ • memori persisten ✓"
+  echo
   echo
 }
 
@@ -171,6 +173,12 @@ write_brain(){
     "$CFG/skill/hotfix" "$CFG/skill/recovery" "$CFG/skill/convention" "$CFG/skill/coverage" \
     "$CFG/skill/test-full" "$CFG/skill/audit-full" "$CFG/skill/fix-full"
 
+  # spinner
+  local sp='⠋⠙⠹⠸⠼⠴⠦⠧⠇⠏'
+  local i=0
+  (while true; do printf "\r  ${sp:i++%${#sp}:1} menyalin file otak..."; sleep 0.08; done) &
+  SPID=$!
+
   # backup config lama HANYA bila itu bukan tulisan AGENT AI (marker)
   if [ -f "$CFG/opencode.json" ] && ! grep -q '"devbrain"' "$CFG/opencode.json" 2>/dev/null; then
     cp "$CFG/opencode.json" "$CFG/opencode.json.bak.$(date +%s)"
@@ -201,8 +209,9 @@ EOF
 
   # copy agents
   for f in "$SCRIPT_DIR/agents/"*.md; do
-    [ -f "$f" ] && cp "$f" "$CFG/agent/" && ok "agent: $(basename "$f")"
+    [ -f "$f" ] && cp "$f" "$CFG/agent/"
   done
+  local agent_count=$(ls "$CFG/agent/"*.md 2>/dev/null | wc -l)
 
   # copy skills (SKILL.md + run.sh)
   for skill_dir in "$SCRIPT_DIR/skills/"*/; do
@@ -210,13 +219,21 @@ EOF
     mkdir -p "$CFG/skill/$skill_name"
     [ -f "$skill_dir/SKILL.md" ] && cp "$skill_dir/SKILL.md" "$CFG/skill/$skill_name/"
     [ -f "$skill_dir/run.sh" ] && { cp "$skill_dir/run.sh" "$CFG/skill/$skill_name/"; chmod +x "$CFG/skill/$skill_name/run.sh"; }
-    ok "skill: $skill_name"
   done
+  local skill_count=$(ls -d "$CFG/skill/"*/ 2>/dev/null | wc -l)
 
   # copy commands
   for f in "$SCRIPT_DIR/command/"*.md; do
-    [ -f "$f" ] && cp "$f" "$CFG/command/" && ok "command: $(basename "$f")"
+    [ -f "$f" ] && cp "$f" "$CFG/command/"
   done
+  local cmd_count=$(ls "$CFG/command/"*.md 2>/dev/null | wc -l)
+
+  # stop spinner
+  kill $SPID 2>/dev/null; wait $SPID 2>/dev/null
+  printf "\r\033[K"
+  ok "agent: $agent_count file"
+  ok "skill: $skill_count folder"
+  ok "command: $cmd_count file"
 
   # copy AGENTS.md (doctrine)
   [ -f "$SCRIPT_DIR/AGENTS.md" ] && cp "$SCRIPT_DIR/AGENTS.md" "$CFG/" && ok "doctrine: AGENTS.md"
@@ -307,24 +324,12 @@ EOF
 
 # ── verifikasi & banner akhir ──
 finish(){
-  step "VERIFIKASI"
   echo
-  echo "  ╔═══════════════════════════════════╗"
-  echo "  ║      A G E N T   A I              ║"
-  echo "  ╚═══════════════════════════════════╝"
-  echo
-  ok "7 agent • 41 skill (10 dengan bash script) • 20 command • memori + pelajaran persisten"
-  echo
-  pc 45  "  CARA PAKAI:"
-  pc 45  "  1) buka folder project apa saja"
-  pc 45  "  2) jalankan:  opencode"
-  pc 45  "  3) DEV otomatis aktif (satu-satunya primary)"
-  pc 45  "  4) ketik tugas bahasa bebas, contoh:"
-  pc 213 "     \"buat halaman login, testnya sekalian, audit juga\""
-  pc 45  "  5) DEV jalan: mikir→bayang→rencana tampil→bangun→test→audit→ingat"
-  echo
-  pc 45  "  SHORTCUT : /ship <tugas>   /fix   /memory"
-  pc 214 "  API key  : jalankan  opencode auth login  bila belum"
+  pc 33 '  ╔═══════════════════════════════╗'
+  pc 33 '  ║                               ║'
+  pc 33 '  ║         S U K S E S           ║'
+  pc 33 '  ║                               ║'
+  pc 33 '  ╚═══════════════════════════════╝'
   echo
 }
 
