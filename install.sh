@@ -63,13 +63,9 @@ done
 banner(){
   local v=$(cat "$SCRIPT_DIR/VERSION" 2>/dev/null | tr -d '[:space:]')
   echo
-  echo "  ╔═══════════════════════════════════════╗"
-  echo "  ║                                       ║"
-  echo "  ║      ▄▀▀▄ ▄▀▀▄ ▄▀▀▄ ▄▀▀▄ ▄▀▀▄       ║"
-  echo "  ║      █  █ █  █ █  █ █  █ █  █        ║"
-  echo "  ║      ▀▄▄▀ ▀▄▄▀ ▀▄▄▀ ▀▄▄▀ ▀▄▄▀        ║"
-  echo "  ║                                       ║"
-  echo "  ╚═══════════════════════════════════════╝"
+  echo "  ╔═══════════════════════════════╗"
+  echo "  ║         AGENT  AI             ║"
+  echo "  ╚═══════════════════════════════╝"
   echo
   pc 45 "   otak utama: DEV • caveman mode ULTRA • ultronomatis"
   [ -n "$v" ] && pc 45 "   versi: $v"
