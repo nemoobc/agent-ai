@@ -1,6 +1,31 @@
 # LESSONS — pelajaran terukur (skill learn)
 Entry terbaru di atas. Format: POLA / BUKTI / AKSI. Tanpa bukti = tidak masuk.
 
+## 2026-09-10 — 1 file 1 baris, cetak ganda dibaca sebagai nimpa (v8.2.0)
+- POLA: cetak ganda ok+pbar dibaca user sebagai nimpa
+- BUKTI: 96 pasang ok+pbar label sama di output --offline 232 baris
+- AKSI: 1 file 1 baris — gabung jadi okbar/errbar (232→136 baris)
+
+## 2026-09-10 — fail-fast tengah loop tinggalkan setengah-tulis (v8.2.0)
+- POLA: fail-fast tengah loop tinggalkan setengah-tulis
+- BUKTI: critic VETO
+- AKSI: _FAIL kumpul-akhir-exit1 + pesan "ulangi install"
+
+## 2026-09-10 — glob-nol tetap exit0 tanpa guard counter (v8.2.0)
+- POLA: glob-nol tetap exit0
+- BUKTI: simulasi agents-kosong
+- AKSI: guard counter-nol → exit1
+
+## 2026-09-10 — badge ganda bikin gate palsu + MAIN && menelan gagal (v8.2.0)
+- POLA: footer badge ganda bikin gate palsu bila test head -1; MAIN && menelan gagal
+- BUKTI: probe SKILLS-99 lolos sebelum fix, FAIL setelah fix; --project nonexistent exit0 sebelum fix, exit1 setelah
+- AKSI: badge parsable tunggal + test sort -u; MAIN if ... || exit 1
+
+## 2026-09-10 — animasi \r menimpa log, wajib append-only (v8.2.0)
+- POLA: animasi \r menimpa log
+- BUKTI: grep \r=0 + matrix TTY/CI/NO_ANIM exit0
+- AKSI: append-only newline + auto-disable non-TTY (can_anim TTY/CI/NO_ANIM/dumb/NO_COLOR, --no-anim/NO_ANIM, trap)
+
 ## 2026-09-09 — upgrade besar = audit turn-sebelumnya dulu, sebelum tambah apa pun
 - POLA: file baru ditulis turn sebelumnya ≠ selesai; tanpa audit, duplikat patch & sabotase test yang gak nempel lolos senyap
 - BUKTI: v7.0.0 — AGENTS.md HUKUM 11/12 ter-duplikat penuh (lint GAK nangkep duplikat, cuma keberadaan); mutation sabotase `-eq 45` di count yang sudah 53 → "gate LOLOS = detektor palsu"; self-test panggil `bash "$path show"` satu-argumen → 127; eval cetak 7/6

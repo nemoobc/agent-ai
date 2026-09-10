@@ -15,6 +15,11 @@
 - keputusan: 4 skill baru (debug/scan/plan/doc-full) biar pipeline 100% tercover; TIDAK tambah agent (7 cukup, tambah agent = overhead); gerbang fase keras di dev.md; command /audit; VERSION 2.0.0 + CHANGELOG
 - pembelajaran: skill = leverage murah, agent = biaya orkestrasi; badge README kini dikunci self-test (badge ≠ isi repo = FAIL); bash ls dengan glob ke-quote ("*.md") jadi literal → count 0
 
+## 2026-09-10 — Rombak README + animasi install append-only v8.2.0
+- konteks: user "panggil semuanya full, rombak full readme md buat baru, animasi installnya rombak lagi yang baru buat full animasi ada animasi loadingnya tanpa timpa teks" → ROUTE ULTRA (panggil semuanya), 9 subagent dipanggil (architect/explore/hermes-research/memory/coder-x2/hermes-docs/tester/auditor/fixer/critic-x2)
+- keputusan: README 1214→231 baris 10 section fresh (badge tunggal header :7-10, footer teks manusia :227); install 472→595 baris anim append-only (banner_reveal/ph/pdone/dots/spin/pbar, --no-anim/NO_ANIM, trap, can_anim TTY/CI/NO_ANIM/dumb/NO_COLOR) + MAIN propagasi exit1; VERSION 8.2.0 + CHANGELOG + README.en sync; self-test ketat varian-unik (badge ganda/beda FAIL)
+- pembelajaran: badge tunggal parsable + test sort -u; MAIN if || exit 1; animasi append-only newline + auto-disable non-TTY; angka: lint 240 LOLOS, self 174 PASS, eval 18/8 PASS, e2e 7 UTUH, demo 6 TERBUKTI, update 5 TERBUKTI, mutation 12/12, audit CLEAN, doctor SEHAT, critic CLEAN (VETO 2 tertutup)
+
 Format entry (ditulis otomatis oleh DEV di akhir tugas penting):
 
 ## YYYY-MM-DD — judul singkat
@@ -26,3 +31,8 @@ Format entry (ditulis otomatis oleh DEV di akhir tugas penting):
 - konteks: repo agent-ai = kit konfigurasi opencode (agents/skills/command/memory + install.sh), branch master, remote nemoobc/agent-ai
 - keputusan: perbaiki 14 temuan audit — false-positive npm audit, permission bash granular (allowlist run.sh + git read-only), uninstall bersih, tsc guard, regex password ketat, pattern TODO komentar, LICENSE MIT, self-test suite, CI Actions
 - pembelajaran: output sehat `npm audit` tetap mengandung kata "vulnerabilities" → grep harus menuju angka ≥1; installer yang menulis config wajib punya marker ("devbrain") supaya uninstall bisa bedakan config milik kit vs config user
+
+## 2026-09-10 — install 1-baris-per-file (okbar/errbar) v8.2.0
+- konteks: user "animasi loading berjalan, teksnya masih nimpa, full panggil semuanya" → ROUTE ULTRA; bukti hermes: output --offline 232 baris, 96 pasang ok+pbar label sama
+- keputusan: gabung ok+pbar jadi okbar/errbar 1 baris (232→136 baris); _FAIL lanjut-lalu-exit1 + pesan "ulangi install"; SKILL.md wajib; counter-nol → exit1; pbar mati dihapus; CHANGELOG entry (VERSION tetap 8.2.0)
+- pembelajaran: cetak ganda ok+pbar dibaca sebagai nimpa; fail-fast tinggalkan setengah-tulis → kumpul-akhir-exit1; glob-nol butuh guard counter; angka: lint 240, self 174, eval 18/8, e2e 7, demo 6, update 5, mutation 12/12, bench 6 PASS, audit CLEAN, doctor SEHAT, critic CLEAN (VETO 2 tertutup)

@@ -110,9 +110,15 @@ done
 grep -q 'HUKUM 11' "$DIR/AGENTS.md" && ok "AGENTS.md punya HUKUM 11 (rantai bukti)" || bad "HUKUM 11 hilang"
 grep -q 'HUKUM 12' "$DIR/AGENTS.md" && ok "AGENTS.md punya HUKUM 12 (anti-injeksi)" || bad "HUKUM 12 hilang"
 grep -q 'critic' "$DIR/agents/dev.md" && ok "dev.md delegasi critic" || bad "dev.md tanpa critic"
-BSKILL=$(grep -oE 'SKILLS-[0-9]+' "$DIR/README.md" | grep -oE '[0-9]+')
-BAGENT=$(grep -oE 'AGENTS-[0-9]+' "$DIR/README.md" | grep -oE '[0-9]+')
-BCMD=$(grep -oE 'COMMANDS-[0-9]+' "$DIR/README.md" | grep -oE '[0-9]+')
+BSKILL_N=$(grep -oE 'SKILLS-[0-9]+' "$DIR/README.md" | sort -u | wc -l | tr -d ' ')
+[ "$BSKILL_N" -eq 1 ] && ok "badge SKILLS tunggal" || bad "badge SKILLS ganda/beda ($BSKILL_N varian)"
+BSKILL=$(grep -oE 'SKILLS-[0-9]+' "$DIR/README.md" | grep -oE '[0-9]+' | head -1)
+BAGENT_N=$(grep -oE 'AGENTS-[0-9]+' "$DIR/README.md" | sort -u | wc -l | tr -d ' ')
+[ "$BAGENT_N" -eq 1 ] && ok "badge AGENTS tunggal" || bad "badge AGENTS ganda/beda ($BAGENT_N varian)"
+BAGENT=$(grep -oE 'AGENTS-[0-9]+' "$DIR/README.md" | grep -oE '[0-9]+' | head -1)
+BCMD_N=$(grep -oE 'COMMANDS-[0-9]+' "$DIR/README.md" | sort -u | wc -l | tr -d ' ')
+[ "$BCMD_N" -eq 1 ] && ok "badge COMMANDS tunggal" || bad "badge COMMANDS ganda/beda ($BCMD_N varian)"
+BCMD=$(grep -oE 'COMMANDS-[0-9]+' "$DIR/README.md" | grep -oE '[0-9]+' | head -1)
 [ "$BAGENT" = "$NAGENT" ] && ok "badge AGENTS=$BAGENT cocok" || bad "badge AGENTS=$BAGENT ≠ $NAGENT"
 [ "$BSKILL" = "$NSKILL" ] && ok "badge SKILLS=$BSKILL cocok" || bad "badge SKILLS=$BSKILL ≠ $NSKILL"
 [ "$BCMD" = "$NCMD" ] && ok "badge COMMANDS=$BCMD cocok" || bad "badge COMMANDS=$BCMD ≠ $NCMD"

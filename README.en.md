@@ -9,7 +9,7 @@
 <br/>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/⚡_VERSION-8.1.3-blue?style=for-the-badge&logo=semver&logoColor=white" alt="Version"/>
+  <img src="https://img.shields.io/badge/⚡_VERSION-8.2.0-blue?style=for-the-badge&logo=semver&logoColor=white" alt="Version"/>
   <img src="https://img.shields.io/badge/🤖_AGENTS-9-00d2ff?style=for-the-badge&logo=robot&logoColor=white" alt="Agents"/>
   <img src="https://img.shields.io/badge/🧩_SKILLS-56-82d815?style=for-the-badge&logo=puzzle-piece&logoColor=white" alt="Skills"/>
   <img src="https://img.shields.io/badge/⌨️_COMMANDS-31-ffd700?style=for-the-badge&logo=terminal&logoColor=black" alt="Commands"/>

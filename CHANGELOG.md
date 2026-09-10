@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## [8.2.0] — 2026-09-09
+### Added
+- README rewrite 1214→229 baris, 11 section fresh
+- install.sh full-animasi append-only: banner_reveal/ph/pdone/dots/spin/pbar + --no-anim + NO_ANIM + durasi
+### Changed
+- install.sh usage +2 baris
+### Fixed
+- Badge sinkron 9/56/31
+- install.sh: log 1 baris per file (okbar/errbar), gagal copy = exit 1 + suruh ulangi
+
 ## [8.1.3] — 2026-09-10
 ### Fixed
 - install.sh finish message: angka benar "9 agent • 56 skill (16 dengan bash script) • 31 command" (sebelumnya 8/53/14/27 — HUKUM 10 pelanggaran)
