@@ -1,6 +1,6 @@
 <!--
   agent-ai — Kit orkestrasi agent AI untuk opencode
-  v10.0.0 • 11 agent • 62 skill • 39 command
+  v11.0.0 • 11 agent • 62 skill • 39 command
 -->
 <div align="center">
 
@@ -15,7 +15,7 @@
 
 <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&pause=1000&color=22D3EE&center=true&vCenter=true&width=600&lines=MIKIR+%E2%86%92+BAYANGKAN+%E2%86%92+GODOK+%E2%86%92+BANGUN+%E2%86%92+TEST+%E2%86%92+AUDIT+%E2%86%92+FIX+%E2%86%92+LAPOR" alt="pipeline" />
 
-![version](https://img.shields.io/badge/VERSION-10.0.0-blue?style=for-the-badge&logo=github)
+![version](https://img.shields.io/badge/VERSION-11.0.0-blue?style=for-the-badge&logo=github)
 ![agents](https://img.shields.io/badge/AGENTS-11-22c55e?style=for-the-badge&logo=robotframework)
 ![skills](https://img.shields.io/badge/SKILLS-62-f97316?style=for-the-badge&logo=apachemaven)
 ![commands](https://img.shields.io/badge/COMMANDS-39-a855f7?style=for-the-badge&logo=terminal)
@@ -46,7 +46,7 @@ STATUS: SELESAI ✅ (bukti: tests/keranjang.test.js 12/12 PASS)
 
 ## 🚀 3 Mode Build Flow
 
-Tiga mode kerja yang saling terhubung — semua mengalir melalui **DEV sebagai otak utama**:
+Tiga mode kerja yang saling terhubung — **DEV satu-satunya primary dan otak utama**. PLAN/BUILD cuma adapter (`agent:dev`), bukan orkestrator baru — semua tetap lewat DEV:
 
 ```
  ╔══════════╗     ╔══════════════════════╗     ╔══════════╗
@@ -101,6 +101,22 @@ DEV adalah satu-satunya primary agent. Semua mode (PLAN, BUILD, atau langsung ke
 | **Gerbang** | Test hijau → Audit clean → Fix kalau perlu → Dokumentasi |
 
 Build hanya jalan setelah PLAN beres. DEV memanggil CODER untuk implementasi, lalu otomatis TEST → AUDIT → FIX sampai semua gerbang hijau.
+
+### 🛡️ Gerbang PLAN_DONE + Anti-Bentrok
+
+BUILD jalan **hanya** kalau gerbang `PLAN_DONE` lolos — tampil + terima + topik sama:
+
+| Syarat | Artinya santai |
+|---|---|
+| 👀 Tampil | Rencana 8 blok sudah tampil ke user, bukan disimpan sendiri |
+| ✅ Terima | User setuju / ACC rencana, baru boleh lanjut |
+| 🎯 Topik sama | BUILD garap topik yang sama dengan PLAN, bukan topik lain |
+
+Anti-bentrok 3 aturan (biar PLAN/DEV/BUILD nggak tabrakan):
+
+1. **Satu otak** — semua mode lewat DEV, jangan panggil ARCHITECT/CODER langsung.
+2. **Gerbang dulu** — tanpa PLAN_DONE = BUILD ditolak, balik ke GODOK lagi.
+3. **Topik dikunci** — ganti topik = PLAN ulang dari awal, bukan timpa BUILD yang jalan.
 
 ### Alur Lengkap
 
@@ -252,6 +268,25 @@ Sumber kebenaran pemicu = [`skills/route/run.sh`](skills/route/run.sh). Jalur me
 
 ---
 
+## 🌐 Multi-Model (2026)
+
+DEV pilihin model terbaik per tugas otomatis via [`skills/multi-model/SKILL.md`](skills/multi-model/SKILL.md) — satu interface, semua provider. Santai, nggak perlu hafal satu-satu:
+
+| Provider | Model 2026 | Jagoannya |
+|---|---|---|
+| OpenAI | GPT-5.x | Kode kompleks + reasoning dalam |
+| Google | Gemini 3.x | Bahasa Indonesia + multimodal |
+| Anthropic | Claude 5 | Arsitektur + audit presisi |
+| DeepSeek | V4.1 | Murah meriah, budget ketat |
+| Zhipu | GLM-5.3 | Teks panjang + hemat token |
+| xAI | Grok 4.x | Reasoning cepat + real-time |
+| Open (Qwen/Llama/Mistral) | Qwen3 / Llama4 / Large3 | Self-host + privasi |
+| Internal | Astra | Internal, butuh ASTRA_BASE_URL+KEY (TODO DEV) |
+
+> Tanpa API key = DEV kasih tau, routing + cost guard saja tanpa eksekusi HTTP. Biaya > threshold = tanya dulu (HUKUM 5). Fallback 3 model berurutan kalau 1 gagal.
+
+---
+
 ## ⚖️ 13 Hukum Kerja
 
 Kit ini punya **13 hukum** yang ditegakkan di setiap fase. Ini bukan saran — ini aturan keras yang DEV patuhi:
@@ -350,6 +385,6 @@ make verify   # gerbang penuh HUKUM 9 — semua hijau baru SELESAI
 
 <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&pause=1200&color=22D3EE&center=true&vCenter=true&width=500&lines=Terima+kasih+sudah+mampir!+%F0%9F%99%8F;Star+%E2%AD%90+%2B+Fork+%F0%9F%8D%B4+%3D+%E2%9D%A4%EF%B8%8F" alt="thanks" />
 
-**v10.0.0** • 11 agent • 62 skill • 39 command • [CHANGELOG](CHANGELOG.md)
+**v11.0.0** • 11 agent • 62 skill • 39 command • [CHANGELOG](CHANGELOG.md)
 
 </div>

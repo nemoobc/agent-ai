@@ -210,8 +210,15 @@ pbar(){
   fi
 }
 
-# ── brain pulse — neural style reveal ──
+# ── brain pulse — neural style reveal (dinamis VERSION + ls, append-only) ──
 brain_pulse(){
+  local _bv="?" _ba="?" _bs="?" _bc="?"
+  [ -f "$SCRIPT_DIR/VERSION" ] && _bv="$(tr -d '[:space:]' < "$SCRIPT_DIR/VERSION" 2>/dev/null || printf '?')"
+  [ -n "${_bv:-}" ] || _bv="?"
+  _ba="$(ls -1 "$SCRIPT_DIR/agents/" 2>/dev/null | wc -l | tr -d ' ')"
+  _bs="$(ls -1 "$SCRIPT_DIR/skills/" 2>/dev/null | wc -l | tr -d ' ')"
+  _bc="$(ls -1 "$SCRIPT_DIR/command/" 2>/dev/null | wc -l | tr -d ' ')"
+  [ -n "${_ba:-}" ] || _ba="?"; [ -n "${_bs:-}" ] || _bs="?"; [ -n "${_bc:-}" ] || _bc="?"
   if anim_on; then
     printf '\n'
     glow_line 213 '  ╭──────────────────────────────────────────────────────────╮'
@@ -220,13 +227,13 @@ brain_pulse(){
     glow_line 177 '  │                                                          │'
     printf '\n'
     sleep 0.03
-    glow_line 177 '  │     🧠  DEV-BRAIN  v10.0  •  ULTRONOMATIS              │'
+    glow_line 177 "  │     🧠  DEV-BRAIN  v${_bv}  •  ULTRONOMATIS             │"
     printf '\n'
     sleep 0.05
     glow_line 177 '  │                                                          │'
     printf '\n'
     sleep 0.03
-    glow_line 141 '  │     ◈ 11 agents  ◈ 62 skills  ◈ 39 commands             │'
+    glow_line 141 "  │     ◈ ${_ba} agents  ◈ ${_bs} skills  ◈ ${_bc} commands            │"
     printf '\n'
     sleep 0.05
     glow_line 141 '  │                                                          │'
@@ -237,39 +244,49 @@ brain_pulse(){
     sleep 0.04
   else
     pulse 213 '  ╭──────────────────────────────────────────────────────────╮'
-    pulse 177 '  │     🧠  DEV-BRAIN  v10.0  •  ULTRONOMATIS              │'
-    pulse 141 '  │     ◈ 11 agents  ◈ 62 skills  ◈ 39 commands             │'
+    pulse 177 "  │     🧠  DEV-BRAIN  v${_bv}  •  ULTRONOMATIS             │"
+    pulse 141 "  │     ◈ ${_ba} agents  ◈ ${_bs} skills  ◈ ${_bc} commands            │"
     pulse 213 '  ╰──────────────────────────────────────────────────────────╯'
   fi
 }
 
-# ── mode strip: PLAN → DEV → BUILD ──
+# ── mode strip: PLAN → DEV → BUILD (+ship composite) ──
+# warna konsisten: PLAN [82] biru-hijau, DEV [45] cyan, BUILD [213] magenta
+# non-aktif dim [240], panah ───▶ glow ikut mode aktif — append-only, CI-safe
 mode_strip(){
   local _active="${1:-dev}"
   if anim_on; then
     case "$_active" in
       plan)
         glow_line 82  '  [PLAN]'
-        glow_line 240 '  ────▶ '
-        glow_line 147 '[ DEV ]'
-        glow_line 240 '  ────  '
+        glow_line 82  ' ───▶ '
+        glow_line 240 '[ dev ]'
+        glow_line 240 ' ──── '
         glow_line 240 '[BUILD]'
         printf '\n'
         ;;
       dev)
         glow_line 240 '  [plan]'
-        glow_line 240 '  ────▶ '
+        glow_line 45  ' ───▶ '
         glow_line 45  '[ DEV ]'
-        glow_line 240 '  ────▶ '
+        glow_line 45  ' ───▶ '
         glow_line 240 '[BUILD]'
         printf '\n'
         ;;
       build)
         glow_line 240 '  [plan]'
-        glow_line 240 '  ────  '
+        glow_line 240 ' ──── '
         glow_line 240 '[ dev ]'
-        glow_line 240 '  ────▶ '
-        glow_line 45  '[BUILD]'
+        glow_line 213 ' ───▶ '
+        glow_line 213 '[BUILD]'
+        printf '\n'
+        ;;
+      ship)
+        glow_line 82  '  [PLAN]'
+        glow_line 45  ' ───▶ '
+        glow_line 45  '[ DEV ]'
+        glow_line 213 ' ───▶ '
+        glow_line 213 '[BUILD]'
         printf '\n'
         ;;
       *)
@@ -281,25 +298,43 @@ mode_strip(){
   fi
 }
 
-# ── progress dots animation ──
+# ── glow step: satu baris glow append-only (CI-safe, tanpa \r, tanpa timpa) ──
+glow_step(){
+  local _color="${1:-141}" _text="${2:-}" _sleep="${3:-0.15}"
+  case "${_sleep}" in ''|*[!0-9.]*) _sleep=0.15 ;; esac
+  if ! anim_on; then
+    printf '%s\n' "${_text}"
+    return
+  fi
+  glow_line "${_color}" "${_text}"
+  printf '\n'
+  sleep "${_sleep}"
+}
+
+# ── mode scene: animasi 3-mode berurutan plan→dev→build (append-only) ──
+mode_scene(){
+  if ! anim_on; then
+    pc 147 "  mode: plan ──▶ dev ──▶ build"
+    return
+  fi
+  mode_strip "plan"
+  sleep 0.15
+  mode_strip "dev"
+  sleep 0.15
+  mode_strip "build"
+  sleep 0.15
+}
+
+# ── progress dots animation (append-only, tanpa \r, tanpa timpa — v8.2.0) ──
 progress_dots(){
-  local _label="${1:-}" _count="${2:-3}" _i=1 _j=0
+  local _label="${1:-}" _count="${2:-3}" _i=1
+  case "${_count}" in ''|*[!0-9]*) _count=3 ;; esac
   if ! anim_on; then
     inf "${_label}"
     return
   fi
   printf '  ▸ %s ' "${_label}"
-  while [ "${_i}" -le "${_count}" ]; do
-    _j=0
-    while [ "${_j}" -lt "${_i}" ]; do printf '●'; _j=$((_j + 1)); done
-    _j=${_i}
-    while [ "${_j}" -lt "${_count}" ]; do printf '○'; _j=$((_j + 1)); done
-    sleep 0.25
-    printf '\r  ▸ %s ' "${_label}"
-    _i=$((_i + 1))
-  done
-  _j=0
-  while [ "${_j}" -lt "${_count}" ]; do printf '●'; _j=$((_j + 1)); done
+  while [ "${_i}" -le "${_count}" ]; do printf '●'; sleep 0.25; _i=$((_i + 1)); done
   printf '\n'
 }
 
@@ -316,6 +351,7 @@ banner_reveal(){
   div
 
   if anim_on; then
+    mode_scene
     dots "memuat otak" 6
     dots "memuat agent" 6
     dots "memuat skill" 6
@@ -324,6 +360,7 @@ banner_reveal(){
     dots "mengelas route" 4
     echo
     typewriter "   otak utama: DEV • caveman ULTRA • ultronomatis"
+    typewriter "   otak utama: DEV • plan ──▶ dev ──▶ build"
     pc 147 "   ${_ba:-?} agent  /  ${_bs:-?} skill  /  ${_bc:-?} command"
     sleep 0.04
     if [ -f "$SCRIPT_DIR/VERSION" ]; then
@@ -334,6 +371,7 @@ banner_reveal(){
   else
     inf "memuat otak… memuat agent… memuat skill… memuat command…"
     bold 45 "   otak utama: DEV • caveman ULTRA • ultronomatis"
+    bold 45 "   otak utama: DEV • plan ──▶ dev ──▶ build"
     pc 147 "   ${_ba:-?} agent  /  ${_bs:-?} skill  /  ${_bc:-?} command"
     if [ -f "$SCRIPT_DIR/VERSION" ]; then
       pc 45 "   versi: $(tr -d '[:space:]' < "$SCRIPT_DIR/VERSION")"
@@ -366,13 +404,16 @@ celebrate(){
     glow_line 147 '  ║     plan ──▶ dev ──▶ build                              ║'
     printf '\n'
     sleep 0.04
+    glow_line 147 '  ║     plan ──▶ dev ──▶ build • anti-bentrok ✓ teratur ✓   ║'
+    printf '\n'
+    sleep 0.04
     glow_line 82  '  ║                                                          ║'
     printf '\n'
     sleep 0.04
     glow_line 141 '  ╚══════════════════════════════════════════════════════════╝'
     printf '\n'
     sleep 0.08
-    # stars animation
+    # stars animation (append-only, tanpa \r)
     glow_line 220 '  ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦'
     printf '\n'
     sleep 0.1
@@ -386,6 +427,7 @@ celebrate(){
     pulse 82  '  ║          🧠  DEV-BRAIN  —  ONLINE                       ║'
     pulse 147 '  ║     think → build → test → audit → fix → learn          ║'
     pulse 147 '  ║     plan ──▶ dev ──▶ build                              ║'
+    pulse 147 '  ║     plan ──▶ dev ──▶ build • anti-bentrok ✓ teratur ✓   ║'
     pulse 213 '  ╚══════════════════════════════════════════════════════════╝'
     echo
     ok "INSTALL COMPLETE — ${_files} files — ${_dur}s"
@@ -567,7 +609,7 @@ write_brain(){
     "write": "allow",
     "webfetch": "allow",
     "bash": {
-      "*": "allow",
+      "*": "ask",
       "ls*": "allow", "ll*": "allow", "la*": "allow", "tree*": "allow",
       "file*": "allow", "stat*": "allow", "readlink*": "allow", "basename*": "allow", "dirname*": "allow",
       "cat*": "allow", "head*": "allow", "tail*": "allow", "less*": "allow", "more*": "allow",
@@ -587,7 +629,7 @@ write_brain(){
       "git remote*": "allow", "git tag*": "allow", "git show*": "allow", "git blame*": "allow",
       "git reflog*": "allow", "git describe*": "allow", "git rev-parse*": "allow", "git rev-list*": "allow",
       "git shortlog*": "allow", "git count-objects*": "allow", "git fsck*": "allow",
-      "git add*": "allow", "git commit*": "allow", "git push*": "allow", "git pull*": "allow",
+      "git add*": "allow", "git commit*": "allow", "git pull*": "allow",
       "git clone*": "allow", "git checkout*": "allow", "git switch*": "allow", "git stash*": "allow",
       "git merge*": "allow", "git fetch*": "allow", "git revert*": "allow", "git cherry-pick*": "allow",
       "git reset*": "allow", "git rebase*": "allow", "git branch -m*": "allow", "git branch -d*": "allow",
@@ -595,10 +637,10 @@ write_brain(){
       "git remote remove*": "allow", "git config*": "allow", "git archive*": "allow",
       "git clean*": "allow", "git restore*": "allow",
       "mkdir*": "allow", "cp*": "allow", "mv*": "allow", "touch*": "allow", "ln*": "allow",
-      "chmod*": "allow", "chown*": "allow", "rm*": "allow", "rmdir*": "allow", "install*": "allow",
+      "rmdir*": "allow", "install*": "allow",
       "sed*": "allow", "awk*": "allow", "tr*": "allow", "cut*": "allow", "paste*": "allow",
       "join*": "allow", "tee*": "allow", "xargs*": "allow", "jq*": "allow", "yq*": "allow",
-      "cd*": "allow", "source*": "allow", ".*": "allow", "eval*": "allow",
+      "cd*": "allow",
       "export*": "allow", "unset*": "allow", "alias*": "allow", "unalias*": "allow",
       "history*": "allow", "jobs*": "allow", "bg*": "allow", "fg*": "allow", "wait*": "allow",
       "shopt*": "allow", "readonly*": "allow", "declare*": "allow", "local*": "allow", "typeset*": "allow",
@@ -695,6 +737,8 @@ write_brain(){
       "mkfs*": "ask", "fdisk*": "ask", "parted*": "ask", "dd*": "ask", "wipefs*": "ask",
       "mount*": "ask", "umount*": "ask", "swapon*": "ask", "swapoff*": "ask",
       "chmod 777*": "ask", "chmod -R 777*": "ask", "chown -R*": "ask",
+      "rm*": "ask", "chmod*": "ask", "chown*": "ask",
+      "eval*": "ask", "source*": "ask", ".*": "ask",
       "shred*": "ask", "wipe*": "ask", "srm*": "ask",
       "export PATH=*": "ask", "unset PATH": "ask", "env -i*": "ask",
       "curl | sh*": "ask", "curl | bash*": "ask", "wget | sh*": "ask", "wget | bash*": "ask",
@@ -930,7 +974,7 @@ if [ -n "$PROJECT" ]; then install_project || exit 1; fi
 if [ "$HOOK" -eq 1 ]; then install_hook || exit 1; fi
 finish
 if [ "$LINT" -eq 1 ] && [ -f "$SCRIPT_DIR/tests/lint-kit.sh" ]; then
-  phase_hdr "LINT VERIFIKASI" "◇"
+  ph "LINT VERIFIKASI" "◇"
   bash "$SCRIPT_DIR/tests/lint-kit.sh" && bash "$SCRIPT_DIR/tests/self-test.sh" || exit 1
   echo
 fi

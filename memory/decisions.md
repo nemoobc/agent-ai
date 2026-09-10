@@ -1,5 +1,7 @@
 # DECISIONS — DEV-BRAIN
 Format: [YYYY-MM-DD] keputusan — alasan
+- [2026-09-10] PLAN_DONE tampil+terima+topik sama — alasan: tutup 3 redaksi beda tampil-vs-disetujui
+- [2026-09-10] multi-model = router+log bukan eksekutor HTTP — alasan: cegah klaim panggil palsu (critic T1)
 - [2026-09-10] DEV tetap satu primary untuk PLAN/BUILD; tambah `/plan` dan `/build` sebagai adapter command — mencegah mode menjadi orkestrator kedua dan menjaga gerbang PLAN→BUILD.
 - [2026-09-10] Hitungan agent/skill/command installer dihitung dari folder — agent baru dan skill baru tidak boleh membuat badge atau salinan drift.
 - [2026-09-10] Update jaringan wajib SHA-256 dan arsip deliver diaudit sebelum upload — cegah eksekusi supply-chain dan kebocoran secret.

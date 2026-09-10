@@ -1,4 +1,4 @@
-# ARSITEKTUR DEV-BRAIN DOCTRINE v8.2
+# ARSITEKTUR DEV-BRAIN DOCTRINE v11.0.0
 
 Dokumen ini menjelaskan **cara kit bekerja**, bukan sekadar daftar file. Siapa pun (atau agent apa pun) yang membaca ini harus bisa menjawab: *apa yang terjadi ketika sebuah permintaan masuk, dan siapa yang menjamin kualitasnya?*
 
@@ -14,10 +14,10 @@ Dokumen ini menjelaskan **cara kit bekerja**, bukan sekadar daftar file. Siapa p
 │  L2  OTAK  — agents/dev.md (FASE 0 route + pipeline 17 fase)│
 │       urutan kerja default; gerbang keras antar fase        │
 ├────────────────────────────────────────────────────────────┤
-│  L3  KEMAMPUAN  — skills/ (56) + command/ (33)             │
+│  L3  KEMAMPUAN  — skills/ (62) + command/ (39)             │
 │       skill = KAPAN dipakai + BAGAIMANA; command = perintah │
 ├────────────────────────────────────────────────────────────┤
-│  L4  EKSEKUSI  — skills/*/run.sh (56 script jalan)         │
+│  L4  EKSEKUSI  — skills/*/run.sh (62 script jalan)         │
 │       nilai yang terukur: gate, guard, scan, backup, metrik │
 ├────────────────────────────────────────────────────────────┤
 │  L5  PEMBUKTIAN  — tests/ (8 suite + CI)                   │
@@ -42,6 +42,17 @@ PLAN  →  DEV  →  BUILD  →  TEST/AUDIT/FIX  →  LAPOR
 - `PLAN` menjalankan rencana 8 blok dan menutup gerbang sebelum kode ditulis.
 - `BUILD` menjalankan coder melalui DEV setelah PLAN selesai.
 - `DEV` menyatukan mode bahasa bebas, `/plan`, `/build`, `/ship`, dan verifikasi.
+
+**PLAN_DONE** = (a) rencana 8 blok TAMPIL + (b) user terima eksplisit dalam sesi/tugas sama + (c) topik sama. Tanpa ketiganya → BANGUN DILARANG.
+
+| Pemanggil | Target | Status |
+|---|---|---|
+| user | DEV | ✅ boleh |
+| `/plan` | DEV | ✅ boleh |
+| `/build` | DEV | ✅ boleh (wajib PLAN_DONE) |
+| `/ship` | DEV (composite) | ✅ boleh |
+| DEV | sub-agent | ✅ boleh |
+| adapter → adapter (bypass DEV) | — | ❌ LARANGAN |
 
 ---
 

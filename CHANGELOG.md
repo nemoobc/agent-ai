@@ -1,5 +1,20 @@
 # CHANGELOG
 
+## [11.0.0] — 2026-09-10
+### Added
+- **MULTI-MODEL ALL-ROUNDER MAX** (SKILL 90→265 baris, run.sh 20→202 baris): katalog 2026 — GPT-5.5/5.4/mini/nano/5.6 Sol-Terra-Luna, Gemini 3.8 Flash/3.7/3.1 Pro/3.5 Lite, Claude Opus 5/Sonnet 5/Fable 5/Haiku 4.5, DeepSeek V4.1 Flash, GLM-5.3/5.2/4.7 + Coding Plan, Grok 4.5/4 Fast, Qwen/Llama/Mistral, Astra-Pro internal placeholder. Routing #1/#2/#3 × 9 task-class + cost guard + fallback chain
+- **3-MODE KONSISTEN ANTI-BENTROK**: PLAN_DONE = tampil+terima+topik sama (ARCHITECTURE §1A); G4/G5 di dev.md; /plan blok 8 SKALA (fix duplikat RISIKO); /build pre-flight baku; DEV satu-satunya primary (11/11)
+- **install.sh ANIMASI MATANG** (937→981 baris): mode_strip glow 3-mode + ship composite, brain_pulse dinamis VERSION/ls, banner mode_scene, celebrate anti-bentrok, progress_dots append-only tanpa \r
+- **README v11**: section multi-model 2026 + gerbang PLAN_DONE + anti-bentrok, badge 11.0.0 sinkron
+### Fixed
+- install.sh permission hardening: `"*":allow→ask`, rm/chmod/chown→ask, eval/source→ask, hapus git push* allow, phase_hdr→ph (5 P1 auditor)
+- dev.md 9/9→11/11 (HUKUM 10), plan.md typo /build** /ship** + /estimate**
+- README.en.md basi 9/56/31→11/62/39 + tabel designer/researcher/skill/command (3 P1)
+- ARCH 56/33→62/39 + lint-kit cek drift baru (critic T3); multi-model jujur routing-only, log HOME+flock, dry-run tanpa tulis, contoh sonnet-5, Astra TODO, route bypass single-source (critic T1/T2/T4-T6)
+- lint-kit: 424→425 cek (+1 cek drift ARCH)
+### Changed
+- VERSION 10.0.0 → 11.0.0, badge + footer sinkron
+
 ## [10.0.0] — 2026-09-10
 ### Added
 - **62 SKILLS FULL ENHANCED** (+267%, dari 1,462 → 5,376 baris total): setiap SKILL.md kini punya 10 section wajib (YAML, judul, deskripsi, trigger, workflow, output, error, integrasi, edge case, anti-pattern). Rata-rata 86 baris/skill (sebelumnya 23.6)

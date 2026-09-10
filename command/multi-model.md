@@ -5,7 +5,7 @@ agent: dev
 
 TUGAS: $ARGUMENTS
 
-DEV menjalankan skill multi-model: pilih model terbaik untuk konteks tugas, panggil, dan kembalikan hasil.
+DEV menjalankan skill multi-model: pilih model (routing + cost guard + log), eksekusi HTTP oleh pemanggil.
 
 ## Usage
 
@@ -33,7 +33,7 @@ DEV menjalankan skill multi-model: pilih model terbaik untuk konteks tugas, pang
 
 ```
 MULTI-MODEL: auto → claude (konteks: code review)
-├── MODEL: claude-3.5-sonnet
+├── MODEL: claude-sonnet-5
 ├── PROMPT: 248 token
 ├── RESPONSE: 1,024 token
 ├── COST: $0.003

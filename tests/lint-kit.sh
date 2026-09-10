@@ -132,6 +132,7 @@ NCW=$(ls -1 "$DIR"/command/*.md | wc -l | tr -d ' ')
 NRUN=$(ls -1 "$DIR"/skills/*/run.sh | wc -l | tr -d ' ')
 grep -q "$NSK skill" "$DIR/README.md" && ok "README: $NSK skill cocok" || bad "README: jumlah skill tidak $NSK"
 grep -q "$NCW command" "$DIR/README.md" && ok "README: $NCW command cocok" || bad "README: jumlah command tidak $NCW"
+grep -q "skills/ ($NSK)" "$DIR/docs/ARCHITECTURE.md" && grep -q "command/ ($NCW)" "$DIR/docs/ARCHITECTURE.md" && grep -q "run.sh ($NRUN" "$DIR/docs/ARCHITECTURE.md" && ok "ARCH: $NSK skill / $NCW command / $NRUN run cocok" || bad "ARCH: angka drift (skills/command/run tidak cocok ls)"
 
 p "▮ LINT: semua command/*.md ada Usage section" 213
 for f in "$DIR"/command/*.md; do

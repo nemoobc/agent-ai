@@ -9,7 +9,7 @@
 <br/>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/🔄_VERSION-10.0.0-blue?style=for-the-badge&logo=semver&logoColor=white" alt="Version"/>
+  <img src="https://img.shields.io/badge/🔄_VERSION-11.0.0-blue?style=for-the-badge&logo=semver&logoColor=white" alt="Version"/>
   <img src="https://img.shields.io/badge/🤖_AGENTS-11-00d2ff?style=for-the-badge&logo=robot&logoColor=white" alt="Agents"/>
   <img src="https://img.shields.io/badge/🧩_SKILLS-62-82d815?style=for-the-badge&logo=puzzle-piece&logoColor=white" alt="Skills"/>
   <img src="https://img.shields.io/badge/⌨️_COMMANDS-39-ffd700?style=for-the-badge&logo=terminal&logoColor=black" alt="Commands"/>
@@ -71,7 +71,7 @@ User: "build login page with validation"
 
 ---
 
-## 🤖 AGENTS (9)
+## 🤖 AGENTS (11)
 
 | Agent | Role | Description |
 |-------|------|-------------|
@@ -84,10 +84,12 @@ User: "build login page with validation"
 | 😈 **CRITIC** | Subagent | Attacks own work. VETO blocks DONE reports. |
 | 🕵️ **HERMES** | Subagent | All-rounder cross-domain (infra/ops/docs/data). |
 | 🧠 **MEMORY** | Subagent | Long-term memory storage. |
+| 🔬 **RESEARCHER** | Subagent | Deep research: web, libraries, best practices. |
+| 🎨 **DESIGNER** | Subagent | UI/UX design: a11y, tokens, component specs. |
 
 ---
 
-## 🧩 SKILLS (56)
+## 🧩 SKILLS (62)
 
 <details>
 <summary>🧠 Core</summary>
@@ -159,9 +161,51 @@ User: "build login page with validation"
 
 </details>
 
+<details>
+<summary>🤖 Multi-Model</summary>
+
+`multi-model`
+
+</details>
+
+<details>
+<summary>🌐 Web</summary>
+
+`web`
+
+</details>
+
+<details>
+<summary>📊 Data</summary>
+
+`data`
+
+</details>
+
+<details>
+<summary>🔔 Notify</summary>
+
+`notify`
+
+</details>
+
+<details>
+<summary>📈 Monitor</summary>
+
+`monitor`
+
+</details>
+
+<details>
+<summary>🏗️ Scaffold</summary>
+
+`scaffold`
+
+</details>
+
 ---
 
-## ⌨️ COMMANDS (31)
+## ⌨️ COMMANDS (39)
 
 | Command | Description |
 |---------|-------------|
@@ -180,6 +224,14 @@ User: "build login page with validation"
 | `/pr` | Prepare PR from diff |
 | `/handoff` | Pack session context for successor |
 | `/estimate <task>` | Size S/M/L/XL from real numbers |
+| `/plan <task>` | Plan 8-block blueprint before code |
+| `/build <task>` | Execute via DEV after PLAN gate |
+| `/data <task>` | Analyze CSV/JSON stats + visuals |
+| `/web <task>` | Browser automation: scrape, screenshot, forms |
+| `/notify <msg>` | Send Email/Slack/Discord/Telegram alerts |
+| `/multi-model [model:prompt]` | Route to best AI model per task |
+| `/monitor` | Health check, uptime, alert thresholds |
+| `/scaffold <type>` | Generate boilerplate (React/Next/Express/FastAPI) |
 
 ---
 

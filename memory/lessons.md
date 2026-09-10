@@ -1,6 +1,11 @@
 # LESSONS — pelajaran terukur (skill learn)
 Entry terbaru di atas. Format: POLA / BUKTI / AKSI. Tanpa bukti = tidak masuk.
 
+## 2026-09-10 — klaim "panggil model" tanpa eksekutor = bohong
+- POLA: runner routing disebut "satu interface panggil semua"
+- BUKTI: run.sh:197 komentar call belum diimplementasikan + dry-run tanpa key exit 0
+- AKSI: tulis jujur routing+log, eksekusi oleh pemanggil; uji critic baca komentar sendiri
+
 ## 2026-09-10 — mode PLAN/BUILD harus adapter DEV, bukan primary baru
 - POLA: mode kerja mudah drift bila hanya hidup di prose atau memiliki entrypoint sendiri
 - BUKTI: `/plan` dan `/build` baru diuji `tests/eval.sh`, keduanya memiliki `agent: dev`, dan `commands/verify.sh` hijau

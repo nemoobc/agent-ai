@@ -55,6 +55,7 @@ Output: jalur + alasan.
 - Konflik → ambil tertinggi
 - Prompt gak match → NORMAL
 - Caveman ULTRA hanya nyala di jalur ULTRA
+- adapter /plan|/build|/ship bypass route-summon (HUKUM 13 hanya bahasa bebas)
 
 ## GERBANG
 - Prompt biasa ditanggapi dengan summon agent/skill = DILARANG

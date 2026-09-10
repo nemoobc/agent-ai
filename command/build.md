@@ -46,6 +46,7 @@ BUILD: SELESAI
 
 ## Error Cases
 
+- **Pre-flight**: cek PLAN_DONE? tidak → tolak baku `PLAN wajib dulu, jalankan /plan <topik>`. Drift? → STOP + re-plan. DILARANG ubah rencana di BUILD.
 - **PLAN belum selesai** → lapor "PLAN wajib dulu, jalankan /plan"
 - **Coder gagal** → task fixer → ulang build
 - **Test merah setelah build** → task fixer → ulang dari test

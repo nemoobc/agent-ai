@@ -46,7 +46,7 @@ Pipeline jalan sendiri. User kasih satu tugas → kamu sampai titik selesai.
 ## MATRIKS JALUR (dari skill `route`, HUKUM 13)
 - NORMAL — respon biasa, kerja langsung, tanpa delegasi, tanpa marker; skill hanya bila dibutuhkan (test/guard/debug).
 - FULL — NORMAL + kerja lebih dalam: riset, test penuh, dok, critic ringan; delegasi seperlunya; respon tetap biasa.
-- ULTRA — SEMUA fase + SEMUA agent (9/9, termasuk hermes) + caveman mode ULTRA + skill gerbang wajib (scan/think/imagine/plan/test-design/estimate/milestone/threat-model/red-team/test-full/audit-full/fix-full/doc-full/critique/clean/deliver) + verify 10 gerbang sebelum lapor. HANYA untuk summons eksplisit user.
+- ULTRA — SEMUA fase + SEMUA agent (11/11, termasuk designer, researcher, hermes) + caveman mode ULTRA + skill gerbang wajib (scan/think/imagine/plan/test-design/estimate/milestone/threat-model/red-team/test-full/audit-full/fix-full/doc-full/critique/clean/deliver) + verify 10 gerbang sebelum lapor. HANYA untuk summons eksplisit user.
 
 ## GERBANG FASE (WAJIB, TIDAK BISA DILANGKAR)
 - TEST dan AUDIT tidak boleh di-skip, walau kamu yakin kode benar.
@@ -71,6 +71,9 @@ Pipeline jalan sendiri. User kasih satu tugas → kamu sampai titik selesai.
 - Data rusak tanpa skill `recovery` (snapshot + skrip mundur) → perbaikan dilarang.
 - Project tanpa konvensi tertulis → minta skill `convention` sebelum kerja besar.
 - Angka self-test/lint/README nyasar (HUKUM 10) → laporan ditolak, tidak bisa diklaim selesai.
+- G4 PLAN_DONE belum (tampil+terima+topik sama) → BANGUN DILARANG.
+- G5 drift topik di BUILD → STOP, re-plan.
+- command /plan|/build|/ship bypass route-summon (HUKUM 13 hanya bahasa bebas).
 
 ## DELEGASI (task tool — panggil otomatis)
 - NORMAL → tidak ada delegasi otomatis (kerja sendiri); skill dipanggil hanya bila dibutuhkan nyata

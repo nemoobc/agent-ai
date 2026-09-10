@@ -41,10 +41,12 @@ PLAN — 8 BLOK
 5. URUTAN     : schema → middleware → route → test
 6. TEST       : 8 assertion baru (happy path + edge case)
 7. RISIKO     : breaking change jika lama pakai regex manual
-8. RISIKO     : skala S, 1-2 hari
+8. SKALA      : S, 1-2 hari (S/M/L/XL + estimasi hari)
 
 GATE: rencana diterima user → lanjut /build. Ditolak → revisi.
 ```
+
+Efek: NOL kode. GATE: DITERIMA→/build <topik> | DITOLAK→revisi.
 
 ## Error Cases
 
@@ -55,6 +57,6 @@ GATE: rencana diterima user → lanjut /build. Ditolak → revisi.
 
 ## Related Commands
 
-- `/build** — eksekusi setelah plan diterima
-- `/ship** — pipeline penuh termasuk plan
-- `/estimate** — estimasi sebelum plan
+- `/build` — eksekusi setelah plan diterima
+- `/ship` — pipeline penuh termasuk plan
+- `/estimate` — estimasi sebelum plan
