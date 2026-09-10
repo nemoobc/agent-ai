@@ -1,36 +1,66 @@
 #!/usr/bin/env bash
-# ═════════════════════════════════════════════════════════════════
-#   ╔═══════════════════╗
-#   ║     AGENT AI      ║   agent-ai full-agent installer
-#   ╚═══════════════════╝   caveman mode • permanen • ultronomatis
-#                           auto: think→build→test→audit→fix
-# ─────────────────────────────────────────────────────────────────
-# Pakai  : bash install.sh [--project DIR] [--uninstall]
-# Env    : NO_ANIM=1 / --no-anim matikan animasi, NO_COLOR=1 tanpa warna, CI=true auto-mati animasi
-# ═════════════════════════════════════════════════════════════════
+# ╔══════════════════════════════════════════════════════════════════╗
+# ║                                                                  ║
+# ║     █████╗ ██╗   ██╗████████╗ ██████╗  █████╗  ██████╗ ██████╗  ║
+# ║    ██╔══██╗██║   ██║╚══██╔══╝██╔═══██╗██╔══██╗██╔════╝██╔══██╗ ║
+# ║    ███████║██║   ██║   ██║   ██║   ██║███████║██║     ██████╔╝ ║
+# ║    ██╔══██║██║   ██║   ██║   ██║   ██║██╔══██║██║     ██╔══██╗ ║
+# ║    ██║  ██║╚██████╔╝   ██║   ╚██████╔╝██║  ██║╚██████╗██║  ██║ ║
+# ║    ╚═╝  ╚═╝ ╚═════╝    ╚═╝    ╚═════╝ ╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝ ║
+# ║                                                                  ║
+# ║   agent-ai full-agent installer — caveman mode • permanen       ║
+# ║   auto: think → build → test → audit → fix → learn              ║
+# ║                                                                  ║
+# ╚══════════════════════════════════════════════════════════════════╝
 set -u
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 
-# ── warna ──
-if [ -t 1 ] && [ -z "${NO_COLOR:-}" ]; then pc(){ printf '\033[38;5;%sm%s\033[0m\n' "$1" "$2"; }
-else pc(){ printf '%s\n' "$2"; }; fi
-ok(){ pc 82  "  ✔ $1"; }
-inf(){ pc 45  "  ▸ $1"; }
+# ════════════════════════════════════════════
+#  WARNA / COLORS
+# ════════════════════════════════════════════
+if [ -t 1 ] && [ -z "${NO_COLOR:-}" ]; then
+  pc(){ printf '\033[38;5;%sm%s\033[0m\n' "$1" "$2"; }
+  bold(){ printf '\033[1;38;5;%sm%s\033[0m\n' "$1" "$2"; }
+  dim(){ printf '\033[2;38;5;%sm%s\033[0m\n' "$1" "$2"; }
+  pulse(){ printf '\033[1;38;5;%sm%s\033[0m\n' "$1" "$2"; }
+else
+  pc(){ printf '%s\n' "$2"; }
+  bold(){ printf '%s\n' "$2"; }
+  dim(){ printf '%s\n' "$2"; }
+  pulse(){ printf '%s\n' "$2"; }
+fi
+
+sym(){ [ -z "${NO_COLOR:-}" ] && [ -t 1 ]; }
+
+ok(){  pc 82  "  ✔ $1"; }
+inf(){ pc 147 "  ▸ $1"; }
 wrn(){ pc 214 "  ⚠ $1"; }
 err(){ pc 196 "  ✖ $1"; }
-step(){ printf '\n'; pc 213 "══════ $1 ══════"; }
+key(){ pc 220 "  $1"; }
+div(){ dim 240 "  ──────────────────────────────────────────"; }
 
-# ── animasi append-only (CI-safe, tanpa timpa baris) ──
+phase_hdr(){
+  local _m="${1:-}" _icon="${2:-◆}"
+  printf '\n'
+  bold 213 "  $_icon═══════════════════════════════════════════════"
+  bold 213 "    $_m"
+  bold 213 "  ════════════════════════════════════════════$_icon"
+}
+
+# ════════════════════════════════════════════
+#  ANIMASI — append-only, CI-safe
+# ════════════════════════════════════════════
 ANIM="${ANIM:-1}"
 _PH_T0=""
 _ANIM_T0="$(date +%s 2>/dev/null || printf '%s' "${SECONDS:-0}")"
 _SPIN_PID=""
+_GP=0; _GPMAX=0
+
 can_anim(){
   [ "${ANIM:-1}" -eq 1 ] 2>/dev/null || return 1
   [ -t 1 ] || return 1
   [ "${CI:-}" != "true" ] && [ "${CI:-}" != "1" ] || return 1
-  # OFFLINE hanya skip jaringan — animasi tetap jalan bila TTY
   [ "${NO_ANIM:-}" != "1" ] || return 1
   [ -z "${NO_COLOR:-}" ] || return 1
   [ "${TERM:-}" != "dumb" ] || return 1
@@ -38,6 +68,7 @@ can_anim(){
 }
 anim_on(){ can_anim; }
 now(){ date +%s 2>/dev/null || printf '%s\n' "${SECONDS:-0}"; }
+
 elapsed(){
   local _s="${1:-0}" _e="0"
   _e="$(now)"
@@ -45,32 +76,39 @@ elapsed(){
   case "${_e}" in ''|*[!0-9]*) _e="${_s}" ;; esac
   printf '%s' "$((_e - _s))"
 }
+
+# ── phase header + timer ──
 ph(){
   local _m="${1:-}"
-  printf '\n'
-  pc 213 "══════ ${_m} ══════"
+  phase_hdr "$_m" "◆"
   _PH_T0="$(now)"
 }
+
+# ── phase done ──
 pdone(){
   local _m="${1:-selesai}" _d="0"
   if [ -n "${_PH_T0:-}" ]; then _d="$(elapsed "${_PH_T0}")"; fi
   ok "${_m} (${_d}s)"
 }
+
+# ── animated dots ──
 dots(){
   local _m="${1:-...}" _n="${2:-3}" _i=1
   if anim_on; then
     printf '  ▸ %s' "${_m}"
-    while [ "${_i}" -le "${_n:-3}" ]; do printf '.'; sleep 0.2; _i=$((_i + 1)); done
+    while [ "${_i}" -le "${_n}" ]; do printf '.'; sleep 0.2; _i=$((_i + 1)); done
     printf '\n'
   else
     inf "${_m}"
   fi
 }
+
+# ── spinner start / stop ──
 spin_start(){
   local _m="${1:-...}" _n="${2:-1}" _i=1
   if anim_on; then
     printf '  ▸ %s' "${_m}"
-    while [ "${_i}" -le "${_n:-1}" ]; do printf '.'; sleep 0.2; _i=$((_i + 1)); done
+    while [ "${_i}" -le "${_n}" ]; do printf '.'; sleep 0.2; _i=$((_i + 1)); done
   else
     inf "${_m}"
   fi
@@ -87,55 +125,128 @@ spin_stop(){
   _SPIN_PID=""
   if [ -n "${_m}" ]; then ok "${_m}"; fi
 }
+
+# ── ok bar (step progress) ──
 okbar(){
   local _i="${1:-0}" _n="${2:-1}" lbl="${3:-}" _fill=0 _k=0 _bar=""
   lbl="${lbl:0:40}"
   case "${_i}" in ''|*[!0-9]*) _i=0 ;; esac
   case "${_n}" in ''|*[!0-9]*) _n=1 ;; esac
-  if [ "${_n}" -le 0 ] 2>/dev/null; then _n=1; fi
-  _fill=$((_i * 20 / _n))
-  if [ "${_fill}" -gt 20 ] 2>/dev/null; then _fill=20; fi
-  if [ "${_fill}" -lt 0 ] 2>/dev/null; then _fill=0; fi
-  _k=0
-  while [ "${_k}" -lt "${_fill}" ]; do _bar="${_bar}#"; _k=$((_k + 1)); done
-  _k=0
-  while [ "${_k}" -lt $((20 - _fill)) ]; do _bar="${_bar}-"; _k=$((_k + 1)); done
-  printf '  ✔ [%s] %s/%s %s\n' "${_bar}" "${_i}" "${_n}" "${lbl}"
+  [ "${_n}" -le 0 ] 2>/dev/null && _n=1
+  _fill=$((_i * 24 / _n)); [ "${_fill}" -gt 24 ] && _fill=24; [ "${_fill}" -lt 0 ] && _fill=0
+  _k=0; while [ "${_k}" -lt "${_fill}" ]; do _bar="${_bar}█"; _k=$((_k + 1)); done
+  _k=0; while [ "${_k}" -lt $((24 - _fill)) ]; do _bar="${_bar}░"; _k=$((_k + 1)); done
+  printf '  ✔ [%s] %s/%s  %s\n' "${_bar}" "${_i}" "${_n}" "${lbl}"
 }
+
+# ── err bar ──
 errbar(){
   local _i="${1:-0}" _n="${2:-1}" lbl="${3:-}" _fill=0 _k=0 _bar=""
   lbl="${lbl:0:40}"
   case "${_i}" in ''|*[!0-9]*) _i=0 ;; esac
   case "${_n}" in ''|*[!0-9]*) _n=1 ;; esac
-  if [ "${_n}" -le 0 ] 2>/dev/null; then _n=1; fi
-  _fill=$((_i * 20 / _n))
-  if [ "${_fill}" -gt 20 ] 2>/dev/null; then _fill=20; fi
-  if [ "${_fill}" -lt 0 ] 2>/dev/null; then _fill=0; fi
-  _k=0
-  while [ "${_k}" -lt "${_fill}" ]; do _bar="${_bar}#"; _k=$((_k + 1)); done
-  _k=0
-  while [ "${_k}" -lt $((20 - _fill)) ]; do _bar="${_bar}-"; _k=$((_k + 1)); done
-  printf '  ✖ [%s] %s/%s %s GAGAL\n' "${_bar}" "${_i}" "${_n}" "${lbl}"
+  [ "${_n}" -le 0 ] 2>/dev/null && _n=1
+  _fill=$((_i * 24 / _n)); [ "${_fill}" -gt 24 ] && _fill=24; [ "${_fill}" -lt 0 ] && _fill=0
+  _k=0; while [ "${_k}" -lt "${_fill}" ]; do _bar="${_bar}█"; _k=$((_k + 1)); done
+  _k=0; while [ "${_k}" -lt $((24 - _fill)) ]; do _bar="${_bar}░"; _k=$((_k + 1)); done
+  printf '  ✖ [%s] %s/%s  %s  GAGAL\n' "${_bar}" "${_i}" "${_n}" "${lbl}"
 }
-banner_reveal(){
-  pc 213 '  ╔═══════════════════╗'; if anim_on; then sleep 0.08; fi
-  pc 177 '  ║     AGENT AI      ║'; if anim_on; then sleep 0.08; fi
-  pc 141 '  ╚═══════════════════╝'; if anim_on; then sleep 0.08; fi
-  if anim_on; then
-    dots "memuat otak" 5
-    dots "memuat agent" 5
-    dots "memuat skill" 5
-    dots "memuat command" 5
-    dots "memuat doctrine" 3
+
+# ── global progress bar ──
+pbar(){
+  local _c="${1:-0}" _t="${2:-0}" _lbl="${3:-}"
+  case "${_c}" in ''|*[!0-9]*) _c=0 ;; esac
+  case "${_t}" in ''|*[!0-9]*) _t=0 ;; esac
+  [ "${_t}" -le 0 ] 2>/dev/null && _t=1
+  local _pct=0 _fill=0 _k=0 _bar="" _el="0" _eta="—"
+  _pct=$((_c * 100 / _t))
+  _fill=$((_c * 30 / _t)); [ "${_fill}" -gt 30 ] && _fill=30; [ "${_fill}" -lt 0 ] && _fill=0
+  _k=0; while [ "${_k}" -lt "${_fill}" ]; do _bar="${_bar}█"; _k=$((_k + 1)); done
+  _k=0; while [ "${_k}" -lt $((30 - _fill)) ]; do _bar="${_bar}░"; _k=$((_k + 1)); done
+  [ -n "${_ANIM_T0:-}" ] && _el="$(elapsed "${_ANIM_T0}")"
+  if [ -n "${_PH_T0:-}" ]; then
+    local _pe="$(elapsed "${_PH_T0}")"
+    [ "${_c}" -gt 0 ] 2>/dev/null && [ "${_pe}" -gt 0 ] 2>/dev/null && _eta=$(( (_pe * (_t - _c)) / _c ))
+  fi
+  if [ -n "${_lbl}" ]; then
+    printf '  ▏[%s] %3d%%  %s/%s  ⏱ %ss  ETA %ss  %s\n' "${_bar}" "${_pct}" "${_c}" "${_t}" "${_el}" "${_eta}" "${_lbl}"
   else
-    inf "memuat otak..."
+    printf '  ▏[%s] %3d%%  %s/%s  ⏱ %ss  ETA %ss\n' "${_bar}" "${_pct}" "${_c}" "${_t}" "${_el}" "${_eta}"
+  fi
+}
+
+# ── brain pulse — 3-mode reveal ──
+brain_pulse(){
+  if anim_on; then
+    pulse 213 '  ╭─────────────────────────────────────────────────╮'; sleep 0.06
+    pulse 177 '  │   🧠     DEV-BRAIN  vPulse  •  ULTRONOMATIS    │'; sleep 0.06
+    pulse 141 '  ╰─────────────────────────────────────────────────╯'; sleep 0.06
+  else
+    pulse 213 '  ╭─────────────────────────────────────────────────╮'
+    pulse 177 '  │   🧠  DEV-BRAIN  •  ULTRONOMATIS               │'
+    pulse 141 '  ╰─────────────────────────────────────────────────╯'
+  fi
+}
+
+# ── mode strip: PLAN → DEV → BUILD ──
+mode_strip(){
+  local _active="${1:-dev}"
+  if anim_on; then
+    case "$_active" in
+      plan)
+        pc 82  '  [PLAN]  ────  [ DEV ]  ────  [BUILD]'
+        ;;
+      dev)
+        pc 147 '  [plan]  ────▶ [ DEV ] ────  [BUILD]'
+        ;;
+      build)
+        pc 45  '  [plan]  ────  [ dev ] ────▶[BUILD]'
+        ;;
+      *)
+        dim 240 '  [plan]  ────  [ dev ] ────  [BUILD]'
+        ;;
+    esac
+  else
+    pc 147 "  mode: $_active"
+  fi
+}
+
+# ── banner reveal ──
+banner_reveal(){
+  brain_pulse
+  local _ba _bs _bc
+  _bs="$(ls -1 "$SCRIPT_DIR/skills/" 2>/dev/null | wc -l | tr -d ' ')"
+  _bc="$(ls -1 "$SCRIPT_DIR/command/" 2>/dev/null | wc -l | tr -d ' ')"
+  _ba="$(ls -1 "$SCRIPT_DIR/agents/" 2>/dev/null | wc -l | tr -d ' ')"
+
+  ph "BOOT DEV-BRAIN"
+  mode_strip "dev"
+  div
+
+  if anim_on; then
+    dots "memuat otak" 6
+    dots "memuat agent" 6
+    dots "memuat skill" 6
+    dots "memuat command" 6
+    dots "memuat doctrine" 4
+    dots "mengelas route" 4
+  else
+    inf "memuat otak… memuat agent… memuat skill… memuat command…"
   fi
   echo
-  pc 45 "   otak utama: DEV • caveman mode ULTRA • ultronomatis"; if anim_on; then sleep 0.05; fi
-  if [ -f "$SCRIPT_DIR/VERSION" ]; then pc 45 "   versi: $(tr -d '[:space:]' < "$SCRIPT_DIR/VERSION")"; if anim_on; then sleep 0.05; fi; fi
-  pc 45 "   auto test/audit/fix ✓ • memori persisten ✓"; if anim_on; then sleep 0.05; fi
+  bold 45 "   otak utama: DEV • caveman ULTRA • ultronomatis"
+  if anim_on; then sleep 0.04; fi
+  pc 147 "   ${_ba:-?} agent  /  ${_bs:-?} skill  /  ${_bc:-?} command"
+  if anim_on; then sleep 0.04; fi
+  if [ -f "$SCRIPT_DIR/VERSION" ]; then
+    pc 45 "   versi: $(tr -d '[:space:]' < "$SCRIPT_DIR/VERSION")"
+    if anim_on; then sleep 0.04; fi
+  fi
+  pc 45 "   auto test ✓ audit ✓ fix ✓ memori persisten ✓"
   echo
 }
+
+# ── cleanup trap ──
 anim_cleanup(){
   _SPIN_PID=""
   if [ -n "${TMP:-}" ] && [ -d "${TMP:-}" ]; then rm -rf "${TMP:-}" 2>/dev/null || true; fi
@@ -143,11 +254,17 @@ anim_cleanup(){
 }
 trap 'anim_cleanup' INT TERM EXIT
 
+# ════════════════════════════════════════════
+#  KONFIGURASI
+# ════════════════════════════════════════════
 CFG="$HOME/.config/opencode"
 IS_TERMUX=0
 [ -n "${TERMUX_VERSION:-}" ] && IS_TERMUX=1
 [ -d /data/data/com.termux ] && IS_TERMUX=1
 
+# ════════════════════════════════════════════
+#  USAGE
+# ════════════════════════════════════════════
 usage(){ cat <<'X'
 Pemakaian:
   bash install.sh                 install global (~/.config/opencode)
@@ -168,6 +285,10 @@ Di dalam opencode (tanpa install global di project ini):
   /bootstrap                      pasang DEV-BRAIN ke project ini (.opencode/)
 X
 }
+
+# ════════════════════════════════════════════
+#  FLAG PARSING
+# ════════════════════════════════════════════
 PROJECT=""; UNINSTALL=0; CHECK=0; UPDATE=0; SHOWVER=0; OFFLINE=0; HOOK=0; LINT=0
 while [ $# -gt 0 ]; do
   case "$1" in
@@ -185,23 +306,21 @@ while [ $# -gt 0 ]; do
   esac
 done
 
-banner(){
-  banner_reveal
-}
-
-# ── update dari GitHub ──
+# ════════════════════════════════════════════
+#  UPDATE
+# ════════════════════════════════════════════
 REPO="nemoobc/agent-ai"
-# URL override: untuk tes lokal (file://) — set DEV_BRAIN_UPDATE_URL.
-# Update jaringan wajib membawa SHA-256 tepercaya melalui DEV_BRAIN_UPDATE_SHA256.
 UPDATE_URL="${DEV_BRAIN_UPDATE_URL:-https://codeload.github.com/$REPO/tar.gz/refs/heads/master}"
 UPDATE_SHA256="${DEV_BRAIN_UPDATE_SHA256:-}"
+
 update(){
   ph "UPDATE DEV-BRAIN"
+  mode_strip "build"
+  div
   command -v curl >/dev/null 2>&1 || { err "curl tidak ada — update manual: git clone $REPO"; exit 1; }
   TMP=$(mktemp -d)
   spin_start "unduh master terbaru…" 5
   _SPID="${_SPIN_PID:-}"
-  # timeout wajib: connect 5s, total 60s — offline/nyangkut tetap selesai, tidak menggantung shell agent
   if curl -fsSL --connect-timeout 5 --max-time 60 "$UPDATE_URL" -o "$TMP/kit.tgz"; then
     spin_stop "${_SPID:-}" "unduh selesai"
   else
@@ -211,14 +330,12 @@ update(){
   if [[ "$UPDATE_URL" != file://* ]]; then
     if ! command -v sha256sum >/dev/null 2>&1 || [ -z "$UPDATE_SHA256" ]; then
       err "update jaringan wajib: DEV_BRAIN_UPDATE_SHA256=<sha256 tepercaya>"
-      rm -rf "$TMP"
-      exit 1
+      rm -rf "$TMP"; exit 1
     fi
     ACTUAL_SHA256="$(sha256sum "$TMP/kit.tgz" | awk '{print $1}')"
     if [ "$ACTUAL_SHA256" != "$UPDATE_SHA256" ]; then
       err "checksum update tidak cocok — instalasi dibatalkan"
-      rm -rf "$TMP"
-      exit 1
+      rm -rf "$TMP"; exit 1
     fi
     ok "checksum update terverifikasi"
   fi
@@ -229,7 +346,6 @@ update(){
   NEWV=$(tr -d '[:space:]' < "$SRC/VERSION" 2>/dev/null)
   OLDV=$(tr -d '[:space:]' < "$CFG/VERSION" 2>/dev/null)
   inf "terpasang: ${OLDV:-?} → tersedia: ${NEWV:-?}"
-  # anti-downgrade: hanya update bila remote LEBIH BARU (semver compare)
   OLDER=$(printf '%s\n%s\n' "${OLDV:-0}" "${NEWV:-0}" | sort -V | head -1)
   if [ -n "$OLDV" ] && [ "$OLDER" != "$OLDV" ]; then
     ok "remote ($NEWV) tidak lebih baru dari terpasang ($OLDV) — skip"
@@ -238,11 +354,10 @@ update(){
   if [ "$NEWV" = "$OLDV" ]; then ok "sudah versi terbaru"; rm -rf "$TMP"; exit 0; fi
   if bash "$SRC/install.sh" --offline; then ok "update ke $NEWV selesai — memori tetap aman"; else err "update gagal di tengah — instalasi lama utuh"; fi
   rm -rf "$TMP"
-  # penting: jangan lanjut write_brain ulang — inner install sudah menulis semuanya
   exit 0
 }
 
-# ── cek versi remote (non-blokir, offline aman) ──
+# ── cek versi remote (non-blokir) ──
 check_remote_version(){
   [ "$OFFLINE" -eq 1 ] && return 0
   command -v curl >/dev/null 2>&1 || return 0
@@ -255,9 +370,13 @@ check_remote_version(){
   fi
 }
 
-# ── uninstall ──
+# ════════════════════════════════════════════
+#  UNINSTALL
+# ════════════════════════════════════════════
 uninstall(){
   ph "UNINSTALL DEV-BRAIN"
+  mode_strip ""
+  div
   dots "menghapus agent" 3
   rm -rf "$CFG/agent" "$CFG/skill" "$CFG/command" "$CFG/docs"
   rm -f "$CFG/AGENTS.md"
@@ -271,23 +390,28 @@ uninstall(){
   exit 0
 }
 
-# ── tulis file dari script dir ke CFG ──
+# ════════════════════════════════════════════
+#  WRITE BRAIN — install to ~/.config/opencode
+# ════════════════════════════════════════════
 write_brain(){
-ph "TULIS OTAK → ~/.config/opencode"
-   dots "menyiapkan otak" 3
-   # prune instalasi lama biar tidak ada file sisa dari versi sebelumnya
+  ph "TULIS OTAK → ~/.config/opencode"
+  mode_strip "plan"
+  div
+  dots "menyiapkan otak" 3
+
+  # prune instalasi lama
   rm -rf "$CFG/agent" "$CFG/skill" "$CFG/command"
   mkdir -p "$CFG/agent" "$CFG/command" "$CFG/memory" "$CFG/skill"
   for skill_dir in "$SCRIPT_DIR/skills/"*/; do
     [ -d "$skill_dir" ] && mkdir -p "$CFG/skill/$(basename "$skill_dir")"
   done
 
-  # backup config lama HANYA bila itu bukan tulisan DEV-BRAIN (marker)
+  # backup config lama (bukan tulisan DEV-BRAIN)
   if [ -f "$CFG/opencode.json" ] && ! grep -q '"devbrain"' "$CFG/opencode.json" 2>/dev/null; then
     cp "$CFG/opencode.json" "$CFG/opencode.json.bak.$(date +%s)"
   fi
 
-  # opencode.json: izin granular — 3 level: allow (aman), ask (konfirmasi), deny (block)
+  # opencode.json — izin granular: allow / ask / deny
   cat > "$CFG/opencode.json" <<'OPencodeEOF'
 {
   "$schema": "https://opencode.ai/config.json",
@@ -438,7 +562,7 @@ ph "TULIS OTAK → ~/.config/opencode"
       "curl | sudo sh*": "deny", "curl | sudo bash*": "deny",
       "wget | sudo sh*": "deny", "wget | sudo bash*": "deny",
       "curl -sL | sudo sh*": "deny", "curl -sL | sudo bash*": "deny",
-      "rm -rf / --no-preserve-root*": "deny", "rm -rf /* --no-preserve-root*": "deny",
+      "rm -rf / --no-preserve-root*": "deny",
       ":(){:|:&};:*": "deny", "fork bomb*": "deny",
       "dd if=/dev/zero of=/dev/sd*": "deny", "dd if=/dev/random of=/dev/sd*": "deny",
       "mkfs.ext4 /dev/sd*": "deny", "mkfs.xfs /dev/sd*": "deny", "mkfs.btrfs /dev/sd*": "deny",
@@ -452,18 +576,22 @@ ph "TULIS OTAK → ~/.config/opencode"
 }
 OPencodeEOF
 
-  # copy every agent present; the folder is the source of truth for counts
+  # ── AGENTS ──
   _FAIL=0
   _NA="$(ls -1 "$SCRIPT_DIR/agents/" 2>/dev/null | wc -l | tr -d ' ')"
   case "${_NA}" in ''|*[!0-9]*) _NA=1 ;; esac
   _ai=0
   for f in "$SCRIPT_DIR/agents/"*.md; do
     [ -f "$f" ] || continue
-    if cp "$f" "$CFG/agent/"; then _ai=$((_ai + 1)); okbar "${_ai}" "${_NA}" "agent: $(basename "$f")"; else errbar "${_ai}" "${_NA}" "agent: $(basename "$f")"; _FAIL=$((_FAIL + 1)); fi
+    if cp "$f" "$CFG/agent/"; then
+      _ai=$((_ai + 1)); okbar "${_ai}" "${_NA}" "agent: $(basename "$f")"
+    else
+      errbar "${_ai}" "${_NA}" "agent: $(basename "$f")"; _FAIL=$((_FAIL + 1))
+    fi
   done
   if [ "${_ai}" -eq 0 ]; then err "tidak ada file tersalin di agent — install dibatalkan"; exit 1; fi
 
-  # copy every skill (SKILL.md wajib + run.sh opsional)
+  # ── SKILLS ──
   _NS="$(ls -1 "$SCRIPT_DIR/skills/" 2>/dev/null | wc -l | tr -d ' ')"
   case "${_NS}" in ''|*[!0-9]*) _NS=1 ;; esac
   _si=0
@@ -473,34 +601,42 @@ OPencodeEOF
     if [ ! -f "$skill_dir/SKILL.md" ]; then errbar "${_si}" "${_NS}" "skill: $skill_name"; _FAIL=$((_FAIL + 1)); continue; fi
     if ! cp "$skill_dir/SKILL.md" "$CFG/skill/$skill_name/"; then errbar "${_si}" "${_NS}" "skill: $skill_name"; _FAIL=$((_FAIL + 1)); continue; fi
     if [ -f "$skill_dir/run.sh" ]; then
-      if ! cp "$skill_dir/run.sh" "$CFG/skill/$skill_name/" || ! chmod +x "$CFG/skill/$skill_name/run.sh"; then errbar "${_si}" "${_NS}" "skill: $skill_name"; _FAIL=$((_FAIL + 1)); continue; fi
+      if ! cp "$skill_dir/run.sh" "$CFG/skill/$skill_name/" || ! chmod +x "$CFG/skill/$skill_name/run.sh"; then
+        errbar "${_si}" "${_NS}" "skill: $skill_name"; _FAIL=$((_FAIL + 1)); continue
+      fi
     fi
     _si=$((_si + 1)); okbar "${_si}" "${_NS}" "skill: $skill_name"
   done
   if [ "${_si}" -eq 0 ]; then err "tidak ada file tersalin di skill — install dibatalkan"; exit 1; fi
 
-  # copy commands
+  # ── COMMANDS ──
   _NC="$(ls -1 "$SCRIPT_DIR/command/" 2>/dev/null | wc -l | tr -d ' ')"
   case "${_NC}" in ''|*[!0-9]*) _NC=1 ;; esac
   _ci=0
   for f in "$SCRIPT_DIR/command/"*.md; do
     [ -f "$f" ] || continue
-    if cp "$f" "$CFG/command/"; then _ci=$((_ci + 1)); okbar "${_ci}" "${_NC}" "command: $(basename "$f")"; else errbar "${_ci}" "${_NC}" "command: $(basename "$f")"; _FAIL=$((_FAIL + 1)); fi
+    if cp "$f" "$CFG/command/"; then
+      _ci=$((_ci + 1)); okbar "${_ci}" "${_NC}" "command: $(basename "$f")"
+    else
+      errbar "${_ci}" "${_NC}" "command: $(basename "$f")"; _FAIL=$((_FAIL + 1))
+    fi
   done
   if [ "${_ci}" -eq 0 ]; then err "tidak ada file tersalin di command — install dibatalkan"; exit 1; fi
   if [ "${_FAIL}" -ne 0 ]; then err "${_FAIL} file gagal — instalasi tidak lengkap, ulangi install"; exit 1; fi
 
-  # copy AGENTS.md (doctrine)
+  _GPMAX=$((_NA + _NS + _NC + 4))
+  _GP=$((_ai + _si + _ci))
+  pbar "${_GP}" "${_GPMAX}" "agent+skill+command tersalin"
+
+  # ── DOCS & MEMORY ──
   [ -f "$SCRIPT_DIR/AGENTS.md" ] && cp "$SCRIPT_DIR/AGENTS.md" "$CFG/" && ok "doctrine: AGENTS.md"
 
-  # copy panduan lengkap
   mkdir -p "$CFG/docs"
   [ -f "$SCRIPT_DIR/docs/USAGE.md" ] && cp "$SCRIPT_DIR/docs/USAGE.md" "$CFG/docs/" && ok "panduan: docs/USAGE.md"
   [ -f "$SCRIPT_DIR/docs/PLAYBOOKS.md" ] && cp "$SCRIPT_DIR/docs/PLAYBOOKS.md" "$CFG/docs/" && ok "playbook: docs/PLAYBOOKS.md"
   [ -f "$SCRIPT_DIR/docs/ARCHITECTURE.md" ] && cp "$SCRIPT_DIR/docs/ARCHITECTURE.md" "$CFG/docs/" && ok "arsitektur: docs/ARCHITECTURE.md"
   [ -f "$SCRIPT_DIR/docs/ROADMAP.md" ] && cp "$SCRIPT_DIR/docs/ROADMAP.md" "$CFG/docs/" && ok "roadmap: docs/ROADMAP.md"
 
-  # copy memory seed
   for f in "$SCRIPT_DIR/memory/"*.md; do
     [ -f "$f" ] && [ ! -f "$CFG/memory/$(basename "$f")" ] && cp "$f" "$CFG/memory/"
   done
@@ -508,27 +644,32 @@ OPencodeEOF
   N=$(find "$CFG/agent" "$CFG/skill" "$CFG/command" -type f 2>/dev/null | wc -l | tr -d ' ')
   ok "total $N file otak ditulis"
   pdone "tulis otak selesai"
-  # catat versi terpasang (dipakai --check, doctor, --update)
+
   [ -f "$SCRIPT_DIR/VERSION" ] && cp "$SCRIPT_DIR/VERSION" "$CFG/VERSION"
 }
 
-# ── pasang ke project ──
+# ════════════════════════════════════════════
+#  PROJECT INSTALL
+# ════════════════════════════════════════════
 install_project(){
-ph "PASANG KE PROJECT"
-   dots "menyiapkan project" 3
-   if [ ! -d "$PROJECT" ]; then err "folder tidak ditemukan: $PROJECT"; return 1; fi
-  # backup AGENTS.md project bila bukan tulisan DEV-BRAIN (marker)
+  ph "PASANG KE PROJECT"
+  mode_strip "build"
+  div
+  dots "menyiapkan project" 3
+  if [ ! -d "$PROJECT" ]; then err "folder tidak ditemukan: $PROJECT"; return 1; fi
+
   if [ -f "$PROJECT/AGENTS.md" ] && ! grep -q 'DEV-BRAIN (project ini)' "$PROJECT/AGENTS.md" 2>/dev/null; then
     cp "$PROJECT/AGENTS.md" "$PROJECT/AGENTS.md.bak.$(date +%s)"
     wrn "AGENTS.md project dibackup (isi asli dipertahankan di .bak)"
   fi
-  # prune instalasi lama di project biar tidak ada file sisa
+
   rm -rf "$PROJECT/.opencode/agent" "$PROJECT/.opencode/skill" "$PROJECT/.opencode/command"
   mkdir -p "$PROJECT/.opencode/memory"
   cp -r "$CFG/agent"   "$PROJECT/.opencode/" 2>/dev/null
   cp -r "$CFG/skill"   "$PROJECT/.opencode/" 2>/dev/null
   cp -r "$CFG/command" "$PROJECT/.opencode/" 2>/dev/null
   [ -f "$PROJECT/.opencode/memory/MEMORY.md" ] || cp "$CFG/memory/MEMORY.md" "$PROJECT/.opencode/memory/"
+
   cat > "$PROJECT/AGENTS.md" <<'EOF'
 # DEV-BRAIN (project ini)
 Otak utama: DEV — caveman mode ULTRA, pipeline otomatis:
@@ -539,11 +680,15 @@ EOF
   ok "terpasang di $PROJECT/.opencode + AGENTS.md"
 }
 
-# ── verifikasi instalasi ──
+# ════════════════════════════════════════════
+#  CHECK INSTALL
+# ════════════════════════════════════════════
 check_install(){
-ph "CHECK INSTALASI DEV-BRAIN"
-   dots "memeriksa instalasi" 3
-   BAD=0
+  ph "CHECK INSTALASI DEV-BRAIN"
+  mode_strip ""
+  div
+  dots "memeriksa instalasi" 3
+  BAD=0
   [ -f "$CFG/AGENTS.md" ] || { err "doctrine hilang: $CFG/AGENTS.md"; BAD=1; }
   [ -f "$CFG/opencode.json" ] || { err "config hilang: $CFG/opencode.json"; BAD=1; }
   grep -q '"devbrain"' "$CFG/opencode.json" 2>/dev/null || { wrn "opencode.json tanpa marker devbrain (bukan tulisan installer)"; }
@@ -558,12 +703,18 @@ ph "CHECK INSTALASI DEV-BRAIN"
     [ -f "$s" ] || continue
     bash -n "$s" 2>/dev/null || { err "script rusak: $s"; BAD=1; }
   done
-  if [ "$BAD" -eq 0 ]; then ok "instalasi sehat — $N file otak, semua script valid"; pdone "cek selesai"; return 0; else pdone "cek selesai (ada masalah)"; return 1; fi
+  if [ "$BAD" -eq 0 ]; then ok "instalasi sehat — $N file otak, semua script valid"; pdone "cek selesai"; return 0
+  else pdone "cek selesai (ada masalah)"; return 1
+  fi
 }
 
-# ── pasang pre-commit hook git-guard ──
+# ════════════════════════════════════════════
+#  GIT HOOK
+# ════════════════════════════════════════════
 install_hook(){
   ph "HOOK GIT-GUARD"
+  mode_strip ""
+  div
   dots "menyiapkan hook" 3
   [ -d .git ] || { err "bukan git repo — jalankan dari root project"; return 1; }
   mkdir -p .git/hooks
@@ -581,40 +732,57 @@ EOF
   ok "pre-commit → git-guard terpasang (setiap commit otomatis di-scan)"
 }
 
-# ── verifikasi & banner akhir ──
+# ════════════════════════════════════════════
+#  FINISH — verifikasi + banner akhir
+# ════════════════════════════════════════════
 finish(){
   ph "VERIFIKASI"
-  dots "memverifikasi" 3
+  mode_strip "build"
+  div
+
   echo
-  pc 213 '  ╔══════════════════════════╗'
-  pc 177 '  ║      AGENT AI ONLINE     ║'
-  pc 141 '  ╚══════════════════════════╝'
+  pulse 213 '  ╔═══════════════════════════════════════════════╗'
+  pulse 82  '  ║                                               ║'
+  pulse 82  '  ║          🧠  AGENT AI  —  ONLINE              ║'
+  pulse 82  '  ║     think → build → test → audit → fix        ║'
+  pulse 82  '  ║     plan → dev → build                        ║'
+  pulse 82  '  ║                                               ║'
+  pulse 213 '  ╚═══════════════════════════════════════════════╝'
   echo
+
   _FA="$(find "$CFG/agent" -maxdepth 1 -type f -name '*.md' 2>/dev/null | wc -l | tr -d ' ')"
   _FS="$(find "$CFG/skill" -mindepth 2 -maxdepth 2 -type f -name 'SKILL.md' 2>/dev/null | wc -l | tr -d ' ')"
   _FR="$(find "$CFG/skill" -mindepth 2 -maxdepth 2 -type f -name 'run.sh' 2>/dev/null | wc -l | tr -d ' ')"
   _FC="$(find "$CFG/command" -maxdepth 1 -type f -name '*.md' 2>/dev/null | wc -l | tr -d ' ')"
   ok "$_FA agent • $_FS skill ($_FR dengan bash script) • $_FC command • memori + pelajaran persisten"
   echo
-  pc 45  "  CARA PAKAI:"
-  pc 45  "  1) buka folder project apa saja"
-  pc 45  "  2) jalankan:  opencode"
-  pc 45  "  3) DEV otomatis aktif (satu-satunya primary)"
-  pc 45  "  4) ketik tugas bahasa bebas, contoh:"
+  div
+  bold 220 "  CARA PAKAI:"
+  pc 147 "  1) buka folder project apa saja"
+  pc 147 "  2) jalankan:  opencode"
+  pc 147 "  3) DEV otomatis aktif (satu-satunya primary)"
+  pc 147 "  4) ketik tugas bahasa bebas, contoh:"
   pc 213 "     \"buat halaman login, testnya sekalian, audit juga\""
-  pc 45  "  5) DEV jalan: plan tampil→build→test→audit→ingat"
+  pc 147 "  5) DEV jalan: plan tampil → build → test → audit → ingat"
   echo
-  pc 45  "  SHORTCUT : /ship <tugas>   /fix   /memory"
+  div
+  pc 147 "  SHORTCUT : /ship <tugas>   /fix   /memory"
   pc 214 "  API key  : jalankan  opencode auth login  bila belum"
   echo
+
   _TOT="$(elapsed "${_ANIM_T0:-0}")"
   pdone "verifikasi selesai"
   ok "durasi total ${_TOT}s"
+  echo
+  mode_strip ""
+  echo
 }
 
-# ═══ MAIN ═══
+# ════════════════════════════════════════════
+#  MAIN
+# ════════════════════════════════════════════
 banner_reveal
-[ "$SHOWVER" -eq 1 ] && { pc 45 "DEV-BRAIN v$(tr -d '[:space:]' < "$SCRIPT_DIR/VERSION" 2>/dev/null || echo '?')"; exit 0; }
+[ "$SHOWVER" -eq 1 ] && { bold 45 "  DEV-BRAIN v$(tr -d '[:space:]' < "$SCRIPT_DIR/VERSION" 2>/dev/null || echo '?')"; exit 0; }
 [ "$UNINSTALL" -eq 1 ] && { uninstall; }
 [ "$CHECK" -eq 1 ] && { check_install; exit $?; }
 [ "$UPDATE" -eq 1 ] && { update; }
@@ -624,7 +792,7 @@ if [ -n "$PROJECT" ]; then install_project || exit 1; fi
 if [ "$HOOK" -eq 1 ]; then install_hook || exit 1; fi
 finish
 if [ "$LINT" -eq 1 ] && [ -f "$SCRIPT_DIR/tests/lint-kit.sh" ]; then
-  step "LINT VERIFIKASI"
+  phase_hdr "LINT VERIFIKASI" "◇"
   bash "$SCRIPT_DIR/tests/lint-kit.sh" && bash "$SCRIPT_DIR/tests/self-test.sh" || exit 1
   echo
 fi

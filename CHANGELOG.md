@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## [9.0.0] — 2026-09-10
+### Added
+- README.md full rewrite: visual overhaul, 3-mode build flow documentation (PLAN → DEV → BUILD)
+- install.sh full animation overhaul
+- 3-mode build flow consistency: PLAN → DEV → BUILD
+
 ## [8.2.0] — 2026-09-09
 ### Added
 - README rewrite 1214→229 baris, 11 section fresh
@@ -29,7 +35,7 @@
   FULL = lengkapi/lengkapin, bagusin/perbagus/perindah, matangkan, sempurnakan, upgrade, maksimalkan, pertajam/perdalam/pertebal/perkuat, rapikan, tuntaskan/kerjain abis, lebih detail/dalam/keren, paling powerful, super, polish/refine
 - Anti false-trigger: kalimat biasa yang kebetulan mengandung kata mirip ("dia punya bakat coding", "show off dikit") tetap NORMAL — dibuktikan eval
 ### Fixed
-- 2 false-trigger ditemukan & dibasmi saat repro (kata tunggal "bakat", "show off" tanpa objek semua) → regex diperketat ke frasa summons
+- 2 false-trigger ditemukan & dibasmi saat repro (kata tunggal "bakat", "show off" tanpa objek) → regex diperketat ke frasa summons
 - eval +3 cek (summon all skills → ULTRA; maksimalkan → FULL; false-trigger bakat → NORMAL) — total 18 cek / 8 kasus
 
 ## [8.1.1] — 2026-09-09
@@ -38,7 +44,7 @@
 - "lengkapin/bagusin/matangkan/full" turun kelas dari ULTRA-adjacent → FULL = kerja lebih dalam, respon tetap biasa, TIDAK summon agent
 - ULTRA = hanya SUMMONS eksplisit user ("panggil semuanya/all", "semua agent", "tunjukkan semua kemampuan", "ultra")
 - HUKUM 1 diperjelas: caveman = mode KERJA (eksekusi tugas), bukan gaya bicara sepanjang waktu; percakapan biasa = gaya biasa
-- dev.md GAYA/FASE 0/MATRIKS/DELEGASI + caveman SKILL.md + route SKILL.md + AGENTS.md HUKUM 13 selaras semantik baru; eval +2 cek (pertanyaan biasa → NORMAL; "panggil semuanya" → ULTRA)
+- dev.md GAYA/FASE 0/MATRIKS JALUR 3 tingkat + gerbang "pemicu dieksekusi NORMAL DILARANG / prompt biasa dipaksa ULTRA DILARANG"; AGENTS.md HUKUM 13 selaras semantik baru; eval +2 cek (pertanyaan biasa → NORMAL; "panggil semuanya" → ULTRA)
 
 ## [8.1.0] — 2026-09-09
 ### Added
@@ -174,7 +180,6 @@
 ### Added
 - `install.sh --check` — verifikasi kesehatan instalasi (tanpa menulis file)
 - `install.sh --project` kini backup AGENTS.md project (marker-detected) + prune instalasi lama
-- Self-test kini juga mengunci badge VERSION README ke file VERSION
 
 ### Fixed
 - Path README `skills/` → `skill/` (sesuai installer & agents)
