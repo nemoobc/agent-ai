@@ -8,7 +8,7 @@ PROMPT: $ARGUMENTS
 2. Terapkan jalur (skills/route/SKILL.md):
    - NORMAL = jalur inti, delegasi minimal.
    - FULL = inti + critic + doc-full + clean.
-   - ULTRA = PANGGIL SEMUA: 9 agent + hermes + caveman ULTRA + skill gerbang wajib + verify 10 gerbang sebelum lapor.
+   - ULTRA = PANGGIL SEMUA: 11 agent + caveman ULTRA + skill gerbang wajib + verify 10 gerbang sebelum lapor.
 3. Tampilkan marker `[ROUTE] <jalur> — pemicu: <kata>` di rencana + laporan.
 4. Jalur ≠ bahasa: caveman tetap nyala di semua jalur; hukum & gerbang sama semua jalur.
 

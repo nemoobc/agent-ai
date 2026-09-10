@@ -32,7 +32,7 @@ bench: ## Ukur durasi tiap gate, deteksi drift
 	bash tests/bench.sh
 
 audit: ## Audit penuh
-	bash skills/audit-full/run.sh 2>/dev/null || true
+	bash skills/audit-full/run.sh
 
 doctor: ## Periksa kesehatan kit
 	bash skills/doctor/run.sh
@@ -40,7 +40,7 @@ doctor: ## Periksa kesehatan kit
 install-check: ## Uji installer offline (deterministik)
 	T=$$(mktemp -d); HOME="$$T" bash install.sh --offline >/dev/null 2>&1 && echo "install --offline OK"
 
-verify: lint test eval e2e demo update mutation bench ## Gerbang penuh HUKUM 9
+verify: lint test eval e2e demo update mutation bench audit doctor ## Gerbang penuh HUKUM 9
 
 zip: ## Buat arsip kit (tanpa .git)
 	@V=$$(cat VERSION); \

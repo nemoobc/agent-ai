@@ -7,8 +7,12 @@
 ### Changed
 - install.sh usage +2 baris
 ### Fixed
-- Badge sinkron 9/56/31
+- Badge sinkron 11/56/33
 - install.sh: log 1 baris per file (okbar/errbar), gagal copy = exit 1 + suruh ulangi
+- installer menyalin agent/skill secara dinamis, PLAN runner menerima string/file, dan full gate mencakup audit + doctor
+### Security
+- Update jaringan wajib checksum SHA-256; permission catch-all tidak lagi menimpa aturan deny/ask
+- Cost, recovery, deliver, dan PR guard memperketat input, arsip, dan publikasi
 
 ## [8.1.3] — 2026-09-10
 ### Fixed

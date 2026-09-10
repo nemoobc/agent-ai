@@ -52,7 +52,18 @@ p "▮ EVAL 6/6 — kit sehat → doctor exit 0" 213
 bash "$DIR/skills/doctor/run.sh" "$DIR" >/dev/null 2>&1
 [ $? -eq 0 ] && ok "doctor SEHAT" || bad "doctor merah di kit sendiri"
 
-p "▮ EVAL 7/7 — clean tidak pernah sentuh area terlarang" 213
+p "▮ EVAL 7/7 — PLAN/BUILD tersambung ke DEV" 213
+PLAN_OUT=$(bash "$DIR/skills/plan/run.sh" "buat validasi input" 2>/dev/null)
+echo "$PLAN_OUT" | grep -q "BLOK 1: ANALISIS" \
+  && echo "$PLAN_OUT" | grep -q "BLOK 8: RISIKO" \
+  && ok "plan runner menerima string dan menghasilkan 8 blok" \
+  || bad "plan runner gagal menerima string"
+grep -q '^agent: dev$' "$DIR/command/plan.md" \
+  && grep -q '^agent: dev$' "$DIR/command/build.md" \
+  && ok "command plan/build diarahkan ke DEV" \
+  || bad "command plan/build melewati DEV"
+
+p "▮ EVAL 8/8 — clean tidak pernah sentuh area terlarang" 213
 FX2=$(mktemp -d)
 mkdir -p "$FX2/node_modules" "$FX2/src"
 printf 'k' > "$FX2/node_modules/k.js"; printf 's' > "$FX2/src/s.js"; mkdir -p "$FX2/dist"
@@ -69,7 +80,7 @@ bash "$DIR/skills/route/run.sh" "lengkapin dashboard user" | grep -q "JALUR: FUL
 RULTRA=$(bash "$DIR/skills/route/run.sh" "LENGKAP FULL PANGGIL SEMUA AGENT + SKILL + CAVEMAN MODE ULTRA + HERMES")
 echo "$RULTRA" | grep -q "JALUR: ULTRA" \
   && ok "route: pemicu maksimum → ULTRA" || bad "route: pemicu maksimum ≠ ULTRA"
-echo "$RULTRA" | grep -qE "9 agent|caveman ULTRA" \
+echo "$RULTRA" | grep -qE "11 agent|caveman ULTRA" \
   && ok "route ULTRA: 'PANGGIL SEMUA' tercantum" || bad "route ULTRA: tidak menyebut panggil semua"
 R2=$(bash "$DIR/skills/route/run.sh" "bagusin halaman login")
 echo "$R2" | grep -q "JALUR: FULL" \

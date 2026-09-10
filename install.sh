@@ -162,6 +162,7 @@ Pemakaian:
   NO_ANIM=1 bash install.sh        matikan animasi (CI/log aman, append-only)
   bash install.sh --no-anim        sama dengan NO_ANIM=1 (tanpa animasi)
   env DEV_BRAIN_UPDATE_URL=...    override URL update (untuk tes/file://)
+  env DEV_BRAIN_UPDATE_SHA256=... checksum wajib untuk update jaringan
 
 Di dalam opencode (tanpa install global di project ini):
   /bootstrap                      pasang DEV-BRAIN ke project ini (.opencode/)
@@ -190,8 +191,10 @@ banner(){
 
 # ── update dari GitHub ──
 REPO="nemoobc/agent-ai"
-# URL override: untuk tes lokal (file://) — set DEV_BRAIN_UPDATE_URL
+# URL override: untuk tes lokal (file://) — set DEV_BRAIN_UPDATE_URL.
+# Update jaringan wajib membawa SHA-256 tepercaya melalui DEV_BRAIN_UPDATE_SHA256.
 UPDATE_URL="${DEV_BRAIN_UPDATE_URL:-https://codeload.github.com/$REPO/tar.gz/refs/heads/master}"
+UPDATE_SHA256="${DEV_BRAIN_UPDATE_SHA256:-}"
 update(){
   ph "UPDATE DEV-BRAIN"
   command -v curl >/dev/null 2>&1 || { err "curl tidak ada — update manual: git clone $REPO"; exit 1; }
@@ -204,6 +207,20 @@ update(){
   else
     spin_stop "${_SPID:-}" ""
     err "unduh gagal — cek koneksi"; rm -rf "$TMP"; exit 1
+  fi
+  if [[ "$UPDATE_URL" != file://* ]]; then
+    if ! command -v sha256sum >/dev/null 2>&1 || [ -z "$UPDATE_SHA256" ]; then
+      err "update jaringan wajib: DEV_BRAIN_UPDATE_SHA256=<sha256 tepercaya>"
+      rm -rf "$TMP"
+      exit 1
+    fi
+    ACTUAL_SHA256="$(sha256sum "$TMP/kit.tgz" | awk '{print $1}')"
+    if [ "$ACTUAL_SHA256" != "$UPDATE_SHA256" ]; then
+      err "checksum update tidak cocok — instalasi dibatalkan"
+      rm -rf "$TMP"
+      exit 1
+    fi
+    ok "checksum update terverifikasi"
   fi
   dots "ekstrak paket…"
   tar -xzf "$TMP/kit.tgz" -C "$TMP" || { err "ekstrak gagal"; rm -rf "$TMP"; exit 1; }
@@ -260,22 +277,10 @@ ph "TULIS OTAK → ~/.config/opencode"
    dots "menyiapkan otak" 3
    # prune instalasi lama biar tidak ada file sisa dari versi sebelumnya
   rm -rf "$CFG/agent" "$CFG/skill" "$CFG/command"
-  mkdir -p "$CFG/agent" "$CFG/command" "$CFG/memory" \
-    "$CFG/skill/think" "$CFG/skill/imagine" "$CFG/skill/remember" "$CFG/skill/recall" \
-    "$CFG/skill/caveman" "$CFG/skill/caveman-warmup" "$CFG/skill/scan" "$CFG/skill/plan" \
-    "$CFG/skill/debug" "$CFG/skill/doc-full" \
-    "$CFG/skill/doctor" "$CFG/skill/review" "$CFG/skill/refactor" "$CFG/skill/cost" \
-    "$CFG/skill/perf" "$CFG/skill/explain" "$CFG/skill/i18n" "$CFG/skill/changelog" \
-    "$CFG/skill/learn" "$CFG/skill/milestone" "$CFG/skill/test-design" "$CFG/skill/api-design" \
-    "$CFG/skill/migrate" "$CFG/skill/postmortem" "$CFG/skill/spec" "$CFG/skill/research" \
-    "$CFG/skill/red-team" "$CFG/skill/team" "$CFG/skill/autonomy" "$CFG/skill/metrics" \
-    "$CFG/skill/handoff" "$CFG/skill/a11y"    "$CFG/skill/context" "$CFG/skill/pr" \
-    "$CFG/skill/git-guard" "$CFG/skill/env-guard" "$CFG/skill/backup" "$CFG/skill/dependency" \
-    "$CFG/skill/hotfix" "$CFG/skill/recovery" "$CFG/skill/convention" "$CFG/skill/coverage" \
-    "$CFG/skill/critique" "$CFG/skill/injection-guard" "$CFG/skill/trace" "$CFG/skill/profile" \
-    "$CFG/skill/budget" "$CFG/skill/threat-model" "$CFG/skill/deliver" "$CFG/skill/eval" \
-    "$CFG/skill/clean" "$CFG/skill/estimate" "$CFG/skill/route" \
-    "$CFG/skill/test-full" "$CFG/skill/audit-full" "$CFG/skill/fix-full"
+  mkdir -p "$CFG/agent" "$CFG/command" "$CFG/memory" "$CFG/skill"
+  for skill_dir in "$SCRIPT_DIR/skills/"*/; do
+    [ -d "$skill_dir" ] && mkdir -p "$CFG/skill/$(basename "$skill_dir")"
+  done
 
   # backup config lama HANYA bila itu bukan tulisan DEV-BRAIN (marker)
   if [ -f "$CFG/opencode.json" ] && ! grep -q '"devbrain"' "$CFG/opencode.json" 2>/dev/null; then
@@ -292,6 +297,7 @@ ph "TULIS OTAK → ~/.config/opencode"
     "write": "allow",
     "webfetch": "allow",
     "bash": {
+      "*": "allow",
       "ls*": "allow", "ll*": "allow", "la*": "allow", "tree*": "allow",
       "file*": "allow", "stat*": "allow", "readlink*": "allow", "basename*": "allow", "dirname*": "allow",
       "cat*": "allow", "head*": "allow", "tail*": "allow", "less*": "allow", "more*": "allow",
@@ -440,14 +446,13 @@ ph "TULIS OTAK → ~/.config/opencode"
       "> /dev/sda*": "deny", "mv /* /dev/null*": "deny", "mv ~ /dev/null*": "deny",
       "chmod -R 000 /*": "deny", "chown -R nobody:nogroup /*": "deny",
       "iptables -F": "deny", "iptables -P INPUT ACCEPT": "deny", "iptables -P FORWARD ACCEPT": "deny",
-      "ufw disable*": "deny",
-      "*": "allow"
+      "ufw disable*": "deny"
     }
   }
 }
 OPencodeEOF
 
-  # copy agents — 9 termasuk critic (adversarial) & hermes (utusan all-rounder)
+  # copy every agent present; the folder is the source of truth for counts
   _FAIL=0
   _NA="$(ls -1 "$SCRIPT_DIR/agents/" 2>/dev/null | wc -l | tr -d ' ')"
   case "${_NA}" in ''|*[!0-9]*) _NA=1 ;; esac
@@ -458,7 +463,7 @@ OPencodeEOF
   done
   if [ "${_ai}" -eq 0 ]; then err "tidak ada file tersalin di agent — install dibatalkan"; exit 1; fi
 
-  # copy skills (SKILL.md wajib + run.sh opsional)
+  # copy every skill (SKILL.md wajib + run.sh opsional)
   _NS="$(ls -1 "$SCRIPT_DIR/skills/" 2>/dev/null | wc -l | tr -d ' ')"
   case "${_NS}" in ''|*[!0-9]*) _NS=1 ;; esac
   _si=0
@@ -585,7 +590,11 @@ finish(){
   pc 177 '  ║      AGENT AI ONLINE     ║'
   pc 141 '  ╚══════════════════════════╝'
   echo
-  ok "9 agent • 56 skill (16 dengan bash script) • 31 command • memori + pelajaran persisten"
+  _FA="$(find "$CFG/agent" -maxdepth 1 -type f -name '*.md' 2>/dev/null | wc -l | tr -d ' ')"
+  _FS="$(find "$CFG/skill" -mindepth 2 -maxdepth 2 -type f -name 'SKILL.md' 2>/dev/null | wc -l | tr -d ' ')"
+  _FR="$(find "$CFG/skill" -mindepth 2 -maxdepth 2 -type f -name 'run.sh' 2>/dev/null | wc -l | tr -d ' ')"
+  _FC="$(find "$CFG/command" -maxdepth 1 -type f -name '*.md' 2>/dev/null | wc -l | tr -d ' ')"
+  ok "$_FA agent • $_FS skill ($_FR dengan bash script) • $_FC command • memori + pelajaran persisten"
   echo
   pc 45  "  CARA PAKAI:"
   pc 45  "  1) buka folder project apa saja"
@@ -593,7 +602,7 @@ finish(){
   pc 45  "  3) DEV otomatis aktif (satu-satunya primary)"
   pc 45  "  4) ketik tugas bahasa bebas, contoh:"
   pc 213 "     \"buat halaman login, testnya sekalian, audit juga\""
-  pc 45  "  5) DEV jalan: mikir→bayang→rencana tampil→bangun→test→audit→ingat"
+  pc 45  "  5) DEV jalan: plan tampil→build→test→audit→ingat"
   echo
   pc 45  "  SHORTCUT : /ship <tugas>   /fix   /memory"
   pc 214 "  API key  : jalankan  opencode auth login  bila belum"

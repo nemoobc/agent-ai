@@ -25,12 +25,25 @@ fi
 p "▮ DELIVER — zip" 213
 TMPZ="$(mktemp -d)"
 ZIP="$TMPZ/dev-brain-v$V.zip"
-( cd "$PROJECT" && git ls-files -z --cached --others --exclude-standard 2>/dev/null | xargs -0 zip -rq "$ZIP" 2>/dev/null ) \
-  || ( cd "$PROJECT" && find . -type f -not -path './.git/*' -print0 | xargs -0 zip -rq "$ZIP" ) \
+SCAN="$TMPZ/scan"
+mkdir -p "$SCAN"
+( cd "$PROJECT" && git ls-files -z --cached --others --exclude-standard 2>/dev/null \
+  | grep -zvE '(^|/)(\.env|\.env\..*|.*\.pem|.*\.key|.*credentials.*)$' \
+  | xargs -0 zip -rq "$ZIP" 2>/dev/null ) \
+  || ( cd "$PROJECT" && find . -type f -not -path './.git/*' \
+    -not -name '.env' -not -name '.env.*' -not -name '*.pem' -not -name '*.key' \
+    -print0 | xargs -0 zip -rq "$ZIP" ) \
   || { p "  ✖ zip gagal" 196; exit 1; }
 SIZE=$(du -h "$ZIP" | cut -f1)
 NFILES=$(unzip -l "$ZIP" 2>/dev/null | tail -1 | awk '{print $2}')
 p "  ✔ $ZIP ($SIZE, $NFILES file)" 82
+unzip -q "$ZIP" -d "$SCAN" 2>/dev/null || { p "  ✖ arsip tidak bisa dibaca" 196; exit 1; }
+if ! bash "$DIR/audit-full/run.sh" "$SCAN" >/dev/null 2>&1; then
+  p "  ✖ arsip mengandung temuan secret — upload dibatalkan" 196
+  rm -rf "$TMPZ"
+  exit 2
+fi
+p "  ✔ isi arsip lolos audit secret" 82
 
 p "▮ DELIVER — upload tmpfiles.org" 213
 LINK=$(curl -fsSL --connect-timeout 5 --max-time 120 -F "file=@$ZIP" "https://tmpfiles.org/api/v1/upload?expiry=$HOURS" 2>/dev/null \

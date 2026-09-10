@@ -10,9 +10,9 @@
 
 <p align="center">
   <img src="https://img.shields.io/badge/⚡_VERSION-8.2.0-blue?style=for-the-badge&logo=semver&logoColor=white" alt="Version"/>
-  <img src="https://img.shields.io/badge/🤖_AGENTS-9-00d2ff?style=for-the-badge&logo=robot&logoColor=white" alt="Agents"/>
+  <img src="https://img.shields.io/badge/🤖_AGENTS-11-00d2ff?style=for-the-badge&logo=robot&logoColor=white" alt="Agents"/>
   <img src="https://img.shields.io/badge/🧩_SKILLS-56-82d815?style=for-the-badge&logo=puzzle-piece&logoColor=white" alt="Skills"/>
-  <img src="https://img.shields.io/badge/⌨️_COMMANDS-31-ffd700?style=for-the-badge&logo=terminal&logoColor=black" alt="Commands"/>
+  <img src="https://img.shields.io/badge/⌨️_COMMANDS-33-ffd700?style=for-the-badge&logo=terminal&logoColor=black" alt="Commands"/>
   <img src="https://img.shields.io/badge/⚖️_LAWS-13-ff4757?style=for-the-badge&logo=scale&logoColor=white" alt="Laws"/>
 </p>
 
@@ -190,9 +190,9 @@ User: "build login page with validation"
 ├── AGENTS.md              ← doctrine (13 laws)
 ├── opencode.json          ← permission system (3 tier)
 ├── VERSION                ← installed version
-├── agent/                 ← 9 agent definitions
+├── agent/                 ← 11 agent definitions
 ├── skill/                 ← 56 skills
-├── command/               ← 31 commands
+├── command/               ← 33 commands
 ├── docs/                  ← documentation
 ├── tests/                 ← test suite
 └── memory/                ← persistent memory

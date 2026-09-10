@@ -5,9 +5,9 @@
 <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&pause=1000&color=22D3EE&center=true&vCenter=true&width=650&lines=MIKIR+%E2%86%92+BAYANGKAN+%E2%86%92+GODOK+%E2%86%92+BANGUN+%E2%86%92+TEST+%E2%86%92+AUDIT+%E2%86%92+FIX+%E2%86%92+LAPOR;9+agent+%E2%80%A2+56+skill+%E2%80%A2+31+command;Kerja+sampai+gerbang+hijau.+SELESAI+%E2%9C%85" alt="typing" />
 
 ![version](https://img.shields.io/badge/VERSION-8.2.0-blue?style=for-the-badge)
-![agents](https://img.shields.io/badge/AGENTS-9-green?style=for-the-badge)
+![agents](https://img.shields.io/badge/AGENTS-11-green?style=for-the-badge)
 ![skills](https://img.shields.io/badge/SKILLS-56-orange?style=for-the-badge)
-![commands](https://img.shields.io/badge/COMMANDS-31-purple?style=for-the-badge)
+![commands](https://img.shields.io/badge/COMMANDS-33-purple?style=for-the-badge)
 ![license](https://img.shields.io/badge/LICENSE-MIT-yellow?style=for-the-badge)
 
 ![stars](https://img.shields.io/github/stars/nemoobc/agent-ai?style=social)
@@ -94,6 +94,16 @@ MIKIR → BAYANGKAN → GODOK → BANGUN → TEST → AUDIT → FIX → DOK → 
 | 🟡 FULL | "lengkapin / bagusin / full" | Riset + test + dok + critic ringan |
 | 🔴 ULTRA | "panggil semuanya / ultra" | Semua agent + verify penuh sebelum lapor |
 
+### DEV menghubungkan 3 mode kerja
+
+```text
+PLAN  →  DEV  →  BUILD  →  TEST/AUDIT/FIX  →  LAPOR
+```
+
+`DEV` selalu menjadi otak utama dan satu-satunya primary agent. `/plan` hanya menyusun
+rencana 8 blok melalui DEV; `/build` hanya boleh menjalankan coder setelah gerbang PLAN
+selesai. Alur bahasa bebas, `/ship`, `/plan`, dan `/build` memakai pipeline DEV yang sama.
+
 ---
 
 ## 🤖 4. Agents
@@ -133,7 +143,7 @@ MIKIR → BAYANGKAN → GODOK → BANGUN → TEST → AUDIT → FIX → DOK → 
 
 ## ⌨️ 6. Commands
 
-**31 command** siap pakai di opencode, dalam 4 grup:
+**33 command** siap pakai di opencode, dalam 4 grup:
 
 | Grup | Command |
 |---|---|
@@ -141,6 +151,7 @@ MIKIR → BAYANGKAN → GODOK → BANGUN → TEST → AUDIT → FIX → DOK → 
 | 📊 Monitoring & Mutu | `audit` `status` `metrics` `coverage` `trace` `critique` `threat-model` `blame` |
 | 📝 Docs & Rencana | `report` `roadmap` `backlog` `estimate` `context` `handoff` `learn` |
 | 🛠️ Utilitas & Tim | `clean` `team` `doctor` `hermes` `pr` `memory` `deliver` |
+| 🧠 DEV flow | `plan` `build` |
 
 ---
 
@@ -148,7 +159,7 @@ MIKIR → BAYANGKAN → GODOK → BANGUN → TEST → AUDIT → FIX → DOK → 
 
 ```text
 agent-ai/
-├── agents/ (9)   skills/ (56)   command/ (31)
+├── agents/ (11)  skills/ (56)   command/ (33)
 ├── docs/  tests/  memory/ (archive + lessons)
 └── install.sh  Makefile  AGENTS.md  VERSION  CHANGELOG.md
 ```
@@ -226,6 +237,6 @@ bash tests/run-demo.sh
 
 <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&pause=1200&color=22D3EE&center=true&vCenter=true&width=500&lines=Terima+kasih+sudah+mampir!+%F0%9F%99%8F;Star+%E2%AD%90+%2B+Fork+%F0%9F%8D%B4+%3D+%E2%9D%A4%EF%B8%8F" alt="thanks" />
 
-v8.2.0 • 9 agent • 56 skill • 31 command
+v8.2.0 • 11 agent • 56 skill • 33 command
 
 </div>

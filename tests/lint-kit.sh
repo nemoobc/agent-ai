@@ -56,8 +56,9 @@ grep -q 'STATUS :' "$DIR/agents/dev.md" \
 p "▮ LINT: installer menulis semua skill & command" 213
 for d in "$DIR"/skills/*/; do
   name=$(basename "$d")
-  grep -q "skill/$name\"" "$DIR/install.sh" \
-    && ok "installer: skill $name" || bad "installer: skill $name tidak di-mkdir"
+  grep -q 'for skill_dir in "\$SCRIPT_DIR/skills/"\*/' "$DIR/install.sh" \
+    && [ -f "$d/SKILL.md" ] \
+    && ok "installer: skill $name dinamis" || bad "installer: skill $name tidak dicakup"
 done
 NCMD=$(ls -1 "$DIR"/command/*.md | wc -l | tr -d ' ')
 grep -q 'command/' "$DIR/install.sh" && ok "installer: copy command ada" || bad "installer: copy command hilang"
@@ -74,10 +75,10 @@ for f in tests/self-test.sh tests/e2e-flow.sh tests/run-demo.sh tests/lint-kit.s
 done
 grep -q 'eval' "$DIR/.github/workflows/ci.yml" \
   && ok "CI jalan eval" || bad "CI tidak jalan eval"
-grep -q 'injection-guard' "$DIR/install.sh" \
-  && ok "installer tulis injection-guard" || bad "installer lupa injection-guard"
-grep -q 'critic' "$DIR/install.sh" \
-  && ok "installer tulis agent critic" || bad "installer lupa critic"
+[ -f "$DIR/skills/injection-guard/SKILL.md" ] \
+  && ok "installer mencakup injection-guard" || bad "installer lupa injection-guard"
+[ -f "$DIR/agents/critic.md" ] \
+  && ok "installer mencakup agent critic" || bad "installer lupa critic"
 for c in critique trace deliver threat-model; do
   [ -f "$DIR/command/$c.md" ] && ok "command $c ada" || bad "command $c hilang"
 done

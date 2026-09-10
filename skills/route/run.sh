@@ -23,7 +23,7 @@ echo "$L" | grep -Eq "$FULL_RE" && has_full=1
 if [ "$has_ultra" -eq 1 ]; then
   echo "JALUR: ULTRA"
   echo "PEMICU: $(echo "$L" | grep -Eo "$ULTRA_RE" | sort -u | tr '\n' ' ')"
-  echo "KELAS: ULTRA — PANGGIL SEMUA: 9 agent + hermes + caveman ULTRA + skill gerbang wajib + verify 10 gerbang"
+  echo "KELAS: ULTRA — PANGGIL SEMUA: 11 agent + caveman ULTRA + skill gerbang wajib + verify 10 gerbang"
 elif [ "$has_full" -eq 1 ]; then
   echo "JALUR: FULL"
   echo "PEMICU: $(echo "$L" | grep -Eo "$FULL_RE" | sort -u | tr '\n' ' ')"

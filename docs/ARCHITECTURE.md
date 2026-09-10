@@ -1,4 +1,4 @@
-# ARSITEKTUR DEV-BRAIN DOCTRINE v8.1
+# ARSITEKTUR DEV-BRAIN DOCTRINE v8.2
 
 Dokumen ini menjelaskan **cara kit bekerja**, bukan sekadar daftar file. Siapa pun (atau agent apa pun) yang membaca ini harus bisa menjawab: *apa yang terjadi ketika sebuah permintaan masuk, dan siapa yang menjamin kualitasnya?*
 
@@ -14,10 +14,10 @@ Dokumen ini menjelaskan **cara kit bekerja**, bukan sekadar daftar file. Siapa p
 │  L2  OTAK  — agents/dev.md (FASE 0 route + pipeline 17 fase)│
 │       urutan kerja default; gerbang keras antar fase        │
 ├────────────────────────────────────────────────────────────┤
-│  L3  KEMAMPUAN  — skills/ (56) + command/ (31)             │
+│  L3  KEMAMPUAN  — skills/ (56) + command/ (33)             │
 │       skill = KAPAN dipakai + BAGAIMANA; command = perintah │
 ├────────────────────────────────────────────────────────────┤
-│  L4  EKSEKUSI  — skills/*/run.sh (16 script jalan)         │
+│  L4  EKSEKUSI  — skills/*/run.sh (56 script jalan)         │
 │       nilai yang terukur: gate, guard, scan, backup, metrik │
 ├────────────────────────────────────────────────────────────┤
 │  L5  PEMBUKTIAN  — tests/ (8 suite + CI)                   │
@@ -29,6 +29,19 @@ Dokumen ini menjelaskan **cara kit bekerja**, bukan sekadar daftar file. Siapa p
 ```
 
 **Aturan lapisan**: L2 tidak boleh memanggil skill yang tidak ada di L3; L3 tidak boleh mengklaim hal yang tidak dibuktikan di L5; L5 tidak boleh menguji hal yang tidak didefinisikan di L1–L2. Laporan apa pun dari L2 tanpa rantai bukti (HUKUM 11) ditolak.
+
+## 1A. KONTRAK 3 MODE
+
+`DEV` adalah satu-satunya primary agent dan otak utama. Tiga mode kerja tidak membuat
+orkestrator baru:
+
+```text
+PLAN  →  DEV  →  BUILD  →  TEST/AUDIT/FIX  →  LAPOR
+```
+
+- `PLAN` menjalankan rencana 8 blok dan menutup gerbang sebelum kode ditulis.
+- `BUILD` menjalankan coder melalui DEV setelah PLAN selesai.
+- `DEV` menyatukan mode bahasa bebas, `/plan`, `/build`, `/ship`, dan verifikasi.
 
 ---
 

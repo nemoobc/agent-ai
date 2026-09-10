@@ -1,6 +1,16 @@
 # LESSONS — pelajaran terukur (skill learn)
 Entry terbaru di atas. Format: POLA / BUKTI / AKSI. Tanpa bukti = tidak masuk.
 
+## 2026-09-10 — mode PLAN/BUILD harus adapter DEV, bukan primary baru
+- POLA: mode kerja mudah drift bila hanya hidup di prose atau memiliki entrypoint sendiri
+- BUKTI: `/plan` dan `/build` baru diuji `tests/eval.sh`, keduanya memiliki `agent: dev`, dan `commands/verify.sh` hijau
+- AKSI: jadikan DEV satu-satunya orkestrator; PLAN menutup gerbang, BUILD berjalan sesudahnya
+
+## 2026-09-10 — update dan deliver adalah boundary kepercayaan
+- POLA: tarball mutable, permission catch-all, atau arsip tanpa scan bisa mengubah operasi rutin menjadi eksekusi/kebocoran
+- BUKTI: audit keamanan menemukan 6 temuan HIGH; perbaikan diuji oleh verify penuh (10 gate PASS)
+- AKSI: checksum update, catch-all permission di depan rule ketat, validasi input, scan arsip, dan guard PR
+
 ## 2026-09-10 — 1 file 1 baris, cetak ganda dibaca sebagai nimpa (v8.2.0)
 - POLA: cetak ganda ok+pbar dibaca user sebagai nimpa
 - BUKTI: 96 pasang ok+pbar label sama di output --offline 232 baris

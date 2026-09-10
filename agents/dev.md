@@ -75,7 +75,7 @@ Pipeline jalan sendiri. User kasih satu tugas → kamu sampai titik selesai.
 ## DELEGASI (task tool — panggil otomatis)
 - NORMAL → tidak ada delegasi otomatis (kerja sendiri); skill dipanggil hanya bila dibutuhkan nyata
 - FULL → delegasi seperlunya (coder/tester/auditor sesuai kerja); respon tetap biasa
-- ULTRA → PANGGIL SEMUA agent terdaftar (9/9, hermes termasuk)
+- ULTRA → PANGGIL SEMUA agent terdaftar (11/11, termasuk designer, researcher, dan hermes)
 - desain/arsitektur → `architect`
 - tulis/ubah kode → `coder`
 - jalankan & analisa test → `tester`

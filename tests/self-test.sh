@@ -15,6 +15,8 @@ p "▮ SELF-TEST: syntax semua script" 213
 for s in "$DIR"/install.sh "$DIR"/skills/*/run.sh; do
   bash -n "$s" 2>/dev/null && ok "bash -n $(basename "$s")" || bad "bash -n $(basename "$s")"
 done
+[ -f "$DIR/command/plan.md" ] && ok "command plan ada" || bad "command plan hilang"
+[ -f "$DIR/command/build.md" ] && ok "command build ada" || bad "command build hilang"
 
 p "▮ SELF-TEST: dokumentasi skill punya command jalan" 213
 for sk in audit-full test-full fix-full; do
@@ -49,7 +51,7 @@ p "▮ SELF-TEST: struktur kit lengkap" 213
 NSKILL=$(ls -1d "$DIR"/skills/*/ 2>/dev/null | wc -l | tr -d ' ')
 NCMD=$(ls -1 "$DIR"/command/*.md 2>/dev/null | wc -l | tr -d ' ')
 [ "$NSKILL" -eq 56 ] && ok "56 skill terdeteksi ($NSKILL)" || bad "jumlah skill = $NSKILL, harusnya 56"
-[ "$NCMD" -eq 31 ] && ok "31 command terdeteksi" || bad "jumlah command = $NCMD, harusnya 31"
+[ "$NCMD" -eq 33 ] && ok "33 command terdeteksi" || bad "jumlah command = $NCMD, harusnya 33"
 [ -f "$DIR/VERSION" ] && ok "VERSION ada" || bad "VERSION hilang"
 [ -f "$DIR/CHANGELOG.md" ] && ok "CHANGELOG ada" || bad "CHANGELOG hilang"
 [ -f "$DIR/LICENSE" ] && ok "LICENSE ada" || bad "LICENSE hilang"
@@ -99,7 +101,7 @@ done
 
 p "▮ SELF-TEST: badge README sinkron dengan isi repo" 213
 NAGENT=$(ls -1 "$DIR"/agents/*.md 2>/dev/null | wc -l | tr -d ' ')
-[ "$NAGENT" -eq 9 ] && ok "9 agent terdeteksi" || bad "jumlah agent = $NAGENT, harusnya 9"
+[ "$NAGENT" -eq 11 ] && ok "11 agent terdeteksi" || bad "jumlah agent = $NAGENT, harusnya 11"
 [ -f "$DIR/agents/hermes.md" ] && ok "agent hermes ada" || bad "agent hermes hilang"
 for s in critique injection-guard trace profile budget threat-model deliver eval; do
   [ -f "$DIR/skills/$s/SKILL.md" ] && ok "skill $s ada" || bad "skill $s hilang"

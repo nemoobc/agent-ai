@@ -38,6 +38,12 @@ p "▶ Changes: $CHANGES files" 248
 if command -v gh > /dev/null 2>&1; then
   p "▶ Creating PR with gh..." 213
   git -C "$DIR" add -A 2>/dev/null
+  if ! bash "$DIR/skills/git-guard/run.sh" "$DIR" >/dev/null 2>&1 || \
+     ! bash "$DIR/skills/env-guard/run.sh" "$DIR" >/dev/null 2>&1; then
+    bad "Secret/environment guard gagal — commit dan PR dibatalkan"
+    git -C "$DIR" reset >/dev/null 2>&1 || true
+    exit 2
+  fi
   git -C "$DIR" commit -m "$TITLE" 2>/dev/null
   PR_URL=$(gh pr create --title "$TITLE" --body "Auto-generated PR from commands/pr.sh" 2>/dev/null)
   if [ -n "$PR_URL" ]; then

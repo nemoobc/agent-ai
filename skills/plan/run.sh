@@ -1,17 +1,23 @@
 #!/usr/bin/env bash
 # plan — rencana 8 blok: analisis, desain, konstruksi, test, audit, dok, bukti, risiko
-# Usage: bash skills/plan/run.sh [input_file]
+# Usage: bash skills/plan/run.sh [project_dir] <input_file_or_string>
 set -u
-ROOT="${1:-.}"; cd "$ROOT" 2>/dev/null || exit 1
+ROOT="."; INPUT=""
+if [ "$#" -ge 2 ] && [ -d "$1" ]; then
+  ROOT="$1"
+  INPUT="$2"
+else
+  INPUT="${1:-}"
+fi
+cd "$ROOT" 2>/dev/null || exit 1
 p(){ printf '\033[38;5;%sm%s\033[0m\n' "$2" "$1"; }
 ok(){ p "  ✔ $1" 82; }
 bad(){ p "  ✖ $1" 196; }
 warn(){ p "  ⚠ $1" 214; }
 info(){ p "  ℹ $1" 111; }
 
-INPUT="${1:-}"
 if [ -z "$INPUT" ]; then
-  bad "Tidak ada input. Gunakan: bash skills/plan/run.sh <file_atau_string>"
+  bad "Tidak ada input. Gunakan: bash skills/plan/run.sh [project_dir] <file_atau_string>"
   exit 1
 fi
 

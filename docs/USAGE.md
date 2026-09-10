@@ -1,7 +1,7 @@
 # PANDUAN LENGKAP DEV-BRAIN (docs/USAGE.md)
 
 Semua agent, semua skill, semua command — kapan dipakai, siapa yang panggil, contoh nyata.
-DEV-BRAIN v8.1.2 — 9 agent, 56 skill, 31 command, 13 hukum, 16 script jalan. Install dulu: `bash install.sh`.
+DEV-BRAIN v8.2.0 — 11 agent, 56 skill, 33 command, 13 hukum, 56 script jalan. Install dulu: `bash install.sh`.
 
 ---
 
@@ -17,7 +17,7 @@ Command di bawah = pintasan. Skills = otot di belakang pintasan. Agents = tangan
 
 ---
 
-## AGENTS (9)
+## AGENTS (11)
 
 | Agent | Peran | Kapan Aktif | Contoh Output |
 |-------|-------|-------------|---------------|
@@ -35,7 +35,7 @@ DEV yang panggil. User tidak perlu tahu. Bila tugas kecil (< 3 file, tanpa risik
 
 ---
 
-## SKILLS (55)
+## SKILLS (56)
 
 ### Otot otomatis (dipanggil DEV tanpa disuruh)
 
@@ -113,7 +113,7 @@ DEV yang panggil. User tidak perlu tahu. Bila tugas kecil (< 3 file, tanpa risik
 
 ---
 
-## COMMANDS (23)
+## COMMANDS (33)
 
 | Command | Fungsi | Contoh |
 |---------|--------|--------|
@@ -220,9 +220,9 @@ DEV: [GODOK] TUJUAN: toggle tema gelap, tersimpan di preferensi.
 ├── AGENTS.md                ← doctrine permanen (13 hukum)
 ├── opencode.json            ← permission granular
 ├── VERSION                  ← versi terpasang
-├── agent/                   ← 9 agent (critic + hermes)
+├── agent/                   ← 11 agent (critic + hermes + designer + researcher)
 ├── skill/                   ← 56 skill
-├── command/                 ← 31 command
+├── command/                 ← 33 command
 └── memory/                  ← ingatan persisten
 
 <project>/.opencode/         ← per-project (opsional: /bootstrap)
