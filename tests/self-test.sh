@@ -50,8 +50,8 @@ fi
 p "▮ SELF-TEST: struktur kit lengkap" 213
 NSKILL=$(ls -1d "$DIR"/skills/*/ 2>/dev/null | wc -l | tr -d ' ')
 NCMD=$(ls -1 "$DIR"/command/*.md 2>/dev/null | wc -l | tr -d ' ')
-[ "$NSKILL" -eq 56 ] && ok "56 skill terdeteksi ($NSKILL)" || bad "jumlah skill = $NSKILL, harusnya 56"
-[ "$NCMD" -eq 33 ] && ok "33 command terdeteksi" || bad "jumlah command = $NCMD, harusnya 33"
+[ "$NSKILL" -eq 62 ] && ok "62 skill terdeteksi ($NSKILL)" || bad "jumlah skill = $NSKILL, harusnya 62"
+[ "$NCMD" -eq 39 ] && ok "39 command terdeteksi" || bad "jumlah command = $NCMD, harusnya 39"
 [ -f "$DIR/VERSION" ] && ok "VERSION ada" || bad "VERSION hilang"
 [ -f "$DIR/CHANGELOG.md" ] && ok "CHANGELOG ada" || bad "CHANGELOG hilang"
 [ -f "$DIR/LICENSE" ] && ok "LICENSE ada" || bad "LICENSE hilang"
@@ -88,7 +88,7 @@ grep -q 'TITIK-PUTUS' "$DIR/agents/dev.md" && ok "dev.md lapor 3 status" || bad 
 for s in recall remember; do
   grep -q 'lessons.md' "$DIR/skills/$s/SKILL.md" && ok "$s tahu lessons.md" || bad "$s tidak tahu lessons.md"
 done
-for c in roadmap report bootstrap status learn release onboard backlog handoff metrics team pr context upgrade verify hotfix coverage blame critique trace deliver threat-model clean estimate hermes; do
+for c in roadmap report bootstrap status learn release onboard backlog handoff metrics team pr context upgrade verify hotfix coverage blame critique trace deliver threat-model clean estimate hermes audit fix build context data doctor hotfix learn memory monitor multi-model notify onboard plan pr release report roadmap route scaffold ship status team threat-model trace upgrade verify web; do
   [ -f "$DIR/command/$c.md" ] && ok "command $c ada" || bad "command $c hilang"
 done
 [ -f "$DIR/memory/lessons.md" ] && ok "memory/lessons.md ada" || bad "memory/lessons.md hilang"
@@ -111,6 +111,7 @@ for f in skills/injection-guard/run.sh skills/profile/run.sh skills/deliver/run.
 done
 grep -q 'HUKUM 11' "$DIR/AGENTS.md" && ok "AGENTS.md punya HUKUM 11 (rantai bukti)" || bad "HUKUM 11 hilang"
 grep -q 'HUKUM 12' "$DIR/AGENTS.md" && ok "AGENTS.md punya HUKUM 12 (anti-injeksi)" || bad "HUKUM 12 hilang"
+grep -q 'HUKUM 13' "$DIR/AGENTS.md" && ok "AGENTS.md punya HUKUM 13 (router intensitas)" || bad "HUKUM 13 hilang"
 grep -q 'critic' "$DIR/agents/dev.md" && ok "dev.md delegasi critic" || bad "dev.md tanpa critic"
 BSKILL_N=$(grep -oE 'SKILLS-[0-9]+' "$DIR/README.md" | sort -u | wc -l | tr -d ' ')
 [ "$BSKILL_N" -eq 1 ] && ok "badge SKILLS tunggal" || bad "badge SKILLS ganda/beda ($BSKILL_N varian)"
@@ -133,8 +134,6 @@ bash "$DIR/skills/doctor/run.sh" . >/dev/null 2>&1
 [ $? -eq 0 ] && ok "doctor SEHAT di kit sendiri" || bad "doctor gagal di kit sendiri"
 
 p "▮ SELF-TEST: mutation + bench siap jalan (tidak rekursif)" 213
-# mutation menjalankan self-test pada SALINAN repo — jadi self-test tidak boleh
-# memanggil mutation/bench penuh (loop tak hingga). Cukup verifikasi ada + syntax.
 bash -n "$DIR/tests/mutation.sh" && bash -n "$DIR/tests/bench.sh" \
   && ok "mutation.sh + bench.sh syntax OK (dijalankan terpisah di make verify/CI)" \
   || bad "mutation.sh/bench.sh syntax rusak"
@@ -184,7 +183,6 @@ p "▮ SELF-TEST: backup/restore opencode.json user" 213
 FH=$(mktemp -d)
 mkdir -p "$FH/.config/opencode"
 printf '{\n  "theme": "dark"\n}\n' > "$FH/.config/opencode/opencode.json"
-# --offline: install deterministik, tanpa cek jaringan — shell agent tidak menggantung
 HOME="$FH" bash "$DIR/install.sh" --offline >/dev/null 2>&1 \
   && grep -q devbrain "$FH/.config/opencode/opencode.json" \
   && ls "$FH/.config/opencode/"opencode.json.bak.* >/dev/null 2>&1 \
@@ -193,6 +191,101 @@ HOME="$FH" bash "$DIR/install.sh" --offline >/dev/null 2>&1 \
   && ok "user config dibackup lalu direstore saat uninstall" \
   || bad "backup/restore user config gagal"
 rm -rf "$FH"
+
+p "▮ SELF-TEST: semua command/*.md punya Usage section" 213
+USING=0; MISSING=0
+for f in "$DIR"/command/*.md; do
+  name=$(basename "$f")
+  if grep -q '## Usage' "$f"; then
+    USING=$((USING+1))
+  else
+    MISSING=$((MISSING+1))
+    bad "command $name: ## Usage hilang"
+  fi
+done
+[ "$MISSING" -eq 0 ] && ok "semua $USING command punya ## Usage" || bad "$MISSING command tanpa Usage"
+
+p "▮ SELF-TEST: semua command/*.md punya ## Error Cases" 213
+USING=0; MISSING=0
+for f in "$DIR"/command/*.md; do
+  name=$(basename "$f")
+  if grep -q '## Error Cases' "$f"; then
+    USING=$((USING+1))
+  else
+    MISSING=$((MISSING+1))
+    bad "command $name: ## Error Cases hilang"
+  fi
+done
+[ "$MISSING" -eq 0 ] && ok "semua $USING command punya ## Error Cases" || bad "$MISSING command tanpa Error Cases"
+
+p "▮ SELF-TEST: semua command/*.md punya ## Related Commands" 213
+USING=0; MISSING=0
+for f in "$DIR"/command/*.md; do
+  name=$(basename "$f")
+  if grep -q '## Related' "$f"; then
+    USING=$((USING+1))
+  else
+    MISSING=$((MISSING+1))
+    bad "command $name: ## Related hilang"
+  fi
+done
+[ "$MISSING" -eq 0 ] && ok "semua $USING command punya ## Related Commands" || bad "$MISSING command tanpa Related"
+
+p "▮ SELF-TEST: semua command/*.md punya ## Triggers" 213
+USING=0; MISSING=0
+for f in "$DIR"/command/*.md; do
+  name=$(basename "$f")
+  if grep -q '## Triggers' "$f"; then
+    USING=$((USING+1))
+  else
+    MISSING=$((MISSING+1))
+    bad "command $name: ## Triggers hilang"
+  fi
+done
+[ "$MISSING" -eq 0 ] && ok "semua $USING command punya ## Triggers" || bad "$MISSING command tanpa Triggers"
+
+p "▮ SELF-TEST: semua command/*.md punya ## Expected Output" 213
+USING=0; MISSING=0
+for f in "$DIR"/command/*.md; do
+  name=$(basename "$f")
+  if grep -q '## Expected Output' "$f"; then
+    USING=$((USING+1))
+  else
+    MISSING=$((MISSING+1))
+    bad "command $name: ## Expected Output hilang"
+  fi
+done
+[ "$MISSING" -eq 0 ] && ok "semua $USING command punya ## Expected Output" || bad "$MISSING command tanpa Expected Output"
+
+p "▮ SELF-TEST: semua command/*.md punya ## Example" 213
+USING=0; MISSING=0
+for f in "$DIR"/command/*.md; do
+  name=$(basename "$f")
+  if grep -q '## Example' "$f"; then
+    USING=$((USING+1))
+  else
+    MISSING=$((MISSING+1))
+    bad "command $name: ## Example hilang"
+  fi
+done
+[ "$MISSING" -eq 0 ] && ok "semua $USING command punya ## Example" || bad "$MISSING command tanpa Example"
+
+p "▮ SELF-TEST: test scripts semua punya colored output" 213
+for f in "$DIR"/tests/*.sh; do
+  name=$(basename "$f")
+  grep -q '\\033\[38;5;%s' "$f" && ok "$name: colored output" || bad "$name: tanpa colored output"
+done
+
+p "▮ SELF-TEST: test scripts semua exit 0/1 only" 213
+for f in "$DIR"/tests/*.sh; do
+  name=$(basename "$f")
+  # Check exit codes are only 0 or 1 (not other codes like 2, etc. in test scripts)
+  grep -q 'exit 0' "$f" && grep -q 'exit 1' "$f" && ok "$name: exit 0+1" || bad "$name: exit code tidak standar"
+done
+
+p "▮ SELF-TEST: HUKUM 13 ada di AGENTS.md" 213
+grep -q 'ROUTER INTENSITAS' "$DIR/AGENTS.md" && ok "AGENTS.md: HUKUM 13 ROUTER INTENSITAS" || bad "AGENTS.md: HUKUM 13 hilang"
+grep -q 'NORMAL.*FULL.*ULTRA' "$DIR/AGENTS.md" && ok "AGENTS.md: 3 jalur (NORMAL/FULL/ULTRA)" || bad "AGENTS.md: 3 jalur tidak lengkap"
 
 rm -rf "$FX"
 echo

@@ -24,11 +24,13 @@ if [ -t 1 ] && [ -z "${NO_COLOR:-}" ]; then
   bold(){ printf '\033[1;38;5;%sm%s\033[0m\n' "$1" "$2"; }
   dim(){ printf '\033[2;38;5;%sm%s\033[0m\n' "$1" "$2"; }
   pulse(){ printf '\033[1;38;5;%sm%s\033[0m\n' "$1" "$2"; }
+  glow_line(){ printf '\033[1;38;5;%sm%s\033[0m' "$1" "$2"; }
 else
   pc(){ printf '%s\n' "$2"; }
   bold(){ printf '%s\n' "$2"; }
   dim(){ printf '%s\n' "$2"; }
   pulse(){ printf '%s\n' "$2"; }
+  glow_line(){ printf '%s' "$2"; }
 fi
 
 sym(){ [ -z "${NO_COLOR:-}" ] && [ -t 1 ]; }
@@ -40,19 +42,10 @@ err(){ pc 196 "  ✖ $1"; }
 key(){ pc 220 "  $1"; }
 div(){ dim 240 "  ──────────────────────────────────────────"; }
 
-phase_hdr(){
-  local _m="${1:-}" _icon="${2:-◆}"
-  printf '\n'
-  bold 213 "  $_icon═══════════════════════════════════════════════"
-  bold 213 "    $_m"
-  bold 213 "  ════════════════════════════════════════════$_icon"
-}
-
 # ════════════════════════════════════════════
 #  ANIMASI — append-only, CI-safe
 # ════════════════════════════════════════════
 ANIM="${ANIM:-1}"
-_PH_T0=""
 _ANIM_T0="$(date +%s 2>/dev/null || printf '%s' "${SECONDS:-0}")"
 _SPIN_PID=""
 _GP=0; _GPMAX=0
@@ -77,17 +70,32 @@ elapsed(){
   printf '%s' "$((_e - _s))"
 }
 
-# ── phase header + timer ──
+# ── phase header + glow + timer ──
+_ph_t0=""
 ph(){
   local _m="${1:-}"
-  phase_hdr "$_m" "◆"
-  _PH_T0="$(now)"
+  local _icon="${2:-◆}"
+  printf '\n'
+  if anim_on; then
+    glow_line 141 "  $_icon"
+    glow_line 213 "═══════════════════════════════════════════════"
+    printf '\n'
+    bold 213 "    $_m"
+    glow_line 213 "  ════════════════════════════════════════════"
+    glow_line 141 "$_icon"
+    printf '\n'
+  else
+    bold 213 "  $_icon═══════════════════════════════════════════════"
+    bold 213 "    $_m"
+    bold 213 "  ════════════════════════════════════════════$_icon"
+  fi
+  _ph_t0="$(now)"
 }
 
 # ── phase done ──
 pdone(){
   local _m="${1:-selesai}" _d="0"
-  if [ -n "${_PH_T0:-}" ]; then _d="$(elapsed "${_PH_T0}")"; fi
+  if [ -n "${_ph_t0:-}" ]; then _d="$(elapsed "${_ph_t0}")"; fi
   ok "${_m} (${_d}s)"
 }
 
@@ -100,6 +108,33 @@ dots(){
     printf '\n'
   else
     inf "${_m}"
+  fi
+}
+
+# ── typewriter effect ──
+typewriter(){
+  local _msg="${1:-}" _delay="${2:-0.03}" _i=0 _len
+  if ! anim_on; then
+    inf "${_msg}"
+    return
+  fi
+  _len=${#_msg}
+  printf '  '
+  while [ "${_i}" -lt "${_len}" ]; do
+    printf '%s' "${_msg:$_i:1}"
+    sleep "${_delay}"
+    _i=$((_i + 1))
+  done
+  printf '\n'
+}
+
+# ── glow animation for borders ──
+glow(){
+  local _color="${1:-141}" _text="${2:-}"
+  if anim_on; then
+    glow_line "${_color}" "${_text}"
+  else
+    printf '%s' "${_text}"
   fi
 }
 
@@ -164,8 +199,8 @@ pbar(){
   _k=0; while [ "${_k}" -lt "${_fill}" ]; do _bar="${_bar}█"; _k=$((_k + 1)); done
   _k=0; while [ "${_k}" -lt $((30 - _fill)) ]; do _bar="${_bar}░"; _k=$((_k + 1)); done
   [ -n "${_ANIM_T0:-}" ] && _el="$(elapsed "${_ANIM_T0}")"
-  if [ -n "${_PH_T0:-}" ]; then
-    local _pe="$(elapsed "${_PH_T0}")"
+  if [ -n "${_ph_t0:-}" ]; then
+    local _pe="$(elapsed "${_ph_t0}")"
     [ "${_c}" -gt 0 ] 2>/dev/null && [ "${_pe}" -gt 0 ] 2>/dev/null && _eta=$(( (_pe * (_t - _c)) / _c ))
   fi
   if [ -n "${_lbl}" ]; then
@@ -175,16 +210,36 @@ pbar(){
   fi
 }
 
-# ── brain pulse — 3-mode reveal ──
+# ── brain pulse — neural style reveal ──
 brain_pulse(){
   if anim_on; then
-    pulse 213 '  ╭─────────────────────────────────────────────────╮'; sleep 0.06
-    pulse 177 '  │   🧠     DEV-BRAIN  vPulse  •  ULTRONOMATIS    │'; sleep 0.06
-    pulse 141 '  ╰─────────────────────────────────────────────────╯'; sleep 0.06
+    printf '\n'
+    glow_line 213 '  ╭──────────────────────────────────────────────────────────╮'
+    printf '\n'
+    sleep 0.05
+    glow_line 177 '  │                                                          │'
+    printf '\n'
+    sleep 0.03
+    glow_line 177 '  │     🧠  DEV-BRAIN  v10.0  •  ULTRONOMATIS              │'
+    printf '\n'
+    sleep 0.05
+    glow_line 177 '  │                                                          │'
+    printf '\n'
+    sleep 0.03
+    glow_line 141 '  │     ◈ 11 agents  ◈ 62 skills  ◈ 39 commands             │'
+    printf '\n'
+    sleep 0.05
+    glow_line 141 '  │                                                          │'
+    printf '\n'
+    sleep 0.03
+    glow_line 213 '  ╰──────────────────────────────────────────────────────────╯'
+    printf '\n'
+    sleep 0.04
   else
-    pulse 213 '  ╭─────────────────────────────────────────────────╮'
-    pulse 177 '  │   🧠  DEV-BRAIN  •  ULTRONOMATIS               │'
-    pulse 141 '  ╰─────────────────────────────────────────────────╯'
+    pulse 213 '  ╭──────────────────────────────────────────────────────────╮'
+    pulse 177 '  │     🧠  DEV-BRAIN  v10.0  •  ULTRONOMATIS              │'
+    pulse 141 '  │     ◈ 11 agents  ◈ 62 skills  ◈ 39 commands             │'
+    pulse 213 '  ╰──────────────────────────────────────────────────────────╯'
   fi
 }
 
@@ -194,16 +249,31 @@ mode_strip(){
   if anim_on; then
     case "$_active" in
       plan)
-        pc 82  '  [PLAN]  ────  [ DEV ]  ────  [BUILD]'
+        glow_line 82  '  [PLAN]'
+        glow_line 240 '  ────▶ '
+        glow_line 147 '[ DEV ]'
+        glow_line 240 '  ────  '
+        glow_line 240 '[BUILD]'
+        printf '\n'
         ;;
       dev)
-        pc 147 '  [plan]  ────▶ [ DEV ] ────  [BUILD]'
+        glow_line 240 '  [plan]'
+        glow_line 240 '  ────▶ '
+        glow_line 45  '[ DEV ]'
+        glow_line 240 '  ────▶ '
+        glow_line 240 '[BUILD]'
+        printf '\n'
         ;;
       build)
-        pc 45  '  [plan]  ────  [ dev ] ────▶[BUILD]'
+        glow_line 240 '  [plan]'
+        glow_line 240 '  ────  '
+        glow_line 240 '[ dev ]'
+        glow_line 240 '  ────▶ '
+        glow_line 45  '[BUILD]'
+        printf '\n'
         ;;
       *)
-        dim 240 '  [plan]  ────  [ dev ] ────  [BUILD]'
+        dim 240 '  [plan]  ────  [ dev ]  ────  [BUILD]'
         ;;
     esac
   else
@@ -211,7 +281,29 @@ mode_strip(){
   fi
 }
 
-# ── banner reveal ──
+# ── progress dots animation ──
+progress_dots(){
+  local _label="${1:-}" _count="${2:-3}" _i=1 _j=0
+  if ! anim_on; then
+    inf "${_label}"
+    return
+  fi
+  printf '  ▸ %s ' "${_label}"
+  while [ "${_i}" -le "${_count}" ]; do
+    _j=0
+    while [ "${_j}" -lt "${_i}" ]; do printf '●'; _j=$((_j + 1)); done
+    _j=${_i}
+    while [ "${_j}" -lt "${_count}" ]; do printf '○'; _j=$((_j + 1)); done
+    sleep 0.25
+    printf '\r  ▸ %s ' "${_label}"
+    _i=$((_i + 1))
+  done
+  _j=0
+  while [ "${_j}" -lt "${_count}" ]; do printf '●'; _j=$((_j + 1)); done
+  printf '\n'
+}
+
+# ── banner reveal — full animated boot sequence ──
 banner_reveal(){
   brain_pulse
   local _ba _bs _bc
@@ -230,20 +322,74 @@ banner_reveal(){
     dots "memuat command" 6
     dots "memuat doctrine" 4
     dots "mengelas route" 4
+    echo
+    typewriter "   otak utama: DEV • caveman ULTRA • ultronomatis"
+    pc 147 "   ${_ba:-?} agent  /  ${_bs:-?} skill  /  ${_bc:-?} command"
+    sleep 0.04
+    if [ -f "$SCRIPT_DIR/VERSION" ]; then
+      pc 45 "   versi: $(tr -d '[:space:]' < "$SCRIPT_DIR/VERSION")"
+      sleep 0.04
+    fi
+    pc 45 "   auto test ✓ audit ✓ fix ✓ memori persisten ✓"
   else
     inf "memuat otak… memuat agent… memuat skill… memuat command…"
+    bold 45 "   otak utama: DEV • caveman ULTRA • ultronomatis"
+    pc 147 "   ${_ba:-?} agent  /  ${_bs:-?} skill  /  ${_bc:-?} command"
+    if [ -f "$SCRIPT_DIR/VERSION" ]; then
+      pc 45 "   versi: $(tr -d '[:space:]' < "$SCRIPT_DIR/VERSION")"
+    fi
+    pc 45 "   auto test ✓ audit ✓ fix ✓ memori persisten ✓"
   fi
   echo
-  bold 45 "   otak utama: DEV • caveman ULTRA • ultronomatis"
-  if anim_on; then sleep 0.04; fi
-  pc 147 "   ${_ba:-?} agent  /  ${_bs:-?} skill  /  ${_bc:-?} command"
-  if anim_on; then sleep 0.04; fi
-  if [ -f "$SCRIPT_DIR/VERSION" ]; then
-    pc 45 "   versi: $(tr -d '[:space:]' < "$SCRIPT_DIR/VERSION")"
-    if anim_on; then sleep 0.04; fi
+}
+
+# ── celebrate — completion animation ──
+celebrate(){
+  local _dur="${1:-0}" _files="${2:-0}"
+  if anim_on; then
+    echo
+    glow_line 141 '  ╔══════════════════════════════════════════════════════════╗'
+    printf '\n'
+    sleep 0.06
+    glow_line 82  '  ║                                                          ║'
+    printf '\n'
+    sleep 0.04
+    glow_line 82  '  ║          🧠  DEV-BRAIN  —  ONLINE                       ║'
+    printf '\n'
+    sleep 0.06
+    glow_line 82  '  ║                                                          ║'
+    printf '\n'
+    sleep 0.04
+    glow_line 147 '  ║     think → build → test → audit → fix → learn          ║'
+    printf '\n'
+    sleep 0.06
+    glow_line 147 '  ║     plan ──▶ dev ──▶ build                              ║'
+    printf '\n'
+    sleep 0.04
+    glow_line 82  '  ║                                                          ║'
+    printf '\n'
+    sleep 0.04
+    glow_line 141 '  ╚══════════════════════════════════════════════════════════╝'
+    printf '\n'
+    sleep 0.08
+    # stars animation
+    glow_line 220 '  ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦'
+    printf '\n'
+    sleep 0.1
+    glow_line 220 "  INSTALL COMPLETE — ${_files} files — ${_dur}s"
+    printf '\n'
+    glow_line 220 '  ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦'
+    printf '\n'
+  else
+    echo
+    pulse 213 '  ╔══════════════════════════════════════════════════════════╗'
+    pulse 82  '  ║          🧠  DEV-BRAIN  —  ONLINE                       ║'
+    pulse 147 '  ║     think → build → test → audit → fix → learn          ║'
+    pulse 147 '  ║     plan ──▶ dev ──▶ build                              ║'
+    pulse 213 '  ╚══════════════════════════════════════════════════════════╝'
+    echo
+    ok "INSTALL COMPLETE — ${_files} files — ${_dur}s"
   fi
-  pc 45 "   auto test ✓ audit ✓ fix ✓ memori persisten ✓"
-  echo
 }
 
 # ── cleanup trap ──
@@ -740,20 +886,13 @@ finish(){
   mode_strip "build"
   div
 
-  echo
-  pulse 213 '  ╔═══════════════════════════════════════════════╗'
-  pulse 82  '  ║                                               ║'
-  pulse 82  '  ║          🧠  AGENT AI  —  ONLINE              ║'
-  pulse 82  '  ║     think → build → test → audit → fix        ║'
-  pulse 82  '  ║     plan → dev → build                        ║'
-  pulse 82  '  ║                                               ║'
-  pulse 213 '  ╚═══════════════════════════════════════════════╝'
-  echo
-
   _FA="$(find "$CFG/agent" -maxdepth 1 -type f -name '*.md' 2>/dev/null | wc -l | tr -d ' ')"
   _FS="$(find "$CFG/skill" -mindepth 2 -maxdepth 2 -type f -name 'SKILL.md' 2>/dev/null | wc -l | tr -d ' ')"
   _FR="$(find "$CFG/skill" -mindepth 2 -maxdepth 2 -type f -name 'run.sh' 2>/dev/null | wc -l | tr -d ' ')"
   _FC="$(find "$CFG/command" -maxdepth 1 -type f -name '*.md' 2>/dev/null | wc -l | tr -d ' ')"
+  _TOT="$(elapsed "${_ANIM_T0:-0}")"
+
+  celebrate "${_TOT}" "$((_FA + _FS + _FC))"
   ok "$_FA agent • $_FS skill ($_FR dengan bash script) • $_FC command • memori + pelajaran persisten"
   echo
   div
@@ -770,7 +909,6 @@ finish(){
   pc 214 "  API key  : jalankan  opencode auth login  bila belum"
   echo
 
-  _TOT="$(elapsed "${_ANIM_T0:-0}")"
   pdone "verifikasi selesai"
   ok "durasi total ${_TOT}s"
   echo

@@ -1,5 +1,27 @@
 # CHANGELOG
 
+## [10.0.0] — 2026-09-10
+### Added
+- **62 SKILLS FULL ENHANCED** (+267%, dari 1,462 → 5,376 baris total): setiap SKILL.md kini punya 10 section wajib (YAML, judul, deskripsi, trigger, workflow, output, error, integrasi, edge case, anti-pattern). Rata-rata 86 baris/skill (sebelumnya 23.6)
+- **11 AGENTS ALL-ROUNDER** (semua 50+ baris): coder multi-language+refactoring, tester mutation+coverage+perf+security+a11y, auditor 3-phase+compliance+red-team, architect scalability+trade-off, designer branding+motion+i18n, fixer RCA+preventive, critic 7 attack protocols, hermes DevOps+cloud+monitoring, memory knowledge-mgmt+patterns, researcher benchmarking+trend-analysis
+- **39 COMMANDS FULLY DOCUMENTED**: tiap command punya Usage, Triggers, Example, Expected Output, Error Cases, Related Commands
+- **8 TEST SCRIPTS ENHANCED**: bench (6→19 gate), e2e-flow (5→14 langkah), eval (8→10 kasus), lint-kit (+6 cek section command), mutation (12→15 perusakan), run-demo (4→11 langkah), self-test (+6 cek section command), test-update (3→6 flow)
+- **README.md COMPLETE REWRITE**: ASCII art baru, 3-mode build flow diagram, 12 section, badge synced
+- **install.sh FULL ANIMATION OVERHAUL** (937 baris): 10 fungsi animasi baru (typewriter, glow, progress_dots, celebrate, brain_pulse enhanced, mode_strip glow, banner_reveal typewriter, glow phase headers, pbar ETA). CI-safe, --no-anim, NO_ANIM=1
+### Changed
+- lint-kit: 424 cek (sebelumnya 240), cek section command wajib
+- self-test: 275 assertion (sebelumnya 174), colored output + exit code validation
+- VERSION 9.1.0 → 10.0.0, badge sinkron
+
+## [9.1.0] — 2026-09-10
+### Added
+- 6 skill baru + run.sh: multi-model (OpenAI/Claude/Gemini/DeepSeek/Grok/Mistral), web (browser automation), data (analisis & visualisasi), notify (email/Slack/Discord/Telegram), monitor (health check & uptime), scaffold (project boilerplate generator)
+- 6 command baru: /multi-model, /web, /data, /notify, /monitor, /scaffold
+- dev.md delegasi +6 skill baru
+### Changed
+- Skill: 56→62, Commands: 33→39
+- AGENTS.md HUKUM 4 + skill baru
+
 ## [9.0.0] — 2026-09-10
 ### Added
 - README.md full rewrite: visual overhaul, 3-mode build flow documentation (PLAN → DEV → BUILD)

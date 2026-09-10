@@ -9,10 +9,10 @@
 <br/>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/⚡_VERSION-9.0.0-blue?style=for-the-badge&logo=semver&logoColor=white" alt="Version"/>
+  <img src="https://img.shields.io/badge/🔄_VERSION-10.0.0-blue?style=for-the-badge&logo=semver&logoColor=white" alt="Version"/>
   <img src="https://img.shields.io/badge/🤖_AGENTS-11-00d2ff?style=for-the-badge&logo=robot&logoColor=white" alt="Agents"/>
-  <img src="https://img.shields.io/badge/🧩_SKILLS-56-82d815?style=for-the-badge&logo=puzzle-piece&logoColor=white" alt="Skills"/>
-  <img src="https://img.shields.io/badge/⌨️_COMMANDS-33-ffd700?style=for-the-badge&logo=terminal&logoColor=black" alt="Commands"/>
+  <img src="https://img.shields.io/badge/🧩_SKILLS-62-82d815?style=for-the-badge&logo=puzzle-piece&logoColor=white" alt="Skills"/>
+  <img src="https://img.shields.io/badge/⌨️_COMMANDS-39-ffd700?style=for-the-badge&logo=terminal&logoColor=black" alt="Commands"/>
   <img src="https://img.shields.io/badge/⚖️_LAWS-13-ff4757?style=for-the-badge&logo=scale&logoColor=white" alt="Laws"/>
 </p>
 
@@ -191,8 +191,8 @@ User: "build login page with validation"
 ├── opencode.json          ← permission system (3 tier)
 ├── VERSION                ← installed version
 ├── agent/                 ← 11 agent definitions
-├── skill/                 ← 56 skills
-├── command/               ← 33 commands
+├── skill/                 ← 62 skills
+├── command/               ← 39 commands
 ├── docs/                  ← documentation
 ├── tests/                 ← test suite
 └── memory/                ← persistent memory

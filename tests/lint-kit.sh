@@ -33,9 +33,35 @@ for f in "$DIR"/command/*.md; do
     && ok "$name: valid" || bad "$name: frontmatter/agent/isi bermasalah"
 done
 
-p "▮ LINT: doctrine utuh (12 hukum, gerbang dev.md)" 213
-grep -q 'HUKUM 1' "$DIR/AGENTS.md" && grep -q 'HUKUM 12' "$DIR/AGENTS.md" \
-  && ok "AGENTS.md: 12 hukum ada" || bad "AGENTS.md: hukum 1..12 tidak lengkap"
+p "▮ LINT: command punya section Usage + Triggers + Example" 213
+for f in "$DIR"/command/*.md; do
+  name=$(basename "$f")
+  has_usage=$(grep -ci '## Usage' "$f")
+  has_triggers=$(grep -ci '## Triggers' "$f")
+  has_example=$(grep -ci '## Example' "$f")
+  if [ "$has_usage" -ge 1 ] && [ "$has_triggers" -ge 1 ] && [ "$has_example" -ge 1 ]; then
+    ok "$name: Usage+Triggers+Example ada"
+  else
+    bad "$name: section hilang (Usage:$has_usage Triggers:$has_triggers Example:$has_example)"
+  fi
+done
+
+p "▮ LINT: command punya Expected Output + Error Cases + Related" 213
+for f in "$DIR"/command/*.md; do
+  name=$(basename "$f")
+  has_expected=$(grep -ci '## Expected Output' "$f")
+  has_error=$(grep -ci '## Error Cases' "$f")
+  has_related=$(grep -ci '## Related' "$f")
+  if [ "$has_expected" -ge 1 ] && [ "$has_error" -ge 1 ] && [ "$has_related" -ge 1 ]; then
+    ok "$name: Expected+Error+Related ada"
+  else
+    bad "$name: section hilang (Expected:$has_expected Error:$has_error Related:$has_related)"
+  fi
+done
+
+p "▮ LINT: doctrine utuh (13 hukum, gerbang dev.md)" 213
+grep -q 'HUKUM 1' "$DIR/AGENTS.md" && grep -q 'HUKUM 13' "$DIR/AGENTS.md" \
+  && ok "AGENTS.md: 13 hukum ada" || bad "AGENTS.md: hukum 1..13 tidak lengkap"
 grep -q 'RANTAI BUKTI' "$DIR/AGENTS.md" \
   && ok "AGENTS.md: HUKUM 11 RANTAI BUKTI ada" || bad "AGENTS.md: HUKUM 11 hilang"
 grep -q 'ANTI-INJEKSI' "$DIR/AGENTS.md" \
@@ -48,6 +74,10 @@ grep -q 'GERBANG FASE' "$DIR/agents/dev.md" \
   && ok "dev.md: gerbang fase ada" || bad "dev.md: gerbang fase hilang"
 grep -q 'FORMAT LAPORAN AKHIR' "$DIR/agents/dev.md" \
   && ok "dev.md: format laporan ada" || bad "dev.md: format laporan hilang"
+grep -q 'ROUTER INTENSITAS' "$DIR/AGENTS.md" \
+  && ok "AGENTS.md: HUKUM 13 ROUTER ada" || bad "AGENTS.md: HUKUM 13 hilang"
+grep -q 'CAVEMAN' "$DIR/AGENTS.md" \
+  && ok "AGENTS.md: HUKUM 1 CAVEMAN ada" || bad "AGENTS.md: HUKUM 1 hilang"
 
 p "▮ LINT: laporan dev.md sinkron dengan gerbang" 213
 grep -q 'STATUS :' "$DIR/agents/dev.md" \
@@ -61,7 +91,7 @@ for d in "$DIR"/skills/*/; do
     && ok "installer: skill $name dinamis" || bad "installer: skill $name tidak dicakup"
 done
 NCMD=$(ls -1 "$DIR"/command/*.md | wc -l | tr -d ' ')
-grep -q 'command/' "$DIR/install.sh" && ok "installer: copy command ada" || bad "installer: copy command hilang"
+grep -q 'command/' "$DIR/install.sh" && ok "installer: copy command ada ($NCMD cmd)" || bad "installer: copy command hilang"
 
 p "▮ LINT: simbol aneh hasil patch (double-line, marker sisa)" 213
 grep -rn '}  [A-Z_]*=' "$DIR/install.sh" >/dev/null 2>&1 \
@@ -102,6 +132,20 @@ NCW=$(ls -1 "$DIR"/command/*.md | wc -l | tr -d ' ')
 NRUN=$(ls -1 "$DIR"/skills/*/run.sh | wc -l | tr -d ' ')
 grep -q "$NSK skill" "$DIR/README.md" && ok "README: $NSK skill cocok" || bad "README: jumlah skill tidak $NSK"
 grep -q "$NCW command" "$DIR/README.md" && ok "README: $NCW command cocok" || bad "README: jumlah command tidak $NCW"
+
+p "▮ LINT: semua command/*.md ada Usage section" 213
+for f in "$DIR"/command/*.md; do
+  name=$(basename "$f")
+  grep -q '## Usage' "$f" \
+    && ok "$name: ada ## Usage" || bad "$name: ## Usage hilang"
+done
+
+p "▮ LINT: semua command/*.md punya ## Error Cases" 213
+for f in "$DIR"/command/*.md; do
+  name=$(basename "$f")
+  grep -q '## Error Cases' "$f" \
+    && ok "$name: ada ## Error Cases" || bad "$name: ## Error Cases hilang"
+done
 
 echo
 if [ "$FAIL" -eq 0 ]; then p "LINT_KIT: LOLOS ($PASS cek)" 82; exit 0; fi

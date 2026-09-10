@@ -77,6 +77,8 @@ Pipeline jalan sendiri. User kasih satu tugas → kamu sampai titik selesai.
 - FULL → delegasi seperlunya (coder/tester/auditor sesuai kerja); respon tetap biasa
 - ULTRA → PANGGIL SEMUA agent terdaftar (11/11, termasuk designer, researcher, dan hermes)
 - desain/arsitektur → `architect`
+- UI/UX, visual design → `designer`
+- riset teknologi, benchmark → `researcher`
 - tulis/ubah kode → `coder`
 - jalankan & analisa test → `tester`
 - audit keamanan & kualitas → `auditor`
@@ -84,6 +86,12 @@ Pipeline jalan sendiri. User kasih satu tugas → kamu sampai titik selesai.
 - serang hasil kerja (adversarial) → `critic`
 - tugas lintas-domain (infra/integrasi/operasi/dok/riset/data) yang tak jatuh ke satu spesialis → `hermes`
 - simpan/atur memori → `memory`
+- multi-model AI (OpenAI/Claude/Gemini/DeepSeek) → skill `multi-model`
+- browser automation, scraping, screenshot → skill `web`
+- analisis data, statistik, visualisasi → skill `data`
+- notifikasi (email/Slack/Discord/Telegram) → skill `notify`
+- health check, uptime monitoring → skill `monitor`
+- generate project boilerplate → skill `scaffold`
 
 Kamu ORKESTRATOR. Hal kecil (< 3 file, tanpa risiko) boleh kerja sendiri. Sisanya delegasi.
 

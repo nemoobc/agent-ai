@@ -1,37 +1,31 @@
 <!--
   agent-ai — Kit orkestrasi agent AI untuk opencode
-  v9.0.0 • 11 agent • 56 skill • 33 command
+  v10.0.0 • 11 agent • 62 skill • 39 command
 -->
 <div align="center">
 
 ```
-    █████╗ ██████╗  ██████╗ ██╗   ██╗███████╗
-   ██╔══██╗██╔══██╗██╔════╝ ██║   ██║██╔════╝
-   ███████║██████╔╝██║  ███╗██║   ██║███████╗
-   ██╔══██║██╔══██╗██║   ██║██║   ██║╚════██║
-   ██║  ██║██║  ██║╚██████╔╝╚██████╔╝███████║
-   ╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝  ╚═════╝ ╚══════╝  AI
-                ███████╗██╗   ██╗███████╗
-                ██╔════╝╚██╗ ██╔╝██╔════╝
-                █████╗   ╚████╔╝ █████╗
-                ██╔══╝    ╚██╔╝  ██╔══╝
-                ███████╗   ██║   ███████╗
-                ╚══════╝   ╚═╝   ╚══════╝
+ █████╗ ██████╗  ██████╗ ██╗   ██╗███████╗   ███████╗██╗   ██╗███████╗
+██╔══██╗██╔══██╗██╔════╝ ██║   ██║██╔════╝   ██╔════╝╚██╗ ██╔╝██╔════╝
+███████║██████╔╝██║  ███╗██║   ██║███████╗   █████╗   ╚████╔╝ █████╗
+██╔══██║██╔══██╗██║   ██║██║   ██║╚════██║   ██╔══╝    ╚██╔╝  ██╔══╝
+██║  ██║██║  ██║╚██████╔╝╚██████╔╝███████║██╗██║        ██║   ███████╗
+╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝  ╚═════╝ ╚══════╝╚═╝╚═╝        ╚═╝   ╚══════╝
 ```
 
 <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&pause=1000&color=22D3EE&center=true&vCenter=true&width=600&lines=MIKIR+%E2%86%92+BAYANGKAN+%E2%86%92+GODOK+%E2%86%92+BANGUN+%E2%86%92+TEST+%E2%86%92+AUDIT+%E2%86%92+FIX+%E2%86%92+LAPOR" alt="pipeline" />
 
-![version](https://img.shields.io/badge/VERSION-9.0.0-blue?style=for-the-badge&logo=github)
+![version](https://img.shields.io/badge/VERSION-10.0.0-blue?style=for-the-badge&logo=github)
 ![agents](https://img.shields.io/badge/AGENTS-11-22c55e?style=for-the-badge&logo=robotframework)
-![skills](https://img.shields.io/badge/SKILLS-56-f97316?style=for-the-badge&logo=apachemaven)
-![commands](https://img.shields.io/badge/COMMANDS-33-a855f7?style=for-the-badge&logo=terminal)
+![skills](https://img.shields.io/badge/SKILLS-62-f97316?style=for-the-badge&logo=apachemaven)
+![commands](https://img.shields.io/badge/COMMANDS-39-a855f7?style=for-the-badge&logo=terminal)
 ![license](https://img.shields.io/badge/LICENSE-MIT-eab308?style=for-the-badge)
 ![stars](https://img.shields.io/github/stars/nemoobc/agent-ai?style=social&label=Star)
 ![forks](https://img.shields.io/github/forks/nemoobc/agent-ai?style=social&label=Fork)
 
 **Kit orkestrasi agent untuk [opencode](https://github.com/sst/opencode): kasih tugas, DEV yang mikir, bangun, test, audit, dan lapor — kamu terima beres.**
 
-[🚀 Instal](#--instal-instan) • [🔄 3 Mode Build](#--3-mode-build-flow) • [📋 Pipeline](#--pipeline-otomatis) • [🤖 Agents](#--agents) • [🧩 Skills](#--skills) • [⌨️ Commands](#--commands) • [🧪 Test](#--test-the-kit) • [📚 Docs](#--docs--kontribusi)
+[🚀 Instal](#-instal-instan) • [🔄 3 Mode Build](#-3-mode-build-flow) • [📋 Pipeline](#-pipeline-otomatis) • [🤖 Agents](#-agents-11) • [🧩 Skills](#-skills-62) • [⌨️ Commands](#-commands-39) • [⚖️ 13 Hukum](#-13-hukum-kerja) • [🧪 Test](#-test-the-kit) • [📚 Docs](#-docs--kontribusi)
 
 </div>
 
@@ -39,7 +33,7 @@
 
 ## 💡 Kenapa Ini Ada
 
-Nulis prompt panjang tiap sesi itu melelahkan dan hasilnya acak. Kit ini menanam **pipeline tetap + 13 hukum kerja** ke opencode, jadi kualitas output konsisten tanpa kamu kawal tiap langkah. Cukup jelaskan maumu dalam satu kalimat — router intensitas yang menentukan seberapa dalam eksekusinya.
+Nulis prompt panjang tiap sesi itu melelahkan dan hasilnya acak. Kit ini menanam **pipeline tetap + 13 hukum kerja** ke opencode, jadi kualitas output konsisten tanpa kamu kawal tiap langkah. Cukup jelaskan maumu dalam satu kalimat — router intensitas menentukan seberapa dalam eksekusinya.
 
 ```text
 > lengkapin fitur keranjang belanja di project ini
@@ -65,13 +59,13 @@ Tiga mode kerja yang saling terhubung — semua mengalir melalui **DEV sebagai o
        │                       │                       │
        ▼                       ▼                       ▼
   /plan command           Primary agent          /build command
-  Architect agent         Semua skill            Coder agent
+  ARCHITECT agent         Semua 62 skill         CODER agent
   Godok fase              Test / Audit / Fix     Test & Audit
        │                       │                       │
        └───────────────────────┼───────────────────────┘
                                ▼
                           📝 LAPOR
-                        SELESAI / TITIK-PUTUS / GAGAL
+                       SELESAI / TITIK-PUTUS / GAGAL
 ```
 
 ### 🔵 PLAN — Susun Rencana
@@ -92,7 +86,7 @@ Plan tidak berdiri sendiri — ia melekat pada DEV. DEV menjalankan fase perenca
 |---|---|
 | **Agent** | `DEV` (primary, selalu aktif) |
 | **Peran** | Terima tugas → router intensitas → panggil sub-agent → verifikasi → lapor |
-| **Skill** | Semua 56 skill, dipilih otomatis sesuai fase |
+| **Skill** | Semua 62 skill, dipilih otomatis sesuai fase |
 | **Hukum** | 13 hukum kerja berlaku penuh |
 
 DEV adalah satu-satunya primary agent. Semua mode (PLAN, BUILD, atau langsung kerja) mengalir melaluinya. DEV yang memutuskan kapan panggil ARCHITECT, CODER, TESTER, AUDITOR, FIXER, CRITIC, HERMES, atau MEMORY — **tanpa kamu minta**.
@@ -160,7 +154,7 @@ bash <(curl -fsSL https://raw.githubusercontent.com/nemoobc/agent-ai/master/inst
 git clone https://github.com/nemoobc/agent-ai.git
 cd agent-ai && bash install.sh
 ```
-<sub><i>Untuk yang ingin source</i></sub>
+<sub><i>Untuk yang ingin source code</i></sub>
 
 </td>
 </tr>
@@ -175,6 +169,7 @@ cd agent-ai && bash install.sh
 | 🪝 Hook | `bash install.sh --hook` | Pre-commit hook git-guard |
 | 🧹 Lint | `bash install.sh --lint` | Verifikasi setelah install |
 | 🗑️ Uninstall | `bash install.sh --uninstall` | Hapus agent (memori tersimpan) |
+| 🎞️ No-anim | `NO_ANIM=1 bash install.sh` | Matikan animasi (CI/log aman) |
 
 ---
 
@@ -187,72 +182,77 @@ MIKIR → BAYANGKAN → GODOK → BANGUN → TEST → AUDIT → FIX → DOK → 
 
 Setiap perubahan kode **wajib** lewat pipeline ini — tidak boleh skip, tidak boleh setengah jalan. DEV menjalankan fase-fase ini otomatis tanpa diminta.
 
-### Router Intensitas
+### 🎚️ Router Intensitas
 
 DEV mengklasifikasi setiap tugas ke salah satu jalur:
 
 | Jalur | Pemicu | Cakupan |
 |---|---|---|
-| 🟢 NORMAL | tugas biasa | Jawab/kerja langsung, tanpa summon agent |
-| 🟡 FULL | "lengkapin / bagusin / full" | Riset + test + dok + critic ringan |
-| 🔴 ULTRA | "panggil semuanya / ultra" | Semua agent + verify penuh sebelum lapor |
+| 🟢 `NORMAL` | tugas biasa | Jawab/kerja langsung, tanpa summon agent |
+| 🟡 `FULL` | "lengkapin / bagusin / matangkan / full" | Riset + test + dok + critic ringan |
+| 🔴 `ULTRA` | "panggil semuanya / semua agent / ultra" | Semua agent + verify penuh sebelum lapor |
 
-Sumber kebenaran pemicu = `skills/route/run.sh`. Jalur menentukan **cakupan** saja — hukum, gerbang, dan bukti tetap sama.
+Sumber kebenaran pemicu = [`skills/route/run.sh`](skills/route/run.sh). Jalur menentukan **cakupan** saja — hukum, gerbang, dan bukti tetap sama di semua jalur.
 
 ---
 
-## 🤖 Agents
+## 🤖 Agents (11)
 
 **11 agent** — DEV selalu primary, sisanya dipanggil otomatis sesuai kebutuhan:
 
-| Agent | Peran |
-|---|---|
-| 👑 `DEV` | **Orkestrator utama** — terima tugas, router intensitas, panggil sub-agent, verifikasi, lapor |
-| 🏗️ `ARCHITECT` | Desain solusi + rencana 8 blok sebelum kode ditulis |
-| 💻 `CODER` | Implementasi persis desain, diff kecil, tanpa scope creep |
-| 🧪 `TESTER` | Tulis & jalankan test, buktikan hijau dengan exit code |
-| 🔍 `AUDITOR` | Audit mutu, keamanan, dan konsistensi angka |
-| 🔧 `FIXER` | Perbaiki temuan audit/test sampai gerbang hijau |
-| 😈 `CRITIC` | Serang hasil kerja — cari lubang yang orang lain lewatkan |
-| 🕵️ `HERMES` | Utusan lintas-domain: bump versi, rilis, sinkron badge |
-| 🧠 `MEMORY` | Ingat keputusan + pelajaran (recall/remember, lessons.md) |
+| # | Agent | Peran |
+|---|---|---|
+| 1 | 👑 `DEV` | **Orkestrator utama** — terima tugas, router intensitas, panggil sub-agent, verifikasi, lapor |
+| 2 | 🏗️ `ARCHITECT` | Desain solusi + rencana 8 blok sebelum kode ditulis |
+| 3 | 💻 `CODER` | Implementasi persis desain, diff kecil, tanpa scope creep |
+| 4 | 🧪 `TESTER` | Tulis & jalankan test, buktikan hijau dengan exit code |
+| 5 | 🔍 `AUDITOR` | Audit mutu, keamanan, dan konsistensi angka |
+| 6 | 🔧 `FIXER` | Perbaiki temuan audit/test sampai gerbang hijau |
+| 7 | 😈 `CRITIC` | Serang hasil kerja — cari lubang yang orang lain lewatkan |
+| 8 | 🕵️ `HERMES` | Utusan lintas-domain: bump versi, rilis, sinkron badge |
+| 9 | 🧠 `MEMORY` | Ingat keputusan + pelajaran (recall/remember, lessons.md) |
+| 10 | 🔬 `RESEARCHER` | Riset mendalam: web, library, best practice |
+| 11 | 🎨 `DESIGNER` | UI/UX design: a11y, tokens, component specs |
 
 ---
 
-## 🧩 Skills
+## 🧩 Skills (62)
 
-**56 skill** total — **16** di antaranya executable (`run.sh`) — dipanggil otomatis oleh DEV sesuai fase pipeline, tanpa kamu hafal satu per satu.
+**62 skill** — dipanggil otomatis oleh DEV sesuai fase pipeline, tanpa kamu hafal satu per satu.
 
-| Kategori | Skill |
-|---|---|
-| 📐 Rencana | `scan` `think` `imagine` `plan` `spec` `estimate` `route` |
-| ✅ Uji & Mutu | `test-design` `test-full` `eval` `coverage` `audit-full` |
-| 🛠️ Perbaikan | `debug` `fix-full` `refactor` `review` `critique` |
-| 🔒 Keamanan | `injection-guard` `threat-model` `red-team` `env-guard` `git-guard` |
-| 🧠 Memori | `recall` `remember` `learn` `handoff` `context` |
-| 📝 Dok & Bahasa | `doc-full` `explain` `i18n` `a11y` |
-| 💾 Operasi Data | `backup` `recovery` `migrate` `hotfix` `postmortem` |
-| ⚡ Kinerja & Biaya | `perf` `profile` `budget` `cost` |
-| 🎭 Orkestrasi | `autonomy` `caveman` `caveman-warmup` `team` `milestone` |
-| 📦 Rilis & Utilitas | `deliver` `changelog` `pr` `research` `api-design` `convention` `dependency` `metrics` `doctor` `clean` `trace` |
-
----
-
-## ⌨️ Commands
-
-**33 command** siap pakai di opencode, dalam 5 grup:
-
-| Grup | Command |
-|---|---|
-| 🚀 Pipeline & Build | `bootstrap` `onboard` `verify` `fix` `ship` `release` `upgrade` `hotfix` `route` |
-| 📊 Monitoring & Mutu | `audit` `status` `metrics` `coverage` `trace` `critique` `threat-model` `blame` |
-| 📝 Docs & Rencana | `report` `roadmap` `backlog` `estimate` `context` `handoff` `learn` |
-| 🛠️ Utilitas & Tim | `clean` `team` `doctor` `hermes` `pr` `memory` `deliver` |
-| 🧠 3 Mode Flow | `plan` `build` |
+| Kategori | Skill | Jumlah |
+|---|---|---|
+| 📐 **Perencanaan** | `scan` `think` `imagine` `plan` `spec` `estimate` `route` | **7** |
+| ✅ **Uji & Mutu** | `test-design` `test-full` `eval` `coverage` `audit-full` | **5** |
+| 🛠️ **Perbaikan** | `debug` `fix-full` `refactor` `review` `critique` | **5** |
+| 🔒 **Keamanan** | `injection-guard` `threat-model` `red-team` `env-guard` `git-guard` | **5** |
+| 🧠 **Memori** | `recall` `remember` `learn` `handoff` `context` | **5** |
+| 📝 **Dokumentasi** | `doc-full` `explain` `i18n` `a11y` `web` | **5** |
+| 💾 **Operasi Data** | `backup` `recovery` `migrate` `hotfix` `postmortem` `data` | **6** |
+| ⚡ **Kinerja & Biaya** | `perf` `profile` `budget` `cost` `monitor` | **5** |
+| 🎭 **Orkestrasi** | `autonomy` `caveman` `caveman-warmup` `team` `milestone` | **5** |
+| 🔬 **Riset & Desain** | `research` `api-design` `multi-model` `scaffold` | **4** |
+| 📦 **Rilis & Utilitas** | `deliver` `changelog` `pr` `convention` `dependency` `metrics` `doctor` `clean` `trace` `notify` | **10** |
+| | **Total** | **62** |
 
 ---
 
-## 📐 13 Hukum Kerja
+## ⌨️ Commands (39)
+
+**39 command** siap pakai di opencode, dalam 6 grup:
+
+| Grup | Command | Jumlah |
+|---|---|---|
+| 🚀 **Pipeline & Build** | `bootstrap` `onboard` `verify` `fix` `ship` `release` `upgrade` `hotfix` `route` `plan` `build` | **11** |
+| 📊 **Monitoring & Mutu** | `audit` `status` `metrics` `coverage` `trace` `critique` `threat-model` `blame` `monitor` | **9** |
+| 📝 **Docs & Rencana** | `report` `roadmap` `backlog` `estimate` `context` `handoff` `learn` | **7** |
+| 🛠️ **Utilitas & Tim** | `clean` `team` `doctor` `hermes` `pr` `memory` `deliver` `scaffold` | **8** |
+| 🌐 **Eksternal** | `data` `web` `notify` `multi-model` | **4** |
+| | **Total** | **39** |
+
+---
+
+## ⚖️ 13 Hukum Kerja
 
 Kit ini punya **13 hukum** yang ditegakkan di setiap fase. Ini bukan saran — ini aturan keras yang DEV patuhi:
 
@@ -280,18 +280,18 @@ Detail lengkap: [AGENTS.md](AGENTS.md)
 
 ```text
 agent-ai/
-├── agents/       11 agent (DEV primary + 10 sub-agent)
-├── skills/       56 skill (16 executable run.sh)
-├── command/      33 command (shell scripts)
-├── commands/     command alias/alternatif
-├── docs/         dokumentasi: USAGE, PLAYBOOKS, ARCHITECTURE, ROADMAP
-├── tests/        test suite + demo + mutation
-├── memory/       archive + lessons (persistent memory)
-├── install.sh    installer utama
-├── Makefile      make verify / make lint / make test / ...
-├── AGENTS.md     13 hukum kerja (sumber kebenaran)
-├── VERSION       versi saat ini
-└── CHANGELOG.md  riwayat perubahan
+├── agents/          11 agent (DEV primary + 10 sub-agent)
+├── skills/          62 skill (semua dengan run.sh executable)
+├── command/         39 command (markdown, dipanggil dari opencode)
+├── commands/        command alias/alternatif
+├── docs/            dokumentasi: USAGE, PLAYBOOKS, ARCHITECTURE, ROADMAP
+├── tests/           8 test suite + demo + mutation
+├── memory/          archive + lessons (persistent memory)
+├── install.sh       installer penuh animasi
+├── Makefile         make verify / make lint / make test / ...
+├── AGENTS.md        13 hukum kerja (sumber kebenaran)
+├── VERSION          versi saat ini
+└── CHANGELOG.md     riwayat perubahan
 ```
 
 ---
@@ -324,7 +324,7 @@ make verify   # gerbang penuh HUKUM 9 — semua hijau baru SELESAI
 
 ---
 
-## 📚 Docs + Kontribusi
+## 📚 Docs & Kontribusi
 
 | Dokumen | Isi |
 |---|---|
@@ -350,6 +350,6 @@ make verify   # gerbang penuh HUKUM 9 — semua hijau baru SELESAI
 
 <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&pause=1200&color=22D3EE&center=true&vCenter=true&width=500&lines=Terima+kasih+sudah+mampir!+%F0%9F%99%8F;Star+%E2%AD%90+%2B+Fork+%F0%9F%8D%B4+%3D+%E2%9D%A4%EF%B8%8F" alt="thanks" />
 
-**v9.0.0** • 11 agent • 56 skill • 33 command • [CHANGELOG](CHANGELOG.md)
+**v10.0.0** • 11 agent • 62 skill • 39 command • [CHANGELOG](CHANGELOG.md)
 
 </div>
