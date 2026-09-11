@@ -81,3 +81,10 @@ DATA ← posisi skill ini → CODER (gunakan hasil analisis)
 - ❌ Mengabaikan missing values → handle, jangan biarkan
 - ❌ Visualisasi menyesatkan → axis yang benar, skala yang jujur
 - ❌ Analisis tanpa konteks → tahu data, tahu pertanyaan, baru analisis
+
+## MASTERY — ALL-ROUNDER MAX
+Data kelas atas:
+- Kenali datamu dulu: 5 angka ringkas (count/mean/median/p99/null-rate) sebelum kesimpulan apa pun
+- Visual bukti + angka: grafik tanpa angka = seni, angka tanpa grafik = tabel tidur
+- Korelasi ≠ kausal — "naik bersama" butuh kontrol/experimen sebelum jadi keputusan
+- Privasi sejak awal: agregat + anonimisasi — data pribadi yang tak perlu dikumpulkan = risiko gratis

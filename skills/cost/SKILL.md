@@ -87,3 +87,10 @@ AKSI BERBIAYA → COST ← posisi skill ini → USER PUTUSKAN → EKSEKUSI
 - ❌ Mengabaikan alternatif → yang sudah ada harus dipakai dulu
 - ❌ Over-estimate → user takut padahal biayanya kecil
 - ❌ Under-estimate → user terkejut saat tagihan datang
+
+## MASTERY — ALL-ROUNDER MAX
+Cost kelas atas:
+- Estimasi = harga unit × volume + buffer risiko — satu angka tanpa rumus = tebakan berdasi
+- Sumber harga bertanggal (halaman pricing + tanggal akses) — harga cloud berubah diam-diam
+- Alternatif selalu dibandingkan (self-host vs SaaS vs plan) — opsi tunggal = keputusan tercuri
+- Biaya tersembunyi: egress + storage + idle + support — harga iklan itu umpan

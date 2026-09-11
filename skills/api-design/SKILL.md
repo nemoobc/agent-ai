@@ -106,3 +106,10 @@ THINK → API-DESIGN ← posisi skill ini → ARCHITECT → CODER → TEST-DESIG
 - ❌ Tidak ada versi → breaking change tanpa jalan mundur
 - ❌ Terlalu banyak endpoint sekaligus → MVP dulu, iterate
 - ❌ Mengabaikan konvensi yang sudah ada → konsistensi > ideal
+
+## MASTERY — ALL-ROUNDER MAX
+API kelas atas:
+- Resource + verb jelas, konsisten penamaan (camel/snake PILIH SATU) — API itu kontrak bahasa, bukan seni abstrak
+- Versi di path (/v1/) sejak hari 1 — breaking change tanpa versi = membakar semua klien sekaligus
+- Error standar (kode + pesan + field) — error yang tak bisa diprogram = error yang bikin dukungan sibuk
+- Pagination + rate limit sejak awal — keduanya retrofit = dua breaking change menunggu

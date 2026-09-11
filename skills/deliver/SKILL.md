@@ -86,3 +86,10 @@ SELESAI (semua gerbang hijau) → DELIVER ← posisi skill ini
 - ❌ Upload file yang seharusnya tidak di-zip → .env, secret, credential
 - ❌ Lupa reminder hapus → data sensitive di public link
 - ❌ Mengarang ukuran/jumlah file → lapor angka aktual
+
+## MASTERY — ALL-ROUNDER MAX
+Deliver kelas atas:
+- Urutan: guard (secret/marker) → bersih → arsip → serah — urutan lain = kirim malu-malu
+- Arsip teruji: unzip + jalan sekali sebelum titip — arsip tak teruji = hadiah yang ditaruh di laci selamanya
+- Checksum + daftar isi disertakan — integritas itu bukti, bukan harapan
+- Artefak debug/backup/tmp dibuang SEBELUM arsip — arsip bersih = tukang bersih dihargai

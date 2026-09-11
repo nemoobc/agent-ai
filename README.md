@@ -1,6 +1,6 @@
 <!--
   agent-ai — Kit orkestrasi agent AI untuk opencode
-  v11.0.0 • 11 agent • 62 skill • 39 command
+  v12.0.0 • 11 agent • 62 skill • 40 command
 -->
 <div align="center">
 
@@ -15,17 +15,17 @@
 
 <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&pause=1000&color=22D3EE&center=true&vCenter=true&width=600&lines=MIKIR+%E2%86%92+BAYANGKAN+%E2%86%92+GODOK+%E2%86%92+BANGUN+%E2%86%92+TEST+%E2%86%92+AUDIT+%E2%86%92+FIX+%E2%86%92+LAPOR" alt="pipeline" />
 
-![version](https://img.shields.io/badge/VERSION-11.0.0-blue?style=for-the-badge&logo=github)
+![version](https://img.shields.io/badge/VERSION-12.0.0-blue?style=for-the-badge&logo=github)
 ![agents](https://img.shields.io/badge/AGENTS-11-22c55e?style=for-the-badge&logo=robotframework)
 ![skills](https://img.shields.io/badge/SKILLS-62-f97316?style=for-the-badge&logo=apachemaven)
-![commands](https://img.shields.io/badge/COMMANDS-39-a855f7?style=for-the-badge&logo=terminal)
+![commands](https://img.shields.io/badge/COMMANDS-40-a855f7?style=for-the-badge&logo=terminal)
 ![license](https://img.shields.io/badge/LICENSE-MIT-eab308?style=for-the-badge)
 ![stars](https://img.shields.io/github/stars/nemoobc/agent-ai?style=social&label=Star)
 ![forks](https://img.shields.io/github/forks/nemoobc/agent-ai?style=social&label=Fork)
 
 **Kit orkestrasi agent untuk [opencode](https://github.com/sst/opencode): kasih tugas, DEV yang mikir, bangun, test, audit, dan lapor — kamu terima beres.**
 
-[🚀 Instal](#-instal-instan) • [🔄 3 Mode Build](#-3-mode-build-flow) • [📋 Pipeline](#-pipeline-otomatis) • [🤖 Agents](#-agents-11) • [🧩 Skills](#-skills-62) • [⌨️ Commands](#-commands-39) • [⚖️ 13 Hukum](#-13-hukum-kerja) • [🧪 Test](#-test-the-kit) • [📚 Docs](#-docs--kontribusi)
+[🚀 Instal](#-instal-instan) • [🔄 3 Mode Build](#-3-mode-build-flow) • [📋 Pipeline](#-pipeline-otomatis) • [🤖 Agents](#-agents-11) • [🧩 Skills](#-skills-62) • [⌨️ Commands]#-commands-40) • [⚖️ 13 Hukum](#-13-hukum-kerja) • [🧪 Test](#-test-the-kit) • [📚 Docs](#-docs--kontribusi)
 
 </div>
 
@@ -184,8 +184,9 @@ cd agent-ai && bash install.sh
 | 📴 Offline | `bash install.sh --offline` | Tanpa cek jaringan (CI aman) |
 | 🪝 Hook | `bash install.sh --hook` | Pre-commit hook git-guard |
 | 🧹 Lint | `bash install.sh --lint` | Verifikasi setelah install |
-| 🗑️ Uninstall | `bash install.sh --uninstall` | Hapus agent (memori tersimpan) |
+| 🗑️ Uninstall | `bash uninstall.sh` / `bash install.sh --uninstall` | Hapus agent (memori tersimpan) |
 | 🎞️ No-anim | `NO_ANIM=1 bash install.sh` | Matikan animasi (CI/log aman) |
+| 🔓 Allow-all | `/allow-all` di opencode | Buka semua izin (backup otomatis) |
 
 ---
 
@@ -253,24 +254,24 @@ Sumber kebenaran pemicu = [`skills/route/run.sh`](skills/route/run.sh). Jalur me
 
 ---
 
-## ⌨️ Commands (39)
+## ⌨️ Commands (40)
 
-**39 command** siap pakai di opencode, dalam 6 grup:
+**40 command** siap pakai di opencode, dalam 6 grup:
 
 | Grup | Command | Jumlah |
 |---|---|---|
 | 🚀 **Pipeline & Build** | `bootstrap` `onboard` `verify` `fix` `ship` `release` `upgrade` `hotfix` `route` `plan` `build` | **11** |
 | 📊 **Monitoring & Mutu** | `audit` `status` `metrics` `coverage` `trace` `critique` `threat-model` `blame` `monitor` | **9** |
 | 📝 **Docs & Rencana** | `report` `roadmap` `backlog` `estimate` `context` `handoff` `learn` | **7** |
-| 🛠️ **Utilitas & Tim** | `clean` `team` `doctor` `hermes` `pr` `memory` `deliver` `scaffold` | **8** |
+| 🛠️ **Utilitas & Tim** | `clean` `team` `doctor` `hermes` `pr` `memory` `deliver` `scaffold` `allow-all` | **9** |
 | 🌐 **Eksternal** | `data` `web` `notify` `multi-model` | **4** |
-| | **Total** | **39** |
+| | **Total** | **40** |
 
 ---
 
 ## 🌐 Multi-Model (2026)
 
-DEV pilihin model terbaik per tugas otomatis via [`skills/multi-model/SKILL.md`](skills/multi-model/SKILL.md) — satu interface, semua provider. Santai, nggak perlu hafal satu-satu:
+DEV pilihin model terbaik per tugas otomatis via [`skills/multi-model/SKILL.md`](skills/multi-model/SKILL.md) — satu interface, **semua model AI di bumi**. Santai, nggak perlu hafal satu-satu:
 
 | Provider | Model 2026 | Jagoannya |
 |---|---|---|
@@ -281,7 +282,9 @@ DEV pilihin model terbaik per tugas otomatis via [`skills/multi-model/SKILL.md`]
 | Zhipu | GLM-5.3 | Teks panjang + hemat token |
 | xAI | Grok 4.x | Reasoning cepat + real-time |
 | Open (Qwen/Llama/Mistral) | Qwen3 / Llama4 / Large3 | Self-host + privasi |
-| Internal | Astra | Internal, butuh ASTRA_BASE_URL+KEY (TODO DEV) |
+| Internal | Astra / Astra Pro | Internal, butuh ASTRA_BASE_URL+KEY (TODO DEV) |
+| Aggregator | OpenRouter / Groq / Cerebras / Fireworks / Together | Satu key akses ratusan model — jalan pintas multi-provider |
+| Global lain | Kimi K2 / MiniMax / Cohere / Nova / Phi / Sonar / Hunyuan / Ernie / Yi / Granite / Nemotron / Jamba / Reka | Katalog lengkap: `run.sh --list-providers` |
 
 > Tanpa API key = DEV kasih tau, routing + cost guard saja tanpa eksekusi HTTP. Biaya > threshold = tanya dulu (HUKUM 5). Fallback 3 model berurutan kalau 1 gagal.
 
@@ -317,12 +320,13 @@ Detail lengkap: [AGENTS.md](AGENTS.md)
 agent-ai/
 ├── agents/          11 agent (DEV primary + 10 sub-agent)
 ├── skills/          62 skill (semua dengan run.sh executable)
-├── command/         39 command (markdown, dipanggil dari opencode)
+├── command/         40 command (markdown, dipanggil dari opencode)
 ├── commands/        command alias/alternatif
 ├── docs/            dokumentasi: USAGE, PLAYBOOKS, ARCHITECTURE, ROADMAP
 ├── tests/           8 test suite + demo + mutation
 ├── memory/          archive + lessons (persistent memory)
 ├── install.sh       installer penuh animasi
+├── uninstall.sh     uninstaller standalone (animasi + aman memori)
 ├── Makefile         make verify / make lint / make test / ...
 ├── AGENTS.md        13 hukum kerja (sumber kebenaran)
 ├── VERSION          versi saat ini
@@ -385,6 +389,6 @@ make verify   # gerbang penuh HUKUM 9 — semua hijau baru SELESAI
 
 <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&pause=1200&color=22D3EE&center=true&vCenter=true&width=500&lines=Terima+kasih+sudah+mampir!+%F0%9F%99%8F;Star+%E2%AD%90+%2B+Fork+%F0%9F%8D%B4+%3D+%E2%9D%A4%EF%B8%8F" alt="thanks" />
 
-**v11.0.0** • 11 agent • 62 skill • 39 command • [CHANGELOG](CHANGELOG.md)
+**v12.0.0** • 11 agent • 62 skill • 40 command • [CHANGELOG](CHANGELOG.md)
 
 </div>

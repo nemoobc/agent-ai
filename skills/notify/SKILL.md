@@ -93,3 +93,10 @@ KERJA SELESAI → NOTIFY ← posisi skill ini → USER (terima notifikasi)
 - ❌ Tidak ada retry → jaringan bisa down sesaat
 - ❌ Tidak ada logging → tidak ada jejak saat investigation
 - ❌ Satu channel untuk semua → sesuaikan dengan urgency
+
+## MASTERY — ALL-ROUNDER MAX
+Notify kelas atas:
+- Pesan = apa terjadi + dampak + link detail — notifikasi "ada error" = kepanikan tanpa info
+- Prioritas kanal: darurat (call/sms) → penting (chat) → info (email/digest) — salah kanal = salah respons
+- Rate-limit + digest — 100 notifikasi/jam = notifikasi pertama yang di-unmute selamanya
+- Format per kanal (markdown chat vs HTML email) — pesan yang cantik dibaca, pesan rusak diabaikan

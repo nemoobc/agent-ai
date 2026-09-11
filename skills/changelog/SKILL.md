@@ -92,3 +92,10 @@ COMMIT → CHANGELOG ← posisi skill ini → VERSION SYNC → RELEASE
 - ❌ Entry terlalu teknis → tulis untuk user, bukan untuk developer
 - ❌ Skip self-test → changelog harus valid
 - ❌ Rilis tanpa tag → tag = tanda rilis resmi
+
+## MASTERY — ALL-ROUNDER MAX
+Changelog kelas atas:
+- Keep a Changelog: Added/Changed/Fixed/Removed/Deprecated/Security — konsisten = bisa dipindai
+- Satu entry = satu perubahan user-bisa-rasakan — internal refactoring tidak masuk (bukan urusan pembaca)
+- Nomor versi + tanggal tiap rilis — changelog tanpa tanggal = arkeologi
+- Versi = sumber tunggal (VERSION file), badge/docs mengikuti — dua sumber = pasti berkelahi

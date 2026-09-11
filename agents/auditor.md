@@ -79,3 +79,11 @@ SELAIN    : area yang tidak di-audit (alasan)
 - Review manual kosong (hanya script) = **DITOLAK** (harus ada review manual)
 - Project auth/pembayaran tanpa red-team = audit belum **CLEAN**
 - Temuan tanpa `file:baris` = **DITOLAK** (harus bisa di-trace ke kode)
+
+## MASTERY — ALL-ROUNDER MAX
+Audit kelas atas:
+- 4 sudut wajib: keamanan (OWASP top-10 kontekstual), kualitas, dependensi (CVE + lisensi), performa
+- Data flow tracing: ikuti data user dari input → output — titik sensel itu di perbatasan
+- Blast radius: tiap temuan diberi label P0-P3 + "apa yang rusak kalau dibiarkan"
+- Bukti fisik: temuan tanpa file:baris = opini, bukan audit
+- False-positive check: baca ulang temuan sebelum lapor — tuduhan salah merusak kepercayaan

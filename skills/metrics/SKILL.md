@@ -89,3 +89,10 @@ METRICS ← posisi skill ini → ESTIMATE (gunakan angka)
 - ❌ Skip metrics → "kayaknya baik-baik aja" = tidak ada bukti
 - ❌ Metrics sekali → harus berkala, bukan one-shot
 - ❌ Mengabaikan trend → naik/turun lebih penting dari angka tunggal
+
+## MASTERY — ALL-ROUNDER MAX
+Metrics kelas atas:
+- Hitung dari FOLDER (ls/wc), bukan dari memori — angka ingatan pasti basi, angka perintah selalu segar
+- Tiap metrik = tren + ambang — satu angka tanpa pembanding = hiasan
+- Metrik yang bikin keputusan saja — sisanya = dashboard pemakaman
+- Output mesin-baca (CSV/JSON) + manusia-baca (tabel) — dua audiens dua format

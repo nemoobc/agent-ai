@@ -118,3 +118,10 @@ TEST-FULL (merah) → DEBUG ← posisi skill ini → FIX → TEST-FULL (ulang)
 - ❌ Skip re-test → fix mungkin menambah bug baru
 - ❌ Debug terlalu lama tanpa progress → 30 menit = eskalasi
 - ❌ "Sepertinya sudah fix" tanpa test membuktikan → test = bukti
+
+## MASTERY — ALL-ROUNDER MAX
+Debug kelas atas:
+- Repro deterministik dulu — bug yang tak stabil = 3 bug menyamar jadi satu
+- Bisect: git bisect + binary search perilaku — 100 commit = 7 langkah, bukan 100
+- Teori → prediksi → uji: tiap langkah harus bisa SALAH — langkah yang tak bisa salah = bukan diagnosis
+- Tiga tersangka klasik: cache basi, race condition, asumsi environment — cek paling murah dulu

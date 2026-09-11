@@ -76,3 +76,10 @@ KERJA SELESAI → CLEAN ← posisi skill ini → DELIVER / COMMIT
 - ❌ Clean di production → hanya di development
 - ❌ Hapus lockfile → lockfile = keamanan dependency
 - ❌ Hapus .env → secret bisa hilang
+
+## MASTERY — ALL-ROUNDER MAX
+Clean kelas atas:
+- Daftar dulu (--dry), hapus kemudian — hapus tanpa daftar = kasih tau setelah kehilangan
+- Zona terlarang eksplisit: src/node_modules/.git/data user — bersih di zona salah = bersih yang menangis
+- Artefak build/cache/log/tmp = kandidat — semuanya regenerable, semuanya boleh pergi
+- Sebelum deliver/zip: clean WAJIB — arsip berisi sampah = hadiah berisi sampah

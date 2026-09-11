@@ -75,3 +75,10 @@ MONITOR ← posisi skill ini → ALERT (saat threshold terlampaui)
 - ❌ Threshold terlalu longgar → anomali terlewat
 - ❌ Alert tanpa konteks → "service down" tanpa detail = tidak membantu
 - ❌ Skip logging → tidak ada jejak saat investigation
+
+## MASTERY — ALL-ROUNDER MAX
+Monitor kelas atas:
+- Pantau 4 emas: latensi/traffic/error/saturasi — sisanya turunan
+- Alarm yang bisa ditindak: tiap alarm punya runbook — alarm tanpa aksi = alarm diabaikan (alarm fatigue)
+- SLO + error budget: 99.9% = 43 menit downtime/bulan — angka itu yang dikelola, bukan mood
+- Dashboard untuk manusia: satu layar, satu pertanyaan ("sehat tidak?") — 20 grafik = 0 keputusan

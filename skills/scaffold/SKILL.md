@@ -101,3 +101,10 @@ SCAFFOLD ← posisi skill ini → CODER (isi kode)
 - ❌ Skip README → dokumentasi awal sangat penting
 - ❌ Terlalu banyak dependencies → minimal dulu, tambah saat dibutuhkan
 - ❌ Skip lint config → kode konsisten dari awal
+
+## MASTERY — ALL-ROUNDER MAX
+Scaffold kelas atas:
+- Scaffold = struktur + konvensi + tooling + CI — 4 lapis, bukan cuma folder kosong
+- Minimal tapi lengkap: hello-world jalan end-to-end (build+test+deploy) sejak menit pertama
+- Ikuti konvensi ekosistem (npm/go mod/cargo) — scaffold yang melawan ekosistem = maintenance seumur hidup
+- Bisa dibuang murah: scaffold adalah titik awal, bukan penjara — tandai bagian yang boleh dihapus

@@ -107,3 +107,10 @@ SCAN → RECALL → DOCTOR ← posisi skill ini → THINK → PLAN
 - ❌ Secret di memori diabaikan → P0 = langsung fix (rotasi + hapus dari memori)
 - ❌ Doctor bilang masalah tapi tidak di-fix → masalah = masalah, fix atau catat
 - ❌ Menganggap doctor = test → doctor = kesehatan lingkungan, test = kualitas kode
+
+## MASTERY — ALL-ROUNDER MAX
+Doctor kelas atas:
+- Gejala → diagnosis → resep — bukan sekadar daftar "ada/tidak"
+- Cek menyeluruh berurutan: struktur → script → test → integrasi → environment
+- Resep = perintah yang bisa dijalankan + dampaknya — "perbaiki config" bukan resep, itu teka-teki
+- Sehat = exit 0 + bukti — doctor yang bilang "kayaknya sehat" = dokter yang katanya lulus

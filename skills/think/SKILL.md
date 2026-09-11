@@ -99,3 +99,10 @@ SCAN → THINK ← posisi skill ini → IMAGINE → PLAN → SPEC → ...
 - ❌ Putusan tanpa alasan → "karena terasa benar" = dilarang
 - ❌ Think terlalu panjang (>15 baris) → think = analisa cepat, bukan esai
 - ❌ Mengulang think yang sama → putusan sudah dibuat, eksekusi
+
+## MASTERY — ALL-ROUNDER MAX
+Berpikir kelas atas:
+- Tulis masalah 1 kalimat dulu — kalau tidak bisa, kamu belum paham masalahnya
+- Bedakan GEJALA vs MASALAH vs AKAR — solusi salah level = solusi palsu
+- Pre-mortem: bayangkan gagal 2 minggu lagi — apa penyebabnya? Itu risiko prioritas
+- Batas eksplisit: apa yang TIDAK dikerjakan — scope tanpa pagar = scope creep

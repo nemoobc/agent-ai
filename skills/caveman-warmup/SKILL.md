@@ -89,3 +89,9 @@ GREETING → CAVEMAN-WARMUP ← posisi skill ini → SCAN → THINK → KERJA
 - ❌ Burn niat di greeting → awal sesi = pelukan, bukan tendangan
 - ❌ Downgrade kerja di mode C → pipeline tetap jalan
 - ❌ Tidak ada transisi → tiba-tiba berubah = confusing
+
+## MASTERY — ALL-ROUNDER MAX
+Warmup kelas atas:
+- Baca situasi 10 detik: tugas langsung = mode A, santai = mode C — salah mode = salah seluruh percakapan
+- Profil user menentukan kedalaman laporan — laporan ke developer ≠ ke pemilik bisnis
+- Warmup = kalibrasi, bukan upacara — kalibrasi lebih dari 1 respons = basa-basi

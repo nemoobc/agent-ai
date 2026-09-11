@@ -101,11 +101,44 @@ EOF
 
 check_keys() {
   local found=0
-  for spec in "OPENAI_API_KEY|OpenAI" "ANTHROPIC_API_KEY|Anthropic" "GEMINI_API_KEY|Gemini" "DEEPSEEK_API_KEY|DeepSeek" "ZHIPU_API_KEY|Zhipu/GLM" "XAI_API_KEY|xAI/Grok" "MISTRAL_API_KEY|Mistral" "ALIBABA_API_KEY|Alibaba/Qwen" "TOGETHER_API_KEY|Together/Llama" "ASTRA_API_KEY|Astra (internal)"; do
+  local total=16
+  for spec in "OPENAI_API_KEY|OpenAI" "ANTHROPIC_API_KEY|Anthropic" "GEMINI_API_KEY|Gemini" "DEEPSEEK_API_KEY|DeepSeek" "ZHIPU_API_KEY|Zhipu/GLM" "XAI_API_KEY|xAI/Grok" "MISTRAL_API_KEY|Mistral" "ALIBABA_API_KEY|Alibaba/Qwen" "TOGETHER_API_KEY|Together/Llama" "ASTRA_API_KEY|Astra (internal)" "OPENROUTER_API_KEY|OpenRouter (semua model)" "MOONSHOT_API_KEY|Moonshot/Kimi" "COHERE_API_KEY|Cohere" "PERPLEXITY_API_KEY|Perplexity/Sonar" "GROQ_API_KEY|Groq" "CEREBRAS_API_KEY|Cerebras"; do
     local env_name="${spec%%|*}" label="${spec##*|}"
     if key_set "$env_name"; then echo "  ✔ $label ready"; found=$((found + 1)); else echo "  · $label: set $env_name"; fi
   done
-  echo "  → $found/10 provider tersedia"
+  echo "  → $found/$total provider tersedia"
+}
+
+list_providers() {
+  cat <<EOF
+# SEMUA PROVIDER BUMI 2026 (katalog lengkap):
+# ── Frontier lab ──
+OpenAI     gpt-5.5 / 5.5-pro / 5.4 / 5.5-mini / 5.5-nano / 5.6-luna-sol-terra
+Anthropic  claude-opus-5 / sonnet-5 / fable-5(-5.1) / haiku-4.5
+Google     gemini-3.8-flash / 3.7-flash / 3.1-pro / 3.5-flash-lite
+xAI        grok-4.5 / grok-4-fast
+# ── Open + value ──
+DeepSeek   deepseek-flash (V4.1) / V4-Pro (reroute 2026-09-14)
+Zhipu      glm-5.3 / glm-5.2 / glm-4.7 / glm-flash (+Plan Lite18/Pro72/Max160)
+Alibaba    qwen-3.5 / qwen-3.6
+Meta       llama-4-scout (ctx 10M) / llama-4-maverick
+Mistral    mistral-large-3 / mistral-small-4
+# ── Sisa bumi ──
+Moonshot   kimi-k2 (agentic+tool-use)      MiniMax  minimax-m2 (multimodal)
+Cohere     command-a (RAG+citasi)          Amazon   nova-premier (Bedrock)
+Microsoft  phi-5 (SLM edge)                Perplexity sonar-pro (search-grounded)
+Tencent    hunyuan-t (MoE open)            Baidu    ernie-x2
+01.AI      yi-large                        IBM      granite-4 (watsonx)
+NVIDIA     nemotron-ultra (NIM)            AI21     jamba-2-large
+Reka       reka-core-3 (multimodal)
+# ── Aggregator/inference (satu key semua model) ──
+OpenRouter 400+ model semua vendor  |  Groq (LPU tercepat)
+Cerebras   (throughput raksasa)     |  Fireworks + Together (open-weight)
+# ── Internal ──
+Astra/Astra Pro: TODO DEV (ASTRA_BASE_URL + auth + model + pricing)
+EOL: ChatGPT 4.1/o3/4o retired 2026-02-13; Gemini 2.0 SHUTDOWN;
+Claude 4.1/4.0/3.5 retired; DeepSeek V4-Pro reroute 2026-09-14.
+EOF
 }
 
 fail_no_key() {
@@ -130,15 +163,17 @@ while [ $# -gt 0 ]; do
     --task-class) TASK_CLASS="${2:-}"; shift 2 ;;
     --dry-run) DRY_RUN=1; shift ;;
     --list-models) MODE="list"; shift ;;
+    --list-providers) MODE="providers"; shift ;;
     --prompt) PROMPT_TEXT="${2:-}"; shift 2 ;;
     check) MODE="check"; shift ;;
-    -h|--help) echo "Usage: run.sh --list-models | --task-class <kelas> [--dry-run] [--prompt <teks>] | check"; exit 0 ;;
+    -h|--help) echo "Usage: run.sh --list-models | --list-providers | --task-class <kelas> [--dry-run] [--prompt <teks>] | check"; exit 0 ;;
     *) echo "multi-model: arg tak dikenal: $1" >&2; exit 2 ;;
   esac
 done
 
 case "$MODE" in
   list) list_models; exit 0 ;;
+  providers) list_providers; exit 0 ;;
   check) check_keys; exit 0 ;;
 esac
 

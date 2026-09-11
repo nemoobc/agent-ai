@@ -87,3 +87,10 @@ RECALL (baca profil) → KERJA → LAPOR (pakai profil)
 - ❌ A = kasar → A = tegas, bukan tidak sopan
 - ❌ Profil kaku → update saat user berubah
 - ❌ Profil = alasan untuk tidak bertanya → profil = cara menjawab, bukan cara bertanya
+
+## MASTERY — ALL-ROUNDER MAX
+Profile kelas atas:
+- Sampling untuk kasar (overhead rendah), instrumentasi untuk presisi — salah alat = salah kesimpulan
+- Bandingkan 2 profil (sebelum/sesudah) — satu profil = foto tanpa cerita
+- Alokasi > eksekusi di bahasa GC (JS/Java/Go) — si pelambat sering tinggal di heap
+- Catat kondisi saat profil (data/dataset/hardware) — profil tanpa konteks = angka tanpa makna

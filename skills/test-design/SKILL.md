@@ -69,3 +69,10 @@ PLAN → TEST-DESIGN ← posisi skill ini → CODER (tulis kode + test)
 - ❌ Skip test design → "nanti aja" = test tidak terstruktur
 - ❌ Hanya test happy path → negative + edge juga penting
 - ❌ Test tanpa assertion yang bisa gagal → test yang selalu pass = bukan test
+
+## MASTERY — ALL-ROUNDER MAX
+Desain test kelas atas:
+- Kasus wajib: happy path, batas (0/1/max), input salah, kosong, akses tanpa izin
+- Satu test = satu alasan gagal — test banyak-klaim = debug neraka
+- Arrange-Act-Assert tegas — test yang bikin data global = test yang saling bunuh
+- Testability sejak desain: fungsi murni + dependensi injeksi = test murah

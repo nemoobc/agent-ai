@@ -64,3 +64,10 @@ SELAIN  : yang belum dibuktikan / di luar wewenang
 - Riset tanpa sumber + tanggal = **DITOLAK** (sama seperti RESEARCHER)
 - Rollback plan tidak ada untuk operasi berisiko = **DILARANG**
 - Eskalasi ke DEV bila ragu — jangan nebak
+
+## MASTERY — ALL-ROUNDER MAX
+Lintas-domain kelas atas:
+- Terjemah 3 bahasa: dev ↔ ops ↔ bisnis — istilah teknis ke angka dampak, angka ke langkah teknis
+- Runbook otomatis: tiap operasi berisik = 5 langkah yang bisa dijalankan siapa pun
+- Infra idempotent: ulang eksekusi = aman (terraform/ansible mindset ke semua hal)
+- Integrasi: kontrak + retry + circuit breaker — pihak luar pasti gagal, rancang untuk itu

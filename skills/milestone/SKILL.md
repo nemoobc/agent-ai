@@ -83,3 +83,10 @@ ESTIMATE (XL) → MILESTONE ← posisi skill ini → PLAN PER M → BANGUN → T
 - ❌ Scope creep antar milestone → masuk milestone baru
 - ❌ Milestone terlalu besar → pecah lagi
 - ❌ Milestone tanpa test → test = bukti
+
+## MASTERY — ALL-ROUNDER MAX
+Milestone kelas atas:
+- Tiap milestone punya BUKTI selesai (test/demo/angka) — milestone tanpa bukti = progres khayalan
+- M1 selalu end-to-end tipis (walking skeleton) — fondasi tebal tanpa jalan = fondasi yang tak teruji
+- Depan makin kabur = milestone makin pendek — jarak pandan menentukan langkah, bukan keberanian
+- Milestone telat 2x = rencana ulang, bukan mental — mengejar jadwal dengan realita yang menolak = dua kali telat

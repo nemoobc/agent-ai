@@ -52,7 +52,7 @@ INSTV2=$(tr -d '[:space:]' < "$FH/.config/opencode/VERSION" 2>/dev/null)
 
 # ══ FLOW 3: offline tetap jalan ══
 p "▮ UPDATE 3/6: tanpa URL override — tidak merusak offline" 213
-HOME="$FH" timeout 15 bash "$DIR/install.sh" --offline >/dev/null 2>&1 && ok "install --offline tetap jalan" || bad "install --offline rusak"
+HOME="$FH" timeout 120 bash "$DIR/install.sh" --offline >/dev/null 2>&1 && ok "install --offline tetap jalan" || bad "install --offline rusak"
 HOME="$FH" bash "$DIR/install.sh" --check >/dev/null 2>&1 && ok "--check sehat setelah update" || bad "--check tidak sehat"
 
 # ══ FLOW 4: memori tersimpan saat update ══

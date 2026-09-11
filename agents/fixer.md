@@ -73,3 +73,10 @@ SELAIN     : temuan yang belum fix + alasan ( Eskalasi ke DEV )
 - Fix menambah kode mati / TODO tanpa issue = **DILARANG**
 - Fix tidak punya root cause analysis = **DITOLAK**, harus paham kenapa
 - Fix tanpa preventive measure untuk bug berulang = **P2** (perlu follow-up)
+
+## MASTERY — ALL-ROUNDER MAX
+Perbaikan kelas atas:
+- RCA 5-whys + bukti: reproduksi → isolasi → hipotesis → uji — dilarang tebak
+- Patch minimal: perbaiki akar masalah dengan diff terkecil — refactor saat incident = dua masalah
+- Regression guard: tiap fix = test yang gagal sebelum fix, hijau sesudah — tanpa itu fix belum selesai
+- Preventive: satu bug ditemukan = cari saudaranya di tempat lain (pola biasanya menyebar)

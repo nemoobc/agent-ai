@@ -94,3 +94,10 @@ PLAN (cek a11y) → CODER (implementasi aksesibel) → A11Y ← posisi skill ini
 - ❌ Menganggap a11y = screen reader saja → keyboard, kontras, motion semua penting
 - ❌ Hanya cek di akhir → a11y harus dibangun dari awal, bukan ditambahkan
 - ❌ Mengandalkan tool saja → tool menangkap ~30%, cek manual tetap wajib
+
+## MASTERY — ALL-ROUNDER MAX
+A11y kelas atas:
+- WCAG 2.2 prinsip: bisa dilihat/didengar/diklik/dipahami/tahan salah — bukan checklist, cara berpikir
+- Keyboard dulu: Tab order + focus visible + skip link — mouse itu kemewahan, keyboard itu hak
+- Kontras 4.5:1 teks normal (AA) — warna cantik yang tak terbaca = desain gagal
+- aria-* dosis kecil: HTML semantik dulu, aria hanya menambal yang semantik tak sanggup

@@ -74,3 +74,10 @@ PR/BRANCH → REVIEW ← posisi skill ini → MERGE (dengan perintah user)
 - ❌ Review terlalu cepat → baca perubahan dengan seksama
 - ❌ Mengabaikan konflik → resolve dulu
 - ❌ Review tanpa bukti → "file:baris" harus ada
+
+## MASTERY — ALL-ROUNDER MAX
+Review kelas atas:
+- Baca diff 2x: kali 1 "apa yang berubah", kali 2 "apa yang SEHARUSNYA berubah"
+- Pertanyaan pembunuh: "apakah ini rusak kalau input 2x lebih besar / datang 2x / datang terlambat?"
+- Nit vs blocker dilabeli jelas — review tanpa prioritas = penundaan terselubung
+- Pujian spesifik sekali, kritik spesifik selalu — review membangun kode, bukan ego

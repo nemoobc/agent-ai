@@ -92,3 +92,10 @@ TUGAS SELESAI → REMEMBER ← posisi skill ini → HANDOFF / SELESAI
 - ❌ Simpan terlalu banyak → kompres, yang penting saja
 - ❌ Simpan sebelum pekerjaan selesai → keputusan bisa berubah
 - ❌ Lupa update session-log → jejak aktivitas hilang
+
+## MASTERY — ALL-ROUNDER MAX
+Remember kelas atas:
+- Simpan keputusan + ALASAN, bukan kejadian — "pakai X karena Y di kondisi Z" itu emas
+- Satu fakta satu tempat + rujukan — duplikasi ingatan = kontradiksi masa depan
+- JANGAN pernah simpan secret/key — ingatan itu tempat paling bocor
+- Tanggal wajib di tiap entry — tanpa tanggal tak bisa dinilai kedaluwarsanya

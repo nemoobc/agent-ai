@@ -79,3 +79,10 @@ WEB ← posisi skill ini → DATA (proses hasil scraping)
 - ❌ Skip validation → data scraping bisa salah
 - ❌ Hardcoded selectors → gunakan data-testid bila mungkin
 - ❌ Tidak ada timeout →无限等待 = hang
+
+## MASTERY — ALL-ROUNDER MAX
+Web automation kelas atas:
+- Tunggu kondisi (selector/network/idle), JANGAN sleep buta — sleep 3s = gagal di koneksi 4G + lambat di LAN
+- Selector stabil: data-testid > aria-label > teks — XPath posisi rusak tiap redesign
+- Screenshot tiap langkah kritis saat debug — "katanya gagal" tanpa bukti visual = tebak-tebakan
+- Headless untuk CI, headed untuk debug — beda mode = beda bug kadang, uji dua-duanya

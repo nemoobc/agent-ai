@@ -79,3 +79,10 @@ USER BERTANYA → EXPLAIN ← posisi skill ini → TAWARAN (lanjut kerja?)
 - ❌ Pakai jargon tanpa definisi → user makin bingung
 - ❌ Penjelasan terlalu panjang → cukup untuk pemahaman, bukan untuk dokumen
 - ❌ Tidak ada tawaran lanjut → "mau kucoba?" = membuka pintu kerja
+
+## MASTERY — ALL-ROUNDER MAX
+Explain kelas atas:
+- Ukur dulu kedalaman user (pertanyaan balik 1) — explain ke ahli vs pemula = dua dokumen berbeda
+- Analogi dari dunia user (dagang/game/masak) — bukan dari dunia kamu
+- Satu konsep satu bagian + contoh nyata tiap konsep — tumpuk dua konsep = tumpuk kebingungan
+- Akhiri dengan "cek pemahaman": 1 soal kecil — explain tanpa umpan balik = ceramah

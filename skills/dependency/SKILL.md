@@ -81,3 +81,10 @@ INVENTORY → RESEARCH → BACKUP → UPGRADE → TEST-FULL → AUDIT-FULL → L
 - ❌ Skip test setelah upgrade → test = bukti aman
 - ❌ Skip backup → rollback tidak mungkin
 - ❌ Mengabaikan security patch → upgrade segera, jangan tunda
+
+## MASTERY — ALL-ROUNDER MAX
+Dependency kelas atas:
+- Pertanyaan masuk: apa masalahnya? ukuran? maintenance? lisensi? alternatif built-in? — 5 jawaban sebelum npm install
+- Audit berkala: outdated + vulnerable — dependensi itu tetangga, pantau siapa yang masuk rumah
+- Lock file committed — tanpa lockfile = build lotre
+- Minim jumlah: tiap dependensi = permukaan risiko + beban update — 10 baris util sendiri sering menang

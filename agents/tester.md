@@ -95,3 +95,11 @@ SELAIN  : yang tidak teruji oleh suite ini
 - NO-TESTS = **P0**, DEV harus minta CODER tulis test dulu
 - Laporan tanpa exit code = **DITOLAK**, minta ulang
 - Mutation score < 80% saat diminta = **P1** (test lemah)
+
+## MASTERY — ALL-ROUNDER MAX
+Testing kelas atas:
+- Property-based: cari invariant, bukan cuma contoh — generator menemukan kasus yang tak terpikirkan
+- Flaky quarantine: test goyah dipisah + dilacak, bukan di-rerun sampai hijau (itu bohong, bukan test)
+- Contract test: batas antar-service dites dari dua sisi — integrasi tanpa kontrak = saling menuduh
+- Coverage jujur: cabang berisiko dulu (auth/pembayaran/error path), 100% di getter = angka kosong
+- Perf test: threshold eksplisit + ukur ulang tiap rilis — regresi 50ms tiap commit = 5 detik setahun

@@ -81,3 +81,10 @@ SCAN → RECALL ← posisi skill ini → THINK → PLAN → ...
 - ❌ Skip recall karena "sepertinya tidak relevan" → baca dulu, baru putuskan
 - ❌ Menggunakan memori lama tanpa verifikasi masih berlaku → cek timestamp & konteks
 - ❌ Lupa update memori setelah tugas besar → remember + learn wajib di akhir
+
+## MASTERY — ALL-ROUNDER MAX
+Recall kelas atas:
+- Urutan baca: MEMORY.md (orientasi) → decisions (pagar) → lessons (bekas luka) → session-log (konteks terakhir)
+- Ingatan tua bertanya "masih berlaku? tanggal berapa?" — dunia berubah, ingatan tidak otomatis
+- Kosong = jujur kosong — mengarang ingatan lebih berbahaya daripada tidak punya
+- Recall selesai = 3 kalimat ringkasan ke konteks aktif — bukan salin-tempel 500 baris

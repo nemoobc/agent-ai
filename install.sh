@@ -211,6 +211,7 @@ pbar(){
 }
 
 # ── brain pulse — neural style reveal (dinamis VERSION + ls, append-only) ──
+# catatan: tanpa emoji di dalam box — lebar emoji beda-beda per terminal = border miring
 brain_pulse(){
   local _bv="?" _ba="?" _bs="?" _bc="?"
   [ -f "$SCRIPT_DIR/VERSION" ] && _bv="$(tr -d '[:space:]' < "$SCRIPT_DIR/VERSION" 2>/dev/null || printf '?')"
@@ -221,32 +222,39 @@ brain_pulse(){
   [ -n "${_ba:-}" ] || _ba="?"; [ -n "${_bs:-}" ] || _bs="?"; [ -n "${_bc:-}" ] || _bc="?"
   if anim_on; then
     printf '\n'
-    glow_line 213 '  ╭──────────────────────────────────────────────────────────╮'
-    printf '\n'
-    sleep 0.05
-    glow_line 177 '  │                                                          │'
-    printf '\n'
-    sleep 0.03
-    glow_line 177 "  │     🧠  DEV-BRAIN  v${_bv}  •  ULTRONOMATIS             │"
-    printf '\n'
-    sleep 0.05
-    glow_line 177 '  │                                                          │'
-    printf '\n'
-    sleep 0.03
-    glow_line 141 "  │     ◈ ${_ba} agents  ◈ ${_bs} skills  ◈ ${_bc} commands            │"
-    printf '\n'
-    sleep 0.05
-    glow_line 141 '  │                                                          │'
-    printf '\n'
-    sleep 0.03
-    glow_line 213 '  ╰──────────────────────────────────────────────────────────╯'
-    printf '\n'
-    sleep 0.04
+    glow_line 213 '  ╭──────────────────────────────────────────────────────────╮'; printf '\n'; sleep 0.04
+    glow_line 177 '  │                                                          │'; printf '\n'; sleep 0.02
+    glow_line 177 "  │      ◈  D E V - B R A I N   v${_bv}  —  ONLINE           │"; printf '\n'; sleep 0.04
+    glow_line 177 '  │                                                          │'; printf '\n'; sleep 0.02
+    glow_line 141 "  │   ${_ba} agents   ${_bs} skills   ${_bc} commands   all-rounder max   │"; printf '\n'; sleep 0.04
+    glow_line 141 '  │                                                          │'; printf '\n'; sleep 0.02
+    glow_line 213 '  ╰──────────────────────────────────────────────────────────╯'; printf '\n'; sleep 0.04
   else
     pulse 213 '  ╭──────────────────────────────────────────────────────────╮'
-    pulse 177 "  │     🧠  DEV-BRAIN  v${_bv}  •  ULTRONOMATIS             │"
-    pulse 141 "  │     ◈ ${_ba} agents  ◈ ${_bs} skills  ◈ ${_bc} commands            │"
+    pulse 177 "  │      ◈  D E V - B R A I N   v${_bv}  —  ONLINE           │"
+    pulse 141 "  │   ${_ba} agents   ${_bs} skills   ${_bc} commands   all-rounder max   │"
     pulse 213 '  ╰──────────────────────────────────────────────────────────╯'
+  fi
+}
+
+# ── logo reveal — ASCII art muncul baris demi baris (CI-safe fallback) ──
+logo_reveal(){
+  local _delay="${1:-0.05}"
+  if anim_on; then
+    printf '\n'
+    glow_line 213 '  █████╗ ██████╗  ██████╗ ██╗   ██╗███████╗   ███████╗██╗   ██╗███████╗'; printf '\n'; sleep "$_delay"
+    glow_line 213 '  ██╔══██╗██╔══██╗██╔════╝ ██║   ██║██╔════╝   ██╔════╝╚██╗ ██╔╝██╔════╝'; printf '\n'; sleep "$_delay"
+    glow_line 213 '  ███████║██████╔╝██║  ███╗██║   ██║███████╗   █████╗   ╚████╔╝ █████╗'; printf '\n'; sleep "$_delay"
+    glow_line 213 '  ██╔══██║██╔══██╗██║   ██║██║   ██║╚════██║   ██╔══╝    ╚██╔╝  ██╔══╝'; printf '\n'; sleep "$_delay"
+    glow_line 213 '  ██║  ██║██║  ██║╚██████╔╝╚██████╔╝███████║██╗██║        ██║   ███████╗'; printf '\n'; sleep "$_delay"
+    glow_line 213 '  ╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝  ╚═════╝ ╚══════╝╚═╝╚═╝        ╚═╝   ╚══════╝'; printf '\n'; sleep "$_delay"
+  else
+    pc 213 '  █████╗ ██████╗  ██████╗ ██╗   ██╗███████╗   ███████╗██╗   ██╗███████╗'
+    pc 213 '  ██╔══██╗██╔══██╗██╔════╝ ██║   ██║██╔════╝   ██╔════╝╚██╗ ██╔╝██╔════╝'
+    pc 213 '  ███████║██████╔╝██║  ███╗██║   ██║███████╗   █████╗   ╚████╔╝ █████╗'
+    pc 213 '  ██╔══██║██╔══██╗██║   ██║██║   ██║╚════██║   ██╔══╝    ╚██╔╝  ██╔══╝'
+    pc 213 '  ██║  ██║██║  ██║╚██████╔╝╚██████╔╝███████║██╗██║        ██║   ███████╗'
+    pc 213 '  ╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝  ╚═════╝ ╚══════╝╚═╝╚═╝        ╚═╝   ╚══════╝'
   fi
 }
 
@@ -340,6 +348,7 @@ progress_dots(){
 
 # ── banner reveal — full animated boot sequence ──
 banner_reveal(){
+  logo_reveal 0.04
   brain_pulse
   local _ba _bs _bc
   _bs="$(ls -1 "$SCRIPT_DIR/skills/" 2>/dev/null | wc -l | tr -d ' ')"
@@ -383,54 +392,31 @@ banner_reveal(){
 
 # ── celebrate — completion animation ──
 celebrate(){
-  local _dur="${1:-0}" _files="${2:-0}"
+  local _dur="${1:-0}" _files="${2:-0}" _v="?"
+  [ -f "$SCRIPT_DIR/VERSION" ] && _v="$(tr -d '[:space:]' < "$SCRIPT_DIR/VERSION" 2>/dev/null || printf '?')"
   if anim_on; then
     echo
-    glow_line 141 '  ╔══════════════════════════════════════════════════════════╗'
-    printf '\n'
-    sleep 0.06
-    glow_line 82  '  ║                                                          ║'
-    printf '\n'
-    sleep 0.04
-    glow_line 82  '  ║          🧠  DEV-BRAIN  —  ONLINE                       ║'
-    printf '\n'
-    sleep 0.06
-    glow_line 82  '  ║                                                          ║'
-    printf '\n'
-    sleep 0.04
-    glow_line 147 '  ║     think → build → test → audit → fix → learn          ║'
-    printf '\n'
-    sleep 0.06
-    glow_line 147 '  ║     plan ──▶ dev ──▶ build                              ║'
-    printf '\n'
-    sleep 0.04
-    glow_line 147 '  ║     plan ──▶ dev ──▶ build • anti-bentrok ✓ teratur ✓   ║'
-    printf '\n'
-    sleep 0.04
-    glow_line 82  '  ║                                                          ║'
-    printf '\n'
-    sleep 0.04
-    glow_line 141 '  ╚══════════════════════════════════════════════════════════╝'
-    printf '\n'
-    sleep 0.08
+    glow_line 141 '  ╔══════════════════════════════════════════════════════════╗'; printf '\n'; sleep 0.05
+    glow_line 82  '  │                                                          │'; printf '\n'; sleep 0.03
+    glow_line 82  '  │          ◈  DEV-BRAIN  v'"${_v}"'  —  ONLINE                  │'; printf '\n'; sleep 0.05
+    glow_line 82  '  │                                                          │'; printf '\n'; sleep 0.03
+    glow_line 147 '  │    think → build → test → audit → fix → learn            │'; printf '\n'; sleep 0.04
+    glow_line 147 '  │    plan ──▶ dev ──▶ build   •   anti-bentrok ✓          │'; printf '\n'; sleep 0.03
+    glow_line 82  '  │                                                          │'; printf '\n'; sleep 0.03
+    glow_line 141 "  ╚══════════════════════════════════════════════════════════╝"; printf '\n'; sleep 0.06
     # stars animation (append-only, tanpa \r)
-    glow_line 220 '  ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦'
-    printf '\n'
-    sleep 0.1
-    glow_line 220 "  INSTALL COMPLETE — ${_files} files — ${_dur}s"
-    printf '\n'
-    glow_line 220 '  ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦'
-    printf '\n'
+    glow_line 220 '  ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦'; printf '\n'; sleep 0.08
+    glow_line 220 "  INSTALL COMPLETE — ${_files} file otak — ${_dur}s — v${_v}"; printf '\n'
+    glow_line 220 '  ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦'; printf '\n'; sleep 0.1
   else
     echo
     pulse 213 '  ╔══════════════════════════════════════════════════════════╗'
-    pulse 82  '  ║          🧠  DEV-BRAIN  —  ONLINE                       ║'
-    pulse 147 '  ║     think → build → test → audit → fix → learn          ║'
-    pulse 147 '  ║     plan ──▶ dev ──▶ build                              ║'
-    pulse 147 '  ║     plan ──▶ dev ──▶ build • anti-bentrok ✓ teratur ✓   ║'
+    pulse 82  '  │          ◈  DEV-BRAIN  v'"${_v}"'  —  ONLINE                  │'
+    pulse 147 '  │    think → build → test → audit → fix → learn            │'
+    pulse 147 '  │    plan ──▶ dev ──▶ build   •   anti-bentrok ✓          │'
     pulse 213 '  ╚══════════════════════════════════════════════════════════╝'
     echo
-    ok "INSTALL COMPLETE — ${_files} files — ${_dur}s"
+    ok "INSTALL COMPLETE — ${_files} file otak — ${_dur}s — v${_v}"
   fi
 }
 
@@ -454,23 +440,32 @@ IS_TERMUX=0
 #  USAGE
 # ════════════════════════════════════════════
 usage(){ cat <<'X'
-Pemakaian:
-  bash install.sh                 install global (~/.config/opencode)
-  bash install.sh --project DIR   sekalian pasang ke project (DIR/.opencode)
-  bash install.sh --check         cek kesehatan instalasi (tanpa menulis)
-  bash install.sh --update        update ke versi terbaru dari GitHub (memori aman)
-  bash install.sh --version       tampilkan versi
-  bash install.sh --uninstall     buang agent & doctrine (memori DIPERTAHANKAN)
-  bash install.sh --offline       tanpa cek jaringan (offline/CI aman, tanpa menunggu)
-  bash install.sh --hook          pasang pre-commit hook git-guard ke project ini (.git/hooks)
-  bash install.sh --lint          jalankan lint-kit + self-test setelah install (verifikasi)
-  NO_ANIM=1 bash install.sh        matikan animasi (CI/log aman, append-only)
-  bash install.sh --no-anim        sama dengan NO_ANIM=1 (tanpa animasi)
-  env DEV_BRAIN_UPDATE_URL=...    override URL update (untuk tes/file://)
-  env DEV_BRAIN_UPDATE_SHA256=... checksum wajib untuk update jaringan
+╔══════════════════════════════════════════════════════════════╗
+║  AGENT-AI / DEV-BRAIN — installer                            ║
+╚══════════════════════════════════════════════════════════════╝
 
-Di dalam opencode (tanpa install global di project ini):
-  /bootstrap                      pasang DEV-BRAIN ke project ini (.opencode/)
+  INSTAL
+    bash install.sh                 install global (~/.config/opencode)
+    bash install.sh --project DIR   sekalian pasang ke project (DIR/.opencode)
+    bash install.sh --hook          pasang pre-commit hook git-guard
+    bash install.sh --lint          lint-kit + self-test setelah install
+
+  KESEHATAN & UPDATE
+    bash install.sh --check         cek kesehatan instalasi (tanpa menulis)
+    bash install.sh --update        update dari GitHub (memori aman)
+    bash install.sh --offline       tanpa cek jaringan (CI aman)
+
+  LAIN-LAIN
+    bash install.sh --uninstall     buang agent & doctrine (memori DIPERTAHANKAN)
+    bash uninstall.sh               uninstall standalone (tampilan penuh)
+    bash install.sh --version       tampilkan versi
+    bash install.sh --no-anim       matikan animasi (CI/log aman)
+    env DEV_BRAIN_UPDATE_URL=...    override URL update (untuk tes/file://)
+    env DEV_BRAIN_UPDATE_SHA256=... checksum wajib untuk update jaringan
+
+  DI DALAM OPENCODE (tanpa install global di project ini)
+    /bootstrap                      pasang DEV-BRAIN ke project ini (.opencode/)
+    /allow-all                      buka semua izin (backup otomatis)
 X
 }
 
@@ -565,15 +560,23 @@ uninstall(){
   ph "UNINSTALL DEV-BRAIN"
   mode_strip ""
   div
+  dots "menghitung file otak" 2
+  N_BEFORE=$(find "$CFG/agent" "$CFG/skill" "$CFG/command" -type f 2>/dev/null | wc -l | tr -d ' ')
+  [ "${N_BEFORE:-0}" -gt 0 ] && inf "$N_BEFORE file otak ditemukan — mulai membersihkan" || wrn "tidak ada file otak terpasang"
   dots "menghapus agent" 3
   rm -rf "$CFG/agent" "$CFG/skill" "$CFG/command" "$CFG/docs"
-  rm -f "$CFG/AGENTS.md"
+  rm -f "$CFG/AGENTS.md" "$CFG/VERSION"
   BAK=$(ls -1t "$CFG"/opencode.json.bak.* 2>/dev/null | head -n1)
   if [ -n "${BAK:-}" ]; then mv "$BAK" "$CFG/opencode.json"; ok "opencode.json dipulihkan dari backup"
   elif [ -f "$CFG/opencode.json" ] && grep -q '"devbrain"' "$CFG/opencode.json" 2>/dev/null; then
     rm -f "$CFG/opencode.json"; ok "opencode.json buatan DEV-BRAIN dihapus"
   fi
-  wrn "folder memory/ DIPERTAHANKAN (isi ingatan kamu)"
+  if [ -d "$CFG/memory" ]; then
+    NM=$(ls -1 "$CFG/memory" 2>/dev/null | wc -l | tr -d ' ')
+    wrn "folder memory/ DIPERTAHANKAN — $NM file ingatan kamu selamat"
+  fi
+  [ "${N_BEFORE:-0}" -gt 0 ] && ok "$N_BEFORE file otak dibersihkan"
+  inf "pasang lagi: bash install.sh  •  alternatif: bash uninstall.sh (standalone)"
   ok "uninstall selesai — DEV-BRAIN dilepas"
   exit 0
 }
@@ -590,9 +593,6 @@ write_brain(){
   # prune instalasi lama
   rm -rf "$CFG/agent" "$CFG/skill" "$CFG/command"
   mkdir -p "$CFG/agent" "$CFG/command" "$CFG/memory" "$CFG/skill"
-  for skill_dir in "$SCRIPT_DIR/skills/"*/; do
-    [ -d "$skill_dir" ] && mkdir -p "$CFG/skill/$(basename "$skill_dir")"
-  done
 
   # backup config lama (bukan tulisan DEV-BRAIN)
   if [ -f "$CFG/opencode.json" ] && ! grep -q '"devbrain"' "$CFG/opencode.json" 2>/dev/null; then
@@ -781,23 +781,25 @@ OPencodeEOF
   done
   if [ "${_ai}" -eq 0 ]; then err "tidak ada file tersalin di agent — install dibatalkan"; exit 1; fi
 
-  # ── SKILLS ──
+  # ── SKILLS ── (copy massal 1 operasi + verifikasi — jauh lebih cepat di I/O lambat;
+  #              skill/ hanya berisi SKILL.md + run.sh, jadi hasil identik dengan copy per-file)
   _NS="$(ls -1 "$SCRIPT_DIR/skills/" 2>/dev/null | wc -l | tr -d ' ')"
   case "${_NS}" in ''|*[!0-9]*) _NS=1 ;; esac
   _si=0
-  for skill_dir in "$SCRIPT_DIR/skills/"*/; do
-    skill_name=$(basename "$skill_dir")
-    mkdir -p "$CFG/skill/$skill_name" || { errbar "${_si}" "${_NS}" "skill: $skill_name"; _FAIL=$((_FAIL + 1)); continue; }
-    if [ ! -f "$skill_dir/SKILL.md" ]; then errbar "${_si}" "${_NS}" "skill: $skill_name"; _FAIL=$((_FAIL + 1)); continue; fi
-    if ! cp "$skill_dir/SKILL.md" "$CFG/skill/$skill_name/"; then errbar "${_si}" "${_NS}" "skill: $skill_name"; _FAIL=$((_FAIL + 1)); continue; fi
-    if [ -f "$skill_dir/run.sh" ]; then
-      if ! cp "$skill_dir/run.sh" "$CFG/skill/$skill_name/" || ! chmod +x "$CFG/skill/$skill_name/run.sh"; then
-        errbar "${_si}" "${_NS}" "skill: $skill_name"; _FAIL=$((_FAIL + 1)); continue
+  if cp -R "$SCRIPT_DIR/skills/." "$CFG/skill/" 2>/dev/null; then
+    chmod +x "$CFG"/skill/*/run.sh 2>/dev/null
+    for skill_dir in "$SCRIPT_DIR/skills/"*/; do
+      skill_name=$(basename "$skill_dir")
+      if [ -f "$CFG/skill/$skill_name/SKILL.md" ]; then
+        _si=$((_si + 1)); okbar "${_si}" "${_NS}" "skill: $skill_name"
+      else
+        errbar "${_si}" "${_NS}" "skill: $skill_name (SKILL.md tidak tersalin)"; _FAIL=$((_FAIL + 1))
       fi
-    fi
-    _si=$((_si + 1)); okbar "${_si}" "${_NS}" "skill: $skill_name"
-  done
-  if [ "${_si}" -eq 0 ]; then err "tidak ada file tersalin di skill — install dibatalkan"; exit 1; fi
+    done
+  else
+    errbar 0 "${_NS}" "copy massal skills gagal"; _FAIL=$((_FAIL + 1))
+  fi
+  if [ "${_si:-0}" -eq 0 ]; then err "tidak ada file tersalin di skill — install dibatalkan"; exit 1; fi
 
   # ── COMMANDS ──
   _NC="$(ls -1 "$SCRIPT_DIR/command/" 2>/dev/null | wc -l | tr -d ' ')"

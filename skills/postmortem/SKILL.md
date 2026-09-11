@@ -92,3 +92,10 @@ INSIDEN → POSTMORTEM ← posisi skill ini → LESSONS.MD → PREVENSI
 - ❌ AKSI tanpa perubahan → "lebih hati-hati" bukan pencegahan
 - ❌ Tidak ada test regresi → bug akan kembali
 - ❌ Postmortem terlalu panjang → cukup untuk pelajaran, jangan esai
+
+## MASTERY — ALL-ROUNDER MAX
+Postmortem kelas atas:
+- Blameless: serang SISTEM, bukan orang — culture takut = insiden tersembunyi sampai meledak
+- Timeline faktual (jam + bukti) → akar sebab (5-whys) → aksi (owner + tenggat) — tanpa owner = tanpa aksi
+- Akar sebab ganda: hampir selalu 3+ faktai berbaris — satu sebab tunggal biasanya cerita yang terlalu rapi
+- Aksi diprioritasi & dijadwalkan — postmortem tanpa diff berikutnya = dokumentasi kesedihan

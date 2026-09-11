@@ -82,3 +82,10 @@ THREAT-MODEL → CODER → RED-TEAM ← posisi skill ini → FIX-FULL
 - ❌ Red-team tanpa bukti → "kemungkinan bisa" bukan bukti
 - ❌ Temuan P0/P1 diabaikan → gerbang keras
 - ❌ Hanya test happy path → red-team = test unhappy path
+
+## MASTERY — ALL-ROUNDER MAX
+Red team kelas atas:
+- Berpikir penyerang nyata: akses apa yang SUDAH dimiliki → eskalasi dari sana, bukan fantasi 0-day
+- 10 menit per vektor, log semua yang ditemukan — kecepatan > kesempurnaan di iterasi 1
+- Uji eksplisit: auth bypass, IDOR, payload XSS/SQLi, race ganda-kirim, rate limit
+- Laporan = bukti reproduksi + dampak + perbaikan — temuan tanpa PoC = cerita

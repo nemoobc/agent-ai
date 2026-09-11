@@ -1,7 +1,7 @@
 # PANDUAN LENGKAP DEV-BRAIN (docs/USAGE.md)
 
 Semua agent, semua skill, semua command — kapan dipakai, siapa yang panggil, contoh nyata.
-DEV-BRAIN v8.2.0 — 11 agent, 56 skill, 33 command, 13 hukum, 56 script jalan. Install dulu: `bash install.sh`.
+DEV-BRAIN v12.0.0 — 11 agent, 62 skill, 40 command, 13 hukum, 62 script jalan. Install dulu: `bash install.sh`; uninstall: `bash uninstall.sh` (memori selamat).
 
 ---
 

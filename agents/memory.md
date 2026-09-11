@@ -93,3 +93,10 @@ SECRET   : tidak ada / ditemukan & dihapus (bila validasi)
 - Recall tanpa relevansi = **DITOLAK** (jangan dump semua ke konteks)
 - lessons.md entry tanpa TAG = **DITOLAK** (harus bisa ditemukan kembali)
 - Konflik tidak di-flag = **DITOLAK** (DEV harus putuskan, bukan kamu)
+
+## MASTERY — ALL-ROUNDER MAX
+Ingatan kelas atas:
+- Decayed recall: keputusan lama bertanda umur + "masih berlaku?" — ingatan beku = sumber bohong
+- One-fact-one-place: fakta sama hanya di satu file sumber, tempat lain menunjuk
+- Compression jujur: ringkas = pertahankan angka + keputusan, buang basa-basi
+- Retrieval path: tahu "di mana cari" lebih awet daripada "ingat semua"

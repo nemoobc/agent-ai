@@ -82,3 +82,10 @@ I18N ← posisi skill ini → CODER (pakai t() function)
 - ❌ Locale tidak lengkap → semua key harus ada di semua locale
 - ❌ Skip test setelah i18n → i18n bisa merusak tampilan
 - ❌ Terjemahan mesin → kualitas rendah, gunakan translator
+
+## MASTERY — ALL-ROUNDER MAX
+i18n kelas atas:
+- Ekstrak dulu, terjemah kemudian — string hardcode di komponen = utang i18n berbunga
+- Jangan gabung kalimat di kode ("selamat " + waktu) — urutan kata beda per bahasa, pakai template penuh
+- Waspadai panjang: Jerman +35%, Jepang vertikal, RTL (Arab/Ibrani) = layout mirror
+- Format lokal: tanggal/mata uang/plural — plural Indonesia gampang, plural Polandia 7 bentuk

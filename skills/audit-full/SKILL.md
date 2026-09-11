@@ -90,3 +90,10 @@ TEST-FULL (hijau) → AUDIT-FULL ← posisi skill ini → CRITIQUE (bila ULTRA)
 - ❌ Menyembunyikan temuan P0/P1 → temuan = temuan, laporkan terang-terangan
 - ❌ Mengulangi audit tanpa fix dulu → fix dulu, baru audit ulang
 - ❌ Menganggap "sedikit warning tidak masalah" → semua temuan ke FIXER, semua
+
+## MASTERY — ALL-ROUNDER MAX
+Audit kelas atas:
+- Berlapis: struktur → logika → keamanan → dependensi → performa — tiap lapis ada daftar wajib
+- Tiap temuan: P0-P3 + file:baris + saran perbaikan konkret — temuan tanpa lokasi = opini
+- Secret scan: pattern (sk-, ghp_, AKIA, key=) + file .env — satu bocor = P0 selesai
+- Audit sendiri di-audit: false-positive dihapus sebelum lapor — presisi itu reputasi

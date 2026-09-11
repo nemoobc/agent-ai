@@ -91,3 +91,10 @@ SCAN → CONVENTION ← posisi skill ini → CODER (ikuti konvensi)
 - ❌ Melanggar konvensi sendiri → konsistensi = tanggung jawab semua
 - ❌ Konvensi mati dipertahankan → delete, jangan archive
 - ❌ Konvensi terlalu banyak → yang penting saja, jangan bikin buku
+
+## MASTERY — ALL-ROUNDER MAX
+Konvensi kelas atas:
+- Tulis yang dipakai HARI INI, bukan yang diidealkan — konvensi impian = konvensi yang dilanggar diam-diam
+- Tiap aturan ada alasannya (1 kalimat) — aturan tanpa alasan = dogma, dogma = ditolak anak baru
+- Enforcement otomatis (linter/formatter/CI) — konvensi tanpa mesin penegak = saran
+- Konvensi berubah = changelog + migrasi — perubahan diam-diam = konvensi dua versi hidup bersama

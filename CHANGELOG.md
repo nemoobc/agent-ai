@@ -1,5 +1,24 @@
 # CHANGELOG
 
+## [12.0.0] — 2026-09-11
+### Added
+- **COMMAND #40 `/allow-all`** (command/allow-all.md + commands/allow-all.sh): buka semua izin opencode (edit/write/webfetch/bash=allow) dengan backup otomatis + revert instruction
+- **uninstall.sh STANDALONE** — full animasi, `--check` (pratinjau tanpa hapus), hitung file otak, memory DIPERTAHANKAN, opencode.json user dipulihkan, idempotent (exit 0 saat kosong)
+- **commands/ LENGKAP 31→40 wrapper** — 8 wrapper hilang diisi (build, data, monitor, multi-model, notify, plan, scaffold, web) + allow-all; parity=40/40
+- **MULTI-MODEL ALL-ROUNDER MAXX** — katalog SEMUA provider bumi: +13 global (Kimi K2, MiniMax, Cohere, Amazon Nova, MS Phi, Perplexity Sonar, Hunyuan, Ernie, Yi, Granite, Nemotron, Jamba, Reka) + 5 aggregator/inference (OpenRouter, Groq, Cerebras, Fireworks, Together); run.sh: `--list-providers` baru + check_keys 10→16 provider
+- **MASTERY — ALL-ROUNDER MAX di SEMUA komponen**: 11 agent + 62 skill (semua dapat section MASTERY depth kelas atas; skills 5.552→7.000+ baris)
+- **lint-kit +detektor**: uninstall.sh (ada/executable/syntax/jaga memory), wrapper parity commands/=command/, allow-all, USAGE.md VERSION sync — 425→450 cek
+- **self-test +detektor**: wrapper count parity, uninstall.sh, USAGE sync, command 39→40
+### Fixed
+- **test-update false-fail di perangkat lambat**: timeout 15→120s (install --offline di Termux = 22,5s > 15s; bukti: time run)
+- **docs/USAGE.md header basi** v8.2.0/56/33 → sinkron 12.0.0/62/40 (HUKUM 10 + detektor baru agar tak terulang)
+- **install.sh box alignment**: emoji 🧠 dalam box membuat border miring (lebar emoji ≠ 1 kolom) → ganti simbol ◈; celebrate hapus baris duplikat plan──▶dev──▶build
+- **bench sadar-perangkat**: cap dikalibrasi mesin CI — di Termux/ARM skala cap ×BENCH_FACTOR (default 4, override `BENCH_FACTOR=1`) — drift tetap terdeteksi relatif perangkat, tanpa false-fail lintas hardware (bukti: mutation 596s > cap lama 180s = false-fail; cap baru 720s, drift-deteksi tetap jalan)
+### Changed
+- **install.sh ROMBAK VISUAL**: `logo_reveal` ASCII baris-per-baris (CI-safe fallback), brain_pulse rapi + stat dinamis, `uninstall()` diperkaya (hitung file + memory notice + hint pasang lagi), `usage()` terstruktur grup INSTAL/KESEHATAN/LAIN-LAIN
+- **install.sh 3x LEBIH CEPAT di I/O lambat**: skills copy massal 1 operasi (`cp -R` + verifikasi per skill — 62/62 SKILL.md + 62/62 run.sh executable terbukti) — 22,5s → 7,2s di Termux; folder skill/ hanya berisi SKILL.md + run.sh jadi hasil identik
+- VERSION 11.0.0 → 12.0.0; badge README/README.en + tabel + USAGE + ARCHITECTURE sinkron (lint-kit 446 cek hijau)
+
 ## [11.0.0] — 2026-09-10
 ### Added
 - **MULTI-MODEL ALL-ROUNDER MAX** (SKILL 90→265 baris, run.sh 20→202 baris): katalog 2026 — GPT-5.5/5.4/mini/nano/5.6 Sol-Terra-Luna, Gemini 3.8 Flash/3.7/3.1 Pro/3.5 Lite, Claude Opus 5/Sonnet 5/Fable 5/Haiku 4.5, DeepSeek V4.1 Flash, GLM-5.3/5.2/4.7 + Coding Plan, Grok 4.5/4 Fast, Qwen/Llama/Mistral, Astra-Pro internal placeholder. Routing #1/#2/#3 × 9 task-class + cost guard + fallback chain

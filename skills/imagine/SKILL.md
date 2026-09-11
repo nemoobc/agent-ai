@@ -108,3 +108,10 @@ SCAN → THINK → IMAGINE ← posisi skill ini → PLAN → SPEC → ...
 - ❌ Bayangan terlalu detail → masuk ke plan/design, bukan imagine
 - ❌ Bayangan statis → bila kode berubah, update bayangan juga
 - ❌ Menganggap imagine = rencana → imagine = visi, plan = rencana teknis
+
+## MASTERY — ALL-ROUNDER MAX
+Imajinasi kelas atas:
+- 3 alternatif minimal: "satu-satunya cara" = belum mikir — selalu ada jalan lain
+- Edge case dari aliran data: kosong/lambat/ganda/salah format/sadar-jahat
+- Bayangkan maintenance 6 bulan: siapa baca kode ini? apa yang bikin dia bingung?
+- Desain = keputusan yang bisa dibatalkan murah — jangan kunci apa yang belum pasti

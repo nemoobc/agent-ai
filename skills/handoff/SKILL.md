@@ -91,3 +91,10 @@ KERJA → HANDOFF ← posisi skill ini → SESI BARU (recall handoff)
 - ❌ Sisa kerja tanpa definisi → tidak bisa diverifikasi selesai
 - ❌ SETENGAH terisi → handoff ditolak sendiri
 - ❌ Handoff terlalu detail → kompres, ambil intinya
+
+## MASTERY — ALL-ROUNDER MAX
+Handoff kelas atas:
+- Format: status + keputusan terakhir + blocker + langkah berikutnya + file kunci — pembaca tak punya memorimu
+- Tulis untuk otak BARU: asumsi ditulis, istilah dijelaskan sekali — handoff untuk diri sendiri = bukan handoff
+- Perintah bisa dijalankan langsung (copy-paste ready) — instruksi setengah jadi = kerja dua kali
+- Tanggal + versi di kepala dokumen — handoff basi lebih berbahaya daripada tidak ada

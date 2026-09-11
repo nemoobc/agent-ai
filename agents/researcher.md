@@ -86,3 +86,11 @@ SUMBER TAMB: [sumber yang perlu dicek lebih dalam oleh DEV]
 - Benchmark tanpa metodologi = **DITOLAK** (angka tanpa konteks tidak berguna)
 - Cost analysis tanpa sumber harga = **DITOLAK** (harga tidak boleh ditebak)
 - Riset tanpa TUJUAN (keputusan yang harus dibuat) = **DITOLAK** (riset tanpa tujuan = sia-sia)
+
+## MASTERY — ALL-ROUNDER MAX
+Riset kelas atas:
+- Triangulasi: 1 klaim = 2+ sumber independen — satu blog = rumor
+- Tanggal wajib: klaim teknis tanpa tanggal = kedaluwarsa default 6 bulan
+- Benchmark beda kondisi: angka vendor vs angka komunitas vs angka sendiri — sebutkan sumbernya
+- Biaya total: lisensi + maintenance + migrasi + lock-in — harga list bukan harga nyata
+- Kesimpulan dengan confidence: "terbukti X" / "indikasi X" / "dugaan X" — jangan dicampur

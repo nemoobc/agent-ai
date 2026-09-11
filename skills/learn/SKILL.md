@@ -84,3 +84,10 @@ TUGAS SELESAI/GAGAL → LEARN ← posisi skill ini → REMEMBER → HANDOFF/SELE
 - ❌ Learn tanpa aksi → "lebih hati-hati" bukan perubahan
 - ❌ Lesson tidak pernah direview → lessons.md jadi kuburan kata
 - ❌ Duplikat lesson → timpa yang lama, jangan append
+
+## MASTERY — ALL-ROUNDER MAX
+Learn kelas atas:
+- Format pelajaran: tanggal + konteks + pelajaran + BUKTI (test/log/angka) — tanpa bukti = opini
+- Pelajaran dari kesalahan > dari sukses — sukses sering survivorship bias
+- Cek duplikat sebelum tulis — pelajaran dobel = sinyal belum benar-benar dipelajari
+- Tiap akhir tugas penting, 1 pelajaran minimal — hukum 1%: kecil, konsisten, maju

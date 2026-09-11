@@ -83,3 +83,10 @@ BANGUN → perubahan user-visible terdeteksi → DOC-FULL ← posisi skill ini
 - ❌ Mengabaikan command examples yang sudah tidak valid → test manual atau skip
 - ❌ Mengupdate README tapi lupa CHANGELOG → keduanya harus sinkron
 - ❌ Dokumen berbohong tentang fitur yang belum ada/diubah → kode adalah sumber kebenaran
+
+## MASTERY — ALL-ROUNDER MAX
+Dokumentasi kelas atas:
+- Dokumen = kode: satu sumber kebenaran, perubahan user-visible = dokumen ikut commit yang sama
+- Tulis untuk PEMAKAI BARU, bukan penulis — pertanyaan "apa yang bikin bingung waktu pertama?" jadi struktur
+- Contoh jalan > paragraf — copy-paste-ready, teruji, dengan output nyata
+- Badge/angka dokumen = divalidasi CI (lint) — angka manual pasti basi, angka otomatis jujur

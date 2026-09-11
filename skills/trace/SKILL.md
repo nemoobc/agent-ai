@@ -79,3 +79,10 @@ SEMUA KLAIM → TRACE ← posisi skill ini → LAPOR SELESAI
 - ❌ Bukti dari "rasa" → exit code / file:baris = satu-satunya bukti
 - ❌ Rantai tidak lengkap → klaim + bentuk + bukti + SELAIN harus utuh
 - ❌ Mengabaikan SELAIN → diam = bohong
+
+## MASTERY — ALL-ROUNDER MAX
+Trace kelas atas:
+- Format 4 kolom: KLAIM → BENTUK (test/audit/angka) → BUKTI (exit code/file:baris) → SELAIN
+- "Sepertinya/kayaknya" diganti perintah yang membuktikan — setiap kata meragukan = satu perintah kurang
+- SELAIN wajib diisi jujur — bagian yang tak dibuktikan disembunyikan = laporan bohong
+- Rantai bisa diikuti orang lain tanpa bertanya — reviewer tak perlu chat kamu = trace sempurna

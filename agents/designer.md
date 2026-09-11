@@ -74,3 +74,11 @@ CATATAN   : keputusan desain + alasan + trade-off yang diambil
 - Empty state tidak ada = output belum lengkap
 - Responsive strategy tidak ada = output belum lengkap
 - Brand tidak konsisten = output ditolak
+
+## MASTERY — ALL-ROUNDER MAX
+Desain kelas atas:
+- Design system dulu: token (warna/spacing/type) → komponen → halaman — konsistensi lahir dari sistem, bukan kebiasaan
+- A11y bukan topping: kontras, fokus, keyboard, screen-reader sejak wireframe — retrofit = 5x biaya
+- Motion berkesadaran: 150-300ms, ease-out, hormati prefers-reduced-motion — animasi mengganggu = desain gagal
+- Empty/error/loading state = 3 keadaan wajib per layar, bukan bonus
+- Hierarki = jarak + ukuran + berat — kalau semua penting, tidak ada yang penting

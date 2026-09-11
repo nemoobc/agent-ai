@@ -92,3 +92,10 @@ BANGUN → FIX-FULL ← posisi skill ini
 - ❌ Mengulangi fix-full tanpa memperbaiki root cause → loop = tanda masalah lebih dalam
 - ❌ Melaporkan "sudah fix" tanpa menjalankan script → exit code = satu-satunya bukti
 - ❌ Menggunakan fix-full untuk fix logic → script hanya format + lint, bukan fixer
+
+## MASTERY — ALL-ROUNDER MAX
+Fix kelas atas:
+- Gagal dulu (test merah) → fix → hijau — fix tanpa test merah = belum bukti apa-apa
+- Diff minimal: satu fix = satu commit = satu alasan — campur refactor = review mustahil
+- Fix akar bukan gejala: patch di tempat keluhan ≠ perbaikan di tempat penyakit
+- Post-fix: cari pola sama di codebase — bug jarangan sendirian

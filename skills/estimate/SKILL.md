@@ -77,3 +77,10 @@ SCAN → METRICS → ESTIMATE ← posisi skill ini → PLAN → MILESTONE → BA
 - ❌ Mengabaikan risiko → auth harus +1 tingkat, selalu
 - ❌ Estimasi = janji → estimasi = data untuk keputusan user
 - ❌ Tidak update estimasi → estimasi berubah, update juga
+
+## MASTERY — ALL-ROUNDER MAX
+Estimasi kelas atas:
+- Skala dari angka nyata: hitung file/tugas/test yang disentuh — bukan feeling
+- Buffer risiko: +30% lintas-sistem baru, +50% ada data migrasi — kompleksitas tidak linier
+- Estimasi rentang (S: 1-2 jam) bukan angka tunggal — satu angka = janji palsu
+- Meleset >2x = pelajaran wajib ke lessons.md — kalibrasi diri itu keterampilan

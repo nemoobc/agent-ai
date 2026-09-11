@@ -88,3 +88,10 @@ USER PROMPT → ROUTE ← posisi skill ini → SCAN/THINK/PLAN/EXECUTE
 - ❌ Skip route → semua tugas dianggap sama
 - ❌ Route salah → periksa regex di run.sh
 - ❌ Route menentukan kualitas → route menentukan CAKUPAN, kualitas = konstan
+
+## MASTERY — ALL-ROUNDER MAX
+Routing kelas atas:
+- Baca intensitas DI BALIK kata: "sebentar" di kalimat panjang tetap NORMAL; "matengin semua" tetap FULL
+- Ambigu = turun 1 level (aman), kecuali biaya jelas — salah kecil < salah besar
+- Satu kata kunci saja cukup pemicu — jangan butuh mantra lengkap
+- Jalur menentukan CAKUPAN saja: gerbang/test/bukti sama di semua jalur

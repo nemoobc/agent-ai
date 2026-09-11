@@ -77,3 +77,10 @@ RECALL → SCAN → CONTEXT ← posisi skill ini → THINK → PLAN → BANGUN �
 - ❌ Skip compact → konteks penuh = kerja menurun kualitasnya
 - ❌ Handoff tanpa struktur → penerus tidak bisa lanjut
 - ❌ "Masih ingat" tanpa bukti tertulis → ilusi konteks = bahaya
+
+## MASTERY — ALL-ROUNDER MAX
+Context kelas atas:
+- Tiap file dibaca = tag: [perlu-lanjut] / [selesai-buang] — memori kerja itu rak sempit
+- Ringkas ke fakta + lokasi (file:baris), bukan salin isi — lokasi bisa dibaca ulang, isi tidak perlu nyantol
+- Konteks >80% = compact SEKARANG — penuh = mulai halah (halusinasi) tanpa sadar
+- Ganti topik besar = handoff + buang — kedua-duanya, bukan salah satu

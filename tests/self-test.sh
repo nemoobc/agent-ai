@@ -50,8 +50,16 @@ fi
 p "▮ SELF-TEST: struktur kit lengkap" 213
 NSKILL=$(ls -1d "$DIR"/skills/*/ 2>/dev/null | wc -l | tr -d ' ')
 NCMD=$(ls -1 "$DIR"/command/*.md 2>/dev/null | wc -l | tr -d ' ')
+NWRAP=$(ls -1 "$DIR"/commands/*.sh 2>/dev/null | wc -l | tr -d ' ')
 [ "$NSKILL" -eq 62 ] && ok "62 skill terdeteksi ($NSKILL)" || bad "jumlah skill = $NSKILL, harusnya 62"
-[ "$NCMD" -eq 39 ] && ok "39 command terdeteksi" || bad "jumlah command = $NCMD, harusnya 39"
+[ "$NCMD" -eq 40 ] && ok "40 command terdeteksi" || bad "jumlah command = $NCMD, harusnya 40"
+[ "$NWRAP" -eq "$NCMD" ] && ok "wrapper commands/ lengkap ($NWRAP)" || bad "wrapper commands/ $NWRAP ≠ command $NCMD"
+[ -f "$DIR/command/allow-all.md" ] && ok "command allow-all ada" || bad "command allow-all hilang"
+[ -f "$DIR/commands/allow-all.sh" ] && ok "wrapper allow-all.sh ada" || bad "wrapper allow-all.sh hilang"
+[ -f "$DIR/uninstall.sh" ] && [ -x "$DIR/uninstall.sh" ] && bash -n "$DIR/uninstall.sh" 2>/dev/null \
+  && ok "uninstall.sh ada + executable + syntax OK" || bad "uninstall.sh hilang/tidak executable/syntax rusak"
+VFILE=$(tr -d '[:space:]' < "$DIR/VERSION" 2>/dev/null)
+grep -q "$VFILE" "$DIR/docs/USAGE.md" && ok "USAGE.md sinkron VERSION $VFILE" || bad "USAGE.md basi (tidak sebut $VFILE)"
 [ -f "$DIR/VERSION" ] && ok "VERSION ada" || bad "VERSION hilang"
 [ -f "$DIR/CHANGELOG.md" ] && ok "CHANGELOG ada" || bad "CHANGELOG hilang"
 [ -f "$DIR/LICENSE" ] && ok "LICENSE ada" || bad "LICENSE hilang"
@@ -88,7 +96,7 @@ grep -q 'TITIK-PUTUS' "$DIR/agents/dev.md" && ok "dev.md lapor 3 status" || bad 
 for s in recall remember; do
   grep -q 'lessons.md' "$DIR/skills/$s/SKILL.md" && ok "$s tahu lessons.md" || bad "$s tidak tahu lessons.md"
 done
-for c in roadmap report bootstrap status learn release onboard backlog handoff metrics team pr context upgrade verify hotfix coverage blame critique trace deliver threat-model clean estimate hermes audit fix build context data doctor hotfix learn memory monitor multi-model notify onboard plan pr release report roadmap route scaffold ship status team threat-model trace upgrade verify web; do
+for c in roadmap report bootstrap status learn release onboard backlog handoff metrics team pr context upgrade verify hotfix coverage blame critique trace deliver threat-model clean estimate hermes audit fix build context data doctor hotfix learn memory monitor multi-model notify onboard plan pr release report roadmap route scaffold ship status team threat-model trace upgrade verify web allow-all; do
   [ -f "$DIR/command/$c.md" ] && ok "command $c ada" || bad "command $c hilang"
 done
 [ -f "$DIR/memory/lessons.md" ] && ok "memory/lessons.md ada" || bad "memory/lessons.md hilang"

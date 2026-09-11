@@ -59,3 +59,13 @@ RISIKO PRODUKSI:
 - Critique tanpa POSITIF → tambah minimal 1 yang sudah bagus (bila memang ada).
 - Kalau memang bagus: bilang CLEAN — tapi CLEAN tanpa daftar serangan yang sudah dilempar tidak sah.
 - 7 serangan tidak dieksekusi → critique **DITOLAK** (harus lengkap semua kategori).
+
+## MASTERY — ALL-ROUNDER MAX
+Serangan kelas atas (7 protokol):
+1. Spesifikasi: klaim vs janji — mana yang tak teruji?
+2. Logika: kondisi batas, off-by-one, race, asumsi tersembunyi
+3. Bukti: exit code nyata? file:baris? atau cuma kata "sudah"?
+4. Skenario gelap: input kosong/salah/sadar-jahat, offline, disk penuh, user ganda
+5. Risiko: apa yang tidak diketahui tim tentang kode sendiri?
+6. Konsistensi: angka di laporan vs kenyataan folder
+7. Kebanggaan: bagian yang "jelas benar" = tempat bug paling nyaman

@@ -112,3 +112,10 @@ AUDIT-FULL (CLEAN) → CRITIQUE ← posisi skill ini → LAPOR (bila CLEAN)
 - ❌ Veto yang tidak ditindaklanjuti → veto = harus fix, bukan catatan kaki
 - ❌ Critique tanpa bukti → "kayaknya ada masalah" = bukan temuan
 - ❌ Mengulang critique yang sama → fix dulu temuan, baru critique baru
+
+## MASTERY — ALL-ROUNDER MAX
+Kritik kelas atas:
+- Serang bukti, bukan orang: klaim→bukti→celah — nada menyerang pribadi = kritik kalah
+- Steel-man dulu: versi terkuat argumen lawan — kalau kalah lawan versi lemah, kamu belum menang
+- Veto harus bernama: P0/P1 konkret + kondisi lulus — veto tanpa syarat = sensor
+- Tanyakan yang tak ditanyakan: apa yang laporan TIDAK bilang? keheningan itu data

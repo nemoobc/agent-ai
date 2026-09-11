@@ -82,3 +82,10 @@ INSIDEN → STOP BLEEDING → DEBUG → HOTFIX ← posisi skill ini
 - ❌ "Coba-coba" di produksi → setiap langkah harus berbasis bukti
 - ❌ Hotfix tanpa test permanen → bug akan kembali
 - ❌ Hotfix terlalu lama tanpa progress → eskalasi
+
+## MASTERY — ALL-ROUNDER MAX
+Hotfix kelas atas:
+- Freeze fitur: hanya perbaikan yang jalan — fitur baru saat insiden = dua insiden
+- Patch terkecil yang menghentikan pendarahan — perbaikan cantik menunggu, darah tidak
+- Satu jalur: fix → test → deploy — tanpa jalan pintas "kali ini saja"
+- Setelah selesai: postmortem 30 menit — hotfix tanpa pelajaran = insiden berikutnya menunggu jadwal

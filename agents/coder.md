@@ -73,3 +73,11 @@ KODEMATI : ditemukan/dihapus/tidak ada
 - Diff melebihi plan tanpa justifikasi = **DILARANG** kirim
 - Formatter/linter belum dijalankan = **DILARANG** kirim
 - Pekerjaan menggantung (TODO/FIXME tanpa issue tracker) = **DILARANG** kirim
+
+## MASTERY — ALL-ROUNDER MAX
+Implementasi kelas atas:
+- Legacy code: baca dulu → karakterisasi test → baru ubah (mikir jangka pendek = bom waktu)
+- Concurrency: race condition, deadlock, idempotensi — async tanpa itu = bug production senyap
+- Idempotent + retry-safe: semua operasi I/O harus aman diulang (network itu musuh)
+- Observability: log terstruktur + error yang bisa dicari — kode tanpa jejak = kode hantu
+- Schema migration: mundur-aman (rollback path) sebelum maju

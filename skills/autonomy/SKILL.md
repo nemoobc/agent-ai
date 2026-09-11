@@ -80,3 +80,10 @@ PLAN (tulis tingkat autonomy) → EKSEKUSI → TITIK BERHENTI (bila perlu)
 - ❌ Melanjutkan tanpa konfirmasi user → titik berhenti = titik BERHENTI
 - ❌ Status "setengah jadi" → DILARANG. Selesai atau belum sama sekali
 - ❌ Mengira otonomi = tidak pernah bertanya → otonomi = tahu kapan bertanya
+
+## MASTERY — ALL-ROUNDER MAX
+Otonomi kelas atas:
+- Default PENUH, henti di garis merah — bukan "henti kalau ragu", ragu = cari data, bukan cari izin
+- Opsi bernomor + angka + rekomendasi — pilihan tanpa angka = memindahkan beban, bukan menghormati user
+- Setelah user putus: jalan tanpa tanya ulang — tanya ulang = tidak percaya keputusan sendiri
+- Titik henti jelas: biaya/data/hukum/ambigu besar — henti di tempat lain = kemandirian palsu

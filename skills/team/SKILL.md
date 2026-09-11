@@ -78,3 +78,10 @@ PLAN → TEAM ← posisi skill ini → PARALEL (sub-agent)
 - ❌ Unit terlalu kecil → overhead koordinasi > manfaat
 - ❌ Unit terlalu besar → kembali ke serial
 - ❌ Tidak ada papan status → tidak tahu progress
+
+## MASTERY — ALL-ROUNDER MAX
+Team kelas atas:
+- Paralel hanya unit INDEPENDEN — dependensi tersembunyi = dua agent saling menunggu selamanya
+- Satu tim = satu konteks hasil (hasil dikumpulkan + direkonsiliasi) — tanpa itu, paralel = tercepat membuat kontradiksi
+- Pecah tugas per deliverable, bukan per teknologi — pembagian teknologi bikin integrasi jadi proyek kedua
+- Hasil paralel = direview silang satu putaran — dua mata lebih baik, kecuali keduanya buta arah sama

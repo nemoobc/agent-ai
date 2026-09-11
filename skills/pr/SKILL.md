@@ -78,3 +78,10 @@ KERJA SELESAI → PR ← posisi skill ini → REVIEW → MERGE
 - ❌ Push tanpa perintah user → HUKUM 5
 - ❌ PR terlalu besar → pecah, jangan dipaksa
 - ❌ Judul asal → gunakan konvensi yang berlaku
+
+## MASTERY — ALL-ROUNDER MAX
+PR kelas atas:
+- Satu PR satu maksud — PR 2000 baris = review lelah = approve buta
+- Deskripsi: apa/kenapa/bukti test/cara uji — reviewer itu tamu yang layak diberi peta
+- Diff siap review: tanpa debug code, tanpa komentar mati, format jalan — review style issue = sembunyikan issue asli
+- Menanggapi review: jawab SEMUA + commit per perbaikan — mengabaikan komentar = mengabaikan reviewer

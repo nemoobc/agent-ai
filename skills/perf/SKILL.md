@@ -83,3 +83,10 @@ PERF ← posisi skill ini → TEST-FULL (verifikasi)
 - ❌ Skip test setelah perf fix → perf fix bisa merusak
 - ❌ Tanpa baseline → tidak tahu apakah membaik
 - ❌ Optimasi premature → pastikan ada masalah dulu
+
+## MASTERY — ALL-ROUNDER MAX
+Perf kelas atas:
+- Ukur DULU (profil/flamegraph), optimasi KEMUDIAN — intuisi performa itu pembohong yang fasih
+- Optimasi hot path 20% yang makan 80% waktu — sisanya jangan disentuh sebelum bukti
+- Target angka (P95 < 200ms) bukan "terasa lebih cepat" — perasaan tak bisa diregresi-test
+- Trade-off jujur: memori vs CPU vs latensi vs kompleksitas — optimasi gratis biasanya pinjam dari tempat lain

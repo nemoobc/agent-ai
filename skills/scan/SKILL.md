@@ -107,3 +107,10 @@ RECALL → SCAN ← posisi skill ini → THINK → IMAGINE → PLAN → ...
 - ❌ Scan terlalu detail (>10 baris) → scan = ringkas, bukan dokumentasi
 - ❌ Scan project lain → peta harus project yang SEDANG dikerjakan
 - ❌ Scan tanpa update → project berubah, scan harus segar
+
+## MASTERY — ALL-ROUNDER MAX
+Pemetaan kelas atas:
+- 30 detik pertama: entry point + manifest (package.json/requirements/Makefile) + struktur folder — itu wajah project
+- Bau kode tersembunyi: file 1000+ baris, folder "misc/util/new", dua config sama nama
+- Stack sadar: framework = konvensi = cara cepat paham maksud kode — catat versi, bukan cuma nama
+- Output scan = peta navigasi: mana aman dilewati, mana wajib dibaca utuh, mana mencurigakan

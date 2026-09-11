@@ -65,3 +65,10 @@ SCAN → THINK → IMAGINE → PLAN ← posisi skill ini → CODER → TEST → 
 - ❌ Plan > 15 baris → pecah, jangan dipaksa
 - ❌ Definisi selesai tidak terukur → "selesai" harus bisa diverifikasi
 - ❌ File di luar plan → scope creep, catat tapi jangan kerjakan
+
+## MASTERY — ALL-ROUNDER MAX
+Rencana kelas atas:
+- 8 blok wajib: masalah/spesifikasi/desain/urutan-kerja/test-design/estimasi/eksekusi/verifikasi — blok hilang = rencana bocor
+- Urutan kerja = graf dependensi, bukan daftar selera — unit independen ditandai untuk paralel
+- Tiap blok punya kriteria selesai yang bisa dites — "selesai" tanpa test = perasaan
+- Estimasi dari angka file/tugas (S<10, M<30, L<60, XL>60) — tanpa angka = tebakan

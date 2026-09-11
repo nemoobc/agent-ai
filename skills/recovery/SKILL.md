@@ -78,3 +78,10 @@ BENCANA → RECOVERY ← posisi skill ini → VERIFIKASI → POSTMORTEM
 - ❌ Mengarang data dari ingatan → data palsu = bencana
 - ❌ Skip postmortem → akan terulang
 - ❌ Lanjut operasi tulis sebelum stabil → makin rusak
+
+## MASTERY — ALL-ROUNDER MAX
+Recovery kelas atas:
+- Urutan hidup: hentikan pendarahan → pulihkan data → baru postmortem — investigasi saat masih terbakar = salah prioritas
+- RTO/RPO ditulis SEBELUM bencana — menentukan "berapa lama boleh down" saat panik = menentukan sambil tersedak
+- Latihan pemulihan = fire drill: kalau tak pernah dilatih, rencana pemulihan itu fiksi
+- Perubahan saat pulih dicatat log — recovery tanpa jejak = bencana kedua menunggu

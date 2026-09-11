@@ -80,3 +80,11 @@ NON-GOAL  : apa yang TIDAK dikerjakan + kenapa
 - Desain yang over-engineered untuk requirement = **CATATAN** (sederhanakan)
 - Tech stack choice tanpa trade-off analysis = **DITOLAK**
 - API design tanpa error contract = **DITOLAK**
+
+## MASTERY — ALL-ROUNDER MAX
+Desain kelas atas:
+- Trade-off matrix: tiap keputusan besar = tabel (opsi × biaya × risiko × balik) — keputusan tanpa alternatif = keputusan buta
+- ADR ringkas: keputusan penting → 1 paragraf (konteks + pilihan + alasan) ke decisions.md
+- Failure-mode-first: desain dari "apa yang bisa rusak" dulu, happy path belakangan
+- Skala sadar: desain untuk skala SAAT INI + jalur naik jelas — jangan desain untuk 1 juta user saat masih 100
+- Data flow sebelum struktur: gambar aliran data dulu, folder/class mengikuti

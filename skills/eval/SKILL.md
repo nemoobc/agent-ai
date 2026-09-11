@@ -69,3 +69,10 @@ PERUBAHAN KODE → EVAL ← posisi skill ini → RILIS / DELIVER
 - ❌ Kasus merah diabaikan → BLOCKED sampai fix
 - ❌ Tidak menambah kasus baru dari bug → pelajaran hilang
 - ❌ Eval hanya di local → harus juga di CI/CD
+
+## MASTERY — ALL-ROUNDER MAX
+Eval kelas atas:
+- Golden case + ambang angka: skor < ambang = regresi, bukan "kayaknya lebih jelek"
+- Uji prompt-injection di eval: konten jahat harus ditolak/tandai, bukan dijalankan
+- Variansi: jalan 2-3x, ambil median — LLM itu berangin, satu run = rumor
+- Eval merah = jangan rilis — eval itu rem, bukan hiasan

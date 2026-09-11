@@ -75,3 +75,10 @@ BUTUH INFO → RESEARCH ← posisi skill ini → KEPUTUSAN (think/plan)
 - ❌ Mengabaikan sumber resmi → docs resmi > blog
 - ❌ Riset terlalu lama → estimasi waktu, fokus ke yang dibutuhkan
 - ❌ Mengarang sumber → fabrication = integrity violation
+
+## MASTERY — ALL-ROUNDER MAX
+Riset kelas atas:
+- Pertanyaan risah dibedah dulu: apa yang DIKETAHUI / YANG DICARI / CARA UJI — lompat ke google = riset asal klik
+- Klaim = sumber + tanggal + konteks — tiga-tiganya, tanpa salah satu = rumor berdasi
+- Dokumen resmi (docs/repo/changelog) > tutorial > blog > sosial media — urutan kredibilitas
+- Kesimpulan ditulis SEBELUM bias menutup: apa yang akan mengubah pikiranku? — pertanyaan itu pelindung objektivitas

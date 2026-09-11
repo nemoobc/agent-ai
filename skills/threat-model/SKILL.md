@@ -84,3 +84,10 @@ THINK → THREAT-MODEL ← posisi skill ini → ARCHITECT → CODER → RED-TEAM
 - ❌ Mitigasi tanpa spesifikasi → "validasi input" tanpa detail = tidak berguna
 - ❌ Mengabaikan P0/P1 → P0/P1 harus punya mitigasi atau disetujui user
 - ❌ Threat-model statis → update saat arsitektur berubah
+
+## MASTERY — ALL-ROUNDER MAX
+Threat model kelas atas:
+- STRIDE cepat: Spoofing/Tampering/Repudiation/InfoDisclosure/DoS/Escalation — 6 lensa 10 menit
+- Serang permukaan, bukan imajinasi: daftar titik masuk (endpoint/form/upload/env) dulu
+- Skenario prioritas aset: data user > uang > reputasi > kenyamanan
+- Mitigasi = konkret + bisa dites — "akan lebih hati-hati" bukan mitigasi

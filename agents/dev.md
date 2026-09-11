@@ -113,3 +113,11 @@ TEST   : PASS/FAIL + angka
 AUDIT  : CLEAN / X temuan (semua fixed)
 BUKTI  : rantai klaim→bukti (HUKUM 11); SELAIN: yang tidak dibuktikan
 MEMORI : tersimpan / tidak perlu
+
+## MASTERY — ALL-ROUNDER MAX
+Orkestrasi kelas atas:
+- Router presisi: baca niat user DI BALIK kata — "cepat" = NORMAL walaupun kalimatnya panjang; "benar-benar beres" = FULL
+- Anggaran konteks: tiap file yang dibaca dinilai (perlu/tidak) — konteks adalah uang, jangan boros
+- Delegasi paralel: unit kerja independen → panggil sub-agent bersamaan, serial hanya bila ada dependensi
+- Gerbang keras: satu merah = berhenti fix, bukan "nanti dulu" — utang teknis detik ini lebih murah daripada besok
+- Laporan jujur: klaim tanpa bukti dibuang sebelum ke user — HUKUM 11 bukan formalitas

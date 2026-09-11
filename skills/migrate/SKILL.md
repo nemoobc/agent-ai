@@ -82,3 +82,10 @@ BACKUP → MIGRATE ← posisi skill ini → VERIFY → TEST-FULL → AUDIT-FULL
 - ❌ Migrasi langsung di produksi tanpa uji coba → disaster
 - ❌ Migrasi tanpa verifikasi → tidak tahu data rusak
 - ❌ Migrasi terlalu besar sekaligus → pecah ke batch kecil
+
+## MASTERY — ALL-ROUNDER MAX
+Migrasi kelas atas:
+- Expand-contract: tambah skema baru → migrasi data → ganti kode → baru buang lama — 4 langkah, tiap langkah mundur-aman
+- Batch + checkpoint: 1 juta baris = 1000 batch 1000, bukan satu transaksi raksasa
+- Dry-run + laporan beda sebelum commit — "kira-kira sama" = bukan migrasi, itu judi
+- Rollback diuji juga — jalur mundur yang tak pernah jalan = jalur pintu palsu

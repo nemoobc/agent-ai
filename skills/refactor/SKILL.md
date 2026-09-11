@@ -83,3 +83,10 @@ TEST-FULL (baseline) → REFACTOR ← posisi skill ini → TEST-FULL (verifikasi
 - ❌ Refactor besar sekaligus → pecah ke langkah kecil
 - ❌ Skip audit → refactor bisa menambah masalah baru
 - ❌ Refactor yang mengubah perilaku → itu bukan refactor
+
+## MASTERY — ALL-ROUNDER MAX
+Refactor kelas atas:
+- Baseline hijau WAJIB sebelum mulai — refactor di kode merah = jalan di gelap
+- Langkah kecil bernama: extract → rename → pindah — tiap langkah commit-able + test hijau
+- Perilaku = konstan (karakterisasi test membuktikan) — yang berubah hanya struktur
+- "Sekalian" = musuh — satu tanggungan per refactor, sisanya catat TODO berissue

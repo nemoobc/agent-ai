@@ -76,3 +76,10 @@ SCAN → THINK → PLAN → [TEST-DESIGN] → BANGUN → TEST-FULL ← posisi sk
 - ❌ Skip test karena "tidak relevan" → catat skipped, jangan sembunyikan
 - ❌ Hanya jalanin test yang berubah → jalankan SEMUA, partial test = bohong
 - ❌ Mengarang angka test tanpa menjalankan script → exit code = satu-satunya sumber kebenaran
+
+## MASTERY — ALL-ROUNDER MAX
+Eksekusi test kelas atas:
+- Urutan: unit → integrasi → e2e — gagal cepat di lapisan termurah
+- -x/stop-on-fail saat debug, full suite saat verifikasi — jangan tanya "yang mana merah" tanpa data
+- Snapshot test = kunci + review diff — snapshot berubah otomatis = kepercayaan mati
+- Dokumentasikan kenapa test ini ada (nama = perilaku, bukan nama fungsi)

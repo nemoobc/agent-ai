@@ -90,3 +90,10 @@ ENV-GUARD ← posisi skill ini → GIT-GUARD → COMMIT
 - ❌ Skip env-guard → secret bisa bocor tanpa disadari
 - ❌ Menganggap .gitignore = aman → git rm --cached tetap perlu
 - ❌ Secret di hardcoded → itu juga P0, fix juga
+
+## MASTERY — ALL-ROUNDER MAX
+Env guard kelas atas:
+- Inventaris: .env* + config + CI vars + docker-compose — secret suka numpang di 4 tempat
+- Pattern wajib: sk- ghp_ AKIA xoxb- -----BEGIN + password= token= api_key= (case-insensitive)
+- False positive diperiksa: contoh placeholder (test/dummy) dibedakan dari nilai asli panjang-acak
+- Secret ketemu: rotasi lebih dulu, hapus kedua — hapus tanpa rotasi = pencuri masih pegang kunci

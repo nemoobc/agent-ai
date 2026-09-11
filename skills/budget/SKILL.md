@@ -74,3 +74,10 @@ BOOT → BUDGET ← posisi skill ini → GODOK → BANGUN → TEST → LAPOR
 - ❌ Skip monitoring → "masih cukup" tanpa data = judi
 - ❌ Compact terlalu telat → sudah telat compact = konteks hilang
 - ❌ Menganggap budget = batas kaku → ini panduan, sesuaikan dengan realita
+
+## MASTERY — ALL-ROUNDER MAX
+Budget kelas atas:
+- Anggaran = batas + alarm di 80% — tanpa alarm, batas baru terasa setelah jebol
+- Bagi per fase (riset/build/test) — anggaran total tanpa pembagian = boros di awal, mati di akhir
+- Burn-rate harian dipantau — "sisa 3 hari anggaran" info di hari terakhir = info theater
+- Menjelang batas: laporkan angka + opsi (stop/naik/turun scope) — keputusan milik user, data milikmu

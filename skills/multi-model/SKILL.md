@@ -1,5 +1,5 @@
 ---
-description: multi-model ALL-ROUNDER MAX — orkestrasi semua AI model bumi 2026 (OpenAI GPT-5.x, Gemini 3.x, Claude 5/Opus5/Sonnet5/Haiku4.5, DeepSeek V4.1, GLM-5.3/5.2, Grok 4.x, Qwen, Llama, Mistral, Astra/Pro internal). Routing per konteks + fallback chain + cost guard. Satu interface — semua provider.
+description: multi-model ALL-ROUNDER MAXX — orkestrasi SEMUA AI model bumi 2026 (OpenAI GPT-5.x semua varian, Gemini 3.x semua varian, Claude Opus/Sonnet/Fable/Haiku semua, DeepSeek V4.1, GLM-5.3/5.2/4.7, Grok 4.x, Qwen/Llama/Mistral, Kimi K2, MiniMax, Cohere, Amazon Nova, MS Phi, Perplexity Sonar, Hunyuan/Ernie/Yi/Granite/Nematron, Astra/Astra Pro internal, aggregator OpenRouter/Groq/Cerebras/Fireworks/Together). Routing per konteks + fallback chain + cost guard. Satu interface — semua model di bumi.
 mode: subagent
 temperature: 0.3
 ---
@@ -109,6 +109,41 @@ diam-diam = biaya & perilaku berubah tanpa jejak.
 > Riset 2026-09-10: nihil sumber publik untuk Astra/Pro. JANGAN klaim
 > harga/URL publik. DEV wajib isi `ASTRA_BASE_URL`, auth, nama model,
 > dan pricing sebelum dipakai. Lihat ASTRA PLACEHOLDER.
+
+### Sisa Bumi — provider global lain (katalog lengkap)
+
+Harga tier: `$` murah / `$$` menengah / `$$$` mahal — harga persis WAJIB
+dicek vendor sebelum call (STALE POLICY). Pin versi, jangan `-latest`.
+
+| Provider | Model unggulan | Pin versi | Harga | Catatan |
+|---|---|---|---|---|
+| Moonshot AI | Kimi K2 / K2-thinking | `kimi-k2` | $$ | Agentic + long-context kuat, jago tool-use |
+| MiniMax | MiniMax-M2 / Hailuo | `minimax-m2` | $$ | Multimodal + agentik |
+| Cohere | Command A / R+ | `command-a` | $$ | Enterprise RAG + citasi, jago retrieval |
+| Amazon | Nova Premier/Pro/Lite | `nova-premier` | $$ | AWS-native (Bedrock) — bila stack AWS |
+| Microsoft | Phi-5 / Phi-5-mini | `phi-5` | $ | SLM — edge/on-device, murah |
+| Perplexity | Sonar / Sonar Pro | `sonar-pro` | $$ | Search-grounded — butuh data segar/fakta |
+| Tencent | Hunyuan-T / A13B | `hunyuan-t` | $ | MoE besar open, self-host OK |
+| Baidu | Ernie X1 / X2 | `ernie-x2` | $$ | Kuat bahasa Cina + multimodal |
+| 01.AI | Yi-Large / Yi-Lightning | `yi-large` | $ | General open, self-host OK |
+| IBM | Granite 4 | `granite-4` | $ | Enterprise on-prem (watsonx) |
+| NVIDIA | Nemotron Ultra / Super | `nemotron-ultra` | $ | Open, jalur NVIDIA NIM |
+| AI21 | Jamba 2 Large | `jamba-2-large` | $$ | Hybrid SSM-Transformer, long ctx |
+| Reka | Reka Core 3 / Flash 3 | `reka-core-3` | $$ | Multimodal (teks+gambar+video) |
+
+### Aggregator & inference platform (satu key, banyak model)
+
+| Platform | Isi | Pin var | Catatan |
+|---|---|---|---|
+| OpenRouter | 400+ model semua vendor | `OPENROUTER_API_KEY` | SATU key akses semua model bumi — jalan pintas multi-provider |
+| Groq | Llama/Qwen/GPT-oss dst. | `GROQ_API_KEY` | Inference PALING cepat (LPU) — latency rendah |
+| Cerebras | Llama/Qwen dst. | `CEREBRAS_API_KEY` | Wafer-scale — throughput raksasa |
+| Fireworks | Semua open-weight | `FIREWORKS_API_KEY` | Hosting model open cepat + murah |
+| Together | Llama/Qwen/DeepSeek dst. | `TOGETHER_API_KEY` | Open-weight, dipakai chain `selfhost`/`longdoc` |
+
+> Aturan aggregator: harga/kualitas bisa beda dari API vendor langsung —
+> bandingkan dulu di `--dry-run` sebelum pindah rutin. OpenRouter = cara
+> tercepat punya akses "semua model bumi" dengan 1 key.
 
 ## ROUTING + FALLBACK CHAIN
 
@@ -254,6 +289,10 @@ TUGAS → MULTI-MODEL ← posisi skill ini → HASIL → VERIFIKASI
 
 ## CHANGELOG + STALE POLICY
 
+- `2026-09-11`: ALL-ROUNDER MAXX — katalog bumi lengkap: +13 provider global
+  (Kimi K2, MiniMax, Cohere, Amazon Nova, MS Phi, Perplexity Sonar, Hunyuan,
+  Ernie, Yi, Granite, Nemotron, Jamba, Reka) + 5 aggregator/inference
+  (OpenRouter, Groq, Cerebras, Fireworks, Together). `--list-providers` di run.sh.
 - `2026-09-10`: ALL-ROUNDER MAX — katalog GPT-5.x/Gemini 3.x/Claude 5/
   DeepSeek V4.1/GLM-5.x/Grok 4.x/Qwen/Llama/Mistral/Astra placeholder.
   Harga snapshot 2026-09-10.
@@ -263,3 +302,11 @@ TUGAS → MULTI-MODEL ← posisi skill ini → HASIL → VERIFIKASI
 - STALE POLICY: harga/model kedaluwarsa cepat. Review tabel tiap rilis vendor
   besar; bila snapshot > 90 hari tanpa review, tandai STALE di laporan dan
   jalankan `skill research` untuk verifikasi sebelum call mahal.
+
+## MASTERY — ALL-ROUNDER MAX
+Routing kelas atas:
+- Pilih termurah yang CUKUP, bukan terkuat yang ada — GPT-5.5 Pro untuk klasifikasi = bakar uang untuk pamer
+- task-class dari KONTeks tugas, bukan dari kata user — "review kode ini" = audit, bukan code_daily
+- Fallback itu rencana, bukan kegagalan: catat alasan tiap lompatan di CSV — fallback diam-diam = kebohongan teknis
+- Harga snapshot = tanggal kedaluwarsa — vendor geser harga tiap kuartal, cek sebelum call mahal
+- Aggregator (OpenRouter) untuk eksplorasi murah, API vendor langsung untuk produksi — harga & latensi beda lapis

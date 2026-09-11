@@ -134,6 +134,20 @@ grep -q "$NSK skill" "$DIR/README.md" && ok "README: $NSK skill cocok" || bad "R
 grep -q "$NCW command" "$DIR/README.md" && ok "README: $NCW command cocok" || bad "README: jumlah command tidak $NCW"
 grep -q "skills/ ($NSK)" "$DIR/docs/ARCHITECTURE.md" && grep -q "command/ ($NCW)" "$DIR/docs/ARCHITECTURE.md" && grep -q "run.sh ($NRUN" "$DIR/docs/ARCHITECTURE.md" && ok "ARCH: $NSK skill / $NCW command / $NRUN run cocok" || bad "ARCH: angka drift (skills/command/run tidak cocok ls)"
 
+p "▮ LINT: uninstall.sh + wrapper commands/ + USAGE sync" 213
+[ -f "$DIR/uninstall.sh" ] && ok "uninstall.sh ada" || bad "uninstall.sh hilang"
+[ -x "$DIR/uninstall.sh" ] && ok "uninstall.sh executable" || bad "uninstall.sh tidak executable"
+bash -n "$DIR/uninstall.sh" 2>/dev/null && ok "uninstall.sh syntax OK" || bad "uninstall.sh syntax rusak"
+grep -q 'memory' "$DIR/uninstall.sh" && grep -q 'DIPERTAHANKAN' "$DIR/uninstall.sh" \
+  && ok "uninstall.sh jaga memory" || bad "uninstall.sh tidak menjaga memory"
+NWRAP=$(ls -1 "$DIR"/commands/*.sh 2>/dev/null | wc -l | tr -d ' ')
+[ "$NWRAP" -eq "$NCW" ] && ok "commands/ wrapper lengkap ($NWRAP = $NCW command)" || bad "commands/ wrapper $NWRAP ≠ $NCW command"
+for w in allow-all build data monitor multi-model notify plan scaffold web; do
+  [ -f "$DIR/commands/$w.sh" ] && ok "wrapper $w.sh ada" || bad "wrapper $w.sh hilang"
+done
+[ -f "$DIR/command/allow-all.md" ] && ok "command allow-all ada" || bad "command allow-all hilang"
+grep -q "$V" "$DIR/docs/USAGE.md" && ok "USAGE.md sebut VERSION $V" || bad "USAGE.md basi (tidak sebut $V)"
+
 p "▮ LINT: semua command/*.md ada Usage section" 213
 for f in "$DIR"/command/*.md; do
   name=$(basename "$f")

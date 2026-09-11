@@ -82,3 +82,10 @@ CODE → STAGE → GIT-GUARD ← posisi skill ini → COMMIT → PUSH
 - ❌ Guard ada tapi tidak jalan → pastikan pre-commit hook terpasang
 - ❌ Mengabaikan debug statement → debug di produksi = exposure
 - ❌ Pola baru tidak ditambah → pelajaran hilang
+
+## MASTERY — ALL-ROUNDER MAX
+Git guard kelas atas:
+- Scan staged diff, bukan seluruh file — konteks baru yang berisiko, bukan sejarah
+- Blokir juga: marker debug (console.log/print debug), file besar >1MB, .env masuk stage
+- Exit 1 keras + pesan perbaikan — guard yang bisa dilobby = bukan guard
+- Hook terpasang ≠ guard jalan — test guard dengan secret palsu berkala (self-test)

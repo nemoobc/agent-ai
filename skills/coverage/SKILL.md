@@ -78,3 +78,10 @@ CODER (tulis kode) → COVERAGE ← posisi skill ini → TEST-DESIGN (tulis test
 - ❌ Mengabaikan gap di area kritis → auth tanpa test = risiko tinggi
 - ❌ Gap dianggap selesai tanpa test → gap = butuh test baru
 - ❌ Coverage menggantikan test runner → coverage = pelengkap, bukan pengganti
+
+## MASTERY — ALL-ROUNDER MAX
+Cakupan kelas atas:
+- Target berisiko dulu: auth/pembayaran/migrasi/error path — 100% util = angka kosong
+- Branch coverage > line coverage — cabang yang tak dites = logika yang tak dites
+- Coverage menurun = ada kode baru tanpa test — blok merge, bukan "nanti"
+- Laporan: mana yang TIDAK tercakup + kenapa — itu lebih jujur daripada angka besar

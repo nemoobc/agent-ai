@@ -10,6 +10,17 @@ p(){ printf '\033[38;5;%sm%s\033[0m\n' "$2" "$1"; }
 WARN_S=30   # di atas ini = peringatan drift
 CAP_S=90    # di atas ini = GAGAL (bench sendiri juga harus cepat)
 
+# ── sadar-perangkat: cap dikalibrasi untuk mesin CI cepat. Di perangkat lambat
+#    (Termux/ARM) skala cap ×BENCH_FACTOR — drift TETAP terdeteksi relatif
+#    perangkat, tanpa false-fail lintas hardware. Override: BENCH_FACTOR=1 bash tests/bench.sh
+BENCH_FACTOR="${BENCH_FACTOR:-}"
+[ -z "$BENCH_FACTOR" ] && BENCH_FACTOR=1
+if [ -z "${BENCH_FACTOR_SET:-}" ] && { [ -n "${TERMUX_VERSION:-}" ] || [ -d /data/data/com.termux ]; }; then
+  BENCH_FACTOR=4
+fi
+WARN_S=$((WARN_S * BENCH_FACTOR)); CAP_S=$((CAP_S * BENCH_FACTOR))
+MUT_CAP=$((180 * BENCH_FACTOR))
+
 total_s=0
 PASS=0; FAIL=0
 
@@ -45,7 +56,7 @@ bench_gate "eval"           bash "$DIR/tests/eval.sh"
 bench_gate "e2e-flow"       bash "$DIR/tests/e2e-flow.sh"
 bench_gate "run-demo"       bash "$DIR/tests/run-demo.sh"
 bench_gate "update-flow"    bash "$DIR/tests/test-update.sh"
-bench_gate "mutation" 180   bash "$DIR/tests/mutation.sh"   # 15 mutasi penuh — cap lebih longgar
+bench_gate "mutation" "$MUT_CAP" bash "$DIR/tests/mutation.sh"   # 15 mutasi penuh — cap lebih longgar
 
 # ── Gerbang komponen ──
 bench_gate "install --offline" bash -c "T=\$(mktemp -d); HOME=\"\$T\" bash \"$DIR/install.sh\" --offline; rm -rf \"\$T\""
@@ -72,7 +83,7 @@ echo "  Total gerbang : $((PASS+FAIL))"
 echo "  Pass          : $PASS"
 echo "  Fail          : $FAIL"
 echo "  Durasi total  : ${total_s}s"
-echo "  Hard-cap      : ${CAP_S}s per gate"
+echo "  Hard-cap      : ${CAP_S}s per gate (faktor perangkat: ${BENCH_FACTOR}x)"
 echo "  Soft-warn     : ${WARN_S}s per gate"
 
 echo

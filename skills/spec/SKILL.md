@@ -60,3 +60,10 @@ THINK → SPEC ← posisi skill ini → IMAGINE → ARCHITECT → CODER → TEST
 - ❌ Spec tanpa ERROR handling → error handling = afterthought
 - ❌ Spec tidak bisa diuji → "berhasil" harus terdefinisi
 - ❌ Spec statis → update saat kebutuhan berubah
+
+## MASTERY — ALL-ROUNDER MAX
+Spesifikasi kelas atas:
+- Format baku: input/output/aturan/error/non-goal — non-goal MELINDUNGI dari scope creep
+- Contoh konkret > definisi abstrak — 3 contoh input→output mengunci perilaku
+- Aturan error eksplisit: apa yang terjadi saat input salah — diam di spec = bug di produksi
+- Spec berubah? versi + alasan — bukan diam-diameter

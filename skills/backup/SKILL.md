@@ -71,3 +71,10 @@ ROLLBACK (bila operasi gagal)
 - ❌ Tidak catat path backup → backup ada tapi tidak tahu di mana
 - ❌ Backup lama tidak dirotasi → disk penuh, backup baru gagal
 - ❌ Menganggap git = backup → git bisa di-reset, backup fisik lebih aman
+
+## MASTERY — ALL-ROUNDER MAX
+Backup kelas atas:
+- 3-2-1: 3 salinan, 2 media, 1 offsite — backup satu tempat = harapan, bukan backup
+- Backup yang tidak pernah di-restore = mitos — tes restore berkala, catat durasinya
+- Sebelum operasi berisiko: snapshot + skrip mundur DULU, operasi kemudian
+- Enkripsi at-rest untuk data user — backup tak terenkripsi = kebocoran yang dijadwalkan
