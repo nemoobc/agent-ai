@@ -45,35 +45,21 @@ AI tanpa struktur = hasil acak. **AGENT AI** memberi AI **pipeline kerja tetap +
 
 ## 🚀 Instal
 
-<table align="center">
-<tr>
-<td align="center" width="33%">
-
-### 🌐 curl
+**curl (recommended):**
 ```bash
 curl -fsSL https://raw.githubusercontent.com/nemoobc/agent-ai/master/install.sh | bash
 ```
 
-</td>
-<td align="center" width="33%">
-
-### 📦 bash
+**bash:**
 ```bash
 bash <(curl -fsSL https://raw.githubusercontent.com/nemoobc/agent-ai/master/install.sh)
 ```
 
-</td>
-<td align="center" width="33%">
-
-### 🔧 clone
+**clone:**
 ```bash
 git clone https://github.com/nemoobc/agent-ai.git
 cd agent-ai && bash install.sh
 ```
-
-</td>
-</tr>
-</table>
 
 ---
 
