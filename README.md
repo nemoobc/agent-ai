@@ -1,31 +1,29 @@
 <!--
-  agent-ai — Kit orkestrasi agent AI untuk opencode
-  v12.0.0 • 11 agent • 62 skill • 40 command
+  AGENT AI — Kit orkestrasi agent AI untuk opencode
+  v12.1.0 • 11 agent • 63 skill • 41 command
+  by nemoobc
 -->
 <div align="center">
 
+<svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="50" height="50" rx="10" fill="#1a1a2e"/>
+  <text x="25" y="28" dominant-baseline="middle" text-anchor="middle" font-family="monospace" font-size="18" font-weight="bold" fill="#22D3EE">&gt;_</text>
+</svg>
+
 ```
- █████╗ ██████╗  ██████╗ ██╗   ██╗███████╗   ███████╗██╗   ██╗███████╗
-██╔══██╗██╔══██╗██╔════╝ ██║   ██║██╔════╝   ██╔════╝╚██╗ ██╔╝██╔════╝
-███████║██████╔╝██║  ███╗██║   ██║███████╗   █████╗   ╚████╔╝ █████╗
-██╔══██║██╔══██╗██║   ██║██║   ██║╚════██║   ██╔══╝    ╚██╔╝  ██╔══╝
-██║  ██║██║  ██║╚██████╔╝╚██████╔╝███████║██╗██║        ██║   ███████╗
-╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝  ╚═════╝ ╚══════╝╚═╝╚═╝        ╚═╝   ╚══════╝
+┌──────────────────────────┐
+│      A G E N T  A I      │
+└──────────────────────────┘
 ```
 
-<img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&pause=1000&color=22D3EE&center=true&vCenter=true&width=600&lines=MIKIR+%E2%86%92+BAYANGKAN+%E2%86%92+GODOK+%E2%86%92+BANGUN+%E2%86%92+TEST+%E2%86%92+AUDIT+%E2%86%92+FIX+%E2%86%92+LAPOR" alt="pipeline" />
+</div>
 
-![version](https://img.shields.io/badge/VERSION-12.0.0-blue?style=for-the-badge&logo=github)
+![version](https://img.shields.io/badge/VERSION-12.1.0-blue?style=for-the-badge&logo=github)
 ![agents](https://img.shields.io/badge/AGENTS-11-22c55e?style=for-the-badge&logo=robotframework)
-![skills](https://img.shields.io/badge/SKILLS-62-f97316?style=for-the-badge&logo=apachemaven)
-![commands](https://img.shields.io/badge/COMMANDS-40-a855f7?style=for-the-badge&logo=terminal)
+![skills](https://img.shields.io/badge/SKILLS-63-f97316?style=for-the-badge&logo=apachemaven)
+![commands](https://img.shields.io/badge/COMMANDS-41-a855f7?style=for-the-badge&logo=terminal)
 ![license](https://img.shields.io/badge/LICENSE-MIT-eab308?style=for-the-badge)
-![stars](https://img.shields.io/github/stars/nemoobc/agent-ai?style=social&label=Star)
-![forks](https://img.shields.io/github/forks/nemoobc/agent-ai?style=social&label=Fork)
-
-**Kit orkestrasi agent untuk [opencode](https://github.com/sst/opencode): kasih tugas, DEV yang mikir, bangun, test, audit, dan lapor — kamu terima beres.**
-
-[🚀 Instal](#-instal-instan) • [🔄 3 Mode Build](#-3-mode-build-flow) • [📋 Pipeline](#-pipeline-otomatis) • [🤖 Agents](#-agents-11) • [🧩 Skills](#-skills-62) • [⌨️ Commands]#-commands-40) • [⚖️ 13 Hukum](#-13-hukum-kerja) • [🧪 Test](#-test-the-kit) • [📚 Docs](#-docs--kontribusi)
+![author](https://img.shields.io/badge/BY-nemoobc-ff69b4?style=for-the-badge&logo=github)
 
 </div>
 
@@ -33,362 +31,101 @@
 
 ## 💡 Kenapa Ini Ada
 
-Nulis prompt panjang tiap sesi itu melelahkan dan hasilnya acak. Kit ini menanam **pipeline tetap + 13 hukum kerja** ke opencode, jadi kualitas output konsisten tanpa kamu kawal tiap langkah. Cukup jelaskan maumu dalam satu kalimat — router intensitas menentukan seberapa dalam eksekusinya.
+AI tanpa struktur = hasil acak. **AGENT AI** memberi AI **pipeline kerja tetap + 13 hukum** supaya output konsisten, teruji, dan bisa dipertanggungjawabkan. Cukup kasih satu kalimat — AI yang mikir, bangun, test, audit, dan lapor.
 
 ```text
-> lengkapin fitur keranjang belanja di project ini
+> bikin fitur login
 
-[DEV] FULL → GODOK rencana 8 blok → BANGUN → TEST hijau → AUDIT CLEAN → LAPOR
-STATUS: SELESAI ✅ (bukti: tests/keranjang.test.js 12/12 PASS)
+[DEV] MIKIR → RENCANA → BANGUN → TEST hijau → AUDIT CLEAN → SELESAI ✅
 ```
+
+**Dibuat oleh [nemoobc](https://github.com/nemoobc)** — supaya AI bisa kerja lebih maksimal.
 
 ---
 
-## 🚀 3 Mode Build Flow
-
-Tiga mode kerja yang saling terhubung — **DEV satu-satunya primary dan otak utama**. PLAN/BUILD cuma adapter (`agent:dev`), bukan orkestrator baru — semua tetap lewat DEV:
-
-```
- ╔══════════╗     ╔══════════════════════╗     ╔══════════╗
- ║  PLAN    ║────▶║         DEV          ║────▶║  BUILD   ║
- ║          ║     ║    (Otak Utama)      ║     ║          ║
- ║ Rencana  ║     ║                      ║     ║ Eksekusi ║
- ║ 8 blok   ║     ║  Orkestrasi +        ║     ║ + Test   ║
- ║          ║     ║  Keputusan           ║     ║ + Audit  ║
- ╚══════════╝     ╚══════════════════════╝     ╚══════════╝
-       │                       │                       │
-       ▼                       ▼                       ▼
-  /plan command           Primary agent          /build command
-  ARCHITECT agent         Semua 62 skill         CODER agent
-  Godok fase              Test / Audit / Fix     Test & Audit
-       │                       │                       │
-       └───────────────────────┼───────────────────────┘
-                               ▼
-                          📝 LAPOR
-                       SELESAI / TITIK-PUTUS / GAGAL
-```
-
-### 🔵 PLAN — Susun Rencana
-
-| Aspek | Detail |
-|---|---|
-| **Command** | `/plan` |
-| **Agent utama** | `ARCHITECT` via DEV |
-| **Output** | Rencana 8 blok yang siap dieksekusi |
-| **Fase DEV** | `MIKIR → BAYANGKAN → GODOK` |
-| **Gerbang** | Rencana harus lolos `scan` + `think` + `imagine` + `plan` |
-
-Plan tidak berdiri sendiri — ia melekat pada DEV. DEV menjalankan fase perencanaan, menghasilkan cetak biru yang langsung jadi bahan BUILD.
-
-### 🟡 DEV — Otak Utama
-
-| Aspek | Detail |
-|---|---|
-| **Agent** | `DEV` (primary, selalu aktif) |
-| **Peran** | Terima tugas → router intensitas → panggil sub-agent → verifikasi → lapor |
-| **Skill** | Semua 62 skill, dipilih otomatis sesuai fase |
-| **Hukum** | 13 hukum kerja berlaku penuh |
-
-DEV adalah satu-satunya primary agent. Semua mode (PLAN, BUILD, atau langsung kerja) mengalir melaluinya. DEV yang memutuskan kapan panggil ARCHITECT, CODER, TESTER, AUDITOR, FIXER, CRITIC, HERMES, atau MEMORY — **tanpa kamu minta**.
-
-### 🔴 BUILD — Eksekusi & Verifikasi
-
-| Aspek | Detail |
-|---|---|
-| **Command** | `/build` |
-| **Agent utama** | `CODER` via DEV (setelah gerbang PLAN selesai) |
-| **Fase DEV** | `BANGUN → TEST → AUDIT → FIX → DOK → INGAT → LAPOR` |
-| **Gerbang** | Test hijau → Audit clean → Fix kalau perlu → Dokumentasi |
-
-Build hanya jalan setelah PLAN beres. DEV memanggil CODER untuk implementasi, lalu otomatis TEST → AUDIT → FIX sampai semua gerbang hijau.
-
-### 🛡️ Gerbang PLAN_DONE + Anti-Bentrok
-
-BUILD jalan **hanya** kalau gerbang `PLAN_DONE` lolos — tampil + terima + topik sama:
-
-| Syarat | Artinya santai |
-|---|---|
-| 👀 Tampil | Rencana 8 blok sudah tampil ke user, bukan disimpan sendiri |
-| ✅ Terima | User setuju / ACC rencana, baru boleh lanjut |
-| 🎯 Topik sama | BUILD garap topik yang sama dengan PLAN, bukan topik lain |
-
-Anti-bentrok 3 aturan (biar PLAN/DEV/BUILD nggak tabrakan):
-
-1. **Satu otak** — semua mode lewat DEV, jangan panggil ARCHITECT/CODER langsung.
-2. **Gerbang dulu** — tanpa PLAN_DONE = BUILD ditolak, balik ke GODOK lagi.
-3. **Topik dikunci** — ganti topik = PLAN ulang dari awal, bukan timpa BUILD yang jalan.
-
-### Alur Lengkap
-
-```
-User: "lengkapin fitur keranjang belanja"
-  │
-  ▼
-[DEV menerima → route (NORMAL/FULL/ULTRA)]
-  │
-  ├── PLAN:   /plan → ARCHITECT → 8 blok rencana
-  │   ▼
-  ├── BUILD:  /build → CODER → implementasi
-  │   ▼
-  ├── TEST:   TESTER → test suite → hijau?
-  │   ▼
-  ├── AUDIT:  AUDITOR → mutu & keamanan → clean?
-  │   ▼
-  ├── FIX:    FIXER (jika perlu) → perbaiki → ulangi TEST/AUDIT
-  │   ▼
-  └── LAPOR:  HERMES → deliver → STATUS: SELESAI ✅
-```
-
----
-
-## 🚀 Instal Instan
+## 🚀 Instal
 
 <table align="center">
 <tr>
 <td align="center" width="33%">
 
-### 🌐 Via curl
+### 🌐 curl
 ```bash
 curl -fsSL https://raw.githubusercontent.com/nemoobc/agent-ai/master/install.sh | bash
 ```
-<sub><i>Recommended — paling cepat</i></sub>
 
 </td>
 <td align="center" width="33%">
 
-### 📦 Via bash
+### 📦 bash
 ```bash
 bash <(curl -fsSL https://raw.githubusercontent.com/nemoobc/agent-ai/master/install.sh)
 ```
-<sub><i>Alternatif untuk shell lama</i></sub>
 
 </td>
 <td align="center" width="33%">
 
-### 🔧 Clone & Install
+### 🔧 clone
 ```bash
 git clone https://github.com/nemoobc/agent-ai.git
 cd agent-ai && bash install.sh
 ```
-<sub><i>Untuk yang ingin source code</i></sub>
 
 </td>
 </tr>
 </table>
 
-| Opsi | Perintah | Fungsi |
-|---|---|---|
-| 🎯 Project | `bash install.sh --project ~/my-app` | Pasang ke project tertentu |
-| 🩺 Check | `bash install.sh --check` | Cek kesehatan instalasi |
-| 🔄 Update | `bash install.sh --update` | Update versi terbaru (memori aman) |
-| 📴 Offline | `bash install.sh --offline` | Tanpa cek jaringan (CI aman) |
-| 🪝 Hook | `bash install.sh --hook` | Pre-commit hook git-guard |
-| 🧹 Lint | `bash install.sh --lint` | Verifikasi setelah install |
-| 🗑️ Uninstall | `bash uninstall.sh` / `bash install.sh --uninstall` | Hapus agent (memori tersimpan) |
-| 🎞️ No-anim | `NO_ANIM=1 bash install.sh` | Matikan animasi (CI/log aman) |
-| 🔓 Allow-all | `/allow-all` di opencode | Buka semua izin (backup otomatis) |
-
 ---
 
-## 📋 Pipeline Otomatis
-
-```text
-MIKIR → BAYANGKAN → GODOK → BANGUN → TEST → AUDIT → FIX → DOK → INGAT → LAPOR
-         (situasional: debug saat bug • cost saat aksi berbiaya)
-```
-
-Setiap perubahan kode **wajib** lewat pipeline ini — tidak boleh skip, tidak boleh setengah jalan. DEV menjalankan fase-fase ini otomatis tanpa diminta.
-
-### 🎚️ Router Intensitas
-
-DEV mengklasifikasi setiap tugas ke salah satu jalur:
-
-| Jalur | Pemicu | Cakupan |
-|---|---|---|
-| 🟢 `NORMAL` | tugas biasa | Jawab/kerja langsung, tanpa summon agent |
-| 🟡 `FULL` | "lengkapin / bagusin / matangkan / full" | Riset + test + dok + critic ringan |
-| 🔴 `ULTRA` | "panggil semuanya / semua agent / ultra" | Semua agent + verify penuh sebelum lapor |
-
-Sumber kebenaran pemicu = [`skills/route/run.sh`](skills/route/run.sh). Jalur menentukan **cakupan** saja — hukum, gerbang, dan bukti tetap sama di semua jalur.
-
----
-
-## 🤖 Agents (11)
-
-**11 agent** — DEV selalu primary, sisanya dipanggil otomatis sesuai kebutuhan:
-
-| # | Agent | Peran |
-|---|---|---|
-| 1 | 👑 `DEV` | **Orkestrator utama** — terima tugas, router intensitas, panggil sub-agent, verifikasi, lapor |
-| 2 | 🏗️ `ARCHITECT` | Desain solusi + rencana 8 blok sebelum kode ditulis |
-| 3 | 💻 `CODER` | Implementasi persis desain, diff kecil, tanpa scope creep |
-| 4 | 🧪 `TESTER` | Tulis & jalankan test, buktikan hijau dengan exit code |
-| 5 | 🔍 `AUDITOR` | Audit mutu, keamanan, dan konsistensi angka |
-| 6 | 🔧 `FIXER` | Perbaiki temuan audit/test sampai gerbang hijau |
-| 7 | 😈 `CRITIC` | Serang hasil kerja — cari lubang yang orang lain lewatkan |
-| 8 | 🕵️ `HERMES` | Utusan lintas-domain: bump versi, rilis, sinkron badge |
-| 9 | 🧠 `MEMORY` | Ingat keputusan + pelajaran (recall/remember, lessons.md) |
-| 10 | 🔬 `RESEARCHER` | Riset mendalam: web, library, best practice |
-| 11 | 🎨 `DESIGNER` | UI/UX design: a11y, tokens, component specs |
-
----
-
-## 🧩 Skills (62)
-
-**62 skill** — dipanggil otomatis oleh DEV sesuai fase pipeline, tanpa kamu hafal satu per satu.
-
-| Kategori | Skill | Jumlah |
-|---|---|---|
-| 📐 **Perencanaan** | `scan` `think` `imagine` `plan` `spec` `estimate` `route` | **7** |
-| ✅ **Uji & Mutu** | `test-design` `test-full` `eval` `coverage` `audit-full` | **5** |
-| 🛠️ **Perbaikan** | `debug` `fix-full` `refactor` `review` `critique` | **5** |
-| 🔒 **Keamanan** | `injection-guard` `threat-model` `red-team` `env-guard` `git-guard` | **5** |
-| 🧠 **Memori** | `recall` `remember` `learn` `handoff` `context` | **5** |
-| 📝 **Dokumentasi** | `doc-full` `explain` `i18n` `a11y` `web` | **5** |
-| 💾 **Operasi Data** | `backup` `recovery` `migrate` `hotfix` `postmortem` `data` | **6** |
-| ⚡ **Kinerja & Biaya** | `perf` `profile` `budget` `cost` `monitor` | **5** |
-| 🎭 **Orkestrasi** | `autonomy` `caveman` `caveman-warmup` `team` `milestone` | **5** |
-| 🔬 **Riset & Desain** | `research` `api-design` `multi-model` `scaffold` | **4** |
-| 📦 **Rilis & Utilitas** | `deliver` `changelog` `pr` `convention` `dependency` `metrics` `doctor` `clean` `trace` `notify` | **10** |
-| | **Total** | **62** |
-
----
-
-## ⌨️ Commands (40)
-
-**40 command** siap pakai di opencode, dalam 6 grup:
-
-| Grup | Command | Jumlah |
-|---|---|---|
-| 🚀 **Pipeline & Build** | `bootstrap` `onboard` `verify` `fix` `ship` `release` `upgrade` `hotfix` `route` `plan` `build` | **11** |
-| 📊 **Monitoring & Mutu** | `audit` `status` `metrics` `coverage` `trace` `critique` `threat-model` `blame` `monitor` | **9** |
-| 📝 **Docs & Rencana** | `report` `roadmap` `backlog` `estimate` `context` `handoff` `learn` | **7** |
-| 🛠️ **Utilitas & Tim** | `clean` `team` `doctor` `hermes` `pr` `memory` `deliver` `scaffold` `allow-all` | **9** |
-| 🌐 **Eksternal** | `data` `web` `notify` `multi-model` | **4** |
-| | **Total** | **40** |
-
----
-
-## 🌐 Multi-Model (2026)
-
-DEV pilihin model terbaik per tugas otomatis via [`skills/multi-model/SKILL.md`](skills/multi-model/SKILL.md) — satu interface, **semua model AI di bumi**. Santai, nggak perlu hafal satu-satu:
-
-| Provider | Model 2026 | Jagoannya |
-|---|---|---|
-| OpenAI | GPT-5.x | Kode kompleks + reasoning dalam |
-| Google | Gemini 3.x | Bahasa Indonesia + multimodal |
-| Anthropic | Claude 5 | Arsitektur + audit presisi |
-| DeepSeek | V4.1 | Murah meriah, budget ketat |
-| Zhipu | GLM-5.3 | Teks panjang + hemat token |
-| xAI | Grok 4.x | Reasoning cepat + real-time |
-| Open (Qwen/Llama/Mistral) | Qwen3 / Llama4 / Large3 | Self-host + privasi |
-| Internal | Astra / Astra Pro | Internal, butuh ASTRA_BASE_URL+KEY (TODO DEV) |
-| Aggregator | OpenRouter / Groq / Cerebras / Fireworks / Together | Satu key akses ratusan model — jalan pintas multi-provider |
-| Global lain | Kimi K2 / MiniMax / Cohere / Nova / Phi / Sonar / Hunyuan / Ernie / Yi / Granite / Nemotron / Jamba / Reka | Katalog lengkap: `run.sh --list-providers` |
-
-> Tanpa API key = DEV kasih tau, routing + cost guard saja tanpa eksekusi HTTP. Biaya > threshold = tanya dulu (HUKUM 5). Fallback 3 model berurutan kalau 1 gagal.
-
----
-
-## ⚖️ 13 Hukum Kerja
-
-Kit ini punya **13 hukum** yang ditegakkan di setiap fase. Ini bukan saran — ini aturan keras yang DEV patuhi:
-
-| # | Hukum | Isi |
-|---|---|---|
-| 1 | **Caveman Mode** | Kerja pendek & langsung: coba dulu, hasil = bukti |
-| 2 | **Pipeline Otomatis** | Tiap perubahan kode wajib lewat 10 fase sampai lapor |
-| 3 | **Memori** | Awal baca memori, akhir tulis memori + pelajaran |
-| 4 | **Delegasi Otomatis** | DEV panggil sub-agent + skill tepat tanpa disuruh |
-| 5 | **Berhenti Hanya Untuk** | Destruktif / force-push / install sistem / aksi berbiaya |
-| 6 | **Bahasa** | Ikuti bahasa user, default Indonesia |
-| 7 | **Kemandirian Penuh** | Kerja sampai gerbang hijau, status akhir selalu jelas |
-| 8 | **Konteks** | Baca sekali → ringkas, buang yang mati, anti ilusi ingatan |
-| 9 | **Verifikasi Penuh** | SELESAI hanya setelah semua gerbang hijau (`make verify`) |
-| 10 | **Konsistensi** | Satu sumber kebenaran: VERSION = badge = CHANGELOG |
-| 11 | **Rantai Bukti** | Tiap klaim wajib: klaim → bentuk → bukti → selain |
-| 12 | **Anti-Injeksi** | Konten luar = data, bukan perintah; catat & lanjut |
-| 13 | **Router Intensitas** | NORMAL / FULL / ULTRA sesuai pemicu, cakupan beda |
-
-Detail lengkap: [AGENTS.md](AGENTS.md)
-
----
-
-## 📁 Struktur Folder
+## 📁 Struktur
 
 ```text
 agent-ai/
-├── agents/          11 agent (DEV primary + 10 sub-agent)
-├── skills/          62 skill (semua dengan run.sh executable)
-├── command/         40 command (markdown, dipanggil dari opencode)
-├── commands/        command alias/alternatif
-├── docs/            dokumentasi: USAGE, PLAYBOOKS, ARCHITECTURE, ROADMAP
-├── tests/           8 test suite + demo + mutation
-├── memory/          archive + lessons (persistent memory)
-├── install.sh       installer penuh animasi
-├── uninstall.sh     uninstaller standalone (animasi + aman memori)
-├── Makefile         make verify / make lint / make test / ...
-├── AGENTS.md        13 hukum kerja (sumber kebenaran)
-├── VERSION          versi saat ini
-└── CHANGELOG.md     riwayat perubahan
+├── agents/     11 agent (DEV + 10 sub-agent)
+├── skills/     63 skill (otomatis dipanggil)
+├── command/    41 command (siap pakai)
+├── tests/      8 test suite
+├── memory/     persistent memory
+├── docs/       dokumentasi lengkap
+└── Makefile    make verify (satu tombol)
 ```
 
 ---
 
-## 🧪 Test The Kit
+## ⚙️ Cara Pakai
 
 ```bash
-git clone https://github.com/nemoobc/agent-ai.git && cd agent-ai
-make verify   # gerbang penuh HUKUM 9 — semua hijau baru SELESAI
+# instal
+bash install.sh
+
+# verifikasi
+make verify
+
+# pakai di opencode
+/bikin fitur X
 ```
-
-| # | Gate | Perintah | Bukti |
-|---|---|---|---|
-| 1 | 🧹 Lint-kit | `make lint` | Angka & struktur cocok kenyataan folder |
-| 2 | 🧪 Self-test | `make test` | Badge sinkron, file wajib ada, doctor sehat |
-| 3 | 📊 Eval | `make eval` | Golden task lolos ambang nilai |
-| 4 | 🔄 E2E flow | `make e2e` | Simulasi pipeline penuh hijau |
-| 5 | 🎬 Demo | `make demo` | Bug sengaja ditangkap & diperbaiki |
-| 6 | 🔄 Test-update | `make update` | Upgrade naik + anti-downgrade aman |
-| 7 | 🧬 Mutation | `make mutation` | 10 perusakan wajib tertangkap gate |
-| 8 | 📈 Bench | `make bench` | Durasi gate stabil, drift terdeteksi |
-| 9 | 🩺 Doctor | `make doctor` | Kesehatan kit secara menyeluruh |
-
-> **Demo 60 detik** — bug disengaja, test menangkap, fixer memperbaiki:
-> ```bash
-> bash tests/run-demo.sh
-> # ▮ DEMO: fixture calc.js (bug: a-b) + test.js (2 assertion)
-> #   ✖ FAIL → perbaiki → ✔ PASS: semua test lulus → audit CLEAN
-> ```
 
 ---
 
-## 📚 Docs & Kontribusi
+## 📚 Dokumentasi
 
-| Dokumen | Isi |
-|---|---|
-| [📖 USAGE](docs/USAGE.md) | Cara pakai harian: jalur, command, contoh sesi |
-| [🎭 PLAYBOOKS](docs/PLAYBOOKS.md) | Resep situasi: hotfix, rilis, migrasi, recovery |
-| [🏛️ ARCHITECTURE](docs/ARCHITECTURE.md) | Arsitektur kit + arah pengembangan |
-| [🗺️ ROADMAP](docs/ROADMAP.md) | Rencana pengembangan + milestone |
-| [🛡️ THREAT-MODEL](docs/THREAT-MODEL.md) | Model ancaman + mitigasi keamanan |
-
-| 🐞 Laporkan Bug | ✨ Minta Fitur |
-|---|---|
-| Buka [issue bug](.github/ISSUE_TEMPLATE/bug.md) + sertakan log `make verify` | Buka [issue fitur](.github/ISSUE_TEMPLATE/feature.md) + kasus pakai & contoh |
+| Doc | Isi |
+|-----|-----|
+| [USAGE](docs/USAGE.md) | Cara pakai harian |
+| [PLAYBOOKS](docs/PLAYBOOKS.md) | Resep situasi |
+| [ARCHITECTURE](docs/ARCHITECTURE.md) | Arsitektur kit |
+| [ROADMAP](docs/ROADMAP.md) | Rencana pengembangan |
 
 ---
 
 ## 📜 Lisensi
 
-<div align="center">
-
 **[MIT License](LICENSE)** — bebas pakai, ubah, dan bagi.
 
-⭐ **Suka kit ini? kasih star & fork — gratis, bikin semangat!** ⭐
+<div align="center">
 
-<img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&pause=1200&color=22D3EE&center=true&vCenter=true&width=500&lines=Terima+kasih+sudah+mampir!+%F0%9F%99%8F;Star+%E2%AD%90+%2B+Fork+%F0%9F%8D%B4+%3D+%E2%9D%A4%EF%B8%8F" alt="thanks" />
+⭐ **Star & Fork — gratis, bikin semangat!** ⭐
 
-**v12.0.0** • 11 agent • 62 skill • 40 command • [CHANGELOG](CHANGELOG.md)
+**v12.1.0** • by [nemoobc](https://github.com/nemoobc)
 
 </div>

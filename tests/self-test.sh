@@ -51,8 +51,8 @@ p "▮ SELF-TEST: struktur kit lengkap" 213
 NSKILL=$(ls -1d "$DIR"/skills/*/ 2>/dev/null | wc -l | tr -d ' ')
 NCMD=$(ls -1 "$DIR"/command/*.md 2>/dev/null | wc -l | tr -d ' ')
 NWRAP=$(ls -1 "$DIR"/commands/*.sh 2>/dev/null | wc -l | tr -d ' ')
-[ "$NSKILL" -eq 62 ] && ok "62 skill terdeteksi ($NSKILL)" || bad "jumlah skill = $NSKILL, harusnya 62"
-[ "$NCMD" -eq 40 ] && ok "40 command terdeteksi" || bad "jumlah command = $NCMD, harusnya 40"
+[ "$NSKILL" -eq 63 ] && ok "63 skill terdeteksi ($NSKILL)" || bad "jumlah skill = $NSKILL, harusnya 63"
+[ "$NCMD" -eq 41 ] && ok "41 command terdeteksi" || bad "jumlah command = $NCMD, harusnya 41"
 [ "$NWRAP" -eq "$NCMD" ] && ok "wrapper commands/ lengkap ($NWRAP)" || bad "wrapper commands/ $NWRAP ≠ command $NCMD"
 [ -f "$DIR/command/allow-all.md" ] && ok "command allow-all ada" || bad "command allow-all hilang"
 [ -f "$DIR/commands/allow-all.sh" ] && ok "wrapper allow-all.sh ada" || bad "wrapper allow-all.sh hilang"

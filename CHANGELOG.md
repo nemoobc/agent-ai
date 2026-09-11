@@ -1,5 +1,17 @@
 # CHANGELOG
 
+## [12.1.0] — 2026-09-11
+### Added
+- **SKILL #63 `auto-prompt`** (skills/auto-prompt/run.sh + command/auto-prompt.md): generate prompt lengkap & matang dari input kasar/pendek — deteksi otomatis domain (autentikasi/API/UI/bug/dll), bahasa target, aturan, output, success criteria
+- **README REDESIGN** — box "AGENT AI" besar + badges + ringkasan singkat "Kenapa Ini Ada" + 3 metode instal (curl/bash/clone) + struktur folder compact + credit nemoobc
+### Changed
+- **`/allow-all` ANIMATION** — box animation + spinner + daftar izin terbuka (bukan tampilkan md mentah); backup otomatis + revert instruction
+- **README** — front section rombak total: AGENT AI branding, lebih compact & fokus
+### Fixed
+- `commands/allow-all.sh` sekarang executable (chmod +x)
+- 43 skill `run.sh` sekarang executable (chmod +x)
+- `README.md:28` broken link `]#-commands-40)` → `[#commands-40]`
+
 ## [12.0.0] — 2026-09-11
 ### Added
 - **COMMAND #40 `/allow-all`** (command/allow-all.md + commands/allow-all.sh): buka semua izin opencode (edit/write/webfetch/bash=allow) dengan backup otomatis + revert instruction

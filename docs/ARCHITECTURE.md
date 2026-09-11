@@ -1,4 +1,4 @@
-# ARSITEKTUR DEV-BRAIN DOCTRINE v12.0.0
+# ARSITEKTUR DEV-BRAIN DOCTRINE v12.1.0
 
 Dokumen ini menjelaskan **cara kit bekerja**, bukan sekadar daftar file. Siapa pun (atau agent apa pun) yang membaca ini harus bisa menjawab: *apa yang terjadi ketika sebuah permintaan masuk, dan siapa yang menjamin kualitasnya?*
 
@@ -14,10 +14,10 @@ Dokumen ini menjelaskan **cara kit bekerja**, bukan sekadar daftar file. Siapa p
 │  L2  OTAK  — agents/dev.md (FASE 0 route + pipeline 17 fase)│
 │       urutan kerja default; gerbang keras antar fase        │
 ├────────────────────────────────────────────────────────────┤
-│  L3  KEMAMPUAN  — skills/ (62) + command/ (40)             │
+│  L3  KEMAMPUAN  — skills/ (63) + command/ (41)             │
 │       skill = KAPAN dipakai + BAGAIMANA; command = perintah │
 ├────────────────────────────────────────────────────────────┤
-│  L4  EKSEKUSI  — skills/*/run.sh (62 script jalan)         │
+│  L4  EKSEKUSI  — skills/*/run.sh (63 script jalan)         │
 │       nilai yang terukur: gate, guard, scan, backup, metrik │
 ├────────────────────────────────────────────────────────────┤
 │  L5  PEMBUKTIAN  — tests/ (8 suite + CI)                   │

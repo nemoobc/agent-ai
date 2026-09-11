@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- hitam tidak pekat -->
+    <color name="bg">#0A0A0A</color>
+    <!-- abu-abu logo -->
+    <color name="logo_gray">#B4B4B4</color>
+</resources>
