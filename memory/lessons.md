@@ -1,6 +1,21 @@
 # LESSONS — pelajaran terukur (skill learn)
 Entry terbaru di atas. Format: POLA / BUKTI / AKSI. Tanpa bukti = tidak masuk.
 
+## 2026-09-11 — cap waktu harus sadar-perangkat, bukan sadar-mesin-CI
+- POLA: hard-cap durasi (timeout/cap) dikalibrasi di mesin cepat → false-fail di perangkat lambat (HP/ARM)
+- BUKTI: test-update timeout 15s vs install Termux 22,5s = GAGAL palsu; bench cap 90/180s vs mutation Termux 596s = false-fail
+- AKSI: skala cap per kelas perangkat (BENCH_FACTOR, default 4x di Termux) + timeout longgar (120s); drift tetap terdeteksi relatif
+
+## 2026-09-11 — copy massal + verifikasi = 3x lebih cepat, hasil identik
+- POLA: loop mkdir+cp+chmod per item (100+ proses fork) membunuh I/O lambat
+- BUKTI: install --offline 22,5s → 7,2s; 62/62 SKILL.md + 62/62 run.sh executable terverifikasi pasca copy massal (cp -R)
+- AKSI: 1 operasi massal + loop verifikasi per item (okbar tetap tampil) — bila konten folder terkurasi (skill/ hanya SKILL.md+run.sh)
+
+## 2026-09-11 — emoji di dalam box ASCII = border miring
+- POLA: emoji (🧠) lebar 2 kolom di terminal → box border tidak sejajar
+- BUKTI: brain_pulse/celebrate border miring di install.sh; ganti ◈ = sejajar
+- AKSI: simbol 1-kolom (◈/✦/◆) di dalam box; emoji hanya di luar box
+
 ## 2026-09-10 — klaim "panggil model" tanpa eksekutor = bohong
 - POLA: runner routing disebut "satu interface panggil semua"
 - BUKTI: run.sh:197 komentar call belum diimplementasikan + dry-run tanpa key exit 0
