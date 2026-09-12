@@ -76,7 +76,7 @@ uninstall(){
   [ -n "${bak:-}" ] && mv "$bak" "$CFG/opencode.json" && ok "config dipulihkan"
 
   echo
-  inf "memory/ aman"
+  inf "memory/ DIPERTAHANKAN"
 
   box_selesai
 }

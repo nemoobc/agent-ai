@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## [12.1.1] — 2026-09-12
+### Fixed
+- **install.sh REGRESI v12.1.0 dipulihkan** — `--offline`, `--uninstall`, `--update`, `--check` flag kembali; backup/restore opencode.json user; marker `devbrain` ditulis; loop skill eksplisit (lint-kit 64 masalah → 0)
+- **uninstall.sh** — pesan `memory/ DIPERTAHANKAN` (lint-kit detektor jaga memory)
+- **tests/mutation.sh** — mutasi hitungan skill `-eq 62` → `-eq 63` (self-test sekarang 63 skill; gate palsu diperbaiki, 15/15 perusakan tertangkap)
+
 ## [12.1.0] — 2026-09-11
 ### Added
 - **SKILL #63 `auto-prompt`** (skills/auto-prompt/run.sh + command/auto-prompt.md): generate prompt lengkap & matang dari input kasar/pendek — deteksi otomatis domain (autentikasi/API/UI/bug/dll), bahasa target, aturan, output, success criteria

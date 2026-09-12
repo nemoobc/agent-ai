@@ -53,7 +53,7 @@ expect_caught "HUKUM 10 dihapus" lint "lint cek 10 hukum"
 p "▮ MUTASI 4/15 — hitungan self-test ngaco (62→9) → self-test" 213
 cp -r "$DIR"/. "$MUT/repo4" 2>/dev/null
 rm -rf "$MUT/repo4/.git"
-sed -i 's/-eq 62 ]/-eq 9 ]/' "$MUT/repo4/tests/self-test.sh"
+sed -i 's/-eq 63 ]/-eq 9 ]/' "$MUT/repo4/tests/self-test.sh"
 ( cd "$MUT/repo4" && bash tests/self-test.sh ) >/dev/null 2>&1
 [ $? -ne 0 ] && { ok "hitungan 62→9 → self-test MENANGKAP"; PASS=$((PASS+1)); } || { bad "hitungan 62→9 → self-test LOLOS"; FAIL=$((FAIL+1)); }
 rm -rf "$MUT/repo4"
