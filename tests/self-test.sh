@@ -194,7 +194,7 @@ printf '{\n  "theme": "dark"\n}\n' > "$FH/.config/opencode/opencode.json"
 HOME="$FH" bash "$DIR/install.sh" --offline >/dev/null 2>&1 \
   && grep -q devbrain "$FH/.config/opencode/opencode.json" \
   && ls "$FH/.config/opencode/"opencode.json.bak.* >/dev/null 2>&1 \
-  && HOME="$FH" bash "$DIR/install.sh" --uninstall >/dev/null 2>&1 \
+  && HOME="$FH" bash "$DIR/install.sh" --uninstall --yes >/dev/null 2>&1 \
   && grep -q '"theme": "dark"' "$FH/.config/opencode/opencode.json" \
   && ok "user config dibackup lalu direstore saat uninstall" \
   || bad "backup/restore user config gagal"

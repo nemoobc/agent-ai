@@ -8,8 +8,11 @@ on:
 jobs:
   self-test:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    timeout-minutes: 15
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4 # pin: actions/checkout@11bd71901bbe5b1630ce7ea09f3b2d965984876457
 
       - name: Syntax check semua script
         run: |

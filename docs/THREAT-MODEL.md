@@ -12,7 +12,11 @@ JALUR    : 1) konten luar → sesi agent (HUKUM 12, injection-guard)
            5) secret bocor ke repo (git-guard, env-guard, audit-full, pre-commit hook)
 DAMPAK   : P0 doctrine diganti → semua sesi terinfeksi; P0 secret ter-commit; P1 update flow menjalankan kode asing; P2 lint/matikan gate senyap
 MITIGASI : HUKUM 12 + injection-guard/run.sh (detektor sinyal);
-           update flow: tarball dari repo resmi saja, anti-downgrade sort -V, memori dipertahankan, test-update 2 arah;
+           update flow: tarball dari repo resmi saja (prefix resmi, non-resmi ditolak),
+           https wajib DEV_BRAIN_UPDATE_SHA (SHA mismatch = ditolak), file:// hanya test lokal,
+           curl --proto '=https' --tlsv1.2, anti-downgrade sort -V, memori dipertahankan, test-update 2 arah;
+           curl|bash diganti unduh-inspeksi-jalankan di README; install default granular (allow-all opt-in);
+           deliver upload wajib --yes; uninstall wajib konfirmasi;
            CI wajib lint+test+eval+e2e+update+mutation+bench+audit sebelum merge; release.yml jalankan self-test lagi sebelum rilis;
            pre-commit hook git-guard; secret scan 16+ pola; permission opencode.json granular (skill allowlist, sisanya ask)
 SISA     : master branch = trust anchor (push proteksi repo milik owner, di luar kendali kit);

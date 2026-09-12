@@ -9,7 +9,7 @@
 <br/>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/🔄_VERSION-12.1.2-blue?style=for-the-badge&logo=semver&logoColor=white" alt="Version"/>
+  <img src="https://img.shields.io/badge/🔄_VERSION-12.1.3-blue?style=for-the-badge&logo=semver&logoColor=white" alt="Version"/>
   <img src="https://img.shields.io/badge/🤖_AGENTS-11-00d2ff?style=for-the-badge&logo=robot&logoColor=white" alt="Agents"/>
   <img src="https://img.shields.io/badge/🧩_SKILLS-63-82d815?style=for-the-badge&logo=puzzle-piece&logoColor=white" alt="Skills"/>
   <img src="https://img.shields.io/badge/⌨️_COMMANDS-41-ffd700?style=for-the-badge&logo=terminal&logoColor=black" alt="Commands"/>
@@ -23,19 +23,21 @@
 ## ⚡ INSTALL
 
 ```bash
-# Recommended
-curl -fsSL https://raw.githubusercontent.com/nemoobc/agent-ai/master/install.sh | bash
+# Recommended (download, inspect, then run — never blind curl|bash)
+curl -fsSL https://raw.githubusercontent.com/nemoobc/agent-ai/master/install.sh -o /tmp/agent-ai-install.sh
+bash /tmp/agent-ai-install.sh
+# default granular (ask). Opt-in allow-all: bash /tmp/agent-ai-install.sh --allow-all
 
 # Or clone & install
 git clone https://github.com/nemoobc/agent-ai.git && cd agent-ai && bash install.sh
 
 # Options
-bash install.sh --project .    # Install to this project
 bash install.sh --check        # Health check
-bash install.sh --update       # Update from GitHub
+bash install.sh --update       # Update from GitHub (needs DEV_BRAIN_UPDATE_URL + SHA)
 bash install.sh --offline      # No network check (CI safe)
-bash install.sh --hook         # Install git-guard pre-commit hook
-bash install.sh --lint         # Verify after install
+bash install.sh --allow-all    # Opt-in: allow all permissions (default granular ask)
+bash uninstall.sh --check      # Preview uninstall (memory kept)
+bash uninstall.sh --yes        # Confirm uninstall (memory kept)
 ```
 
 ---
@@ -89,12 +91,12 @@ User: "build login page with validation"
 
 ---
 
-## 🧩 SKILLS (62)
+## 🧩 SKILLS (63)
 
 <details>
 <summary>🧠 Core</summary>
 
-`think` `imagine` `plan` `spec` `research` `scan`
+`think` `imagine` `plan` `spec` `research` `scan` `route` `auto-prompt`
 
 </details>
 
@@ -115,21 +117,21 @@ User: "build login page with validation"
 <details>
 <summary>🏗️ Build</summary>
 
-`api-design` `milestone` `team` `autonomy` `estimate` `deliver` ✅ `clean` ✅
+`api-design` `milestone` `team` `autonomy` `estimate` `deliver` ✅ `clean` ✅ `backup` ✅
 
 </details>
 
 <details>
 <summary>🧪 Test</summary>
 
-`test-design` `test-full` ✅ `mutation` `coverage` ✅ `bench` `eval` `e2e-flow`
+`test-design` `test-full` ✅ `coverage` ✅ `eval`
 
 </details>
 
 <details>
 <summary>🔍 Audit</summary>
 
-`audit-full` ✅ `critique` `doctor` ✅ `metrics` ✅ `blame`
+`audit-full` ✅ `critique` `doctor` ✅ `metrics` ✅
 
 </details>
 
@@ -143,7 +145,7 @@ User: "build login page with validation"
 <details>
 <summary>📝 Doc</summary>
 
-`doc-full` `changelog` ✅ `pr` `handoff` `onboard`
+`doc-full` `changelog` ✅ `pr` `handoff`
 
 </details>
 
@@ -205,7 +207,7 @@ User: "build login page with validation"
 
 ---
 
-## ⌨️ COMMANDS (40)
+## ⌨️ COMMANDS (41)
 
 | Command | Description |
 |---------|-------------|
@@ -232,6 +234,24 @@ User: "build login page with validation"
 | `/multi-model [model:prompt]` | Route to best AI model per task |
 | `/monitor` | Health check, uptime, alert thresholds |
 | `/scaffold <type>` | Generate boilerplate (React/Next/Express/FastAPI) |
+| `/allow-all` | Open all opencode permissions (explicit opt-in, backup first) |
+| `/auto-prompt [input]` | Generate polished prompt from rough input |
+| `/backlog <task>` | Measurable work queue with impact×effort score |
+| `/blame <target>` | git blame summary: who changed what, when |
+| `/bootstrap` | Install DEV-BRAIN to project without global install |
+| `/clean [--dry]` | Safe artifact cleanup (strict allowlist) |
+| `/context` | Session context status + compact advice |
+| `/coverage` | Test-gap map → what to test first |
+| `/deliver [hours]` | Zip → upload link, NO commit/push (confirm required) |
+| `/onboard` | Project map for new members |
+| `/release` | Full release gate: test→audit→changelog→bump→tag |
+| `/report` | Session summary for handoff |
+| `/roadmap` | Next steps ordered by impact × effort |
+| `/route <prompt>` | Prompt router: NORMAL / FULL / ULTRA |
+| `/team <task>` | Parallel coordinated work split |
+| `/threat-model <feature>` | Threat map before coding |
+| `/trace` | Evidence chain for reports (Law 11) |
+| `/upgrade` | Safe kit update + verify |
 
 ---
 
@@ -243,8 +263,8 @@ User: "build login page with validation"
 ├── opencode.json          ← permission system (3 tier)
 ├── VERSION                ← installed version
 ├── agent/                 ← 11 agent definitions
-├── skill/                 ← 62 skills
-├── command/               ← 40 commands
+├── skill/                 ← 63 skills
+├── command/               ← 41 commands
 ├── docs/                  ← documentation
 ├── tests/                 ← test suite
 └── memory/                ← persistent memory
@@ -277,7 +297,7 @@ make verify                # All gates, one command
 bash tests/lint-kit.sh     # Structure linter (150+ checks)
 bash tests/self-test.sh    # Detector suite (110+ checks)
 bash tests/eval.sh         # Behavioral regression (18 checks)
-bash tests/mutation.sh     # Proof: 12 breakages caught
+bash tests/mutation.sh     # Proof: 15 breakages caught
 bash tests/bench.sh        # Gate duration under hard-cap
 ```
 
@@ -286,7 +306,7 @@ bash tests/bench.sh        # Gate duration under hard-cap
 ## 📚 DOCS
 
 - **[USAGE.md](docs/USAGE.md)** — Full guide (Indonesian)
-- **[PLAYBOOKS.md](docs/PLAYBOOKS.md)** — 17 recipes (Indonesian)
+- **[PLAYBOOKS.md](docs/PLAYBOOKS.md)** — 23 recipes (Indonesian)
 - **[ARCHITECTURE.md](docs/ARCHITECTURE.md)** — 6-layer architecture
 
 ---

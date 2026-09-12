@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -u
+set -uo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 CFG="$HOME/.config/opencode"
@@ -57,27 +57,26 @@ backup_config(){
   fi
 }
 
-# Tulis opencode.json DEV-BRAIN (allow-all) — MERGE, jangan timpa config user (MCP/provider/model)
+# Tulis opencode.json DEV-BRAIN — MERGE, jangan timpa config user (MCP/provider/model)
+# Default granular (ask). Allow-all hanya opt-in: --allow-all atau DEV_BRAIN_ALLOW_ALL=1.
 write_config(){
+  local MODE="granular"
+  [ "${ALLOW_ALL:-0}" = "1" ] && MODE="allow-all"
+  [ "${DEV_BRAIN_ALLOW_ALL:-}" = "1" ] && MODE="allow-all"
   if [ -f "$CFG/opencode.json" ] && command -v python3 >/dev/null 2>&1; then
-    python3 - "$CFG/opencode.json" <<'PYEOF'
+    python3 - "$CFG/opencode.json" "$MODE" <<'PYEOF'
 import json, sys
-path = sys.argv[1]
+path, mode = sys.argv[1], sys.argv[2]
 try:
     with open(path) as f:
         old = json.load(f)
 except Exception:
     old = {}
-new = {
-    "$schema": "https://opencode.ai/config.json",
-    "devbrain": "allow-all",
-    "permission": {
-        "edit": "allow",
-        "write": "allow",
-        "webfetch": "allow",
-        "bash": {"*": "allow"}
-    }
-}
+if mode == "allow-all":
+    perm = {"edit": "allow", "write": "allow", "webfetch": "allow", "bash": {"*": "allow"}}
+else:
+    perm = {"edit": "ask", "write": "ask", "webfetch": "ask", "bash": {"*": "ask"}}
+new = {"$schema": "https://opencode.ai/config.json", "devbrain": "granular" if mode != "allow-all" else "allow-all", "permission": perm}
 # Pertahankan semua bagian milik user (MCP, provider, model, agent, theme, dll)
 for k, v in old.items():
     if k not in ("devbrain", "permission"):
@@ -86,8 +85,9 @@ with open(path, "w") as f:
     json.dump(new, f, indent=2)
     f.write("\n")
 PYEOF
-    ok "opencode.json DEV-BRAIN ditulis (config user dipertahankan)"
+    ok "opencode.json DEV-BRAIN ditulis ($MODE, config user dipertahankan)"
   else
+    if [ "$MODE" = "allow-all" ]; then
     cat > "$CFG/opencode.json" <<'OPencodeEOF'
 {
   "$schema": "https://opencode.ai/config.json",
@@ -102,7 +102,23 @@ PYEOF
   }
 }
 OPencodeEOF
-    ok "opencode.json DEV-BRAIN ditulis"
+    else
+    cat > "$CFG/opencode.json" <<'OPencodeEOF'
+{
+  "$schema": "https://opencode.ai/config.json",
+  "devbrain": "granular",
+  "permission": {
+    "edit": "ask",
+    "write": "ask",
+    "webfetch": "ask",
+    "bash": {
+      "*": "ask"
+    }
+  }
+}
+OPencodeEOF
+    fi
+    ok "opencode.json DEV-BRAIN ditulis ($MODE)"
   fi
 }
 
@@ -152,6 +168,18 @@ uninstall(){
     return
   fi
 
+  if [ "${ALLOW_YES:-0}" != "1" ]; then
+    if [ -t 0 ]; then
+      local nagent=$(ls -1 "$CFG/agent" 2>/dev/null | wc -l | tr -d ' ')
+      inf "Akan dihapus: agent $nagent + skill/command/docs + AGENTS.md (memory DIPERTAHANKAN)"
+      printf "  ketik HAPUS untuk lanjut: "; read -r ans
+      [ "$ans" = "HAPUS" ] || { inf "dibatalkan"; box_selesai; return 1; }
+    else
+      inf "dibatalkan — non-interaktif wajib --yes"
+      box_selesai; return 1
+    fi
+  fi
+
   dots "agent..."
   rm -rf "$CFG/agent"
 
@@ -188,11 +216,13 @@ uninstall(){
 }
 
 usage(){
-  echo "Usage: bash install.sh [--offline] [--uninstall] [--update] [--check] [--help]"
+  echo "Usage: bash install.sh [--offline] [--uninstall] [--update] [--check] [--allow-all] [--help]"
   echo "  --offline     install tanpa animasi/cek jaringan (CI aman)"
   echo "  --uninstall   buang agent & doctrine (memori DIPERTAHANKAN)"
-  echo "  --update      update dari DEV_BRAIN_UPDATE_URL (memori aman)"
+  echo "  --update      update dari DEV_BRAIN_UPDATE_URL (memori aman, https wajib SHA via DEV_BRAIN_UPDATE_SHA)"
   echo "  --check       cek kesehatan instalasi (tanpa menulis)"
+  echo "  --allow-all   opt-in: permission allow semua (default granular ask). Bisa juga DEV_BRAIN_ALLOW_ALL=1"
+  echo "  --yes         lewati konfirmasi hapus (untuk --uninstall non-interaktif)"
   echo "  --help        tampilkan bantuan ini"
 }
 
@@ -219,16 +249,35 @@ check_install(){
 }
 
 # Update dari remote (file:// untuk test, https untuk produksi)
+# https wajib SHA: DEV_BRAIN_UPDATE_SHA (sha256 tarball). file:// skip SHA (test lokal).
+# UPDATE_URL dipin ke repo resmi bila tidak diawali file:// atau URL resmi.
+OFFICIAL_PREFIX="https://raw.githubusercontent.com/nemoobc/agent-ai"
 update(){
   local UPDATE_URL="${DEV_BRAIN_UPDATE_URL:-}"
   [ -n "$UPDATE_URL" ] || { wrn "DEV_BRAIN_UPDATE_URL kosong — update dibatalkan"; return 1; }
+  case "$UPDATE_URL" in
+    file://*|"$OFFICIAL_PREFIX"*) ;;
+    *) wrn "UPDATE_URL tidak resmi — hanya $OFFICIAL_PREFIX atau file:// (test). Update dibatalkan"; return 1 ;;
+  esac
   command -v curl >/dev/null 2>&1 || { wrn "curl tidak ada — update manual: git clone"; return 1; }
   local TMP; TMP=$(mktemp -d)
-  if curl -fsSL --connect-timeout 5 --max-time 60 "$UPDATE_URL" -o "$TMP/kit.tgz"; then
+  if curl -fsSL --proto '=https,file' --tlsv1.2 --connect-timeout 5 --max-time 60 "$UPDATE_URL" -o "$TMP/kit.tgz"; then
     ok "unduh selesai"
   else
     wrn "unduh gagal — cek koneksi"; rm -rf "$TMP"; return 1
   fi
+  case "$UPDATE_URL" in
+    https://*)
+      if [ -n "${DEV_BRAIN_UPDATE_SHA:-}" ]; then
+        command -v sha256sum >/dev/null 2>&1 || { wrn "sha256sum tidak ada — SHA tak bisa diverifikasi, update dibatalkan"; rm -rf "$TMP"; return 1; }
+        printf '%s  %s\n' "$DEV_BRAIN_UPDATE_SHA" "$TMP/kit.tgz" | sha256sum -c - >/dev/null 2>&1 \
+          || { wrn "SHA mismatch — tarball ditolak, update dibatalkan"; rm -rf "$TMP"; return 1; }
+        ok "SHA cocok"
+      else
+        wrn "DEV_BRAIN_UPDATE_SHA kosong — update https tanpa verifikasi DITOLAK"; rm -rf "$TMP"; return 1
+      fi
+      ;;
+  esac
   tar -xzf "$TMP/kit.tgz" -C "$TMP" || { wrn "ekstrak gagal"; rm -rf "$TMP"; return 1; }
   local SRC; SRC=$(find "$TMP" -maxdepth 1 -type d -name 'agent-ai*' | head -1)
   [ -f "$SRC/install.sh" ] || { wrn "paket tidak valid"; rm -rf "$TMP"; return 1; }
@@ -250,12 +299,16 @@ OFFLINE=0
 UNINSTALL=0
 UPDATE=0
 CHECK=0
+ALLOW_ALL=0
+ALLOW_YES=0
 while [ $# -gt 0 ]; do
   case "$1" in
     --offline) OFFLINE=1; shift ;;
     --uninstall) UNINSTALL=1; shift ;;
     --update) UPDATE=1; shift ;;
     --check) CHECK=1; shift ;;
+    --allow-all) ALLOW_ALL=1; shift ;;
+    --yes|-y) ALLOW_YES=1; shift ;;
     --help|-h) usage; exit 0 ;;
     *) wrn "arg tak dikenal: $1 (diabaikan)"; shift ;;
   esac

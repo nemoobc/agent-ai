@@ -11,8 +11,10 @@ permissions:
 jobs:
   release:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment: release
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4 # pin: actions/checkout@11bd71901bbe5b1630ce7ea09f3b2d965984876457
 
       - name: Syntax + self-test (gate)
         run: |
@@ -33,7 +35,7 @@ jobs:
           head -40 release-notes.md
 
       - name: Buat GitHub Release
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v2 # pin: softprops/action-gh-release@da05d552573ad93b93904e8d7a1e2e46d37f0eb4f2
         with:
           body_path: release-notes.md
           generate_release_notes: true

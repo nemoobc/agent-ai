@@ -1,11 +1,18 @@
 #!/usr/bin/env bash
 # ═════════════════════════════════════════════════════════════════
 #  DELIVER run.sh — zip + upload tmpfiles.org (serah kerja tanpa git).
-#  Pemakaian: bash run.sh [jam_hidup]   (default 24; max 72 di tmpfiles)
+#  Pemakaian: bash run.sh [jam_hidup] [--yes]   (default 24; max 72 di tmpfiles)
+#  Upload ke tmpfiles.org = exfil eksternal. Wajib opt-in: --yes atau DELIVER_CONFIRM=1.
 #  Exit: 0 = link jadi, 1 = gagal, 2 = dibatalkan guard.
 # ═════════════════════════════════════════════════════════════════
 set -u
 p(){ printf '\033[38;5;%sm%s\033[0m\n' "$2" "$1"; }
+YES=0
+[ "${DELIVER_CONFIRM:-}" = "1" ] && YES=1
+for a in "$@"; do [ "$a" = "--yes" ] && YES=1; done
+ARGS=()
+for a in "$@"; do [ "$a" != "--yes" ] && ARGS+=("$a"); done
+set -- "${ARGS[@]:-}"
 DIR="$(cd "$(dirname "$0")/.." && pwd)"
 PROJECT="$(cd "$DIR/.." && pwd)"
 V="$(tr -d '[:space:]' < "$PROJECT/VERSION" 2>/dev/null || echo dev)"
@@ -44,6 +51,12 @@ if ! bash "$DIR/audit-full/run.sh" "$SCAN" >/dev/null 2>&1; then
   exit 2
 fi
 p "  ✔ isi arsip lolos audit secret" 82
+
+if [ "$YES" -ne 1 ]; then
+  p "  ✖ upload DIBATALKAN — arsip repo ke tmpfiles.org = eksternal. Ulangi dengan --yes (atau DELIVER_CONFIRM=1) bila setuju. ZIP: $ZIP" 196
+  p "  ▸ pratinjau isi: $SCAN ($SIZE, $NFILES file)" 214
+  exit 2
+fi
 
 p "▮ DELIVER — upload tmpfiles.org" 213
 LINK=$(curl -fsSL --connect-timeout 5 --max-time 120 -F "file=@$ZIP" "https://tmpfiles.org/api/v1/upload?expiry=$HOURS" 2>/dev/null \

@@ -13,5 +13,10 @@ Thumbs.db
 # lingkungan
 .env
 .env.local
+.env.*
+!.env.example
+*.pem
+*.key
+credentials*.json
 node_modules/
 __pycache__/

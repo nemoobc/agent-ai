@@ -1,5 +1,17 @@
 # CHANGELOG
 
+## [12.1.3] — 2026-09-12
+### Security
+- **install default granular** — `write_config` tulis `ask` semua; allow-all hanya opt-in `--allow-all` / `DEV_BRAIN_ALLOW_ALL=1`
+- **update wajib SHA** — https tolak tanpa `DEV_BRAIN_UPDATE_SHA`; pin prefix resmi, non-resmi ditolak; curl `--proto '=https' --tlsv1.2`; `set -o pipefail`
+- **curl|bash diganti** — README anjur unduh-inspeksi-jalankan; `deliver` upload wajib `--yes`; `uninstall`/`install --uninstall` wajib konfirmasi/`--yes`
+### Fixed
+- **README.en.md drift** — SKILLS 62→63 (buang bench/blame/mutation/e2e-flow; tambah auto-prompt/backup/route), COMMANDS 40→41 (tabel 23→41), STRUCTURE 62/40→63/41, PLAYBOOKS 17→23, mutation 12→15, flags install sync (buang --project/--hook/--lint fiktif)
+- **Makefile** — komen mutation 10→15
+- **docs drift cd780be** — entry ini catat perubahan USAGE/PLAYBOOKS/ARCH/lint/CI versi lalu
+- **CI hardening** — `permissions: contents: read`, `timeout-minutes`, `environment: release`, pin SHA action
+- **.gitignore** — tambah `.env.*`, `*.pem`, `*.key`, `credentials*.json`
+
 ## [12.1.2] — 2026-09-12
 ### Fixed
 - **install.sh write_config MERGE** — sebelumnya `cat >` menimpa opencode.json → MCP/provider/model config user HILANG saat install. Sekarang merge via python3 (fallback tulis baru): semua key user (mcp, provider, model, agent, theme) dipertahankan, hanya devbrain+permission yang ditulis DEV-BRAIN

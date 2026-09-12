@@ -25,7 +25,7 @@ demo: ## Demo flow cepat
 update: ## Uji update flow (upgrade + anti-downgrade, tanpa jaringan)
 	bash tests/test-update.sh
 
-mutation: ## Bukti detektor: 10 perusakan harus ditangkap gate
+mutation: ## Bukti detektor: 15 perusakan harus ditangkap gate
 	bash tests/mutation.sh
 
 bench: ## Ukur durasi tiap gate, deteksi drift

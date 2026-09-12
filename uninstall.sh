@@ -57,6 +57,21 @@ uninstall(){
     return
   fi
 
+  if [ "${1:-}" != "--yes" ]; then
+    nagent=$(ls -1 "$CFG/agent" 2>/dev/null | wc -l | tr -d ' ')
+    nskill=$(ls -1d "$CFG/skill"/*/ 2>/dev/null | wc -l | tr -d ' ')
+    ncmd=$(ls -1 "$CFG/command"/*.md 2>/dev/null | wc -l | tr -d ' ')
+    inf "Akan dihapus: agent $nagent | skill $nskill | command $ncmd + AGENTS.md + VERSION (memory DIPERTAHANKAN)"
+    inf "Pratinjau dulu: bash uninstall.sh --check"
+    if [ -t 0 ]; then
+      printf "  ketik HAPUS untuk lanjut: "; read -r ans
+      [ "$ans" = "HAPUS" ] || { inf "dibatalkan"; box_selesai; return 1; }
+    else
+      inf "dibatalkan — non-interaktif wajib: bash uninstall.sh --yes"
+      box_selesai; return 1
+    fi
+  fi
+
   dots "agent..."
   rm -rf "$CFG/agent"
 
@@ -104,6 +119,7 @@ case "${1:-}" in
     inf "  memory/ DIPERTAHANKAN"
     exit 0
     ;;
-  --help|-h) echo "Usage: bash uninstall.sh [--check]";;
+  --help|-h) echo "Usage: bash uninstall.sh [--check] [--yes]";;
+  --yes) uninstall --yes;;
   *) uninstall;;
 esac
