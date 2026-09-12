@@ -82,6 +82,28 @@ uninstall(){
 }
 
 case "${1:-}" in
-  --help|-h) echo "Usage: bash uninstall.sh";;
+  --check|-c)
+    # PRATINJAU — hitung & tampilkan, TANPA menghapus apa pun
+    if [ ! -d "$CFG" ]; then
+      inf "Tidak ada instalasi"
+      exit 0
+    fi
+    nagent=$(ls -1 "$CFG/agent" 2>/dev/null | wc -l | tr -d ' ')
+    nskill=$(ls -1d "$CFG/skill"/*/ 2>/dev/null | wc -l | tr -d ' ')
+    ncmd=$(ls -1 "$CFG/command"/*.md 2>/dev/null | wc -l | tr -d ' ')
+    ndocs=$(ls -1 "$CFG/docs" 2>/dev/null | wc -l | tr -d ' ')
+    bak=$(ls -1t "$CFG"/opencode.json.bak.* 2>/dev/null | head -n1)
+    inf "PRATINJAU (--check) — tidak ada yang dihapus:"
+    inf "  agent: $nagent | skill: $nskill | command: $ncmd | docs: $ndocs"
+    inf "  AGENTS.md + VERSION akan dihapus"
+    if [ -n "${bak:-}" ]; then
+      inf "  opencode.json dipulihkan dari: $(basename "$bak")"
+    else
+      inf "  opencode.json TIDAK dipulihkan (tidak ada backup)"
+    fi
+    inf "  memory/ DIPERTAHANKAN"
+    exit 0
+    ;;
+  --help|-h) echo "Usage: bash uninstall.sh [--check]";;
   *) uninstall;;
 esac

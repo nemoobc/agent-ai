@@ -1,6 +1,6 @@
 <!--
   AGENT AI — Kit orkestrasi agent AI untuk opencode
-  v12.1.1 • 11 agent • 63 skill • 41 command
+  v12.1.2 • 11 agent • 63 skill • 41 command
   by nemoobc
 -->
 <div align="center">
@@ -18,7 +18,7 @@
 
 </div>
 
-![version](https://img.shields.io/badge/VERSION-12.1.1-blue?style=for-the-badge&logo=github)
+![version](https://img.shields.io/badge/VERSION-12.1.2-blue?style=for-the-badge&logo=github)
 ![agents](https://img.shields.io/badge/AGENTS-11-22c55e?style=for-the-badge&logo=robotframework)
 ![skills](https://img.shields.io/badge/SKILLS-63-f97316?style=for-the-badge&logo=apachemaven)
 ![commands](https://img.shields.io/badge/COMMANDS-41-a855f7?style=for-the-badge&logo=terminal)
@@ -112,6 +112,6 @@ make verify
 
 ⭐ **Star & Fork — gratis, bikin semangat!** ⭐
 
-**v12.1.1** • by [nemoobc](https://github.com/nemoobc)
+**v12.1.2** • by [nemoobc](https://github.com/nemoobc)
 
 </div>

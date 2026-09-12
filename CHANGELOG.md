@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## [12.1.2] — 2026-09-12
+### Fixed
+- **install.sh write_config MERGE** — sebelumnya `cat >` menimpa opencode.json → MCP/provider/model config user HILANG saat install. Sekarang merge via python3 (fallback tulis baru): semua key user (mcp, provider, model, agent, theme) dipertahankan, hanya devbrain+permission yang ditulis DEV-BRAIN
+- **uninstall.sh --check TIDAK ADA** — `bash uninstall.sh --check` langsung menghapus semua + memulihkan backup (bukan pratinjau!). Sekarang `--check` = pratinjau murni: hitung agent/skill/command/docs, tampilkan backup yang akan dipulihkan, TANPA menghapus apa pun
+
 ## [12.1.1] — 2026-09-12
 ### Fixed
 - **install.sh REGRESI v12.1.0 dipulihkan** — `--offline`, `--uninstall`, `--update`, `--check` flag kembali; backup/restore opencode.json user; marker `devbrain` ditulis; loop skill eksplisit (lint-kit 64 masalah → 0)

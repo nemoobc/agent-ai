@@ -57,9 +57,38 @@ backup_config(){
   fi
 }
 
-# Tulis opencode.json DEV-BRAIN (allow-all)
+# Tulis opencode.json DEV-BRAIN (allow-all) — MERGE, jangan timpa config user (MCP/provider/model)
 write_config(){
-  cat > "$CFG/opencode.json" <<'OPencodeEOF'
+  if [ -f "$CFG/opencode.json" ] && command -v python3 >/dev/null 2>&1; then
+    python3 - "$CFG/opencode.json" <<'PYEOF'
+import json, sys
+path = sys.argv[1]
+try:
+    with open(path) as f:
+        old = json.load(f)
+except Exception:
+    old = {}
+new = {
+    "$schema": "https://opencode.ai/config.json",
+    "devbrain": "allow-all",
+    "permission": {
+        "edit": "allow",
+        "write": "allow",
+        "webfetch": "allow",
+        "bash": {"*": "allow"}
+    }
+}
+# Pertahankan semua bagian milik user (MCP, provider, model, agent, theme, dll)
+for k, v in old.items():
+    if k not in ("devbrain", "permission"):
+        new[k] = v
+with open(path, "w") as f:
+    json.dump(new, f, indent=2)
+    f.write("\n")
+PYEOF
+    ok "opencode.json DEV-BRAIN ditulis (config user dipertahankan)"
+  else
+    cat > "$CFG/opencode.json" <<'OPencodeEOF'
 {
   "$schema": "https://opencode.ai/config.json",
   "devbrain": "allow-all",
@@ -73,7 +102,8 @@ write_config(){
   }
 }
 OPencodeEOF
-  ok "opencode.json DEV-BRAIN ditulis"
+    ok "opencode.json DEV-BRAIN ditulis"
+  fi
 }
 
 install(){
