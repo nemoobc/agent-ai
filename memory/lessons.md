@@ -1,6 +1,11 @@
 # LESSONS — pelajaran terukur (skill learn)
 Entry terbaru di atas. Format: POLA / BUKTI / AKSI. Tanpa bukti = tidak masuk.
 
+## 2026-09-13 — jangan andalkan /tmp, pakai working directory sendiri
+- POLA: pakai /tmp untuk temp kerja → gagal di environment yang /tmp read-only (Termux sandbox)
+- BUKTI: git worktree add ke /tmp → "Read-only file system"; cp ke /tmp → gagal
+- AKSI: pakai ~/workspace/ atau subdirektori di project sendiri; /tmp hanya bila ada bukti writable
+
 ## 2026-09-11 — cap waktu harus sadar-perangkat, bukan sadar-mesin-CI
 - POLA: hard-cap durasi (timeout/cap) dikalibrasi di mesin cepat → false-fail di perangkat lambat (HP/ARM)
 - BUKTI: test-update timeout 15s vs install Termux 22,5s = GAGAL palsu; bench cap 90/180s vs mutation Termux 596s = false-fail
