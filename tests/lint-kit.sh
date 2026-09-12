@@ -120,6 +120,8 @@ grep -q 'mutation' "$DIR/.github/workflows/ci.yml" \
   && ok "CI jalan mutation" || bad "CI tidak jalan mutation"
 grep -q 'bench' "$DIR/.github/workflows/ci.yml" \
   && ok "CI jalan bench" || bad "CI tidak jalan bench"
+grep -q 'doctor' "$DIR/.github/workflows/ci.yml" \
+  && ok "CI jalan doctor" || bad "CI tidak jalan doctor"
 
 p "▮ LINT: konsistensi angka (HUKUM 10)" 213
 V=$(cat "$DIR/VERSION" | tr -d '[:space:]')
@@ -147,6 +149,10 @@ for w in allow-all build data monitor multi-model notify plan scaffold web; do
 done
 [ -f "$DIR/command/allow-all.md" ] && ok "command allow-all ada" || bad "command allow-all hilang"
 grep -q "$V" "$DIR/docs/USAGE.md" && ok "USAGE.md sebut VERSION $V" || bad "USAGE.md basi (tidak sebut $V)"
+grep -q "SKILLS ($NSK)" "$DIR/docs/USAGE.md" && ok "USAGE: SKILLS ($NSK) cocok" || bad "USAGE: SKILLS tidak ($NSK)"
+grep -q "COMMANDS ($NCW)" "$DIR/docs/USAGE.md" && ok "USAGE: COMMANDS ($NCW) cocok" || bad "USAGE: COMMANDS tidak ($NCW)"
+grep -q "$V" "$DIR/docs/PLAYBOOKS.md" && ok "PLAYBOOKS sebut $V" || bad "PLAYBOOKS basi (tidak sebut $V)"
+grep -q "$V" "$DIR/docs/ARCHITECTURE.md" && ok "ARCH sebut $V" || bad "ARCH basi (tidak sebut $V)"
 
 p "▮ LINT: semua command/*.md ada Usage section" 213
 for f in "$DIR"/command/*.md; do

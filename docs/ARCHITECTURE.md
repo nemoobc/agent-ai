@@ -1,4 +1,4 @@
-# ARSITEKTUR DEV-BRAIN DOCTRINE v12.1.0
+# ARSITEKTUR DEV-BRAIN DOCTRINE v12.1.2
 
 Dokumen ini menjelaskan **cara kit bekerja**, bukan sekadar daftar file. Siapa pun (atau agent apa pun) yang membaca ini harus bisa menjawab: *apa yang terjadi ketika sebuah permintaan masuk, dan siapa yang menjamin kualitasnya?*
 

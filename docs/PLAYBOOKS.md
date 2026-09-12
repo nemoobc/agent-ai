@@ -1,4 +1,4 @@
-# PLAYBOOKS — DEV-BRAIN v7.0
+# PLAYBOOKS — DEV-BRAIN v12.1.2
 
 Resep skenario nyata. Tiap resep = urutan skill/command + gerbang yang tidak boleh dilewati.
 Kamu tetap TIDAK PERLU hafal ini — DEV pilih otomatis. Ini untuk paham cara dia berpikir.

@@ -35,7 +35,7 @@ DEV yang panggil. User tidak perlu tahu. Bila tugas kecil (< 3 file, tanpa risik
 
 ---
 
-## SKILLS (56)
+## SKILLS (63)
 
 ### Otot otomatis (dipanggil DEV tanpa disuruh)
 
@@ -113,7 +113,7 @@ DEV yang panggil. User tidak perlu tahu. Bila tugas kecil (< 3 file, tanpa risik
 
 ---
 
-## COMMANDS (33)
+## COMMANDS (41)
 
 | Command | Fungsi | Contoh |
 |---------|--------|--------|
@@ -148,6 +148,16 @@ DEV yang panggil. User tidak perlu tahu. Bila tugas kecil (< 3 file, tanpa risik
 | `/estimate <tugas>` | Pecah jadi item S/M/L/XL dengan angka nyata dari scan | `/estimate rebuild auth` |
 | `/route <prompt>` | Klasifikasi prompt → NORMAL/FULL/ULTRA; jalur menentukan cakupan pipeline & delegasi | `/route lengkapin dashboard` |
 | `/hermes <tugas>` | Delegasi lintas-domain ke agent hermes, laporan berbukti | `/hermes wiring pembayaran` |
+| `/allow-all` | Buka semua izin opencode + backup otomatis | `/allow-all` |
+| `/auto-prompt [input]` | Generate prompt matang dari input kasar | `/auto-prompt bikin login` |
+| `/build [fitur]` | Implementasi via DEV setelah gerbang PLAN | `/build form login` |
+| `/data [file] [opsi]` | Analisis & visualisasi CSV/JSON/Excel | `/data data.csv summary` |
+| `/monitor [target]` | Health check & alert service | `/monitor https://api.id once` |
+| `/multi-model [model:prompt]` | Panggil AI model apa aja + cost guard | `/multi-model claude:jelaskan JWT` |
+| `/notify [channel:pesan]` | Kirim notifikasi Email/Slack/Discord/Telegram | `/notify telegram:deploy sukses` |
+| `/scaffold [stack] [nama]` | Generate boilerplate siap coding | `/scaffold nextjs app-baru` |
+| `/web [aksi] [target]` | Otomasi browser: scrape/screenshot/form | `/web scrape https://s.id` |
+| `/plan [perubahan]` | Rencana 8 blok sebelum eksekusi | `/plan tambah dark mode` |
 
 ---
 
@@ -221,8 +231,8 @@ DEV: [GODOK] TUJUAN: toggle tema gelap, tersimpan di preferensi.
 ├── opencode.json            ← permission granular
 ├── VERSION                  ← versi terpasang
 ├── agent/                   ← 11 agent (critic + hermes + designer + researcher)
-├── skill/                   ← 56 skill
-├── command/                 ← 33 command
+├── skill/                   ← 63 skill
+├── command/                 ← 41 command
 └── memory/                  ← ingatan persisten
 
 <project>/.opencode/         ← per-project (opsional: /bootstrap)

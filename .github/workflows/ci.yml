@@ -43,3 +43,6 @@ jobs:
 
       - name: Audit-full pada kit ini sendiri
         run: bash skills/audit-full/run.sh .
+
+      - name: Doctor — kesehatan kit
+        run: bash skills/doctor/run.sh .
