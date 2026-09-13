@@ -15,8 +15,8 @@ function getRoute() { const [page, param] = location.hash.slice(1).split('/'); r
 window.addEventListener('hashchange', render);
 
 // ─── Sidebar ──────────────────────────────────────────────
-function toggleSidebar() { const sb = $('#sidebar'); const btn = $('#menuBtn'); sb.classList.toggle('open'); btn.classList.toggle('on'); btn.setAttribute('aria-expanded', sb.classList.contains('open')); }
-function closeSidebar() { $('#sidebar').classList.remove('open'); const btn = $('#menuBtn'); btn.classList.remove('on'); btn.setAttribute('aria-expanded', 'false'); }
+function toggleSidebar() { const sb = $('#sidebar'); const btn = $('#menuBtn'); const isMobile = window.innerWidth <= 768; if (isMobile) { sb.classList.toggle('open'); btn.classList.toggle('on'); } else { sb.classList.toggle('collapsed'); } btn.setAttribute('aria-expanded', sb.classList.contains('open') || !sb.classList.contains('collapsed')); }
+function closeSidebar() { const sb = $('#sidebar'); const btn = $('#menuBtn'); sb.classList.remove('open'); sb.classList.remove('collapsed'); btn.classList.remove('on'); btn.setAttribute('aria-expanded', 'false'); }
 window.toggleSidebar = toggleSidebar;
 window.closeSidebar = closeSidebar;
 

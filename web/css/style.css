@@ -152,7 +152,7 @@ img { max-width: 100%; }
 }
 
 .menu-btn {
-  display: none;
+  display: flex;
   background: none;
   border: 1px solid var(--bg-4);
   border-radius: var(--radius-sm);
@@ -871,3 +871,13 @@ input:focus:not(:focus-visible) {
 .skip-link:focus{top:0}
 @media(max-width:768px){.menu-btn{min-width:44px;min-height:44px}}
 
+
+/* Desktop sidebar collapse */
+.sidebar.collapsed { width: 0; min-width: 0; padding: 0; overflow: hidden; border: none; }
+.sidebar.collapsed .sidebar-head,
+.sidebar.collapsed nav { display: none; }
+.sidebar.collapsed ~ .content { padding: 28px 24px; }
+@media(min-width:769px){
+  .sidebar.collapsed { width: 0; min-width: 0; }
+  .content { transition: padding .2s var(--ease); }
+}
