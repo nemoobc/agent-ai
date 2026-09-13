@@ -222,11 +222,10 @@ const P = {
 
   term() {
     return `${breadcrumb(['Home','Terminal'])}
-<div class="page-header"><h1 tabindex="-1">Terminal</h1></div>
-<div class="term-notice">⚠ Static build — terminal requires backend. <code>cd web && npm start</code></div>
-<div class="btn-row"><button class="btn sm" disabled>Lint</button><button class="btn sm" disabled>Self-Test</button><button class="btn sm" disabled>Eval</button><button class="btn sm" disabled>Doctor</button><button class="btn sm" disabled>Audit</button></div>
-<div class="term" role="log" id="trm"><div class="ln pr">$ agent-ai terminal</div><div class="ln out">Read-only mode. Deploy with Node.js for live execution.</div></div>
-<div class="term-bar"><input id="tc" placeholder="Disabled in static mode" disabled><button class="btn primary" disabled>RUN</button></div>`;
+<div class="page-header"><h1 tabindex="-1">Terminal</h1><span class="sub">agent-ai shell</span></div>
+<div class="term" role="log" aria-label="Terminal output" aria-live="polite" id="trm" tabindex="0"></div>
+<div class="term-bar"><span class="term-ps" aria-hidden="true">$</span><input id="tc" placeholder="Type 'help' and press Enter" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Terminal input"><button class="btn primary" id="trun">RUN</button></div>
+<div class="term-hint">Tab autocomplete &bull; &uarr;/&darr; history &bull; Ctrl+L clear</div>`;
   },
 
   mem() {
@@ -338,6 +337,269 @@ document.addEventListener('keydown', e => {
   }
 });
 
+// ─── Terminal ─────────────────────────────────────────────
+let termHist = [];
+let termHistIdx = -1;
+
+const TERM_ALL = ['help','status','skills','skill','commands','command','agents','agent','memory','cat','theme','clear','about','neofetch','date','echo'];
+
+const TERM_HELP = {
+  help: 'list all commands, or detail for one: help <cmd>',
+  status: 'show kit status (version, counts)',
+  skills: 'list all skills',
+  skill: 'show skill detail: skill <name>',
+  commands: 'list all commands',
+  command: 'show command detail: command <name>',
+  agents: 'list all agents',
+  agent: 'show agent detail: agent <name>',
+  memory: 'list memory files',
+  cat: 'show memory file content: cat <file>',
+  theme: 'toggle theme, or set it: theme [dark|light]',
+  clear: "clear terminal (also Ctrl+L)",
+  about: 'about agent-ai',
+  neofetch: 'system info display',
+  date: 'current date/time',
+  echo: 'echo text: echo <text>'
+};
+
+const TERM_BANNER = [
+' █████╗  ██████╗ ███████╗███╗   ██╗████████╗         █████╗ ██╗',
+'██╔══██╗██╔════╝ ██╔════╝████╗  ██║╚══██╔══╝        ██╔══██╗██║',
+'███████║██║  ███╗█████╗  ██╔██╗ ██║   ██║           ███████║██║',
+'██╔══██║██║   ██║██╔══╝  ██║╚██╗██║   ██║           ██╔══██║██║',
+'██║  ██║╚██████╔╝███████╗██║ ╚████║   ██║           ██║  ██║██║',
+'╚═╝  ╚═╝ ╚═════╝ ╚══════╝╚═╝  ╚═══╝   ╚═╝           ╚═╝  ╚═╝╚═╝'
+].join('\n');
+
+function termEnsureStyle() {
+  if (document.getElementById('termExtra')) return;
+  const st = document.createElement('style');
+  st.id = 'termExtra';
+  st.textContent = '.term-ps{color:var(--green);font-family:var(--font-mono);font-weight:700}'
+    + '.term-hint{color:var(--tx-3);font-size:.75rem;margin-top:10px}'
+    + '.term .ok{color:#00ff9f}.term .cy{color:#00e5ff}.term .yl{color:#ffcf4d}'
+    + '.term-art{color:#00ff9f;margin:0;font-size:.68rem;line-height:1.35;overflow-x:auto}'
+    + '.term pre{white-space:pre-wrap;word-break:break-word;margin:4px 0}'
+    + '.term a{color:#00e5ff}';
+  document.head.appendChild(st);
+}
+
+function termScroll() {
+  const box = $('#trm');
+  if (box) box.scrollTop = box.scrollHeight;
+}
+
+function termPrint(html, cls) {
+  const box = $('#trm');
+  if (!box) return;
+  const d = document.createElement('div');
+  d.className = 'ln ' + (cls || 'out');
+  d.innerHTML = html;
+  box.appendChild(d);
+}
+
+function termFind(list, name) {
+  const n = (name || '').toLowerCase();
+  return list.find(x => (x.name || '').toLowerCase() === n);
+}
+
+function termPreview(content, link) {
+  const t = (content || '').trim();
+  if (!t) return;
+  const cut = t.length > 1200;
+  termPrint('<pre>' + esc(cut ? t.slice(0, 1200) : t) + '</pre>', 'out');
+  if (cut) termPrint('... (' + t.length + ' chars — full: <a href="#' + link + '">' + esc(link) + '</a>)', 'yl');
+}
+
+function tHelp(arg) {
+  const a = (arg || '').toLowerCase();
+  if (!a) {
+    termPrint('Available commands:', 'yl');
+    TERM_ALL.forEach(c => termPrint('<span class="cy">' + c + '</span> — ' + esc(TERM_HELP[c]), 'out'));
+    return;
+  }
+  if (TERM_HELP[a]) termPrint('<span class="cy">' + esc(a) + '</span> — ' + esc(TERM_HELP[a]), 'out');
+  else termPrint("no help for '" + esc(a) + "'. Type 'help'.", 'err');
+}
+
+function tStatus() {
+  const rows = [
+    ['version', DATA.version],
+    ['skills', DATA.skills.length],
+    ['commands', DATA.commands.length],
+    ['agents', DATA.agents.length],
+    ['memory files', DATA.memory.length],
+    ['skills with runner', DATA.skills.filter(s => s.hasRun).length],
+    ['theme', getTheme()]
+  ];
+  termPrint('AGENT-AI status:', 'yl');
+  rows.forEach(r => termPrint('<span class="cy">' + esc(r[0]) + '</span>: ' + esc(String(r[1])), 'out'));
+}
+
+function tSkills() {
+  termPrint(DATA.skills.length + ' skills:', 'yl');
+  DATA.skills.forEach(s => termPrint('<span class="cy">' + esc(s.name) + '</span> <span class="tag ' + (s.hasRun ? 'green' : 'orange') + '">' + (s.hasRun ? 'RUN' : 'MD') + '</span> ' + esc((s.description || '').slice(0, 80)), 'out'));
+}
+
+function tSkill(arg) {
+  if (!arg) { termPrint('usage: skill <name>', 'err'); return; }
+  const s = termFind(DATA.skills, arg);
+  if (!s) { termPrint("skill not found: '" + esc(arg) + "'", 'err'); return; }
+  termPrint('<span class="cy">skill: ' + esc(s.name) + '</span> ' + (s.hasRun ? '[has run.sh]' : '[skill.md only]'), 'yl');
+  if (s.description) termPrint(esc(s.description), 'out');
+  termPreview(s.content, 'skills/' + s.name);
+}
+
+function tCmds() {
+  termPrint(DATA.commands.length + ' commands:', 'yl');
+  DATA.commands.forEach(c => termPrint('<span class="cy">/' + esc(c.name) + '</span> ' + esc((c.description || '').slice(0, 80)), 'out'));
+}
+
+function tCmd(arg) {
+  if (!arg) { termPrint('usage: command <name>', 'err'); return; }
+  const c = termFind(DATA.commands, arg.replace(/^\//, ''));
+  if (!c) { termPrint("command not found: '" + esc(arg) + "'", 'err'); return; }
+  termPrint('<span class="cy">command: /' + esc(c.name) + '</span>', 'yl');
+  if (c.description) termPrint(esc(c.description), 'out');
+  termPreview(c.content, 'commands/' + c.name);
+}
+
+function tAgents() {
+  termPrint(DATA.agents.length + ' agents:', 'yl');
+  DATA.agents.forEach(a => termPrint('<span class="cy">' + esc(a.name) + '</span> ' + esc((a.description || '').slice(0, 80)), 'out'));
+}
+
+function tAgent(arg) {
+  if (!arg) { termPrint('usage: agent <name>', 'err'); return; }
+  const a = termFind(DATA.agents, arg);
+  if (!a) { termPrint("agent not found: '" + esc(arg) + "'", 'err'); return; }
+  termPrint('<span class="cy">agent: ' + esc(a.name) + '</span>', 'yl');
+  if (a.description) termPrint(esc(a.description), 'out');
+  termPreview(a.content, 'agents');
+}
+
+function tMem() {
+  if (!DATA.memory.length) { termPrint('No memory files.', 'out'); return; }
+  termPrint(DATA.memory.length + ' memory files — use: cat <file>', 'yl');
+  DATA.memory.forEach(m => termPrint('<span class="cy">' + esc(m.name) + '</span> (' + (m.content || '').length + ' chars)', 'out'));
+}
+
+function tCat(arg) {
+  if (!arg) { termPrint('usage: cat <file>', 'err'); return; }
+  const m = termFind(DATA.memory, arg);
+  if (!m) { termPrint("file not found: '" + esc(arg) + "'. Files: " + DATA.memory.map(x => esc(x.name)).join(', '), 'err'); return; }
+  termPrint('<span class="cy">' + esc(m.name) + '</span>', 'yl');
+  termPrint('<pre>' + esc(m.content || '(empty)') + '</pre>', 'out');
+}
+
+function tTheme(arg) {
+  const a = (arg || '').toLowerCase();
+  if (a === 'dark' || a === 'light') setTheme(a);
+  else window.toggleTheme();
+  termPrint('theme: ' + esc(getTheme()), 'ok');
+}
+
+function tClear() {
+  const box = $('#trm');
+  if (box) box.innerHTML = '';
+}
+
+function tAbout() {
+  termPrint('AGENT-AI — DEV-BRAIN Kit Dashboard', 'yl');
+  termPrint('Browse skills, commands, agents and kit memory in your browser. Live data from data.json, in-terminal shell on the Terminal page.', 'out');
+  termPrint('v' + esc(DATA.version) + ' — type \'help\' to begin.', 'cy');
+}
+
+function tNeo() {
+  termPrint('<pre class="term-art">   ▲\n  ▲▲▲\n ▲▲▲▲▲\n▲▲▲▲▲▲▲</pre>', 'ok');
+  const rows = [
+    ['agent-ai', 'v' + DATA.version],
+    ['skills', DATA.skills.length + ' (' + DATA.skills.filter(s => s.hasRun).length + ' with runner)'],
+    ['commands', DATA.commands.length],
+    ['agents', DATA.agents.length],
+    ['memory', DATA.memory.length + ' files'],
+    ['theme', getTheme()],
+    ['platform', (navigator && navigator.platform) || 'web'],
+    ['date', new Date().toLocaleString()]
+  ];
+  rows.forEach(r => termPrint('<span class="cy">' + esc(r[0]) + '</span>: ' + esc(String(r[1])), 'out'));
+}
+
+function tDate() {
+  termPrint(esc(new Date().toString()), 'cy');
+}
+
+function tEcho(arg) {
+  termPrint(esc(arg), 'out');
+}
+
+const TERM_FN = { help: tHelp, status: tStatus, skills: tSkills, skill: tSkill, commands: tCmds, command: tCmd, agents: tAgents, agent: tAgent, memory: tMem, cat: tCat, theme: tTheme, clear: tClear, about: tAbout, neofetch: tNeo, date: tDate, echo: tEcho };
+
+function termExec(raw) {
+  if (!DATA) { termPrint('Data not loaded yet.', 'err'); return; }
+  termPrint('$ ' + esc(raw), 'pr');
+  const line = (raw || '').trim();
+  if (!line) { termScroll(); return; }
+  const sp = line.indexOf(' ');
+  const cmd = (sp < 0 ? line : line.slice(0, sp)).toLowerCase();
+  const arg = sp < 0 ? '' : line.slice(sp + 1).trim();
+  const fn = TERM_FN[cmd];
+  if (fn) fn(arg);
+  else {
+    const sug = TERM_ALL.filter(c => c.indexOf(cmd) === 0);
+    termPrint("command not found: '" + esc(cmd) + "'. Type 'help'." + (sug.length ? ' Did you mean: ' + sug.map(s => esc(s)).join(', ') + '?' : ''), 'err');
+  }
+  termScroll();
+}
+
+function termComplete(val) {
+  const m = val.match(/^(.*\s)?(\S*)$/);
+  const head = (val.trim().split(/\s+/)[0] || '').toLowerCase();
+  const frag = ((m && m[2]) || '').toLowerCase();
+  const prefix = (m && m[1]) || '';
+  let pool = null;
+  if (!prefix) pool = TERM_ALL;
+  else if (head === 'skill') pool = DATA.skills.map(s => s.name);
+  else if (head === 'command') pool = DATA.commands.map(c => c.name);
+  else if (head === 'agent') pool = DATA.agents.map(a => a.name);
+  else if (head === 'cat') pool = DATA.memory.map(x => x.name);
+  else if (head === 'help') pool = TERM_ALL;
+  else return val;
+  const hit = pool.filter(n => n.toLowerCase().indexOf(frag) === 0);
+  if (hit.length === 1) return prefix + hit[0] + ' ';
+  if (hit.length > 1) termPrint(hit.map(s => esc(s)).join('   '), 'cy');
+  return val;
+}
+
+function initTerm() {
+  termEnsureStyle();
+  const box = $('#trm'), input = $('#tc');
+  if (!box || !input || box.dataset.live) return;
+  box.dataset.live = '1';
+  termPrint('<pre class="term-art">' + TERM_BANNER + '</pre>', 'ok');
+  termPrint('AGENT-AI v' + esc(DATA.version) + ' — ' + DATA.skills.length + ' skills, ' + DATA.commands.length + ' commands, ' + DATA.agents.length + ' agents. Type \'help\'.', 'out');
+  termScroll();
+  const run = () => {
+    const v = input.value;
+    input.value = '';
+    if (v.trim()) { termHist.push(v); termHistIdx = termHist.length; }
+    termExec(v);
+    input.focus();
+  };
+  const btn = $('#trun');
+  if (btn) btn.onclick = run;
+  input.addEventListener('keydown', e => {
+    if ((e.ctrlKey && (e.key === 'k' || e.key === 'K')) || e.key === 'Escape') e.stopPropagation();
+    if (e.key === 'Enter') run();
+    else if (e.key === 'ArrowUp') { e.preventDefault(); if (termHist.length && termHistIdx > 0) { termHistIdx--; input.value = termHist[termHistIdx]; } }
+    else if (e.key === 'ArrowDown') { e.preventDefault(); if (termHistIdx < termHist.length - 1) { termHistIdx++; input.value = termHist[termHistIdx]; } else { termHistIdx = termHist.length; input.value = ''; } }
+    else if (e.key === 'Tab') { e.preventDefault(); input.value = termComplete(input.value); }
+    else if (e.key === 'l' && e.ctrlKey) { e.preventDefault(); tClear(); }
+  });
+  box.onclick = () => input.focus();
+  setTimeout(() => input.focus(), 50);
+}
+
 // ─── Render ───────────────────────────────────────────────
 function render() {
   const{page,param}=getRoute();
@@ -355,6 +617,9 @@ function render() {
 
   // Animate counters
   $$('.counter[data-target]').forEach(el => { animateCounter(el, parseInt(el.dataset.target)); });
+
+  // Terminal
+  if (page === 'term') initTerm();
 
   // Config
   if(page==='cfg'){
