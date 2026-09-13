@@ -383,3 +383,8 @@ a:focus:not(:focus-visible), button:focus:not(:focus-visible), input:focus:not(:
 /* ═══ SKELETON ═══ */
 @keyframes shimmer { 0% { background-position: -400px 0; } 100% { background-position: 400px 0; } }
 .skeleton { background: linear-gradient(90deg, var(--bg-2) 25%, var(--bg-3) 50%, var(--bg-2) 75%); background-size: 800px 100%; animation: shimmer 1.5s infinite; border-radius: var(--r-sm); }
+
+.sidebar-logo { width: 28px; height: 28px; flex-shrink: 0; filter: drop-shadow(0 0 6px rgba(255,105,180,.3)); }
+.welcome-icon-svg { width: 120px; height: 120px; margin-bottom: 24px; filter: drop-shadow(0 0 30px rgba(191,64,255,.4)); animation: pulse 2s ease-in-out infinite; }
+@media (max-width: 768px) { .sidebar-logo { width: 24px; height: 24px; } }
+
