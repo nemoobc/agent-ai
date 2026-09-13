@@ -324,8 +324,8 @@ kbd { background: var(--bg-3); padding: 2px 8px; border-radius: 4px; font-family
 .welcome-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 1000; background: var(--bg-0); display: flex; align-items: center; justify-content: center; animation: fadeIn .5s; transition: background .5s; }
 .welcome-overlay.fade-out { opacity: 0; transform: scale(1.05); transition: all .5s; }
 .welcome { text-align: center; padding: 48px; max-width: 420px; animation: animeIn .6s var(--ease-bounce) both; }
-.welcome-icon { font-size: 5rem; margin-bottom: 20px; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; animation: pulse 2s ease-in-out infinite; filter: drop-shadow(0 0 20px rgba(255,105,180,.3)); }
-@keyframes pulse { 0%,100% { transform: scale(1); filter: drop-shadow(0 0 20px rgba(255,105,180,.3)); } 50% { transform: scale(1.1); filter: drop-shadow(0 0 30px rgba(191,64,255,.4)); } }
+.welcome-icon { font-size: 5rem; margin-bottom: 20px; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;  filter: drop-shadow(0 0 20px rgba(255,105,180,.3)); }
+@keyframes pulse { 0%,100% { transform: scale(1); filter: drop-shadow(0 0 20px rgba(255,105,180,.3)); } 50% { transform: scale(1.1); filter: drop-shadow(0 0 10px rgba(191,64,255,.2)); } }
 .welcome h1 { font-size: 2.2rem; font-weight: 800; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; letter-spacing: -.03em; margin-bottom: 6px; }
 .welcome-sub { color: var(--tx-4); font-size: .9rem; margin-bottom: 32px; }
 .welcome-stats { display: flex; justify-content: center; gap: 32px; margin-bottom: 32px; }
@@ -385,6 +385,6 @@ a:focus:not(:focus-visible), button:focus:not(:focus-visible), input:focus:not(:
 .skeleton { background: linear-gradient(90deg, var(--bg-2) 25%, var(--bg-3) 50%, var(--bg-2) 75%); background-size: 800px 100%; animation: shimmer 1.5s infinite; border-radius: var(--r-sm); }
 
 .sidebar-logo { width: 28px; height: 28px; flex-shrink: 0; filter: drop-shadow(0 0 6px rgba(255,105,180,.3)); }
-.welcome-icon-svg { width: 120px; height: 120px; margin-bottom: 24px; filter: drop-shadow(0 0 30px rgba(191,64,255,.4)); animation: pulse 2s ease-in-out infinite; }
+.welcome-icon-svg { width: 120px; height: 120px; margin-bottom: 24px; filter: drop-shadow(0 0 10px rgba(191,64,255,.2));  }
 @media (max-width: 768px) { .sidebar-logo { width: 24px; height: 24px; } }
 
