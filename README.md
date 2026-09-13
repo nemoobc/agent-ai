@@ -1,6 +1,6 @@
 <!--
   AGENT AI — Kit orkestrasi agent AI untuk opencode
-  v12.1.3 • 11 agent • 63 skill • 41 command
+  v12.2.0 • 11 agent • 63 skill • 41 command
   by nemoobc
 -->
 <div align="center">
@@ -18,7 +18,7 @@
 
 </div>
 
-![version](https://img.shields.io/badge/VERSION-12.1.3-blue?style=for-the-badge&logo=github)
+![version](https://img.shields.io/badge/VERSION-12.2.0-blue?style=for-the-badge&logo=github)
 ![agents](https://img.shields.io/badge/AGENTS-11-22c55e?style=for-the-badge&logo=robotframework)
 ![skills](https://img.shields.io/badge/SKILLS-63-f97316?style=for-the-badge&logo=apachemaven)
 ![commands](https://img.shields.io/badge/COMMANDS-41-a855f7?style=for-the-badge&logo=terminal)
@@ -29,25 +29,49 @@
 
 ---
 
-## 💡 Kenapa Ini Ada
+## Kenapa Ini Ada
 
 AI tanpa struktur = hasil acak. **AGENT AI** memberi AI **pipeline kerja tetap + 13 hukum** supaya output konsisten, teruji, dan bisa dipertanggungjawabkan. Cukup kasih satu kalimat — AI yang mikir, bangun, test, audit, dan lapor.
 
 ```text
 > bikin fitur login
 
-[DEV] MIKIR → RENCANA → BANGUN → TEST hijau → AUDIT CLEAN → SELESAI ✅
+[DEV] MIKIR → RENCANA → BANGUN → TEST hijau → AUDIT CLEAN → SELESAI
 ```
 
 **Dibuat oleh [nemoobc](https://github.com/nemoobc)** — supaya AI bisa kerja lebih maksimal.
 
 ---
 
-## 🚀 Instal
+## Fitur Baru v12.2.0
+
+- **Privacy First** — `share: disabled`, `snapshot: false`, `openTelemetry: false` + provider anti-tracking headers
+- **Default Model** — Zen (GLM-5.3) sebagai primary, 9Router free models sebagai fallback
+- **allow-all Enhanced** — Merge config (provider/model/privacy TIDAK berubah), bukan overwrite
+- **opencode-termux** — `--allow-all` flag built-in + privacy env vars otomatis
+
+---
+
+## Instal
 
 **curl (recommended):**
 ```bash
 curl -fsSL https://raw.githubusercontent.com/nemoobc/agent-ai/master/install.sh -o /tmp/agent-ai-install.sh
+# baca dulu bila ragu: less /tmp/agent-ai-install.sh
+bash /tmp/agent-ai-install.sh
+# default granular (ask). Opt-in allow-all: bash /tmp/agent-ai-install.sh --allow-all
+```
+
+**bash:**
+```bash
+bash <(curl -fsSL https://raw.githubusercontent.com/nemoobc/agent-ai/master/install.sh)
+```
+
+**clone:**
+```bash
+git clone https://github.com/nemoobc/agent-ai.git
+cd agent-ai && bash install.sh
+```
 # baca dulu bila ragu: less /tmp/agent-ai-install.sh
 bash /tmp/agent-ai-install.sh
 # default granular (ask). Opt-in allow-all: bash /tmp/agent-ai-install.sh --allow-all
@@ -115,6 +139,6 @@ make verify
 
 ⭐ **Star & Fork — gratis, bikin semangat!** ⭐
 
-**v12.1.3** • by [nemoobc](https://github.com/nemoobc)
+**v12.2.0** • by [nemoobc](https://github.com/nemoobc)
 
 </div>
