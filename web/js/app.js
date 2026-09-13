@@ -433,3 +433,5 @@ fetch('data.json',{cache:'force-cache'})
   .catch(e=>{
     $('#app').innerHTML=`<div class="empty" style="margin-top:100px"><h3>Failed to load data</h3><p>${esc(e.message)}</p><button class="btn primary" onclick="location.reload()">Retry</button></div>`;
   });
+
+})();
