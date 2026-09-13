@@ -9,11 +9,14 @@
 </head>
 <body>
   <div class="app">
-    <aside class="sidebar">
+    <button class="menu-btn" id="menuBtn" onclick="document.querySelector('.sidebar').classList.toggle('open');this.classList.toggle('on')">
+      <span></span><span></span><span></span>
+    </button>
+    <aside class="sidebar" id="sidebar">
       <div class="logo">AGENT-AI <span class="ver" id="ver"></span></div>
       <nav id="nav"></nav>
     </aside>
-    <main class="content" id="app"></main>
+    <main class="content" id="app" onclick="document.querySelector('.sidebar').classList.remove('open');document.getElementById('menuBtn').classList.remove('on')"></main>
   </div>
   <script src="js/app.js"></script>
 </body>
