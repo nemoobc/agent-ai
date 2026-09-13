@@ -15,13 +15,57 @@ function getRoute() { const [page, param] = location.hash.slice(1).split('/'); r
 window.addEventListener('hashchange', render);
 
 // ─── Sidebar ──────────────────────────────────────────────
-function toggleSidebar() { const sb = $('#sidebar'); const btn = $('#menuBtn'); const isMobile = window.innerWidth <= 768; if (isMobile) { sb.classList.toggle('open'); btn.classList.toggle('on'); } else { sb.classList.toggle('collapsed'); } btn.setAttribute('aria-expanded', sb.classList.contains('open') || !sb.classList.contains('collapsed')); }
+function toggleSidebar() {
+  const sb = $('#sidebar');
+  const btn = $('#menuBtn');
+  const isMobile = window.innerWidth <= 768;
+  if (isMobile) { sb.classList.toggle('open'); btn.classList.toggle('on'); }
+  else { sb.classList.toggle('collapsed'); }
+  btn.setAttribute('aria-expanded', sb.classList.contains('open') || !sb.classList.contains('collapsed'));
+}
 function closeSidebar() { const sb = $('#sidebar'); const btn = $('#menuBtn'); sb.classList.remove('open'); sb.classList.remove('collapsed'); btn.classList.remove('on'); btn.setAttribute('aria-expanded', 'false'); }
 window.toggleSidebar = toggleSidebar;
 window.closeSidebar = closeSidebar;
+document.addEventListener('click', e => { const sb = $('#sidebar'); if (sb.classList.contains('open') && !sb.contains(e.target) && !$('#menuBtn')?.contains(e.target)) closeSidebar(); });
 
-// Backdrop close
-document.addEventListener('click', e => { const sb = $('#sidebar'); if (sb.classList.contains('open') && !sb.contains(e.target) && !$('#menuBtn').contains(e.target)) closeSidebar(); });
+// ─── Welcome Screen ───────────────────────────────────────
+function showWelcome() {
+  if (localStorage.getItem('agent-ai-seen')) return false;
+  const overlay = document.createElement('div');
+  overlay.className = 'welcome-overlay';
+  overlay.innerHTML = `
+    <div class="welcome">
+      <div class="welcome-icon">◈</div>
+      <h1>AGENT-AI</h1>
+      <p class="welcome-sub">DEV-BRAIN Kit Dashboard</p>
+      <div class="welcome-stats">
+        <div class="ws"><span class="ws-val" id="wv1">0</span><span class="ws-label">Skills</span></div>
+        <div class="ws"><span class="ws-val" id="wv2">0</span><span class="ws-label">Commands</span></div>
+        <div class="ws"><span class="ws-val" id="wv3">0</span><span class="ws-label">Agents</span></div>
+      </div>
+      <p class="welcome-desc">Browse skills, commands, agents, and explore the DEV-BRAIN kit.</p>
+      <button class="welcome-btn" id="welcomeBtn">Get Started</button>
+      <div class="welcome-footer">v<span id="wv"></span> • Built with ♥</div>
+    </div>`;
+  document.body.appendChild(overlay);
+
+  // Animate numbers
+  let s = 0, c = 0, a = 0;
+  const ti = setInterval(() => {
+    if (s < DATA.skills.length) { s++; $('#wv1').textContent = s; }
+    if (c < DATA.commands.length) { c++; $('#wv2').textContent = c; }
+    if (a < DATA.agents.length) { a++; $('#wv3').textContent = a; }
+    if (s >= DATA.skills.length && c >= DATA.commands.length && a >= DATA.agents.length) clearInterval(ti);
+  }, 30);
+
+  $('#wv').textContent = DATA.version;
+  $('#welcomeBtn').onclick = () => {
+    overlay.classList.add('fade-out');
+    setTimeout(() => overlay.remove(), 400);
+    localStorage.setItem('agent-ai-seen', '1');
+  };
+  return true;
+}
 
 // ─── Nav ──────────────────────────────────────────────────
 function buildNav(page) {
@@ -72,9 +116,19 @@ const P = {
   dash() {
     const s = DATA.skills, c = DATA.commands, a = DATA.agents, w = s.filter(x => x.hasRun).length;
     return `<div class="page-header"><h1 tabindex="-1">Dashboard</h1><span class="sub">v${DATA.version}</span></div>
-<div class="stats" role="list"><div class="stat" role="listitem"><div class="label">Health</div><div class="val g">SEHAT</div></div><div class="stat" role="listitem"><div class="label">Skills</div><div class="val b">${s.length}</div></div><div class="stat" role="listitem"><div class="label">Commands</div><div class="val o">${c.length}</div></div><div class="stat" role="listitem"><div class="label">Agents</div><div class="val p">${a.length}</div></div><div class="stat" role="listitem"><div class="label">Has Runner</div><div class="val c">${w}</div></div></div>
-<div class="btn-row"><a href="#skills" class="btn primary">Browse Skills</a><a href="#commands" class="btn primary">Browse Commands</a><a href="#terminal" class="btn">Terminal</a></div>
-<h3 style="color:var(--tx-3);margin-bottom:12px">Recent Skills</h3>
+<div class="stats" role="list">
+  <div class="stat" role="listitem"><div class="label">Health</div><div class="val g">SEHAT</div></div>
+  <div class="stat" role="listitem"><div class="label">Skills</div><div class="val b">${s.length}</div></div>
+  <div class="stat" role="listitem"><div class="label">Commands</div><div class="val o">${c.length}</div></div>
+  <div class="stat" role="listitem"><div class="label">Agents</div><div class="val p">${a.length}</div></div>
+  <div class="stat" role="listitem"><div class="label">Has Runner</div><div class="val c">${w}</div></div>
+</div>
+<div class="btn-row">
+  <a href="#skills" class="btn primary">⚡ Browse Skills</a>
+  <a href="#commands" class="btn primary">▶ Browse Commands</a>
+  <a href="#terminal" class="btn">>_ Terminal</a>
+</div>
+<h3 style="color:var(--tx-3);margin-bottom:14px;font-size:0.9rem">Recent Skills</h3>
 <div class="grid-2">${s.slice(0, 6).map(skillCard).join('')}</div>`;
   },
 
@@ -116,8 +170,8 @@ const P = {
     return `<div class="page-header"><h1 tabindex="-1">Terminal</h1></div>
 <div class="term-notice">⚠ Static build — terminal requires backend server. <code>cd web && npm start</code></div>
 <div class="btn-row">
-<button class="btn sm" disabled>Lint</button><button class="btn sm" disabled>Self-Test</button>
-<button class="btn sm" disabled>Eval</button><button class="btn sm" disabled>Doctor</button><button class="btn sm" disabled>Audit</button>
+  <button class="btn sm" disabled>Lint</button><button class="btn sm" disabled>Self-Test</button>
+  <button class="btn sm" disabled>Eval</button><button class="btn sm" disabled>Doctor</button><button class="btn sm" disabled>Audit</button>
 </div>
 <div class="term" role="log" aria-label="Terminal output" id="trm"><div class="ln pr">$ agent-ai terminal</div><div class="ln out">Read-only mode. Deploy with Node.js for live execution.</div></div>
 <div class="term-bar"><input id="tc" placeholder="Disabled in static mode" disabled aria-label="Terminal command"><button class="btn primary" disabled>RUN</button></div>`;
@@ -147,14 +201,13 @@ const P = {
     const suites = ['lint-kit', 'self-test', 'eval', 'e2e-flow', 'run-demo', 'test-update', 'mutation', 'bench'];
     return `<div class="page-header"><h1 tabindex="-1">Tests</h1><span class="sub">${suites.length} suites</span></div>
 <div class="detail"><div class="detail-head"><h2>Demo Mode</h2><span class="tag orange">SIMULATED</span></div>
-<div class="detail-body"><p style="color:var(--tx-3);margin-bottom:16px">Test results below are simulated. For real results, run <code>make verify</code> locally.</p></div></div>
+<div class="detail-body"><p style="color:var(--tx-3);margin-bottom:0">Test results below are simulated. For real results, run <code>make verify</code> locally.</p></div></div>
 <table class="tbl"><thead><tr><th>Suite</th><th>Status</th><th></th></tr></thead>
 <tbody>${suites.map(s => `<tr><td>${s}</td><td id="s-${s}">—</td><td><button class="btn sm" onclick="window._tr('${s}')">Demo</button></td></tr>`).join('')}</tbody></table>`;
   }
 };
 
 // ─── Actions ──────────────────────────────────────────────
-// Event delegation for agent cards
 document.addEventListener('click', e => {
   const card = e.target.closest('.card[data-agent]');
   if (card) { const name = card.dataset.agent; const a = DATA.agents.find(x => x.name === name); if (a) renderAgent(a); }
@@ -169,7 +222,6 @@ function renderAgent(a) {
 
 window._tr = function(suite) {
   const list = suite === 'all' ? ['lint-kit', 'self-test', 'eval', 'e2e-flow', 'run-demo', 'test-update', 'mutation', 'bench'] : [suite];
-  // Clear previous timers
   activeTimers.forEach(id => clearTimeout(id));
   activeTimers = [];
   list.forEach(s => {
@@ -181,7 +233,6 @@ window._tr = function(suite) {
   });
 };
 
-// Debounced search
 window._f = function() {
   clearTimeout(searchTimer);
   searchTimer = setTimeout(() => {
@@ -196,19 +247,17 @@ window._f = function() {
 
 // ─── Keyboard shortcuts ───────────────────────────────────
 document.addEventListener('keydown', e => {
-  // Ctrl+K or / — focus search
   if ((e.ctrlKey && e.key === 'k') || (e.key === '/' && !['INPUT', 'TEXTAREA'].includes(e.target.tagName))) {
     e.preventDefault();
     const q = $('#q');
     if (q) { q.focus(); q.select(); }
     else { location.hash = '#skills'; setTimeout(() => { const q2 = $('#q'); if (q2) q2.focus(); }, 100); }
   }
-  // Escape — close sidebar or go back
   if (e.key === 'Escape') {
     const sb = $('#sidebar');
     if (sb.classList.contains('open')) { closeSidebar(); return; }
     const { page } = getRoute();
-    if (page !== 'dash') { location.hash = '#'; }
+    if (page !== 'dash') location.hash = '#';
   }
 });
 
@@ -216,25 +265,18 @@ document.addEventListener('keydown', e => {
 function render() {
   const { page, param } = getRoute();
   buildNav(page);
-
   let html = '';
   if (param && P[page + '/:name']) html = P[page + '/:name'](param);
   else if (P[page]) html = P[page]();
   else html = P.dash();
-
   $('#app').innerHTML = html;
   $('#app').scrollTop = 0;
   closeSidebar();
-
-  // Focus h1 for screen readers
   const h1 = $('#app h1');
   if (h1) setTimeout(() => h1.focus(), 50);
-
-  // Update title
   const titles = { dash: 'Dashboard', skills: 'Skills', cmds: 'Commands', agents: 'Agents', term: 'Terminal', mem: 'Memory', cfg: 'Config', tests: 'Tests' };
   document.title = (titles[page] || 'Dashboard') + ' — AGENT-AI';
 
-  // Config page
   if (page === 'cfg') {
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(), 10000);
@@ -244,7 +286,6 @@ function render() {
       .catch(e => { const el = $('#cfg'); if (el) el.textContent = 'Failed: ' + esc(e.message); });
   }
 
-  // Skills page — init filters
   if (page === 'skills') {
     const cats = {
       pipeline: /^(think|plan|test-|audit|fix|debug|doc-|doctor|review|refactor|perf|explain|changelog|spec|imagine)/,
@@ -278,7 +319,6 @@ function render() {
 }
 
 // ─── Init ─────────────────────────────────────────────────
-// Loading state
 $('#app').innerHTML = `<div class="empty" style="margin-top:100px"><div class="spin" style="margin-bottom:16px"></div><h3>Loading...</h3></div>`;
 
 fetch('data.json', { cache: 'force-cache' })
@@ -287,6 +327,7 @@ fetch('data.json', { cache: 'force-cache' })
     if (!d.skills || !d.commands) throw new Error('Invalid data');
     DATA = d;
     $('#ver').textContent = 'v' + d.version;
+    showWelcome();
     render();
   })
   .catch(e => {
