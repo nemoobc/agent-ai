@@ -3,23 +3,31 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="AGENT-AI — DEV-BRAIN Kit Dashboard. Browse skills, commands, agents, and more.">
+  <meta name="theme-color" content="#0d1117">
+  <meta property="og:title" content="AGENT-AI Dashboard">
+  <meta property="og:description" content="DEV-BRAIN Kit Dashboard — 63 skills, 41 commands, 11 agents">
+  <meta property="og:type" content="website">
   <title>AGENT-AI</title>
   <link rel="stylesheet" href="css/style.css">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>◈</text></svg>">
 </head>
 <body>
+  <a href="#main" class="skip-link">Skip to content</a>
   <div class="app">
-    <aside class="sidebar" id="sidebar">
+    <aside class="sidebar" id="sidebar" aria-label="Navigation">
       <div class="sidebar-head">
-        <button class="menu-btn" id="menuBtn" onclick="toggleSidebar()">
+        <button class="menu-btn" id="menuBtn" aria-label="Toggle navigation" aria-expanded="false" onclick="toggleSidebar()">
           <span></span><span></span><span></span>
         </button>
         <div class="logo">AGENT-AI <span class="ver" id="ver"></span></div>
       </div>
-      <nav id="nav"></nav>
+      <nav id="nav" aria-label="Main navigation"></nav>
     </aside>
-    <main class="content" id="app"></main>
+    <main class="content" id="app" id="main" role="main"></main>
   </div>
+  <div id="sr-status" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+  <noscript><div style="padding:40px;text-align:center;color:#8b949e"><h2>JavaScript required</h2><p>This application requires JavaScript to run.</p></div></noscript>
   <script src="js/app.js"></script>
 </body>
 </html>
