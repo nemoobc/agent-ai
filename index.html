@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="AGENT-AI — DEV-BRAIN Kit Dashboard">
+  <meta name="theme-color" content="#0a0014">
+  <title>AGENT-AI</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" type="image/svg+xml" href="img/logo.svg">
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+  <button class="menu-btn" id="menuBtn" aria-label="Toggle sidebar" aria-expanded="false" onclick="toggleSidebar()">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="app">
+    <aside class="sidebar" id="sidebar" aria-label="Navigation">
+      <div class="sidebar-head">
+        <img src="img/logo.svg" alt="" class="sidebar-logo" width="28" height="28">
+        <div class="logo">AGENT-AI <span class="ver" id="ver"></span></div>
+        <button class="theme-btn" id="themeBtn" aria-label="Toggle theme" onclick="toggleTheme()">☀</button>
+      </div>
+      <nav id="nav" aria-label="Main navigation"></nav>
+      <div class="sidebar-foot">
+        <div class="shortcuts-hint">Press <kbd>?</kbd> for shortcuts</div>
+      </div>
+    </aside>
+    <main class="content" id="app" role="main"></main>
+  </div>
+  <nav class="bottom-nav" id="bottomNav" aria-label="Mobile navigation"></nav>
+  <div class="toast-container" id="toasts"></div>
+  <div class="shortcuts-modal" id="shortcutsModal">
+    <div class="shortcuts-panel">
+      <div class="shortcuts-head"><h2>Keyboard Shortcuts</h2><button class="btn sm" onclick="closeShortcuts()">✕</button></div>
+      <div class="shortcuts-body">
+        <div class="sc-row"><kbd>Ctrl</kbd>+<kbd>K</kbd><span>Search</span></div>
+        <div class="sc-row"><kbd>/</kbd><span>Focus search</span></div>
+        <div class="sc-row"><kbd>Esc</kbd><span>Close / Back</span></div>
+        <div class="sc-row"><kbd>1</kbd>-<kbd>8</kbd><span>Go to page</span></div>
+        <div class="sc-row"><kbd>T</kbd><span>Toggle theme</span></div>
+        <div class="sc-row"><kbd>?</kbd><span>This dialog</span></div>
+      </div>
+    </div>
+  </div>
+  <noscript><div style="padding:40px;text-align:center;color:#666"><h2>JavaScript required</h2></div></noscript>
+  <script src="js/app.js"></script>
+</body>
+</html>
