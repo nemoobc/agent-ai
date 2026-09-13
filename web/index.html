@@ -14,12 +14,12 @@
 </head>
 <body>
   <a href="#main" class="skip-link">Skip to content</a>
+  <button class="menu-btn" id="menuBtn" aria-label="Toggle navigation" aria-expanded="false" onclick="toggleSidebar()">
+    <span></span><span></span><span></span>
+  </button>
   <div class="app">
     <aside class="sidebar" id="sidebar" aria-label="Navigation">
       <div class="sidebar-head">
-        <button class="menu-btn" id="menuBtn" aria-label="Toggle navigation" aria-expanded="false" onclick="toggleSidebar()">
-          <span></span><span></span><span></span>
-        </button>
         <div class="logo">AGENT-AI <span class="ver" id="ver"></span></div>
       </div>
       <nav id="nav" aria-label="Main navigation"></nav>
