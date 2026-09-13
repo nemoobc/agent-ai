@@ -396,6 +396,26 @@ function render() {
   }
 }
 
+// ─── Particles ────────────────────────────────────────────
+function initParticles() {
+  const container = document.createElement('div');
+  container.className = 'particles';
+  document.body.appendChild(container);
+  const colors = ['#ff69b4', '#bf40ff', '#00ffff', '#00ff9f', '#ffaa00'];
+  for (let i = 0; i < 30; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    p.style.left = Math.random() * 100 + '%';
+    p.style.setProperty('--dur', (8 + Math.random() * 12) + 's');
+    p.style.setProperty('--delay', (Math.random() * 10) + 's');
+    p.style.width = p.style.height = (2 + Math.random() * 4) + 'px';
+    const c = colors[Math.floor(Math.random() * colors.length)];
+    p.style.background = c;
+    p.style.boxShadow = `0 0 ${4 + Math.random() * 8}px ${c}`;
+    container.appendChild(p);
+  }
+}
+
 // ─── Init ─────────────────────────────────────────────────
 $('#app').innerHTML=`<div class="empty" style="margin-top:100px"><div class="spin" style="margin-bottom:16px"></div><h3>Loading...</h3></div>`;
 
@@ -413,22 +433,3 @@ fetch('data.json',{cache:'force-cache'})
   .catch(e=>{
     $('#app').innerHTML=`<div class="empty" style="margin-top:100px"><h3>Failed to load data</h3><p>${esc(e.message)}</p><button class="btn primary" onclick="location.reload()">Retry</button></div>`;
   });
-
-// ─── Particles ────────────────────────────────────────────
-function initParticles() {
-  const container = document.createElement('div');
-  container.className = 'particles';
-  document.body.appendChild(container);
-  const colors = ['var(--blue)', 'var(--purple)', 'var(--cyan)', 'var(--green)'];
-  for (let i = 0; i < 30; i++) {
-    const p = document.createElement('div');
-    p.className = 'particle';
-    p.style.left = Math.random() * 100 + '%';
-    p.style.setProperty('--dur', (8 + Math.random() * 12) + 's');
-    p.style.setProperty('--delay', (Math.random() * 10) + 's');
-    p.style.width = p.style.height = (2 + Math.random() * 4) + 'px';
-    p.style.background = colors[Math.floor(Math.random() * colors.length)];
-    p.style.boxShadow = `0 0 ${4 + Math.random() * 8}px ${p.style.background}`;
-    container.appendChild(p);
-  }
-}
