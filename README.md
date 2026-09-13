@@ -72,25 +72,10 @@ bash <(curl -fsSL https://raw.githubusercontent.com/nemoobc/agent-ai/master/inst
 git clone https://github.com/nemoobc/agent-ai.git
 cd agent-ai && bash install.sh
 ```
-# baca dulu bila ragu: less /tmp/agent-ai-install.sh
-bash /tmp/agent-ai-install.sh
-# default granular (ask). Opt-in allow-all: bash /tmp/agent-ai-install.sh --allow-all
-```
-
-**bash:**
-```bash
-bash <(curl -fsSL https://raw.githubusercontent.com/nemoobc/agent-ai/master/install.sh)
-```
-
-**clone:**
-```bash
-git clone https://github.com/nemoobc/agent-ai.git
-cd agent-ai && bash install.sh
-```
 
 ---
 
-## 📁 Struktur
+## Struktur
 
 ```text
 agent-ai/
