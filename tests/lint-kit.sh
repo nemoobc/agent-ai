@@ -144,10 +144,12 @@ grep -q 'memory' "$DIR/uninstall.sh" && grep -q 'DIPERTAHANKAN' "$DIR/uninstall.
   && ok "uninstall.sh jaga memory" || bad "uninstall.sh tidak menjaga memory"
 NWRAP=$(ls -1 "$DIR"/commands/*.sh 2>/dev/null | wc -l | tr -d ' ')
 [ "$NWRAP" -eq "$NCW" ] && ok "commands/ wrapper lengkap ($NWRAP = $NCW command)" || bad "commands/ wrapper $NWRAP ≠ $NCW command"
-for w in allow-all build data monitor multi-model notify plan scaffold web; do
+for w in build data monitor multi-model notify plan scaffold web; do
   [ -f "$DIR/commands/$w.sh" ] && ok "wrapper $w.sh ada" || bad "wrapper $w.sh hilang"
 done
-[ -f "$DIR/command/allow-all.md" ] && ok "command allow-all ada" || bad "command allow-all hilang"
+[ ! -f "$DIR/command/allow-all.md" ] && [ ! -f "$DIR/commands/allow-all.sh" ] \
+  && ok "command allow-all TIDAK ada (dipindah built-in opencode-termux)" \
+  || bad "sisa command allow-all masih ada (harusnya sudah dihapus)"
 grep -q "$V" "$DIR/docs/USAGE.md" && ok "USAGE.md sebut VERSION $V" || bad "USAGE.md basi (tidak sebut $V)"
 grep -q "SKILLS ($NSK)" "$DIR/docs/USAGE.md" && ok "USAGE: SKILLS ($NSK) cocok" || bad "USAGE: SKILLS tidak ($NSK)"
 grep -q "COMMANDS ($NCW)" "$DIR/docs/USAGE.md" && ok "USAGE: COMMANDS ($NCW) cocok" || bad "USAGE: COMMANDS tidak ($NCW)"

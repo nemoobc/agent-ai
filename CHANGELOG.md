@@ -1,5 +1,22 @@
 # CHANGELOG
 
+## [Unreleased]
+### Security
+- **privasi penuh install** — `write_config` tambah `share:"disabled"`, `snapshot:false`, `autoupdate:false`, `experimental.openTelemetry:false` ke template + merge (python3/node) → provider/model tidak melihat aktivitas user (share/snapshot/telemetry mati); set user yang eksplisit tetap menang
+- **model/provider default TIDAK di-paksa** — template hanya keamanan+privasi (devbrain + permission ask); model/provider dibiarkan default opencode gratis
+### Removed
+- **command `/allow-all` dihapus** (command/allow-all.md + commands/allow-all.sh) — izin opencode sekarang built-in di opencode-termux; installer `--allow-all` opt-in tetap ada
+### Fixed
+- **install matikan config user tanpa python3** — fallback `cat >` menimpa MCP/provider/model user; sekarang engine merge `python3 → node`, tanpa keduanya config user berisi DIAMKAN (tidak ditimpa), template hanya instalasi baru/config DEV-BRAIN lama
+- **node merge argv** — `node -` argumen `process.argv.slice(2)` (slice(1) salah baca, config tidak pernah tertulis dalam sesi node)
+- **install fresh tanpa config** — config belum ada TIDAK masuk jalur "DIAMKAN"; template penuh ditulis
+- **hitung command 41→40 konsisten** — README badge, README.en, docs/USAGE, docs/ARCHITECTURE sinkron dengan folder (40 command nyata)
+- **README `v12.2.0` drift** — badge & fitur belum dirilis ditarik kembali ke versi rilis 12.1.3 (VERSION/CHANGELOG/tag), klaim openTelemetry/Zen/9Router-provider yang tidak ada di kode dibuang
+- **self-test + lint-kit detektor allow-all** — cek keberadaan diganti cek KETIDAKADAAN (perusakan penambahan kembali ikut tertangkap)
+- **audit-full false-positive TODO** — `tests/lint-kit.sh` (pola detektor sisa-marker sendiri) tidak dihitung utang teknis
+- **docs/ARCHITECTURE flag install.sh** — daftar flags `--hook`/`--lint` fiktif diganti flags nyata
+- **self-test backup/restore diperkuat** — cek keamanan+privasi (permission, share, snapshot, autoupdate, openTelemetry) + config user utuh SAAT install (bukan hanya saat restore)
+
 ## [12.1.3] — 2026-09-12
 ### Security
 - **install default granular** — `write_config` tulis `ask` semua; allow-all hanya opt-in `--allow-all` / `DEV_BRAIN_ALLOW_ALL=1`

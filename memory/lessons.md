@@ -1,6 +1,11 @@
 # LESSONS — pelajaran terukur (skill learn)
 Entry terbaru di atas. Format: POLA / BUKTI / AKSI. Tanpa bukti = tidak masuk.
 
+## 2026-09-14 — penghapusan struktur harus ikut lepas detektornya
+- POLA: command dihapus dari folder tapi detektor (self-test/lint-kit) masih memaksa file itu ADA + dokumen (README/USAGE/ARCH) masih hitung 41 → garis merah berjamaah
+- BUKTI: commit 2db7d85 "remove: allow-all" → lint 6 masalah + self-test 6 gagal (allow-all ini, 41 vs 40, 12.2.0 vs 12.1.3); setelah detektor jadi cek KETIDAKADAAN + angka 40 + versi 12.1.3 → lint 453 & self-test 281 LOLOS
+- AKSI: hapus file = hapus/balik detektor posisi ke dua arah (cek "TIDAK ada"), sinkron semua hitungan versi di folder & dokumen, satu-satunya dan tunggal (HUKUM 10)
+
 ## 2026-09-13 — jangan andalkan /tmp, pakai working directory sendiri
 - POLA: pakai /tmp untuk temp kerja → gagal di environment yang /tmp read-only (Termux sandbox)
 - BUKTI: git worktree add ke /tmp → "Read-only file system"; cp ke /tmp → gagal
@@ -105,3 +110,13 @@ Entry terbaru di atas. Format: POLA / BUKTI / AKSI. Tanpa bukti = tidak masuk.
 - POLA: menulis jumlah skill di badge/self-test sebelum menghitung real
 - BUKTI: self-test FAIL "SKILLS=13 ≠ 21" — 13+8 salah tulis 16
 - AKSI: hitung `ls | wc -l` dulu, baru tulis angka; self-test jaga
+
+## 2026-09-14 — config user = data, bukan yang ditimpa
+- POLA: sub-process dict/jq tak ada (python3 hilang) → fallback `cat >` menimpa opencode.json user
+- BUKTI: grep '"theme": "dark"' gagal setelah `HOME=$T bash install.sh --offline` di env tanpa python3+before di env tanpa python3 (node hadir tapi `process.argv.slice(1)` salah baca `-`)
+- AKSI: engine JSON berjenjang python3→node; tanpa engine = DIAMKAN, TIDAK pernah ditimpa; tes install/uninstall 2 arah wajib tiap ubah write_config
+
+## 2026-09-14 — node - <script> arg offset
+- POLA: `node - a b c` → process.argv = ['node','-','a','b','c']; slice(1) menangkap '-'
+- BUKTI: config tak pernah tertulis; file '-' muncul
+- AKSI: pakai slice(2) untuk arg setelah '-'

@@ -14,7 +14,7 @@ Dokumen ini menjelaskan **cara kit bekerja**, bukan sekadar daftar file. Siapa p
 │  L2  OTAK  — agents/dev.md (FASE 0 route + pipeline 17 fase)│
 │       urutan kerja default; gerbang keras antar fase        │
 ├────────────────────────────────────────────────────────────┤
-│  L3  KEMAMPUAN  — skills/ (63) + command/ (41)             │
+│  L3  KEMAMPUAN  — skills/ (63) + command/ (40)             │
 │       skill = KAPAN dipakai + BAGAIMANA; command = perintah │
 ├────────────────────────────────────────────────────────────┤
 │  L4  EKSEKUSI  — skills/*/run.sh (63 script jalan)         │
@@ -87,7 +87,7 @@ keluar ──► status jelas: SELESAI / TITIK-PUTUS / GAGAL
 
 | Komponen | Input | Output | Dikonsumsi oleh |
 |---|---|---|---|
-| `install.sh` | HOME, flags (`--offline`, `--hook`, `--lint`, `--update`) | instalasi kit + pre-commit hook | user / CI |
+| `install.sh` | HOME, flags (`--offline`, `--uninstall`, `--update`, `--check`, `--allow-all`, `--yes`) | instalasi kit | user / CI |
 | `skills/*/run.sh` | cwd project, argumen | exit code 0/1 + output teks | pipeline, hook, CI |
 | `tests/*.sh` | repo bersih | exit code + hitungan PASS/FAIL | `make verify`, CI |
 | `tests/mutation.sh` | repo bersih | bukti tiap perusakan ditangkap | CI, rilis |

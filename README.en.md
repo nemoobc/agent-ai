@@ -12,11 +12,27 @@
   <img src="https://img.shields.io/badge/🔄_VERSION-12.1.3-blue?style=for-the-badge&logo=semver&logoColor=white" alt="Version"/>
   <img src="https://img.shields.io/badge/🤖_AGENTS-11-00d2ff?style=for-the-badge&logo=robot&logoColor=white" alt="Agents"/>
   <img src="https://img.shields.io/badge/🧩_SKILLS-63-82d815?style=for-the-badge&logo=puzzle-piece&logoColor=white" alt="Skills"/>
-  <img src="https://img.shields.io/badge/⌨️_COMMANDS-41-ffd700?style=for-the-badge&logo=terminal&logoColor=black" alt="Commands"/>
+  <img src="https://img.shields.io/badge/⌨️_COMMANDS-40-ffd700?style=for-the-badge&logo=terminal&logoColor=black" alt="Commands"/>
   <img src="https://img.shields.io/badge/⚖️_LAWS-13-ff4757?style=for-the-badge&logo=scale&logoColor=white" alt="Laws"/>
 </p>
 
 <br/>
+
+---
+
+## 🔒 SECURITY & PRIVACY
+
+Installing must NEVER damage user config, and the AI must never leak user activity.
+
+| Guarantee | Details |
+|-----------|---------|
+| **Permission ask (default)** | Every edit/write/webfetch/bash asks for confirmation. Full access is OPT-IN only (`--allow-all`) |
+| **Full privacy** | `share:"disabled"`, `snapshot:false`, `autoupdate:false`, `experimental.openTelemetry:false` → provider/model **cannot see user activity** |
+| **User config preserved** | Your MCP/provider/model/theme keys are **never overwritten** — safe merge via `python3 → node`; with no engine, a meaningful config is left **untouched** |
+| **No forced model/provider** | Kit sets no model — opencode's free default stands; your own settings always win |
+| **Safe updates** | HTTPS updates require SHA verification (`DEV_BRAIN_UPDATE_SHA`) + pinned URL + `set -o pipefail` |
+| **Safe uninstall** | Requires confirmation; restores user config, keeps memory |
+| **No blind curl\|bash** | README recommends download → inspect → run; `deliver` upload requires `--yes` |
 
 ---
 
@@ -207,7 +223,7 @@ User: "build login page with validation"
 
 ---
 
-## ⌨️ COMMANDS (41)
+## ⌨️ COMMANDS (40)
 
 | Command | Description |
 |---------|-------------|
@@ -234,7 +250,6 @@ User: "build login page with validation"
 | `/multi-model [model:prompt]` | Route to best AI model per task |
 | `/monitor` | Health check, uptime, alert thresholds |
 | `/scaffold <type>` | Generate boilerplate (React/Next/Express/FastAPI) |
-| `/allow-all` | Open all opencode permissions (explicit opt-in, backup first) |
 | `/auto-prompt [input]` | Generate polished prompt from rough input |
 | `/backlog <task>` | Measurable work queue with impact×effort score |
 | `/blame <target>` | git blame summary: who changed what, when |
@@ -264,7 +279,7 @@ User: "build login page with validation"
 ├── VERSION                ← installed version
 ├── agent/                 ← 11 agent definitions
 ├── skill/                 ← 63 skills
-├── command/               ← 41 commands
+├── command/               ← 40 commands
 ├── docs/                  ← documentation
 ├── tests/                 ← test suite
 └── memory/                ← persistent memory
@@ -294,11 +309,14 @@ User: "build login page with validation"
 
 ```bash
 make verify                # All gates, one command
-bash tests/lint-kit.sh     # Structure linter (150+ checks)
-bash tests/self-test.sh    # Detector suite (110+ checks)
-bash tests/eval.sh         # Behavioral regression (18 checks)
+bash tests/lint-kit.sh     # Structure linter (453 checks)
+bash tests/self-test.sh    # Detector suite (281 checks)
+bash tests/eval.sh         # Behavioral regression (21 checks, 10 cases)
+bash tests/run-demo.sh     # Pipeline demo (11 steps)
+bash tests/e2e-flow.sh     # End-to-end flow (14 steps)
+bash tests/test-update.sh  # Update flow up & anti-downgrade (11 steps)
 bash tests/mutation.sh     # Proof: 15 breakages caught
-bash tests/bench.sh        # Gate duration under hard-cap
+bash tests/bench.sh        # Gate duration under hard-cap (19 gates)
 ```
 
 ---

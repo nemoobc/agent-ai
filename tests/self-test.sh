@@ -52,10 +52,10 @@ NSKILL=$(ls -1d "$DIR"/skills/*/ 2>/dev/null | wc -l | tr -d ' ')
 NCMD=$(ls -1 "$DIR"/command/*.md 2>/dev/null | wc -l | tr -d ' ')
 NWRAP=$(ls -1 "$DIR"/commands/*.sh 2>/dev/null | wc -l | tr -d ' ')
 [ "$NSKILL" -eq 63 ] && ok "63 skill terdeteksi ($NSKILL)" || bad "jumlah skill = $NSKILL, harusnya 63"
-[ "$NCMD" -eq 41 ] && ok "41 command terdeteksi" || bad "jumlah command = $NCMD, harusnya 41"
+[ "$NCMD" -eq 40 ] && ok "40 command terdeteksi" || bad "jumlah command = $NCMD, harusnya 40"
 [ "$NWRAP" -eq "$NCMD" ] && ok "wrapper commands/ lengkap ($NWRAP)" || bad "wrapper commands/ $NWRAP ≠ command $NCMD"
-[ -f "$DIR/command/allow-all.md" ] && ok "command allow-all ada" || bad "command allow-all hilang"
-[ -f "$DIR/commands/allow-all.sh" ] && ok "wrapper allow-all.sh ada" || bad "wrapper allow-all.sh hilang"
+[ ! -f "$DIR/command/allow-all.md" ] && ok "command allow-all tidak ada (built-in di opencode-termux)" || bad "command allow-all.md masih ada (harusnya sudah dihapus)"
+[ ! -f "$DIR/commands/allow-all.sh" ] && ok "wrapper allow-all.sh tidak ada (built-in di opencode-termux)" || bad "wrapper allow-all.sh masih ada (harusnya sudah dihapus)"
 [ -f "$DIR/uninstall.sh" ] && [ -x "$DIR/uninstall.sh" ] && bash -n "$DIR/uninstall.sh" 2>/dev/null \
   && ok "uninstall.sh ada + executable + syntax OK" || bad "uninstall.sh hilang/tidak executable/syntax rusak"
 VFILE=$(tr -d '[:space:]' < "$DIR/VERSION" 2>/dev/null)
@@ -96,7 +96,7 @@ grep -q 'TITIK-PUTUS' "$DIR/agents/dev.md" && ok "dev.md lapor 3 status" || bad 
 for s in recall remember; do
   grep -q 'lessons.md' "$DIR/skills/$s/SKILL.md" && ok "$s tahu lessons.md" || bad "$s tidak tahu lessons.md"
 done
-for c in roadmap report bootstrap status learn release onboard backlog handoff metrics team pr context upgrade verify hotfix coverage blame critique trace deliver threat-model clean estimate hermes audit fix build context data doctor hotfix learn memory monitor multi-model notify onboard plan pr release report roadmap route scaffold ship status team threat-model trace upgrade verify web allow-all; do
+for c in roadmap report bootstrap status learn release onboard backlog handoff metrics team pr context upgrade verify hotfix coverage blame critique trace deliver threat-model clean estimate hermes audit fix build context data doctor hotfix learn memory monitor multi-model notify onboard plan pr release report roadmap route scaffold ship status team threat-model trace upgrade verify web; do
   [ -f "$DIR/command/$c.md" ] && ok "command $c ada" || bad "command $c hilang"
 done
 [ -f "$DIR/memory/lessons.md" ] && ok "memory/lessons.md ada" || bad "memory/lessons.md hilang"
@@ -187,17 +187,23 @@ bash "$DIR/skills/profile/run.sh" show >/dev/null 2>&1
 grep -q 'git-guard' "$DIR/skills/deliver/run.sh" && ok "deliver jalan guard dulu" || bad "deliver tanpa guard"
 grep -q 'commit' "$DIR/command/deliver.md" && grep -q 'DILARANG' "$DIR/command/deliver.md" && ok "deliver command larang git" || bad "deliver command tidak melarang git"
 
-p "▮ SELF-TEST: backup/restore opencode.json user" 213
+p "▮ SELF-TEST: backup/restore opencode.json user (keamanan + privasi penuh)" 213
 FH=$(mktemp -d)
 mkdir -p "$FH/.config/opencode"
 printf '{\n  "theme": "dark"\n}\n' > "$FH/.config/opencode/opencode.json"
 HOME="$FH" bash "$DIR/install.sh" --offline >/dev/null 2>&1 \
   && grep -q devbrain "$FH/.config/opencode/opencode.json" \
+  && grep -q '"theme": "dark"' "$FH/.config/opencode/opencode.json" \
+  && grep -q '"permission"' "$FH/.config/opencode/opencode.json" \
+  && grep -q '"share": "disabled"' "$FH/.config/opencode/opencode.json" \
+  && grep -q '"snapshot": false' "$FH/.config/opencode/opencode.json" \
+  && grep -q '"autoupdate": false' "$FH/.config/opencode/opencode.json" \
+  && grep -q '"openTelemetry": false' "$FH/.config/opencode/opencode.json" \
   && ls "$FH/.config/opencode/"opencode.json.bak.* >/dev/null 2>&1 \
   && HOME="$FH" bash "$DIR/install.sh" --uninstall --yes >/dev/null 2>&1 \
   && grep -q '"theme": "dark"' "$FH/.config/opencode/opencode.json" \
-  && ok "user config dibackup lalu direstore saat uninstall" \
-  || bad "backup/restore user config gagal"
+  && ok "install tambah keamanan+privasi (merge, user config utuh) + backup + restore saat uninstall" \
+  || bad "keamanan/privasi/backup gagal (config harus utuh DI INSTALL + privasi aktif, bukan baru di restore)"
 rm -rf "$FH"
 
 p "▮ SELF-TEST: semua command/*.md punya Usage section" 213

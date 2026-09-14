@@ -1,7 +1,7 @@
 # PANDUAN LENGKAP DEV-BRAIN (docs/USAGE.md)
 
 Semua agent, semua skill, semua command — kapan dipakai, siapa yang panggil, contoh nyata.
-DEV-BRAIN v12.1.3 — 11 agent, 63 skill, 41 command, 13 hukum, 63 script jalan. Install dulu: `bash install.sh`; uninstall: `bash uninstall.sh` (memori selamat).
+DEV-BRAIN v12.1.3 — 11 agent, 63 skill, 40 command, 13 hukum, 63 script jalan. Install dulu: `bash install.sh`; uninstall: `bash uninstall.sh` (memori selamat).
 
 ---
 
@@ -113,7 +113,7 @@ DEV yang panggil. User tidak perlu tahu. Bila tugas kecil (< 3 file, tanpa risik
 
 ---
 
-## COMMANDS (41)
+## COMMANDS (40)
 
 | Command | Fungsi | Contoh |
 |---------|--------|--------|
@@ -148,7 +148,6 @@ DEV yang panggil. User tidak perlu tahu. Bila tugas kecil (< 3 file, tanpa risik
 | `/estimate <tugas>` | Pecah jadi item S/M/L/XL dengan angka nyata dari scan | `/estimate rebuild auth` |
 | `/route <prompt>` | Klasifikasi prompt → NORMAL/FULL/ULTRA; jalur menentukan cakupan pipeline & delegasi | `/route lengkapin dashboard` |
 | `/hermes <tugas>` | Delegasi lintas-domain ke agent hermes, laporan berbukti | `/hermes wiring pembayaran` |
-| `/allow-all` | Buka semua izin opencode + backup otomatis | `/allow-all` |
 | `/auto-prompt [input]` | Generate prompt matang dari input kasar | `/auto-prompt bikin login` |
 | `/build [fitur]` | Implementasi via DEV setelah gerbang PLAN | `/build form login` |
 | `/data [file] [opsi]` | Analisis & visualisasi CSV/JSON/Excel | `/data data.csv summary` |
@@ -232,7 +231,7 @@ DEV: [GODOK] TUJUAN: toggle tema gelap, tersimpan di preferensi.
 ├── VERSION                  ← versi terpasang
 ├── agent/                   ← 11 agent (critic + hermes + designer + researcher)
 ├── skill/                   ← 63 skill
-├── command/                 ← 41 command
+├── command/                 ← 40 command
 └── memory/                  ← ingatan persisten
 
 <project>/.opencode/         ← per-project (opsional: /bootstrap)

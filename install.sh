@@ -58,11 +58,43 @@ backup_config(){
 }
 
 # Tulis opencode.json DEV-BRAIN — MERGE, jangan timpa config user (MCP/provider/model)
-# Default granular (ask). Allow-all hanya opt-in: --allow-all atau DEV_BRAIN_ALLOW_ALL=1.
+# HANYA keamanan+privasi ditambah: devbrain marker + permission ask (granular, allow-all opt-in
+# via --allow-all / DEV_BRAIN_ALLOW_ALL=1) + share/snapshot/autoupdate/openTelemetry dimatikan
+# (provider/model tidak lihat aktivitas user). model/provider TIDAK di-set. Engine merge:
+# python3 → node. Tanpa keduanya: config user berisi TETAP DIAMKAN, template hanya untuk
+# instalasi baru / config DEV-BRAIN lama.
 write_config(){
   local MODE="granular"
   [ "${ALLOW_ALL:-0}" = "1" ] && MODE="allow-all"
   [ "${DEV_BRAIN_ALLOW_ALL:-}" = "1" ] && MODE="allow-all"
+  local PERM_JSON MARK
+  PERM_JSON='{"edit":"ask","write":"ask","webfetch":"ask","bash":{"*":"ask"}}'
+  [ "$MODE" = "allow-all" ] && PERM_JSON='{"edit":"allow","write":"allow","webfetch":"allow","bash":{"*":"allow"}}'
+  MARK='granular'
+  [ "$MODE" = "allow-all" ] && MARK='allow-all'
+
+  write_tpl(){
+    printf '%s\n' '{' \
+      '  "$schema": "https://opencode.ai/config.json",' \
+      "  \"devbrain\": \"$MARK\"," \
+      '  "share": "disabled",' \
+      '  "snapshot": false,' \
+      '  "autoupdate": false,' \
+      '  "experimental": {' \
+      '    "openTelemetry": false' \
+      '  },' \
+      '  "permission": {' \
+      '    "edit": "ask",' \
+      '    "write": "ask",' \
+      '    "webfetch": "ask",' \
+      '    "bash": {' \
+      '      "*": "ask"' \
+      '    }' \
+      '  }' \
+      '}' > "$CFG/opencode.json"
+    [ "$MODE" = "allow-all" ] && sed -i 's/"edit": "ask"/"edit": "allow"/; s/"write": "ask"/"write": "allow"/; s/"webfetch": "ask"/"webfetch": "allow"/; s/"\*": "ask"/"*": "allow"/' "$CFG/opencode.json"
+  }
+
   if [ -f "$CFG/opencode.json" ] && command -v python3 >/dev/null 2>&1; then
     python3 - "$CFG/opencode.json" "$MODE" <<'PYEOF'
 import json, sys
@@ -76,7 +108,9 @@ if mode == "allow-all":
     perm = {"edit": "allow", "write": "allow", "webfetch": "allow", "bash": {"*": "allow"}}
 else:
     perm = {"edit": "ask", "write": "ask", "webfetch": "ask", "bash": {"*": "ask"}}
-new = {"$schema": "https://opencode.ai/config.json", "devbrain": "granular" if mode != "allow-all" else "allow-all", "permission": perm}
+# Privasi: provider/model TIDAK melihat aktivitas user — share/snapshot/telemetry dimatikan.
+# User yang sudah set sendiri TETAP menang (loop di bawah menimpa key milik user).
+new = {"$schema": "https://opencode.ai/config.json", "devbrain": "granular" if mode != "allow-all" else "allow-all", "share": "disabled", "snapshot": False, "autoupdate": False, "experimental": {"openTelemetry": False}, "permission": perm}
 # Pertahankan semua bagian milik user (MCP, provider, model, agent, theme, dll)
 for k, v in old.items():
     if k not in ("devbrain", "permission"):
@@ -86,38 +120,33 @@ with open(path, "w") as f:
     f.write("\n")
 PYEOF
     ok "opencode.json DEV-BRAIN ditulis ($MODE, config user dipertahankan)"
+  elif [ -f "$CFG/opencode.json" ] && command -v node >/dev/null 2>&1; then
+    node - "$CFG/opencode.json" "$MODE" "$PERM_JSON" <<'NODEEOF'
+const fs = require('fs');
+const [path, mode, permJson] = process.argv.slice(2);
+let old = {};
+try { old = JSON.parse(fs.readFileSync(path, 'utf8')); } catch (e) { old = {}; }
+const perm = JSON.parse(permJson);
+// Privasi: share/snapshot/autoupdate/telemetry dimatikan; set user menang (loop bawah).
+const cfg = { "$schema": "https://opencode.ai/config.json", "devbrain": mode === "allow-all" ? "allow-all" : "granular", "share": "disabled", "snapshot": false, "autoupdate": false, "experimental": { "openTelemetry": false }, "permission": perm };
+for (const k of Object.keys(old)) { if (k !== "devbrain" && k !== "permission") cfg[k] = old[k]; }
+fs.writeFileSync(path, JSON.stringify(cfg, null, 2) + "\n");
+NODEEOF
+    ok "opencode.json DEV-BRAIN ditulis ($MODE, config user dipertahankan via node)"
+  elif [ -f "$CFG/opencode.json" ] && grep -q '"devbrain"' "$CFG/opencode.json" 2>/dev/null; then
+    # Config milik DEV-BRAIN lama — segarkan template
+    write_tpl
+    ok "opencode.json DEV-BRAIN ditulis ($MODE)"
+  elif [ -f "$CFG/opencode.json" ] && ! grep -qE '"(mcp|provider|model|agent|theme|key|custom|hooks|experimental)"' "$CFG/opencode.json"; then
+    # Config kosong/milik DEV-BRAIN lama — aman timpa template penuh
+    write_tpl
+    ok "opencode.json DEV-BRAIN ditulis ($MODE)"
+  elif [ -f "$CFG/opencode.json" ]; then
+    wrn "config user DIAMKAN (tidak ditimpa) — butuh python3 atau node untuk merge permission"
+    inf "install dulu:  apt/pkg install python  atau  nodejs, lalu jalankan ulang install"
   else
-    if [ "$MODE" = "allow-all" ]; then
-    cat > "$CFG/opencode.json" <<'OPencodeEOF'
-{
-  "$schema": "https://opencode.ai/config.json",
-  "devbrain": "allow-all",
-  "permission": {
-    "edit": "allow",
-    "write": "allow",
-    "webfetch": "allow",
-    "bash": {
-      "*": "allow"
-    }
-  }
-}
-OPencodeEOF
-    else
-    cat > "$CFG/opencode.json" <<'OPencodeEOF'
-{
-  "$schema": "https://opencode.ai/config.json",
-  "devbrain": "granular",
-  "permission": {
-    "edit": "ask",
-    "write": "ask",
-    "webfetch": "ask",
-    "bash": {
-      "*": "ask"
-    }
-  }
-}
-OPencodeEOF
-    fi
+    # Instalasi baru / config belum ada — tulis template penuh (tidak ada yang diamankan)
+    write_tpl
     ok "opencode.json DEV-BRAIN ditulis ($MODE)"
   fi
 }
