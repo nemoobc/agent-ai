@@ -1,4 +1,4 @@
-# ARSITEKTUR DEV-BRAIN DOCTRINE v12.1.3
+# ARSITEKTUR DEV-BRAIN DOCTRINE v12.2.0
 
 Dokumen ini menjelaskan **cara kit bekerja**, bukan sekadar daftar file. Siapa pun (atau agent apa pun) yang membaca ini harus bisa menjawab: *apa yang terjadi ketika sebuah permintaan masuk, dan siapa yang menjamin kualitasnya?*
 
@@ -25,6 +25,9 @@ Dokumen ini menjelaskan **cara kit bekerja**, bukan sekadar daftar file. Siapa p
 ├────────────────────────────────────────────────────────────┤
 │  L6  MEMORI  — memory/ (4 lapisan + arsip)                 │
 │       keputusan, pelajaran, log sesi — lintas sesi          │
+├────────────────────────────────────────────────────────────┤
+│  L7  PRESENTASI  — web/ (dashboard statis kit)              │
+│       data.json di-generate build.js dari skills/ + command/│
 └────────────────────────────────────────────────────────────┘
 ```
 

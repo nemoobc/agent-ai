@@ -20,3 +20,6 @@ Thumbs.db
 credentials*.json
 node_modules/
 __pycache__/
+
+# generated — dibangun ulang oleh web/build.js
+web/data.json

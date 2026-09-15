@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## [Unreleased]
+## [12.2.0] — 2026-09-15
 ### Security
 - **privasi penuh install** — `write_config` tambah `share:"disabled"`, `snapshot:false`, `autoupdate:false`, `experimental.openTelemetry:false` ke template + merge (python3/node) → provider/model tidak melihat aktivitas user (share/snapshot/telemetry mati); set user yang eksplisit tetap menang
 - **model/provider default TIDAK di-paksa** — template hanya keamanan+privasi (devbrain + permission ask); model/provider dibiarkan default opencode gratis
@@ -16,6 +16,14 @@
 - **audit-full false-positive TODO** — `tests/lint-kit.sh` (pola detektor sisa-marker sendiri) tidak dihitung utang teknis
 - **docs/ARCHITECTURE flag install.sh** — daftar flags `--hook`/`--lint` fiktif diganti flags nyata
 - **self-test backup/restore diperkuat** — cek keamanan+privasi (permission, share, snapshot, autoupdate, openTelemetry) + config user utuh SAAT install (bukan hanya saat restore)
+### Added
+- **web/ didokumentasikan** — README struktur + docs/ARCHITECTURE lapisan L7 (dashboard statis kit; data.json di-generate build.js)
+- **web/data.json di-untrack** — file generated (414KB) masuk .gitignore; repo ringan, dibangun ulang `node web/build.js`
+- **test baru `tests/web-sync.sh`** — detektor drift data.json (version = VERSION, skills 63, commands 40); masuk `make verify` + CI; self-test 281→283 (2 cek otomatis untuk test file baru)
+- **install.sh cek exit code** — cp/mkdir gagal → pesan + return 1 (sebelumnya lolos diam-diam tanpa `-e`)
+- **uninstall.sh `set -uo pipefail`** — konsisten dengan install.sh
+### Removed
+- **syntax-app dihapus dari repo** — project wallet Android EIP-7702 nyasar di kit (74 file), tidak terdokumentasi; history git tetap menyimpan
 
 ## [12.1.3] — 2026-09-12
 ### Security

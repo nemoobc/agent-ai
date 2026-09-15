@@ -2,7 +2,7 @@
 # Semua gerbang kit dipanggil dari sini. `make verify` = gerbang penuh HUKUM 9.
 
 SHELL := bash
-.PHONY: lint test eval e2e demo update mutation bench verify audit doctor install-check zip help
+.PHONY: lint test eval e2e demo update mutation bench web-sync verify audit doctor install-check zip help
 
 help: ## Daftar semua target
 	@grep -E '^[a-zA-Z_-]+:.*##' Makefile | awk -F':.*## ' '{printf "  %-16s %s\n", $$1, $$2}'
@@ -31,6 +31,9 @@ mutation: ## Bukti detektor: 15 perusakan harus ditangkap gate
 bench: ## Ukur durasi tiap gate, deteksi drift
 	bash tests/bench.sh
 
+web-sync: ## Cek data.json sinkron dengan kit (generate + verifikasi)
+	bash tests/web-sync.sh
+
 audit: ## Audit penuh
 	bash skills/audit-full/run.sh
 
@@ -40,7 +43,7 @@ doctor: ## Periksa kesehatan kit
 install-check: ## Uji installer offline (deterministik)
 	T=$$(mktemp -d); HOME="$$T" bash install.sh --offline >/dev/null 2>&1 && echo "install --offline OK"
 
-verify: lint test eval e2e demo update mutation bench audit doctor ## Gerbang penuh HUKUM 9
+verify: lint test eval e2e demo update mutation bench web-sync audit doctor ## Gerbang penuh HUKUM 9
 
 zip: ## Buat arsip kit (tanpa .git)
 	@V=$$(cat VERSION); \

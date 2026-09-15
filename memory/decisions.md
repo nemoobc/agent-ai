@@ -1,5 +1,8 @@
 # DECISIONS — DEV-BRAIN
 Format: [YYYY-MM-DD] keputusan — alasan
+- [2026-09-15] Versi naik ke 12.2.0 — fitur [Unreleased] (privasi penuh install, hapus /allow-all, fix merge python3→node, command 40) SUDAH ada di kode; keputusan 2026-09-14 menahan versi karena fitur belum ada. Kini rilis valid.
+- [2026-09-15] web/data.json di-untrack + detektor web-sync — file generated (build.js), 414KB; repo ringan, drift tertangkap test baru tests/web-sync.sh (version/skills/commands).
+- [2026-09-15] install.sh cek exit code tiap langkah penting — tanpa -e, error cp/mkdir bisa lolos diam-diam; sekarang gagal → pesan + return 1.
 - [2026-09-14] Versi tetap 12.1.3 (bukan naik ke 12.2.0) — VERSION/CHANGELOG/tag sudah sepakat 12.1.3; README yang drift duluan. Fitur "v12.2.0" (openTelemetry, Zen/9Router default) tidak ada di kode.
 - [2026-09-14] command `/allow-all` dihapus permanen, detektor jadi cek KETIDAKADAAN — built-in opencode-termux; installer `--allow-all` opt-in tetap eksis. Detektor satu-arah (cek ada) akan menolak niat maintainer.
 - [2026-09-14] Hitungan source of truth tetap folder (ls), dokumen/badge/detektor wajib ikut — HUKUM 10; angka baru masuk VERSION → CHANGELOG → badge → self-test → lint.

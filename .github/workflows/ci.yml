@@ -44,6 +44,9 @@ jobs:
       - name: Bench — durasi gate di bawah hard-cap
         run: bash tests/bench.sh
 
+      - name: Web-sync — data.json sinkron dengan kit
+        run: bash tests/web-sync.sh
+
       - name: Audit-full pada kit ini sendiri
         run: bash skills/audit-full/run.sh .
 

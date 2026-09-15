@@ -155,27 +155,30 @@ install(){
   clear
   box_awal
 
-  mkdir -p "$CFG/agent" "$CFG/skill" "$CFG/command" "$CFG/docs" "$CFG/memory"
+  mkdir -p "$CFG/agent" "$CFG/skill" "$CFG/command" "$CFG/docs" "$CFG/memory" \
+    || { wrn "gagal buat folder config"; return 1; }
 
   dots "agent..."
-  cp -R "$SCRIPT_DIR/agents/." "$CFG/agent/"
+  cp -R "$SCRIPT_DIR/agents/." "$CFG/agent/" \
+    || { wrn "gagal copy agent"; return 1; }
 
   dots "skill..."
   for skill_dir in "$SCRIPT_DIR/skills/"*/; do
     name=$(basename "$skill_dir")
-    cp -R "$skill_dir" "$CFG/skill/$name"
+    cp -R "$skill_dir" "$CFG/skill/$name" || { wrn "gagal copy skill $name"; return 1; }
     chmod +x "$CFG/skill/$name/run.sh" 2>/dev/null
   done
 
   dots "command..."
-  cp -R "$SCRIPT_DIR/command/." "$CFG/command/"
-  cp -R "$SCRIPT_DIR/commands/." "$CFG/command/" 2>/dev/null
+  cp -R "$SCRIPT_DIR/command/." "$CFG/command/" || { wrn "gagal copy command"; return 1; }
+  cp -R "$SCRIPT_DIR/commands/." "$CFG/command/" 2>/dev/null || { wrn "gagal copy wrapper"; return 1; }
 
   dots "docs..."
-  cp "$SCRIPT_DIR/docs/"*.md "$CFG/docs/" 2>/dev/null
+  cp "$SCRIPT_DIR/docs/"*.md "$CFG/docs/" 2>/dev/null || { wrn "gagal copy docs"; return 1; }
 
   dots "doctrine..."
-  cp "$SCRIPT_DIR/AGENTS.md" "$SCRIPT_DIR/VERSION" "$CFG/"
+  cp "$SCRIPT_DIR/AGENTS.md" "$SCRIPT_DIR/VERSION" "$CFG/" \
+    || { wrn "gagal copy doctrine"; return 1; }
 
   backup_config
   write_config

@@ -1,5 +1,6 @@
 # SESSION LOG — DEV-BRAIN
 Format: [YYYY-MM-DD HH:MM] tugas → hasil
+- [2026-09-15] audit isi agent-ai → CLEAN (secret bersih, angka konsisten 11/63/40/v12.1.3) + temuan P1 syntax-app (74 file wallet Android nyasar, tidak terdokumentasi) + P2 web/ tidak terdokumentasi → user: hapus syntax-app + gas semua saran → remove syntax-app (commit), rilis 12.2.0 (fitur Unreleased sudah di kode), web/ didokumentasikan (README struktur + ARCH L7), web/data.json di-untrack + .gitignore, install.sh cek exit code langkah penting, uninstall.sh pipefail, test baru tests/web-sync.sh (Makefile verify + CI + README gate)
 - [2026-09-10 23:00] ULTRA install 1-baris-per-file okbar/errbar v8.2.0 (232→136 baris) → lint 240, self 174, eval 18/8, e2e 7, demo 6, update 5, mutation 12/12, bench 6 PASS, audit CLEAN, doctor SEHAT, critic CLEAN (VETO 2 tertutup)
 - [2026-09-10 22:00] ULTRA rombak README + anim install append-only v8.2.0 → lint 240 LOLOS, self 174 PASS, eval 18/8 PASS, e2e 7 UTUH, demo 6 TERBUKTI, update 5 TERBUKTI, mutation 12/12, audit CLEAN, doctor SEHAT, critic CLEAN (VETO 2 tertutup)
 - [2026-09-08 21:00] v2.3.0 distribusi → --update (anti-downgrade sort -V, BUG downgrade tertangkap saat test vs GitHub asli), --version, VERSION tercatat, test-full 12 stack, cargo fmt/clippy → self-test 30/30, audit CLEAN
