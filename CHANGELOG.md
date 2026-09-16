@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [Unreleased]
+### Changed
+- **uninstall konfirmasi y/n** — prompt "Lanjutkan lepas? (y/n)" menggantikan "ketik HAPUS"; kata "hapus" diganti "lepas" di pesan uninstall (install.sh + uninstall.sh)
+
 ## [12.2.1] — 2026-09-16
 ### Fixed
 - **skill frontmatter tanpa `name:`** — 63 SKILL.md cuma `description:`; opencode tidak mendeteksi skill tanpa `name:` → `name:` ditambah di semua skill (config + source)

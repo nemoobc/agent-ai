@@ -243,9 +243,9 @@ uninstall(){
   if [ "${ALLOW_YES:-0}" != "1" ]; then
     if [ -t 0 ]; then
       local nagent=$(ls -1 "$CFG/agent" 2>/dev/null | wc -l | tr -d ' ')
-      inf "Akan dihapus: agent $nagent + skill/command/docs + AGENTS.md (memory DIPERTAHANKAN)"
-      printf "  ketik HAPUS untuk lanjut: "; read -r ans
-      [ "$ans" = "HAPUS" ] || { inf "dibatalkan"; box_selesai; return 1; }
+      inf "Akan dilepas: agent $nagent + skill/command/docs + AGENTS.md (memory DIPERTAHANKAN)"
+      printf "  Lanjutkan lepas? (y/n): "; read -r ans
+      case "$ans" in y|Y|yes|YES) ;; *) inf "dibatalkan"; box_selesai; return 1;; esac
     else
       inf "dibatalkan — non-interaktif wajib --yes"
       box_selesai; return 1
@@ -273,7 +273,7 @@ uninstall(){
     ok "opencode.json dipulihkan dari backup"
   elif [ -f "$CFG/opencode.json" ] && grep -q '"devbrain"' "$CFG/opencode.json" 2>/dev/null; then
     rm -f "$CFG/opencode.json"
-    ok "opencode.json buatan DEV-BRAIN dihapus"
+    ok "opencode.json buatan DEV-BRAIN dilepas"
   fi
 
   if [ -d "$CFG/memory" ]; then
@@ -294,7 +294,7 @@ usage(){
   echo "  --update      update dari DEV_BRAIN_UPDATE_URL (memori aman, https wajib SHA via DEV_BRAIN_UPDATE_SHA)"
   echo "  --check       cek kesehatan instalasi (tanpa menulis)"
   echo "  --allow-all   opt-in: permission allow semua (default granular ask). Bisa juga DEV_BRAIN_ALLOW_ALL=1"
-  echo "  --yes         lewati konfirmasi hapus (untuk --uninstall non-interaktif)"
+  echo "  --yes         lewati konfirmasi lepas (untuk --uninstall non-interaktif)"
   echo "  --help        tampilkan bantuan ini"
 }
 

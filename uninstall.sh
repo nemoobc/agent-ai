@@ -61,11 +61,11 @@ uninstall(){
     nagent=$(ls -1 "$CFG/agent" 2>/dev/null | wc -l | tr -d ' ')
     nskill=$(ls -1d "$CFG/skill"/*/ 2>/dev/null | wc -l | tr -d ' ')
     ncmd=$(ls -1 "$CFG/command"/*.md 2>/dev/null | wc -l | tr -d ' ')
-    inf "Akan dihapus: agent $nagent | skill $nskill | command $ncmd + AGENTS.md + VERSION (memory DIPERTAHANKAN)"
+    inf "Akan dilepas: agent $nagent | skill $nskill | command $ncmd + AGENTS.md + VERSION (memory DIPERTAHANKAN)"
     inf "Pratinjau dulu: bash uninstall.sh --check"
     if [ -t 0 ]; then
-      printf "  ketik HAPUS untuk lanjut: "; read -r ans
-      [ "$ans" = "HAPUS" ] || { inf "dibatalkan"; box_selesai; return 1; }
+      printf "  Lanjutkan lepas? (y/n): "; read -r ans
+      case "$ans" in y|Y|yes|YES) ;; *) inf "dibatalkan"; box_selesai; return 1;; esac
     else
       inf "dibatalkan — non-interaktif wajib: bash uninstall.sh --yes"
       box_selesai; return 1
@@ -98,7 +98,7 @@ uninstall(){
 
 case "${1:-}" in
   --check|-c)
-    # PRATINJAU — hitung & tampilkan, TANPA menghapus apa pun
+    # PRATINJAU — hitung & tampilkan, TANPA melepas apa pun
     if [ ! -d "$CFG" ]; then
       inf "Tidak ada instalasi"
       exit 0
@@ -108,9 +108,9 @@ case "${1:-}" in
     ncmd=$(ls -1 "$CFG/command"/*.md 2>/dev/null | wc -l | tr -d ' ')
     ndocs=$(ls -1 "$CFG/docs" 2>/dev/null | wc -l | tr -d ' ')
     bak=$(ls -1t "$CFG"/opencode.json.bak.* 2>/dev/null | head -n1)
-    inf "PRATINJAU (--check) — tidak ada yang dihapus:"
+    inf "PRATINJAU (--check) — tidak ada yang dilepas:"
     inf "  agent: $nagent | skill: $nskill | command: $ncmd | docs: $ndocs"
-    inf "  AGENTS.md + VERSION akan dihapus"
+    inf "  AGENTS.md + VERSION akan dilepas"
     if [ -n "${bak:-}" ]; then
       inf "  opencode.json dipulihkan dari: $(basename "$bak")"
     else
