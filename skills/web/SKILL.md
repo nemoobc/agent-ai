@@ -1,4 +1,5 @@
 ---
+name: web
 description: web — browser automation, scraping, testing via Playwright/Puppeteer. Form filling, screenshot, network intercept, DOM query. Headless atau headed mode.
 mode: subagent
 temperature: 0.3

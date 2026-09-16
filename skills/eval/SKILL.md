@@ -1,4 +1,5 @@
 ---
+name: eval
 description: EVAL — eval regresi perilaku agent: kasus klaim-palsu, hitungan-salah, injeksi-prompt, guard-bocor. Kit tidak boleh mundur antar versi.
 ---
 

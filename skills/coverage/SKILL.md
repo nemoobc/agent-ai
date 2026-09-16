@@ -1,4 +1,5 @@
 ---
+name: coverage
 description: COVERAGE — peta gap test heuristik: daftar fungsi/class dari source, cek mana yang tidak pernah disebut di file test. Bukan pengganti coverage tool — penunjuk area yang belum tersentuh.
 ---
 
@@ -17,9 +18,9 @@ Memetakan celah (gap) antara kode sumber dan cakupan test. Coverage heuristik = 
 
 ## JALANKAN
 ```bash
-bash ~/.config/opencode/skill/coverage/run.sh
+bash ~/.config/opencode/skills/coverage/run.sh
 ```
-(atau terpasang di project: `bash .opencode/skill/coverage/run.sh`)
+(atau terpasang di project: `bash .opencode/skills/coverage/run.sh`)
 
 Output: daftar fungsi/class dari source + mana yang tidak pernah disebut di test files.
 

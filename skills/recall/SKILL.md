@@ -1,4 +1,5 @@
 ---
+name: recall
 description: Memuat ingatan jangka panjang DEV-BRAIN. Dipakai otomatis di awal setiap sesi. Baca file memori, jangan tebak. Saring yang relevan, rangkum 1 blok.
 ---
 

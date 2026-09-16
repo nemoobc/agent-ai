@@ -1,4 +1,5 @@
 ---
+name: auto-prompt
 description: auto-prompt — Generate prompt lengkap & matang dari input kasar/pendek
 ---
 

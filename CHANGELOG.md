@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## [Unreleased]
+### Fixed
+- **skill frontmatter tanpa `name:`** — 63 SKILL.md cuma `description:`; opencode tidak mendeteksi skill tanpa `name:` → `name:` ditambah di semua skill (config + source)
+- **skill path singular** — 9 SKILL.md masih `opencode/skill/` → `opencode/skills/`
+- **install.sh folder skill salah** — `$CFG/skill` (singular) → `$CFG/skills` (plural); opencode baca skill dari `skills/`, 63 skill agent-ai tidak terdeteksi skill tool
+- **install.sh dependensi otomatis** — `install_deps()` cek + install paket penting (ripgrep, git, curl, nodejs, python, make, jq, sqlite) via pkg/apt-get; skill tool opencode butuh ripgrep
+
 ## [12.2.0] — 2026-09-15
 ### Security
 - **privasi penuh install** — `write_config` tambah `share:"disabled"`, `snapshot:false`, `autoupdate:false`, `experimental.openTelemetry:false` ke template + merge (python3/node) → provider/model tidak melihat aktivitas user (share/snapshot/telemetry mati); set user yang eksplisit tetap menang

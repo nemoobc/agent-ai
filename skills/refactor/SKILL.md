@@ -1,4 +1,5 @@
 ---
+name: refactor
 description: REFACTOR — ubah struktur kode tanpa mengubah perilaku. Beda dari fix (perbaiki perilaku) dan perf (kejar cepat). Niat: kode lebih jelas, tanpa regresi.
 ---
 

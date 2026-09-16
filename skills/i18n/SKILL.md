@@ -1,4 +1,5 @@
 ---
+name: i18n
 description: I18N — semua teks user-visible pakai key terkumpul, tidak ada string hardcoded. Jalankan saat menambah fitur teks, atau saat scan menemukan teks hardcoded.
 ---
 

@@ -1,4 +1,5 @@
 ---
+name: backup
 description: BACKUP — snapshot data/folder sebelum operasi berisiko (migrate, hapus, rewrite): run.sh buat tarball bertanggal, keep N terbaru. Tanpa backup = operasi berisiko dilarang.
 ---
 
@@ -18,7 +19,7 @@ Membuat salinan keamanan (snapshot) dari data/project sebelum operasi berisiko d
 
 ## JALANKAN
 ```bash
-bash ~/.config/opencode/skill/backup/run.sh [dir] [label]
+bash ~/.config/opencode/skills/backup/run.sh [dir] [label]
 ```
 - Bikin `backups/<nama>-<label>-<timestamp>.tar.gz` (di dalam project, di gitignore-kan)
 - Default keep: 5 backup terakhir, sisanya dihapus (bisa diubah argumen)

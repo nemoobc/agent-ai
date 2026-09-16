@@ -1,4 +1,5 @@
 ---
+name: metrics
 description: METRICS — kesehatan project terukur: kompleksitas, cakupan test, utang teknis, kecepatan pipeline. Angka untuk keputusan, bukan dekorasi.
 ---
 

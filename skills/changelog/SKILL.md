@@ -1,4 +1,5 @@
 ---
+name: changelog
 description: CHANGELOG — validasi & generate entry CHANGELOG.md sinkron dengan VERSION + badge README. Jalankan saat rilis, bump versi, atau sebelum release workflow jalan.
 ---
 

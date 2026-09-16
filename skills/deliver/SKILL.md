@@ -1,4 +1,5 @@
 ---
+name: deliver
 description: DELIVER — jalur serah kerja tanpa git: zip → upload tmpfiles.org → link. Dipakai saat user melarang commit/push. Secret dilarang ikut. Script run.sh otomatis.
 ---
 

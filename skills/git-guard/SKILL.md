@@ -1,4 +1,5 @@
 ---
+name: git-guard
 description: GIT-GUARD — gerbang sebelum commit yang JALAN: blokir secret, merge marker, debug statement, diff raksasa di staged changes. Jalankan run.sh otomatis sebelum commit.
 ---
 
@@ -17,9 +18,9 @@ Memeriksa staged changes sebelum commit untuk memblokir masalah keamanan dan kua
 
 ## JALANKAN
 ```bash
-bash ~/.config/opencode/skill/git-guard/run.sh
+bash ~/.config/opencode/skills/git-guard/run.sh
 ```
-(atau terpasang di project: `bash .opencode/skill/git-guard/run.sh`)
+(atau terpasang di project: `bash .opencode/skills/git-guard/run.sh`)
 
 Exit 0 = CLEAN (aman di-commit). Exit 1 = BLOKIR (ada masalah di staged diff).
 

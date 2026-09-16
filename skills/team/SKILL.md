@@ -1,4 +1,5 @@
 ---
+name: team
 description: TEAM — kerja paralel: pecah kerja jadi unit tak-bergantung, antrean sub-agent, verifikasi ulang, merge hasil. Satu niat per unit. Verifikasi = wajib.
 ---
 

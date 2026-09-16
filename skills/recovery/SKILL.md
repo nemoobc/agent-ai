@@ -1,4 +1,5 @@
 ---
+name: recovery
 description: RECOVERY — pemulihan setelah bencana (data rusak/hilang, migrasi gagal, deploy rusak): restore dari backup, verifikasi, minimal green, postmortem. Backup = tiket pulang.
 ---
 

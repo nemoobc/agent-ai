@@ -1,4 +1,5 @@
 ---
+name: profile
 description: PROFILE — profil gaya komunikasi & kedalaman user (A/B/C + kedalaman D1–D3). Dipelajari dari interaksi, dipakai DEV untuk menyesuaikan laporan & sentuhan, kerja TETAP pipeline penuh.
 ---
 

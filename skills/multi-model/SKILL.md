@@ -1,4 +1,5 @@
 ---
+name: multi-model
 description: multi-model ALL-ROUNDER MAXX — orkestrasi SEMUA AI model bumi 2026 (OpenAI GPT-5.x semua varian, Gemini 3.x semua varian, Claude Opus/Sonnet/Fable/Haiku semua, DeepSeek V4.1, GLM-5.3/5.2/4.7, Grok 4.x, Qwen/Llama/Mistral, Kimi K2, MiniMax, Cohere, Amazon Nova, MS Phi, Perplexity Sonar, Hunyuan/Ernie/Yi/Granite/Nematron, Astra/Astra Pro internal, aggregator OpenRouter/Groq/Cerebras/Fireworks/Together). Routing per konteks + fallback chain + cost guard. Satu interface — semua model di bumi.
 mode: subagent
 temperature: 0.3

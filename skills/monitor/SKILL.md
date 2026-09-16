@@ -1,4 +1,5 @@
 ---
+name: monitor
 description: monitor — health check, uptime, log watch, alert threshold. DEV pakai untuk pantau service & deteksi anomali. Interval minimum 30 detik.
 mode: subagent
 temperature: 0.1

@@ -1,4 +1,5 @@
 ---
+name: audit-full
 description: AUTO AUDIT FULL — audit dependensi, typecheck, lint, scan secret bocor, higiene TODO. Wajib setelah test hijau. Semua temuan → FIXER. Exit code menentukan gerbang.
 ---
 
@@ -6,9 +7,9 @@ description: AUTO AUDIT FULL — audit dependensi, typecheck, lint, scan secret 
 
 Jalankan dari root project:
 ```bash
-bash ~/.config/opencode/skill/audit-full/run.sh .
+bash ~/.config/opencode/skills/audit-full/run.sh .
 ```
-(atau terpasang di project: `bash .opencode/skill/audit-full/run.sh .`)
+(atau terpasang di project: `bash .opencode/skills/audit-full/run.sh .`)
 
 ## APA YANG DILAKUKAN
 Menjalankan serangkaian audit otomatis terhadap kode dan konfigurasi project:

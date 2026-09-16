@@ -1,4 +1,5 @@
 ---
+name: a11y
 description: A11Y — aksesibilitas: UI bisa dipakai keyboard, screen reader, kontras cukup. Wajib untuk UI baru/perubahan UI — bukan bonus, bagian dari definisi selesai.
 ---
 

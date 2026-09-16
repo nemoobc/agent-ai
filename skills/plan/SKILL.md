@@ -1,4 +1,5 @@
 ---
+name: plan
 description: PLAN AUTO — rencana lengkap & matang untuk SETIAP permintaan user, sebelum eksekusi. Tampil ke user. Tanpa plan, BANGUN dilarang. Format 8 blok.
 ---
 

@@ -1,4 +1,5 @@
 ---
+name: test-full
 description: AUTO TEST FULL — deteksi semua framework test di project (node/python/go/rust/php/make) dan jalankan semuanya. Wajib setiap selesai menulis/mengubah kode. Exit code menentukan gerbang: hijau = lanjut, merah = fix dulu.
 ---
 
@@ -6,9 +7,9 @@ description: AUTO TEST FULL — deteksi semua framework test di project (node/py
 
 Jalankan dari root project:
 ```bash
-bash ~/.config/opencode/skill/test-full/run.sh .
+bash ~/.config/opencode/skills/test-full/run.sh .
 ```
-(atau terpasang di project: `bash .opencode/skill/test-full/run.sh .`)
+(atau terpasang di project: `bash .opencode/skills/test-full/run.sh .`)
 
 ## APA YANG DILAKUKAN
 Script mendeteksi otomatis framework test yang ada di project lalu menjalankan semuanya tanpa intervensi manual:

@@ -1,4 +1,5 @@
 ---
+name: spec
 description: SPEC — spesifikasi perilaku sebelum arsitektur: input, output, aturan, error, non-goal. Fitur ambigu = tangkap di sini, bukan di tengah koding. Dipanggil sebelum architect.
 ---
 

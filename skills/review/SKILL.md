@@ -1,4 +1,5 @@
 ---
+name: review
 description: REVIEW — baca PR/branch/diff sebelum merge: konteks rencana, bereskan conflict, verifikasi test+audit, saran commit. Baca dulu, baru bicara.
 ---
 

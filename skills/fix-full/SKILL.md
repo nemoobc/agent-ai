@@ -1,4 +1,5 @@
 ---
+name: fix-full
 description: AUTO FIX FULL — formatter, lint --fix, lalu re-test otomatis sampai terlihat hasil. Dipakai FIXER di setiap putaran perbaikan. Script hanya permukaan — fix logis tetap tulis sendiri.
 ---
 
@@ -6,9 +7,9 @@ description: AUTO FIX FULL — formatter, lint --fix, lalu re-test otomatis samp
 
 Jalankan dari root project:
 ```bash
-bash ~/.config/opencode/skill/fix-full/run.sh .
+bash ~/.config/opencode/skills/fix-full/run.sh .
 ```
-(atau terpasang di project: `bash .opencode/skill/fix-full/run.sh .`)
+(atau terpasang di project: `bash .opencode/skills/fix-full/run.sh .`)
 
 ## APA YANG DILAKUKAN
 Script otomatis menjalankan 3 tahap perbaikan permukaan secara berurutan:

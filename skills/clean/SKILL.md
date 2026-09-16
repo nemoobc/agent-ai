@@ -1,4 +1,5 @@
 ---
+name: clean
 description: CLEAN — bersih-bersih otomatis artefak kerja dari project: build output, cache, log, file OS. Allowlist ketat — kode sumber, node_modules, .git, .env tidak pernah disentuh.
 ---
 
@@ -11,9 +12,9 @@ Menghapus artefak build, cache, dan file sementara dari project sesuai allowlist
 
 ## JALANKAN
 ```bash
-bash ~/.config/opencode/skill/clean/run.sh [root] [--dry]
+bash ~/.config/opencode/skills/clean/run.sh [root] [--dry]
 ```
-(atau terpasang di project: `bash .opencode/skill/clean/run.sh [root] [--dry]`)
+(atau terpasang di project: `bash .opencode/skills/clean/run.sh [root] [--dry]`)
 
 ## URUTAN
 

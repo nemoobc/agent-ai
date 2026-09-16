@@ -1,4 +1,5 @@
 ---
+name: perf
 description: PERF — audit performa: N+1 query, loop berat di render/hot path, bundle besar, IO blocking, utang memori. Jalankan bila user keluh "lambat", atau otomatis saat menemukan hotspot saat build.
 ---
 

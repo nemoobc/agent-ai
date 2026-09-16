@@ -1,4 +1,5 @@
 ---
+name: critique
 description: CRITIQUE — serangan adversarial ke hasil kerja sendiri: spesifikasi, logika, bukti, skenario tak-teruji. Veto blokir lapor SELESAI. Tugas besar/berisiko = WAJIB.
 ---
 

@@ -151,11 +151,51 @@ NODEEOF
   fi
 }
 
+# Dependensi penting — cek yang kurang, install via pkg (Termux) / apt-get (linux)
+# Binary → nama paket: rg=ripgrep, node=nodejs, sqlite3=sqlite, sisanya sama.
+pkg_of(){ case "$1" in rg) echo ripgrep;; node) echo nodejs;; sqlite3) echo sqlite;; *) echo "$1";; esac; }
+install_deps(){
+  local NEED=() PKG="" c
+  for c in rg git curl node python make jq sqlite3; do
+    command -v "$c" >/dev/null 2>&1 || NEED+=("$c")
+  done
+  [ ${#NEED[@]} -eq 0 ] && { ok "dependensi lengkap"; return 0; }
+  wrn "dependensi kurang: ${NEED[*]}"
+  if command -v pkg >/dev/null 2>&1; then
+    PKG="pkg"
+  elif command -v apt-get >/dev/null 2>&1; then
+    PKG="apt-get"
+  else
+    wrn "manajer paket tidak dikenal — install manual: ${NEED[*]}"
+    return 1
+  fi
+  if [ "${ALLOW_YES:-0}" = "1" ]; then
+    inf "install: ${NEED[*]}"
+    $PKG install -y "${NEED[@]}" || { wrn "install dependensi gagal"; return 1; }
+    ok "dependensi siap"
+  elif [ -t 0 ]; then
+    printf "  install ${NEED[*]} via $PKG? [y/N] "; read -r ans
+    if [ "$ans" = "y" ] || [ "$ans" = "Y" ]; then
+      inf "install: ${NEED[*]}"
+      $PKG install -y "${NEED[@]}" || { wrn "install dependensi gagal"; return 1; }
+      ok "dependensi siap"
+    else
+      wrn "dilewati — install manual: ${NEED[*]}"
+      return 1
+    fi
+  else
+    wrn "non-interaktif tanpa --yes — install manual: ${NEED[*]}"
+    return 1
+  fi
+}
+
 install(){
   clear
   box_awal
 
-  mkdir -p "$CFG/agent" "$CFG/skill" "$CFG/command" "$CFG/docs" "$CFG/memory" \
+  install_deps || { wrn "dependensi belum lengkap — install dibatalkan"; box_selesai; return 1; }
+
+  mkdir -p "$CFG/agent" "$CFG/skills" "$CFG/command" "$CFG/docs" "$CFG/memory" \
     || { wrn "gagal buat folder config"; return 1; }
 
   dots "agent..."
@@ -165,8 +205,8 @@ install(){
   dots "skill..."
   for skill_dir in "$SCRIPT_DIR/skills/"*/; do
     name=$(basename "$skill_dir")
-    cp -R "$skill_dir" "$CFG/skill/$name" || { wrn "gagal copy skill $name"; return 1; }
-    chmod +x "$CFG/skill/$name/run.sh" 2>/dev/null
+    cp -R "$skill_dir" "$CFG/skills/$name" || { wrn "gagal copy skill $name"; return 1; }
+    chmod +x "$CFG/skills/$name/run.sh" 2>/dev/null
   done
 
   dots "command..."
@@ -183,7 +223,7 @@ install(){
   backup_config
   write_config
 
-  local n=$(find "$CFG/agent" "$CFG/skill" "$CFG/command" -type f 2>/dev/null | wc -l | tr -d ' ')
+  local n=$(find "$CFG/agent" "$CFG/skills" "$CFG/command" -type f 2>/dev/null | wc -l | tr -d ' ')
   echo
   ok "$n file"
 
@@ -216,7 +256,7 @@ uninstall(){
   rm -rf "$CFG/agent"
 
   dots "skill..."
-  rm -rf "$CFG/skill"
+  rm -rf "$CFG/skills"
 
   dots "command..."
   rm -rf "$CFG/command"
@@ -264,10 +304,10 @@ check_install(){
   [ -f "$CFG/AGENTS.md" ] || { wrn "doctrine hilang: $CFG/AGENTS.md"; BAD=1; }
   [ -f "$CFG/opencode.json" ] || { wrn "config hilang: $CFG/opencode.json"; BAD=1; }
   grep -q '"devbrain"' "$CFG/opencode.json" 2>/dev/null || wrn "opencode.json tanpa marker devbrain (bukan tulisan installer)"
-  for d in agent command memory skill; do
+  for d in agent command memory skills; do
     [ -d "$CFG/$d" ] || { wrn "folder hilang: $CFG/$d"; BAD=1; }
   done
-  local n=$(find "$CFG/agent" "$CFG/skill" "$CFG/command" -type f 2>/dev/null | wc -l | tr -d ' ')
+  local n=$(find "$CFG/agent" "$CFG/skills" "$CFG/command" -type f 2>/dev/null | wc -l | tr -d ' ')
   [ "${n:-0}" -ge 20 ] || { wrn "file otak cuma $n — install ulang"; BAD=1; }
   local v=$(tr -d '[:space:]' < "$CFG/VERSION" 2>/dev/null)
   if [ -n "$v" ]; then ok "versi terpasang: $v"; else wrn "versi tidak tercatat (install lama) — update disarankan"; fi

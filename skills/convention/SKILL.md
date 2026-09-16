@@ -1,4 +1,5 @@
 ---
+name: convention
 description: CONVENTION — ekstrak & tegakkan konvensi repo: struktur, penamaan, gaya, alur git. Satu sumber kebenaran yang dipakai semua agent — konsistensi tanpa diingat-ingat.
 ---
 

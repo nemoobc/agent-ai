@@ -1,4 +1,5 @@
 ---
+name: env-guard
 description: ENV-GUARD — hygiene environment: .env tidak ikut ke-commit, .env.example ada dan sinkron, secret tidak masuk git. Wajib untuk project dengan secret. run.sh jalan otomatis di audit.
 ---
 
@@ -18,9 +19,9 @@ Memastikan environment variable dan secret tidak bocor ke version control. Env-g
 
 ## JALANKAN
 ```bash
-bash ~/.config/opencode/skill/env-guard/run.sh
+bash ~/.config/opencode/skills/env-guard/run.sh
 ```
-(atau terpasang di project: `bash .opencode/skill/env-guard/run.sh`)
+(atau terpasang di project: `bash .opencode/skills/env-guard/run.sh`)
 Exit 0 = bersih. Exit 1 = masalah.
 
 ## CEK YANG DILAKUKAN run.sh

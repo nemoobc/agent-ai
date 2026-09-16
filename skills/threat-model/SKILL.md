@@ -1,4 +1,5 @@
 ---
+name: threat-model
 description: THREAT-MODEL — peta ancaman sebelum bangun surface baru: aktor, aset, jalur serangan, mitigasi. Wajib untuk auth/pembayaran/data user/publik, sejalan dengan red-team.
 ---
 

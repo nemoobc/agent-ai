@@ -1,4 +1,5 @@
 ---
+name: remember
 description: Menyimpan ingatan jangka panjang — keputusan, pembelajaran, konteks penting. Dipakai otomatis di akhir tugas penting. JANGAN simpan secret/API key, apapun alasannya.
 ---
 

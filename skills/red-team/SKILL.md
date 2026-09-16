@@ -1,4 +1,5 @@
 ---
+name: red-team
 description: RED-TEAM — serang hasil kerja sendiri sebelum user/penyerang melakukannya: input jahat, batas, penyalahgunaan, kegagalan berantai. Wajib untuk auth/pembayaran/data user/permukaan publik.
 ---
 

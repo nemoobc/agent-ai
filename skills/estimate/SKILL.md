@@ -1,4 +1,5 @@
 ---
+name: estimate
 description: ESTIMATE — pecah tugas jadi item kerja ber-skala S/M/L/XL dari angka file nyata (scan), plus rentang best/worst. Masuk plan & milestone — plan tanpa angka = tebakan.
 ---
 

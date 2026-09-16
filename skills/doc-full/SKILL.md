@@ -1,4 +1,5 @@
 ---
+name: doc-full
 description: DOC-FULL — sinkron README/CHANGELOG/dokumen saat perilaku berubah. Dipakai setelah perubahan yang user-visible. Dokumen bohong = bug.
 ---
 

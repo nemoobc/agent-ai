@@ -1,4 +1,5 @@
 ---
+name: migrate
 description: MIGRATE — ubah skema/data/model dengan aman: snapshot dulu, skrip mundur, jalan bertahap, verifikasi, test, audit. Tanpa snapshot = dilarang. Data hilang tidak bisa dikembalikan oleh test.
 ---
 

@@ -1,4 +1,5 @@
 ---
+name: learn
 description: LEARN — ekstrak pelajaran dari setiap tugas selesai/gagal jadi lessons.md terukur (Pola/Bukti/Aksi). Wajib di akhir tugas, di atas remember. Tanpa bukti = dilarang masuk.
 ---
 

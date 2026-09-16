@@ -1,4 +1,5 @@
 ---
+name: hotfix
 description: HOTFIX — produksi rusak, cepat & minimal: hentikan pendarahan dulu, reproduksi, fix SEMPIT, bukti, postmortem setelah tenang. Tidak ada ruang untuk eksperimen di produksi.
 ---
 

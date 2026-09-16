@@ -1,4 +1,5 @@
 ---
+name: context
 description: CONTEXT — disiplin konteks: baca file sekali + ringkas, jangan baca ulang utuh, compact saat penuh, handoff sebelum hilang. Jantung HUKUM 8.
 ---
 

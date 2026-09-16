@@ -20,7 +20,7 @@ done
 
 p "▮ SELF-TEST: dokumentasi skill punya command jalan" 213
 for sk in audit-full test-full fix-full; do
-  grep -q "skill/$sk/run.sh" "$DIR/skills/$sk/SKILL.md" \
+  grep -q "skills/$sk/run.sh" "$DIR/skills/$sk/SKILL.md" \
     && ok "$sk/SKILL.md ada command" || bad "$sk/SKILL.md tanpa command"
 done
 

@@ -1,4 +1,5 @@
 ---
+name: data
 description: data — analisis data, statistik, visualisasi, transformasi CSV/JSON/Excel/SQL. Pandas, NumPy, matplotlib thinking.
 mode: subagent
 temperature: 0.3

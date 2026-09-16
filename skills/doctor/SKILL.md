@@ -1,4 +1,5 @@
 ---
+name: doctor
 description: DOCTOR — diagnosa instalasi & kesehatan: lingkungan, dependensi opsional, typecheck, memori (termasuk deteksi secret di memori). Jalankan kapan pun tanpa diminta bila ada yang terasa aneh.
 ---
 
@@ -6,9 +7,9 @@ description: DOCTOR — diagnosa instalasi & kesehatan: lingkungan, dependensi o
 
 Jalankan dari root project:
 ```bash
-bash ~/.config/opencode/skill/doctor/run.sh .
+bash ~/.config/opencode/skills/doctor/run.sh .
 ```
-(atau terpasang di project: `bash .opencode/skill/doctor/run.sh .`)
+(atau terpasang di project: `bash .opencode/skills/doctor/run.sh .`)
 
 Exit 0 = sehat, 1 = ada masalah.
 

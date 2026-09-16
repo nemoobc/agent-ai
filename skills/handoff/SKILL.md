@@ -1,4 +1,5 @@
 ---
+name: handoff
 description: HANDOFF — kemas konteks sesi supaya sesi/agent berikutnya lanjut tanpa mengulang dari nol: kondisi, sisa kerja, keputusan, perintah validasi. Tanpa handoff = ilusi konteks.
 ---
 

@@ -1,4 +1,5 @@
 ---
+name: cost
 description: COST — estimasi biaya/token sebelum aksi berbiaya (API berbayar, LLM call, cloud service). Wajib sebelum aksi berbiaya — HUKUM 5. Tanpa angka = tidak jalan.
 ---
 

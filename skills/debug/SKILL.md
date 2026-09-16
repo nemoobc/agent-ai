@@ -1,4 +1,5 @@
 ---
+name: debug
 description: DEBUG sistematis — reproduksi → isolasi → hipotesis → bukti → fix → re-test. Wajib sebelum memperbaiki bug apa pun, dilarang menebak. Akar masalah ketemu, baru fix.
 ---
 

@@ -1,4 +1,5 @@
 ---
+name: trace
 description: TRACE — rantai bukti (HUKUM 11): setiap klaim di laporan wajib punya jalur ke bukti fisik (exit code, output test, file:baris). Klaim tanpa rantai = tidak boleh diucapkan.
 ---
 

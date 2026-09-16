@@ -1,4 +1,5 @@
 ---
+name: scaffold
 description: scaffold — generate project template, boilerplate, starter code. Full-stack: React, Next.js, Express, FastAPI, Go, Rust. Dari nol sampai siap coding dalam satu perintah.
 mode: subagent
 temperature: 0.3

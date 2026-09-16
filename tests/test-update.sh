@@ -28,7 +28,7 @@ p "▮ UPDATE: versi lokal = $LOCAL_V (upgrade target: $NEWER_V, downgrade targe
 # ── siapkan "remote master" = salinan kit ini dengan VERSION khusus ──
 mk_remote(){ # $1 = versi remote — nama folder WAJIB 'agent-ai*' (installer cari dengan find -name 'agent-ai*')
   rm -rf "$T/agent-ai" "$REMOTE"; mkdir -p "$T/agent-ai" "$REMOTE"
-  cp -r "$DIR/agents" "$DIR/command" "$DIR/skills" "$DIR/memory" "$DIR/docs" "$DIR/tests" "$T/agent-ai/"
+  cp -r "$DIR/agents" "$DIR/command" "$DIR/commands" "$DIR/skills" "$DIR/memory" "$DIR/docs" "$DIR/tests" "$T/agent-ai/"
   cp "$DIR/AGENTS.md" "$DIR/README.md" "$DIR/CHANGELOG.md" "$DIR/LICENSE" "$DIR/install.sh" "$T/agent-ai/"
   echo "$1" > "$T/agent-ai/VERSION"
   tar -czf "$T/remote.tgz" -C "$T" agent-ai 2>/dev/null

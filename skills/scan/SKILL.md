@@ -1,4 +1,5 @@
 ---
+name: scan
 description: SCAN — peta project saat BOOT sesi: bahasa, framework, struktur, entry point, test framework. Input wajib sebelum eksekusi pertama. Baca file, jangan tebak.
 ---
 

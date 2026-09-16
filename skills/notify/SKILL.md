@@ -1,4 +1,5 @@
 ---
+name: notify
 description: notify — kirim notifikasi multi-channel: email, Slack, Discord, Telegram, webhook. DEV pakai untuk update progress & alert. Tanpa konfigurasi = tidak bisa kirim.
 mode: subagent
 temperature: 0

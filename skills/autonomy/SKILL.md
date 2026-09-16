@@ -1,4 +1,5 @@
 ---
+name: autonomy
 description: AUTONOMY — tentukan tingkat kemandirian tiap tugas: kerja sendiri sampai keputusan butuh user, berhenti TEPAT di titik itu dengan angka, bukan setengah jalan.
 ---
 

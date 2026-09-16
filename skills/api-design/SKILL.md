@@ -1,4 +1,5 @@
 ---
+name: api-design
 description: API-DESIGN — kontrak API sebelum implementasi: endpoint/route, skema request/response, error code, versi, contoh curl. Konsisten & terdokumentasi. Sekali keluar, sulit ditarik.
 ---
 

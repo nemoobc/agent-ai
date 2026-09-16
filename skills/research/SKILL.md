@@ -1,4 +1,5 @@
 ---
+name: research
 description: RESEARCH — riset eksternal bersumber: versi library, API, harga, best practice. Webfetch/web_search. Tanpa sumber = dilarang diklaim. Data, bukan opini.
 ---
 

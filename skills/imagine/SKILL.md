@@ -1,4 +1,5 @@
 ---
+name: imagine
 description: Membayangkan hasil akhir sebelum membangun — visualisasi struktur file, alur user, tampilan akhir. Input langsung ke plan. Tanpa bayangan = plan tebakan.
 ---
 

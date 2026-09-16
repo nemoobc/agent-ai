@@ -1,4 +1,5 @@
 ---
+name: budget
 description: BUDGET — anggaran konteks sesi (HUKUM 8 terukur): pakai ringkasan konteks ringkas + pengukuran pemakaian per fase + pemicu compact/handoff sebelum kehabisan.
 ---
 

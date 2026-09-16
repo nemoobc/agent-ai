@@ -120,3 +120,13 @@ Entry terbaru di atas. Format: POLA / BUKTI / AKSI. Tanpa bukti = tidak masuk.
 - POLA: `node - a b c` → process.argv = ['node','-','a','b','c']; slice(1) menangkap '-'
 - BUKTI: config tak pernah tertulis; file '-' muncul
 - AKSI: pakai slice(2) untuk arg setelah '-'
+
+## 2026-09-16 — opencode skill butuh name frontmatter + folder skills plural
+- POLA: skill tanpa `name:` di frontmatter TIDAK terdeteksi opencode (cuma description tidak cukup); folder `skill/` (singular) tidak dibaca — opencode baca `skills/` (plural)
+- BUKTI: 63 skill agent-ai tidak muncul di skill tool; setelah `name:` ditambah + pindah ke `skills/` → 73/73 kebaca
+- AKSI: SKILL.md WAJIB `name:` + `description:`; install.sh copy ke `$CFG/skills`; self-test cek pola `skills/<nama>/run.sh`
+
+## 2026-09-16 — test-update mk_remote tidak lengkap (pre-existing)
+- POLA: mk_remote tidak copy `commands/` (plural) → install() baris `cp -R "$SCRIPT_DIR/commands/."` gagal → update flow selalu GAGAL 3 sejak v12.1.0
+- BUKTI: git stash → test-update tetap GAGAL (3) di HEAD; setelah tambah `commands` ke mk_remote → FLOW TERBUKTI (11)
+- AKSI: mk_remote harus mirror struktur kit lengkap (agents, command, commands, skills, memory, docs, tests)

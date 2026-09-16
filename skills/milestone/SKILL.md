@@ -1,4 +1,5 @@
 ---
+name: milestone
 description: MILESTONE — pecah tugas besar jadi milestone bernomor dengan bukti per milestone. Tiap milestone = plan 8 blok mini + test + laporan pendek. Tanpa bukti = tidak selesai.
 ---
 

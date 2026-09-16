@@ -1,4 +1,5 @@
 ---
+name: dependency
 description: DEPENDENCY — upgrade dependensi dengan aman: inventory dulu, baca changelog, deteksi breaking change, lockfile dikunci, test penuh. Bukan sekadar bump versi.
 ---
 

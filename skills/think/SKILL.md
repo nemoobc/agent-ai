@@ -1,4 +1,5 @@
 ---
+name: think
 description: Mikir mendalam sebelum eksekusi — analisa masalah, batasan, opsi, risiko, lalu putus. Wajib sebelum membangun/memperbaiki apa pun. Dilarang menebak.
 ---
 

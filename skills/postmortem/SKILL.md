@@ -1,4 +1,5 @@
 ---
+name: postmortem
 description: POSTMORTEM — bedah insiden/gagal: garis waktu, akar masalah, dampak, aksi pencegahan permanen. Tanpa menyalahkan. Wajib setelah gagal keras atau data rusak.
 ---
 

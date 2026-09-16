@@ -1,4 +1,5 @@
 ---
+name: route
 description: ROUTE — router intensitas: klasifikasi prompt user jadi jalur NORMAL / FULL / ULTRA sebelum eksekusi. Respon default = biasa. FASE 0 pipeline.
 ---
 

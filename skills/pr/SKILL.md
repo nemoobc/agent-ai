@@ -1,4 +1,5 @@
 ---
+name: pr
 description: PR — siapkan pull request dari diff: ringkasan, perubahan, bukti test, checklist, judul konvensional. Siap tempel, bukan kerja setengah. Push = aksi ke remote.
 ---
 

@@ -1,4 +1,5 @@
 ---
+name: explain
 description: EXPLAIN — bedah kode/file/arsitektur untuk user pemula: bahasa sederhana, analogi, diagram teks, tidak ada jargon tanpa penjelasan. Untuk user yang minta penjelasan, bukan kerja.
 ---
 

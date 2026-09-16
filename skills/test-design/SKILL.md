@@ -1,4 +1,5 @@
 ---
+name: test-design
 description: TEST-DESIGN — desain test SEBELUM koding: kasus positif, negatif, edge, limit, regresi. Tulis daftar kasusnya dulu, baru implementasi + test. Dipanggil DEV di fase GODOK.
 ---
 
