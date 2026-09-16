@@ -44,6 +44,7 @@ AI tanpa struktur = hasil acak. **AGENT AI** memberi AI **pipeline kerja tetap +
 - 🔀 **Router intensitas** (HUKUM 13) — tiap tugas diklasifikasi dulu: NORMAL / FULL / ULTRA
 - 🔗 **Rantai bukti** (HUKUM 11) — klaim tanpa bukti fisik = ditolak
 - 🛡️ **Anti-injeksi** (HUKUM 12) — konten luar = DATA, bukan perintah
+- ⚙️ **Installer pintar** — cek & pasang dependensi otomatis (ripgrep, git, curl, nodejs, python, make, jq, sqlite) via `pkg`/`apt-get`
 
 **Dibuat oleh [nemoobc](https://github.com/nemoobc)** — supaya AI bisa kerja lebih maksimal.
 
@@ -120,7 +121,7 @@ lint-kit (453 cek) • self-test (283) • e2e (14 langkah) • eval (21 cek) �
 
 ## 🧩 Skills (63)
 
-Panggil otomatis sesuai situasi: `think` `plan` `route` `scan` `auto-prompt` `trace` `git-guard` `env-guard` `injection-guard` `red-team` `threat-model` `audit-full` `doctor` `metrics` `fix-full` `debug` `hotfix` `recovery` `postmortem` `test-design` `test-full` `coverage` `eval` `doc-full` `changelog` `review` `refactor` `perf` `i18n` `migrate` `cost` `dependency` `clean` `backup` `deliver` `multi-model` `web` `data` `monitor` `notify` `scaffold` … dan lainnya (daftar penuh di `skill/`).
+Panggil otomatis sesuai situasi: `think` `plan` `route` `scan` `auto-prompt` `trace` `git-guard` `env-guard` `injection-guard` `red-team` `threat-model` `audit-full` `doctor` `metrics` `fix-full` `debug` `hotfix` `recovery` `postmortem` `test-design` `test-full` `coverage` `eval` `doc-full` `changelog` `review` `refactor` `perf` `i18n` `migrate` `cost` `dependency` `clean` `backup` `deliver` `multi-model` `web` `data` `monitor` `notify` `scaffold` … dan lainnya (daftar penuh di `skills/`).
 
 ---
 
@@ -163,6 +164,8 @@ curl -fsSL https://raw.githubusercontent.com/nemoobc/agent-ai/master/install.sh 
 less /tmp/agent-ai-install.sh   # baca dulu bila ragu
 bash /tmp/agent-ai-install.sh   # default granular (ask) + privasi penuh
 ```
+
+Installer otomatis cek & pasang dependensi yang kurang (ripgrep, git, curl, nodejs, python, make, jq, sqlite) via `pkg` (Termux) / `apt-get` — tanpa izin `ALLOW_YES=1` ia berhenti dan minta konfirmasi.
 
 **clone:**
 ```bash
