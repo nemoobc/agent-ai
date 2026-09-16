@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## [Unreleased]
+## [12.2.1] — 2026-09-16
 ### Fixed
 - **skill frontmatter tanpa `name:`** — 63 SKILL.md cuma `description:`; opencode tidak mendeteksi skill tanpa `name:` → `name:` ditambah di semua skill (config + source)
 - **skill path singular** — 9 SKILL.md masih `opencode/skill/` → `opencode/skills/`
