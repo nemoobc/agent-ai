@@ -1,6 +1,8 @@
 # CHANGELOG
 
 ## [Unreleased]
+### Fixed
+- **install.sh nama paket dependensi** — `install_deps()` sebelumnya mengirim nama BINARY (`rg`, `node`, `sqlite3`) langsung ke `pkg install` → gagal karena paket Termux bernama `ripgrep`, `nodejs`, `sqlite`. Sekarang binary → nama paket dikonversi dulu (apt: `python`→`python3`), dan pesan manual menampilkan nama PAKET yang harus diinstall user
 ### Changed
 - **uninstall konfirmasi y/n** — prompt "Lanjutkan lepas? (y/n)" menggantikan "ketik HAPUS"; kata "hapus" diganti "lepas" di pesan uninstall (install.sh + uninstall.sh)
 

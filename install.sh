@@ -152,8 +152,8 @@ NODEEOF
 }
 
 # Dependensi penting — cek yang kurang, install via pkg (Termux) / apt-get (linux)
-# Binary → nama paket: rg=ripgrep, node=nodejs, sqlite3=sqlite, sisanya sama.
-pkg_of(){ case "$1" in rg) echo ripgrep;; node) echo nodejs;; sqlite3) echo sqlite;; *) echo "$1";; esac; }
+# Binary ≠ nama paket: rg=ripgrep, node=nodejs, sqlite3=sqlite, python=python3 (apt).
+# User cukup lihat nama PAKET yang akan diinstall — tidak perlu tahu mapping.
 install_deps(){
   local NEED=() PKG="" c
   for c in rg git curl node python make jq sqlite3; do
@@ -169,22 +169,33 @@ install_deps(){
     wrn "manajer paket tidak dikenal — install manual: ${NEED[*]}"
     return 1
   fi
+  # Binary → nama paket sesuai manajer paket
+  local PKGS=() b
+  for b in "${NEED[@]}"; do
+    case "$b" in
+      rg)       PKGS+=(ripgrep) ;;
+      node)     PKGS+=(nodejs) ;;
+      sqlite3)  PKGS+=(sqlite) ;;
+      python)   [ "$PKG" = "apt-get" ] && PKGS+=(python3) || PKGS+=(python) ;;
+      *)        PKGS+=("$b") ;;
+    esac
+  done
   if [ "${ALLOW_YES:-0}" = "1" ]; then
-    inf "install: ${NEED[*]}"
-    $PKG install -y "${NEED[@]}" || { wrn "install dependensi gagal"; return 1; }
+    inf "install: ${PKGS[*]}"
+    $PKG install -y "${PKGS[@]}" || { wrn "install dependensi gagal"; return 1; }
     ok "dependensi siap"
   elif [ -t 0 ]; then
-    printf "  install ${NEED[*]} via $PKG? [y/N] "; read -r ans
+    printf "  install ${PKGS[*]} via $PKG? [y/N] "; read -r ans
     if [ "$ans" = "y" ] || [ "$ans" = "Y" ]; then
-      inf "install: ${NEED[*]}"
-      $PKG install -y "${NEED[@]}" || { wrn "install dependensi gagal"; return 1; }
+      inf "install: ${PKGS[*]}"
+      $PKG install -y "${PKGS[@]}" || { wrn "install dependensi gagal"; return 1; }
       ok "dependensi siap"
     else
-      wrn "dilewati — install manual: ${NEED[*]}"
+      wrn "dilewati — install manual: ${PKGS[*]}"
       return 1
     fi
   else
-    wrn "non-interaktif tanpa --yes — install manual: ${NEED[*]}"
+    wrn "non-interaktif tanpa --yes — install manual: ${PKGS[*]}"
     return 1
   fi
 }
