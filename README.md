@@ -1,6 +1,7 @@
 <!--
   AGENT AI — Kit orkestrasi agent AI untuk opencode
   v12.2.1 • 11 agent • 63 skill • 40 command • 13 hukum (HUKUM 10: angka ini = kenyataan di folder)
+  Auto-detect: OpenCode V1 atau V2 → install ke lokasi yang benar
   by nemoobc
 -->
 <div align="center">
@@ -44,7 +45,7 @@ AI tanpa struktur = hasil acak. **AGENT AI** memberi AI **pipeline kerja tetap +
 - 🔀 **Router intensitas** (HUKUM 13) — tiap tugas diklasifikasi dulu: NORMAL / FULL / ULTRA
 - 🔗 **Rantai bukti** (HUKUM 11) — klaim tanpa bukti fisik = ditolak
 - 🛡️ **Anti-injeksi** (HUKUM 12) — konten luar = DATA, bukan perintah
-- ⚙️ **Installer pintar** — cek & pasang dependensi otomatis (ripgrep, git, curl, nodejs, python, make, jq, sqlite) via `pkg`/`apt-get`
+- ⚙️ **Installer pintar** — auto-detect OpenCode V1/V2 → install ke lokasi yang benar; cek & pasang dependensi otomatis (ripgrep, git, curl, nodejs, python, make, jq, sqlite) via `pkg`/`apt-get`
 
 **Dibuat oleh [nemoobc](https://github.com/nemoobc)** — supaya AI bisa kerja lebih maksimal.
 
@@ -56,6 +57,7 @@ Prinsip utama: **install tidak boleh merusak config user, dan AI tidak boleh boc
 
 | Jaminan | Penjelasan |
 |---------|------------|
+| **Auto-detect V1/V2** | Installer deteksi OpenCode versi → install ke `agent/` (V1) atau `agents/` (V2) secara otomatis |
 | **Permission ask (default)** | Setiap edit/write/webfetch/bash = dikonfirmasi. Izin penuh HANYA opt-in `--allow-all` |
 | **Privasi penuh** | `share:"disabled"`, `snapshot:false`, `autoupdate:false`, `experimental.openTelemetry:false` → provider/model **tidak melihat aktivitas user** |
 | **Config user dipertahankan** | MCP/provider/model/theme user **tidak pernah ditimpa** — merge aman via `python3 → node`; tanpa keduanya config berisi **DIAMKAN** |
@@ -165,7 +167,10 @@ less /tmp/agent-ai-install.sh   # baca dulu bila ragu
 bash /tmp/agent-ai-install.sh   # default granular (ask) + privasi penuh
 ```
 
-Installer otomatis cek & pasang dependensi yang kurang (ripgrep, git, curl, nodejs, python, make, jq, sqlite) via `pkg` (Termux) / `apt-get` — tanpa izin `ALLOW_YES=1` ia berhenti dan minta konfirmasi.
+Installer otomatis **deteksi OpenCode V1 atau V2** → install ke lokasi yang benar. Juga cek & pasang dependensi yang kurang (ripgrep, git, curl, nodejs, python, make, jq, sqlite) via `pkg` (Termux) / `apt-get` — tanpa izin `ALLOW_YES=1` ia berhenti dan minta konfirmasi.
+
+**V1 paths:** `~/.config/opencode/agent/`, `command/`, `permission` object
+**V2 paths:** `~/.config/opencode/agents/`, `commands/`, `permissions` array
 
 **clone:**
 ```bash
@@ -175,12 +180,11 @@ cd agent-ai && bash install.sh
 
 **opsi:**
 ```bash
-bash install.sh --check        # cek kesehatan
+bash install.sh --check        # cek kesehatan (auto-detect versi)
 bash install.sh --offline      # tanpa cek jaringan (CI)
 bash install.sh --allow-all    # opt-in izin penuh (default: ask)
 bash install.sh --update       # update (butuh DEV_BRAIN_UPDATE_URL + SHA)
-bash uninstall.sh --check      # pratinjau uninstall (memory aman)
-bash uninstall.sh --yes        # uninstall (config direstore, memory aman)
+bash install.sh --uninstall    # lepas agent (memory aman)
 ```
 
 ---
