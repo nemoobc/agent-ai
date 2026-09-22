@@ -40,22 +40,22 @@ Installing must NEVER damage user config, and the AI must never leak user activi
 
 **One-liner (curl → bash):**
 ```bash
-curl -fsSL https://raw.githubusercontent.com/nemoobc/agent-ai/main/curl-install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/nemoobc/agent-ai/master/curl-install.sh | bash
 ```
 
 **Uninstall (memory kept):**
 ```bash
-curl -fsSL https://raw.githubusercontent.com/nemoobc/agent-ai/main/curl-install.sh | bash -s -- --uninstall
+curl -fsSL https://raw.githubusercontent.com/nemoobc/agent-ai/master/curl-install.sh | bash -s -- --uninstall
 ```
 
 **Health check:**
 ```bash
-curl -fsSL https://raw.githubusercontent.com/nemoobc/agent-ai/main/curl-install.sh | bash -s -- --check
+curl -fsSL https://raw.githubusercontent.com/nemoobc/agent-ai/master/curl-install.sh | bash -s -- --check
 ```
 
 > ⚠️ `curl | bash` runs the script without inspection. When in doubt, download → inspect → run:
 > ```bash
-> curl -fsSL https://raw.githubusercontent.com/nemoobc/agent-ai/main/curl-install.sh -o agent-ai-install.sh
+> curl -fsSL https://raw.githubusercontent.com/nemoobc/agent-ai/master/curl-install.sh -o agent-ai-install.sh
 > less agent-ai-install.sh
 > bash agent-ai-install.sh
 > ```

@@ -162,24 +162,24 @@ agent-ai/
 
 **satu perintah (curl → bash):**
 ```bash
-curl -fsSL https://raw.githubusercontent.com/nemoobc/agent-ai/main/curl-install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/nemoobc/agent-ai/master/curl-install.sh | bash
 ```
 
 Installer otomatis **deteksi OpenCode V1 atau V2** → install ke lokasi yang benar. Juga cek & pasang dependensi yang kurang (ripgrep, git, curl, nodejs, python, make, jq, sqlite) via `pkg` (Termux) / `apt-get` — tanpa izin `ALLOW_YES=1` ia berhenti dan minta konfirmasi.
 
 **uninstall (memory aman):**
 ```bash
-curl -fsSL https://raw.githubusercontent.com/nemoobc/agent-ai/main/curl-install.sh | bash -s -- --uninstall
+curl -fsSL https://raw.githubusercontent.com/nemoobc/agent-ai/master/curl-install.sh | bash -s -- --uninstall
 ```
 
 **cek kesehatan:**
 ```bash
-curl -fsSL https://raw.githubusercontent.com/nemoobc/agent-ai/main/curl-install.sh | bash -s -- --check
+curl -fsSL https://raw.githubusercontent.com/nemoobc/agent-ai/master/curl-install.sh | bash -s -- --check
 ```
 
 > ⚠️ `curl | bash` = menjalankan skrip tanpa inspeksi. Bila ragu, unduh → baca → jalankan:
 > ```bash
-> curl -fsSL https://raw.githubusercontent.com/nemoobc/agent-ai/main/curl-install.sh -o agent-ai-install.sh
+> curl -fsSL https://raw.githubusercontent.com/nemoobc/agent-ai/master/curl-install.sh -o agent-ai-install.sh
 > less agent-ai-install.sh
 > bash agent-ai-install.sh
 > ```

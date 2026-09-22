@@ -4,7 +4,7 @@
 #  Unduh arsip source dari GitHub, ekstrak ke temp, jalankan
 #  install.sh asli (deteksi V1/V2, dependensi, config aman).
 #
-#  Install   : curl -fsSL https://raw.githubusercontent.com/nemoobc/agent-ai/main/curl-install.sh | bash
+#  Install   : curl -fsSL https://raw.githubusercontent.com/nemoobc/agent-ai/master/curl-install.sh | bash
 #  Cek       : ... | bash -s -- --check
 #  Uninstall : ... | bash -s -- --uninstall
 #
@@ -15,7 +15,7 @@
 set -euo pipefail
 
 AGENT_AI_REPO="${AGENT_AI_REPO:-nemoobc/agent-ai}"
-AGENT_AI_REF="${AGENT_AI_REF:-main}"
+AGENT_AI_REF="${AGENT_AI_REF:-master}"
 AGENT_AI_URL="${AGENT_AI_URL:-https://github.com/${AGENT_AI_REPO}/archive/refs/heads/${AGENT_AI_REF}.tar.gz}"
 
 TMP="$(mktemp -d)"
