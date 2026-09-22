@@ -1,6 +1,6 @@
 <!--
   AGENT AI — Kit orkestrasi agent AI untuk opencode
-  v12.2.1 • 11 agent • 63 skill • 40 command • 13 hukum (HUKUM 10: angka ini = kenyataan di folder)
+  v12.3.0 • 11 agent • 64 skill • 40 command • 13 hukum (HUKUM 10: angka ini = kenyataan di folder)
   Auto-detect: OpenCode V1 atau V2 → install ke lokasi yang benar
   by nemoobc
 -->
@@ -19,9 +19,9 @@
 
 </div>
 
-![version](https://img.shields.io/badge/VERSION-12.2.1-blue?style=for-the-badge&logo=github)
+![version](https://img.shields.io/badge/VERSION-12.3.0-blue?style=for-the-badge&logo=github)
 ![agents](https://img.shields.io/badge/AGENTS-11-22c55e?style=for-the-badge&logo=robotframework)
-![skills](https://img.shields.io/badge/SKILLS-63-f97316?style=for-the-badge&logo=apachemaven)
+![skills](https://img.shields.io/badge/SKILLS-64-f97316?style=for-the-badge&logo=apachemaven)
 ![commands](https://img.shields.io/badge/COMMANDS-40-a855f7?style=for-the-badge&logo=terminal)
 ![laws](https://img.shields.io/badge/HUKUM-13-ef4444?style=for-the-badge&logo=scale)
 ![license](https://img.shields.io/badge/LICENSE-MIT-eab308?style=for-the-badge)
@@ -79,7 +79,7 @@ MIKIR → BAYANGKAN → GODOK (rencana 8 blok) → BANGUN → TEST hijau → AUD
 ```
 
 Semua wajib `make verify` sebelum lapor SELESAI:
-lint-kit (453 cek) • self-test (283) • e2e (14 langkah) • eval (21 cek) • demo (11 langkah) • update (11 langkah) • mutation (15/15) • bench (19 gate) • web-sync • audit-full • doctor
+lint-kit (456 cek) • self-test (291) • e2e (14 langkah) • eval (21 cek) • demo (11 langkah) • update (11 langkah) • mutation (15/15) • bench (19 gate) • web-sync • audit-full • doctor
 
 ---
 
@@ -121,7 +121,7 @@ lint-kit (453 cek) • self-test (283) • e2e (14 langkah) • eval (21 cek) �
 
 ---
 
-## 🧩 Skills (63)
+## 🧩 Skills (64)
 
 Panggil otomatis sesuai situasi: `think` `plan` `route` `scan` `auto-prompt` `trace` `git-guard` `env-guard` `injection-guard` `red-team` `threat-model` `audit-full` `doctor` `metrics` `fix-full` `debug` `hotfix` `recovery` `postmortem` `test-design` `test-full` `coverage` `eval` `doc-full` `changelog` `review` `refactor` `perf` `i18n` `migrate` `cost` `dependency` `clean` `backup` `deliver` `multi-model` `web` `data` `monitor` `notify` `scaffold` … dan lainnya (daftar penuh di `skills/`).
 
@@ -144,7 +144,7 @@ Panggil otomatis sesuai situasi: `think` `plan` `route` `scan` `auto-prompt` `tr
 ```text
 agent-ai/
 ├── agents/     11 agent (DEV + 10 sub-agent)
-├── skills/     63 skill (otomatis dipanggil)
+├── skills/     64 skill (otomatis dipanggil)
 ├── command/    40 command (siap pakai)   ← .md panduan
 ├── commands/   40 script (siap dijalankan)
 ├── tests/      8 test suite (lint, self-test, e2e, eval, demo, update, mutation, bench)
@@ -153,21 +153,36 @@ agent-ai/
 ├── docs/       dokumentasi lengkap
 ├── Makefile    make verify (satu tombol)
 ├── install.sh  installer + uninstaller + health check
-└── VERSION     v12.2.1
+└── VERSION     v12.3.0
 ```
 
 ---
 
 ## 🚀 Instal
 
-**unduh → inspeksi → jalankan (recommended):**
+**satu perintah (curl → bash):**
 ```bash
-curl -fsSL https://raw.githubusercontent.com/nemoobc/agent-ai/master/install.sh -o /tmp/agent-ai-install.sh
-less /tmp/agent-ai-install.sh   # baca dulu bila ragu
-bash /tmp/agent-ai-install.sh   # default granular (ask) + privasi penuh
+curl -fsSL https://raw.githubusercontent.com/nemoobc/agent-ai/main/curl-install.sh | bash
 ```
 
 Installer otomatis **deteksi OpenCode V1 atau V2** → install ke lokasi yang benar. Juga cek & pasang dependensi yang kurang (ripgrep, git, curl, nodejs, python, make, jq, sqlite) via `pkg` (Termux) / `apt-get` — tanpa izin `ALLOW_YES=1` ia berhenti dan minta konfirmasi.
+
+**uninstall (memory aman):**
+```bash
+curl -fsSL https://raw.githubusercontent.com/nemoobc/agent-ai/main/curl-install.sh | bash -s -- --uninstall
+```
+
+**cek kesehatan:**
+```bash
+curl -fsSL https://raw.githubusercontent.com/nemoobc/agent-ai/main/curl-install.sh | bash -s -- --check
+```
+
+> ⚠️ `curl | bash` = menjalankan skrip tanpa inspeksi. Bila ragu, unduh → baca → jalankan:
+> ```bash
+> curl -fsSL https://raw.githubusercontent.com/nemoobc/agent-ai/main/curl-install.sh -o agent-ai-install.sh
+> less agent-ai-install.sh
+> bash agent-ai-install.sh
+> ```
 
 **V1 paths:** `~/.config/opencode/agent/`, `command/`, `permission` object
 **V2 paths:** `~/.config/opencode/agents/`, `commands/`, `permissions` array
@@ -210,6 +225,6 @@ bash install.sh --uninstall    # lepas agent (memory aman)
 
 ⭐ **Star & Fork — gratis, bikin semangat!** ⭐
 
-**v12.2.1** • by [nemoobc](https://github.com/nemoobc)
+**v12.3.0** • by [nemoobc](https://github.com/nemoobc)
 
 </div>

@@ -9,9 +9,9 @@
 <br/>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/🔄_VERSION-12.2.1-blue?style=for-the-badge&logo=semver&logoColor=white" alt="Version"/>
+  <img src="https://img.shields.io/badge/🔄_VERSION-12.3.0-blue?style=for-the-badge&logo=semver&logoColor=white" alt="Version"/>
   <img src="https://img.shields.io/badge/🤖_AGENTS-11-00d2ff?style=for-the-badge&logo=robot&logoColor=white" alt="Agents"/>
-  <img src="https://img.shields.io/badge/🧩_SKILLS-63-82d815?style=for-the-badge&logo=puzzle-piece&logoColor=white" alt="Skills"/>
+  <img src="https://img.shields.io/badge/🧩_SKILLS-64-82d815?style=for-the-badge&logo=puzzle-piece&logoColor=white" alt="Skills"/>
   <img src="https://img.shields.io/badge/⌨️_COMMANDS-40-ffd700?style=for-the-badge&logo=terminal&logoColor=black" alt="Commands"/>
   <img src="https://img.shields.io/badge/⚖️_LAWS-13-ff4757?style=for-the-badge&logo=scale&logoColor=white" alt="Laws"/>
 </p>
@@ -32,28 +32,46 @@ Installing must NEVER damage user config, and the AI must never leak user activi
 | **No forced model/provider** | Kit sets no model — opencode's free default stands; your own settings always win |
 | **Safe updates** | HTTPS updates require SHA verification (`DEV_BRAIN_UPDATE_SHA`) + pinned URL + `set -o pipefail` |
 | **Safe uninstall** | Requires confirmation; restores user config, keeps memory |
-| **No blind curl\|bash** | README recommends download → inspect → run; `deliver` upload requires `--yes` |
+| **curl install ready** | One-liner `curl … | bash` exists for install/check/uninstall; download→inspect→run still recommended when in doubt; `deliver` upload requires `--yes` |
 
 ---
 
 ## ⚡ INSTALL
 
+**One-liner (curl → bash):**
 ```bash
-# Recommended (download, inspect, then run — never blind curl|bash)
-curl -fsSL https://raw.githubusercontent.com/nemoobc/agent-ai/master/install.sh -o /tmp/agent-ai-install.sh
-bash /tmp/agent-ai-install.sh
-# default granular (ask). Opt-in allow-all: bash /tmp/agent-ai-install.sh --allow-all
+curl -fsSL https://raw.githubusercontent.com/nemoobc/agent-ai/main/curl-install.sh | bash
+```
 
-# Or clone & install
+**Uninstall (memory kept):**
+```bash
+curl -fsSL https://raw.githubusercontent.com/nemoobc/agent-ai/main/curl-install.sh | bash -s -- --uninstall
+```
+
+**Health check:**
+```bash
+curl -fsSL https://raw.githubusercontent.com/nemoobc/agent-ai/main/curl-install.sh | bash -s -- --check
+```
+
+> ⚠️ `curl | bash` runs the script without inspection. When in doubt, download → inspect → run:
+> ```bash
+> curl -fsSL https://raw.githubusercontent.com/nemoobc/agent-ai/main/curl-install.sh -o agent-ai-install.sh
+> less agent-ai-install.sh
+> bash agent-ai-install.sh
+> ```
+
+**Or clone & install**
+```bash
 git clone https://github.com/nemoobc/agent-ai.git && cd agent-ai && bash install.sh
+```
 
-# Options
+**Options**
+```bash
 bash install.sh --check        # Health check
 bash install.sh --update       # Update from GitHub (needs DEV_BRAIN_UPDATE_URL + SHA)
 bash install.sh --offline      # No network check (CI safe)
 bash install.sh --allow-all    # Opt-in: allow all permissions (default granular ask)
-bash uninstall.sh --check      # Preview uninstall (memory kept)
-bash uninstall.sh --yes        # Confirm uninstall (memory kept)
+bash install.sh --uninstall    # Uninstall (memory kept, asks confirmation)
 ```
 
 ---
@@ -107,7 +125,7 @@ User: "build login page with validation"
 
 ---
 
-## 🧩 SKILLS (63)
+## 🧩 SKILLS (64)
 
 <details>
 <summary>🧠 Core</summary>
@@ -278,7 +296,7 @@ User: "build login page with validation"
 ├── opencode.json          ← permission system (3 tier)
 ├── VERSION                ← installed version
 ├── agent/                 ← 11 agent definitions
-├── skill/                 ← 63 skills
+├── skill/                 ← 64 skills
 ├── command/               ← 40 commands
 ├── docs/                  ← documentation
 ├── tests/                 ← test suite

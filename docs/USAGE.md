@@ -1,7 +1,7 @@
 # PANDUAN LENGKAP DEV-BRAIN (docs/USAGE.md)
 
 Semua agent, semua skill, semua command — kapan dipakai, siapa yang panggil, contoh nyata.
-DEV-BRAIN v12.2.1 — 11 agent, 63 skill, 40 command, 13 hukum, 63 script jalan. Install dulu: `bash install.sh`; uninstall: `bash uninstall.sh` (memori selamat).
+DEV-BRAIN v12.3.0 — 11 agent, 64 skill, 40 command, 13 hukum, 64 script jalan. Install dulu: `bash install.sh`; uninstall: `bash uninstall.sh` (memori selamat).
 
 ---
 
@@ -35,7 +35,7 @@ DEV yang panggil. User tidak perlu tahu. Bila tugas kecil (< 3 file, tanpa risik
 
 ---
 
-## SKILLS (63)
+## SKILLS (64)
 
 ### Otot otomatis (dipanggil DEV tanpa disuruh)
 
@@ -51,6 +51,7 @@ DEV yang panggil. User tidak perlu tahu. Bila tugas kecil (< 3 file, tanpa risik
 | `remember` | Akhir tugas penting | Simpan keputusan & pembelajaran (tanpa secret) |
 | `caveman` | Permanen | Gaya bicara ULTRA: pendek, marker wajib |
 | `caveman-warmup` | Awal sesi | Jembatan tone: profil A/B/C sebelum bicara keras, kerja tetap caveman |
+| `wake-lock` | Mulai & selesai tugas | termux-wake-lock `on` saat eksekusi tugas, `off` setelah lapor; no-op (exit 0) di luar Termux |
 | `cost` | Sebelum aksi berbiaya (HUKUM 5) | Estimasi biaya/token dengan sumber angka, tanya user |
 | `learn` | Akhir setiap tugas | Ekstrak pelajaran POLA/BUKTI/AKSI → memory/lessons.md |
 | `postmortem` | Gagal keras / data rusak | Garis waktu, akar, mengapa lolos test, pencegahan permanen |
@@ -230,7 +231,7 @@ DEV: [GODOK] TUJUAN: toggle tema gelap, tersimpan di preferensi.
 ├── opencode.json            ← permission granular
 ├── VERSION                  ← versi terpasang
 ├── agent/                   ← 11 agent (critic + hermes + designer + researcher)
-├── skill/                   ← 63 skill
+├── skill/                   ← 64 skill
 ├── command/                 ← 40 command
 └── memory/                  ← ingatan persisten
 

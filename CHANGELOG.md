@@ -1,10 +1,27 @@
 # CHANGELOG
 
 ## [Unreleased]
+
+## [12.3.0] — 2026-09-22
+### Added
+- **install satu perintah** — `curl-install.sh`: unduh arsip GitHub → ekstrak → jalankan `install.sh` asli; mode default (install), `--check`, `--uninstall`, flag lanjut `--offline`/`--allow-all`. README: one-liner `curl -fsSL …/curl-install.sh | bash` + uninstall `| bash -s -- --uninstall`
+- **skill `wake-lock`** — termux-wake-lock otomatis hidup saat AI mulai eksekusi tugas, mati saat selesai/lapor; no-op (exit 0) di luar Termux; aturan masuk agents/dev.md (BOOT fase 0 + LAPOR) & AGENTS.md (WAKE-LOCK)
+- **riset opencode V2 resmi** — `docs/OPENCODE-V2.md`: install, config precedence, agents, skills (ID/discovery/permission), commands (argumen/shell/subagent), permissions V2 (last-match-wins, actions, policies), CLI settings `cli.json` + implikasi untuk kit
+- **backlog terukur** — `.opencode/backlog.md` (definisi selesai + skor dampak×usaha) + docs/ROADMAP.md pembaruan
+### Changed
+- Bump 12.3.0; skill 63→64; run.sh 63→64; self-test 283→291 (+8 cek; 3 blok cek baru: 3 kasus detect_version V1/V2/channel Termux, curl-install.sh one-liner, skill wake-lock)
 ### Fixed
 - **install.sh nama paket dependensi** — `install_deps()` sebelumnya mengirim nama BINARY (`rg`, `node`, `sqlite3`) langsung ke `pkg install` → gagal karena paket Termux bernama `ripgrep`, `nodejs`, `sqlite`. Sekarang binary → nama paket dikonversi dulu (apt: `python`→`python3`), dan pesan manual menampilkan nama PAKET yang harus diinstall user
-### Changed
 - **uninstall konfirmasi y/n** — prompt "Lanjutkan lepas? (y/n)" menggantikan "ketik HAPUS"; kata "hapus" diganti "lepas" di pesan uninstall (install.sh + uninstall.sh)
+
+## [12.2.2] — 2026-09-22
+### Fixed
+- **install.sh deteksi OpenCode keliru di Termux** — binary terpasang bernama `opencode-termux` (`@nemoobc/opencode-termux`, bundel upstream opencode 2.x) tidak dikenali daftar cek (`opencode-termux-v2`/`opencode2`/`opencode`) → jatuh ke deteksi folder lama → "v1" padahal OpenCode v2. Sekarang `detect_version()` cek `opencode-termux` + baca `opencodeUpstream` dari `package.json` global (tanpa menjalankan binary yang shebang-nya bisa rusak di Termux: `#!/usr/bin/env`)
+- **install.sh layout sisa bercampur** — instal v2 kini sisihkan sisa layout v1 (`agent`, `command`, `commands` → `*.v1.bak`) dan sebaliknya; tidak dibiarkan bercampur dengan layout baru
+- **install.sh `--allow-all` default salah** — `ALLOW_ALL=0` (var set) dianggap non-empty oleh `${ALLOW_ALL:+allow-all}` → config tertulis allow-all padahal user tidak minta; sekarang default `granular` (ask), `--allow-all` baru aktif bila eksplisit
+- **install.sh update tanpa anti-downgrade** — `update()` hanya no-op saat versi sama, versi BERAPA PUN yang lebih tua (mis. 0.1.0) tetap di-install menimpa yang baru; sekarang `ver_gt` membandingkan semver dan menolak downgrade (versi lama utuh)
+- **install.sh migrasi V1→V2 kotor** — merge config v2 membuang kunci V1 lama (`permission`, `share`, `snapshot`, `autoupdate`, `experimental`) supaya config hasil konversi bersih
+- **deteksi tanpa unit test** — self-test PATH dibersihkan dari binary opencode nyata (mock home deterministik) + 3 kasus deteksi: opencode resmi 2.x → v2, 0.x → v1, `opencode-termux` upstream 2.2.0 → v2
 
 ## [12.2.1] — 2026-09-16
 ### Fixed

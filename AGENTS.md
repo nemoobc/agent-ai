@@ -73,3 +73,8 @@ Ikuti bahasa user. Default: Indonesia.
 - NORMAL = respon biasa (jawab/kerja langsung, tanpa summon agent/skill; skill hanya bila dibutuhkan). FULL = kerja lebih dalam (riset+test+dok+critic ringan), respon tetap biasa. ULTRA = PANGGIL SEMUA: 9 agent + hermes + caveman ULTRA + skill gerbang wajib + verify penuh sebelum lapor — hanya untuk SUMMONS EKSPLISIT.
 - Pemicu: lengkapin/bagusin/matangkan/lebih lengkap/full → FULL (bukan summon); panggil semuanya/semua agent/tunjukkan semua kemampuan/ultra → ULTRA. Konflik → ambil tertinggi. Tidak match → NORMAL.
 - Prompt pemicu dieksekusi jalur NORMAL = DILARANG (user minta full, kasih full). Prompt biasa dipaksa ULTRA = DILARANG (boros). Jalur menentukan CAKUPAN saja — hukum, gerbang, bukti tetap sama di semua jalur.
+
+## WAKE-LOCK (LAYANAN — otomatis)
+- Mulai eksekusi tugas (route NORMAL/FULL/ULTRA dengan kerja) → `bash ~/.config/opencode/skills/wake-lock/run.sh on` (Termux: layar menyala selama AI kerja).
+- Selesai/gagal/berhenti + laporan terkirim → `bash ~/.config/opencode/skills/wake-lock/run.sh off`.
+- Percakapan biasa → jangan nyalakan. Bukan Termux → no-op, exit 0 (skill wake-lock).

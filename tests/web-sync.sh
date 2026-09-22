@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # ═════════════════════════════════════════════════════════════════
 #  WEB-SYNC — cek data.json sinkron dengan kit:
-#  version = VERSION, skills = 63, commands = 40.
+#  version = VERSION, skills = 64, commands = 40.
 #  Jalankan: bash tests/web-sync.sh
 #  Exit 0 = sinkron, 1 = drift.
 # ═════════════════════════════════════════════════════════════════
@@ -25,7 +25,7 @@ DCMD=$(node -e "const d=require('$DIR/web/data.json'); console.log(d.commands.le
 DVER=$(node -e "const d=require('$DIR/web/data.json'); console.log(d.version)")
 
 [ "$DVER" = "$VFILE" ] && ok "data.json version = $DVER" || bad "data.json version $DVER ≠ VERSION $VFILE"
-[ "$DSKILL" -eq 63 ] && ok "data.json skills = $DSKILL" || bad "data.json skills = $DSKILL, harusnya 63"
+[ "$DSKILL" -eq 64 ] && ok "data.json skills = $DSKILL" || bad "data.json skills = $DSKILL, harusnya 64"
 [ "$DCMD" -eq 40 ] && ok "data.json commands = $DCMD" || bad "data.json commands = $DCMD, harusnya 40"
 
 echo

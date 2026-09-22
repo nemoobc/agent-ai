@@ -3,48 +3,74 @@ set -uo pipefail
 
 CFG="$HOME/.config/opencode"
 
-# Warna
+# Warna + UI modern (box rounded, section, dots ringan)
 R='\033[38;5;196m' G='\033[38;5;82m' C='\033[38;5;213m' W='\033[38;5;255m' M='\033[38;5;248m' N='\033[0m'
-
+B='\033[1m' D='\033[38;5;240m' Y='\033[38;5;214m'
 ok(){ printf "${G}  ✔ %s${N}\n" "$1"; }
 inf(){ printf "${M}  ▸ %s${N}\n" "$1"; }
-
-# Loading dots
-dots(){
-  local msg="$1" d=("." ".." "...")
-  for j in {1..3}; do
-    printf "\r${M}  %s${N} ${C}%s${N}" "${d[$((j%3))]}" "$msg"
-    sleep 0.3
-  done
-  printf "\r${G}  ✔${N} %s\n" "$msg"
-}
+wrn(){ printf "${Y}  ⚠ %s${N}\n" "$1"; }
 
 # Animasi
 ANIM="${ANIM:-1}"
-anim_on(){ [ "${ANIM:-1}" -eq 1 ] && [ -t 1 ] && [ "${NO_ANIM:-}" != "1" ]; }
+anim_on(){ [ "${ANIM:-1}" -eq 1 ] && [ -t 1 ] && [ "${NO_ANIM:-}" != "1" ] && [ -z "${CI:-}" ]; }
 
-box_awal(){
+# lebar teks buang escape ansi
+plen(){ printf '%s' "$1" | sed -e 's/\\033\[[0-9;]*m//g' -e 's/\x1b\[[0-9;]*m//g' | wc -c | tr -d ' '; }
+
+# lebar box adaptif layar
+W_=60
+if [ -n "${COLUMNS:-}" ] && [ "${COLUMNS:-0}" -ge 40 ]; then
+  W_=$(( COLUMNS - 6 )); [ "$W_" -gt 60 ] && W_=60
+fi
+
+# rounded box
+box(){
+  local color="$1"; shift
+  printf "${color}╭"; printf '─%.0s' $(seq 1 "$W_"); printf "╮${N}\n"
+  for line in "$@"; do
+    printf "${color}│${N}  "
+    printf '%b' "$line"
+    local plain pad; plain=$(plen "$line")
+    pad=$(( W_ - 3 - plain )); [ "$pad" -lt 0 ] && pad=0
+    printf '%*s' "$pad" ''
+    printf "${color}│${N}\n"
+  done
+  printf "${color}╰"; printf '─%.0s' $(seq 1 "$W_"); printf "╯${N}\n"
+}
+
+# section bernomor
+section(){ printf "  ${C}${B}[%s]${N} ${B}%s${N} ${D}%s${N}\n" "$1" "$2" "$(printf '─%.0s' $(seq 1 40))"; }
+
+# Loading dots — tampilan modern (⋯ animasi TTY / ▸ polos non-TTY)
+dots(){
+  local msg="$1" i
   if anim_on; then
-    printf "${C}  ┌─────────────────────┐${N}\n"
-    printf "${W}  │      AGENT AI       │${N}\n"
-    printf "${C}  └─────────────────────┘${N}\n"
+    for i in 1 2 3; do
+      printf "\r  ${C}⋯${N} ${M}%s${N}   " "$msg"
+      sleep 0.12
+    done
+    printf "\r  ${G}✔${N} ${M}%s${N}\n" "$msg"
   else
-    printf "  ┌─────────────────────┐\n"
-    printf "  │      AGENT AI       │\n"
-    printf "  └─────────────────────┘\n"
+    printf "  ${D}▸${N} ${M}%s${N}\n" "$msg"
   fi
 }
 
-box_selesai(){
-  if anim_on; then
-    printf "\n${G}  ┌─────────────────────┐${N}\n"
-    printf "${G}  │       SELESAI       │${N}\n"
-    printf "${G}  └─────────────────────┘${N}\n"
-  else
-    printf "\n  ┌─────────────────────┐\n"
-    printf "  │       SELESAI       │\n"
-    printf "  └─────────────────────┘\n"
-  fi
+box_awal(){
+  local color="$C"; anim_on || color=""
+  box "$color" \
+    "${B}${C}  ◆ AGENT AI${N}${D}  —  uninstaller${N}" \
+    "${M}  lepas agent/skill/command + doktrin — memory TETAP aman${N}"
+}
+
+box_selesai(){ # $1 = lepas|batal
+  local mode="${1:-lepas}" color="$G" title="  ${G}${B}✔ DILEPAS${N}"
+  local sub="install lagi: bash install.sh"
+  case "$mode" in
+    batal) color="$M"; title="  ${M}${B}◦ DIBATALKAN${N}"; sub="tidak ada yang diubah" ;;
+  esac
+  anim_on || color=""
+  echo
+  box "$color" "$title ${M}${sub}${N}"
 }
 
 uninstall(){
@@ -64,14 +90,19 @@ uninstall(){
     inf "Akan dilepas: agent $nagent | skill $nskill | command $ncmd + AGENTS.md + VERSION (memory DIPERTAHANKAN)"
     inf "Pratinjau dulu: bash uninstall.sh --check"
     if [ -t 0 ]; then
-      printf "  Lanjutkan lepas? (y/n): "; read -r ans
-      case "$ans" in y|Y|yes|YES) ;; *) inf "dibatalkan"; box_selesai; return 1;; esac
+      local col="$Y"; anim_on || col=""
+      box "$col" \
+        "  ${Y}${B}⚠ LEPAS INSTALASI${N}${D} — agent $nagent | skill $nskill | command $ncmd${N}" \
+        "  ${M}memory/ TETAP aman • config dipulihkan dari backup${N}"
+      printf "\n  Lanjutkan lepas? (y/n): "; read -r ans
+      case "$ans" in y|Y|yes|YES) ;; *) inf "dibatalkan"; box_selesai batal; return 1;; esac
     else
       inf "dibatalkan — non-interaktif wajib: bash uninstall.sh --yes"
-      box_selesai; return 1
+      box_selesai batal; return 1
     fi
   fi
 
+  section "1/2" "MELEPAS"
   dots "agent..."
   rm -rf "$CFG/agent"
 
@@ -87,13 +118,14 @@ uninstall(){
   dots "doctrine..."
   rm -f "$CFG/AGENTS.md" "$CFG/VERSION"
 
+  section "2/2" "MEMULIHKAN"
   local bak=$(ls -1t "$CFG"/opencode.json.bak.* 2>/dev/null | head -n1)
   [ -n "${bak:-}" ] && mv "$bak" "$CFG/opencode.json" && ok "config dipulihkan"
 
   echo
-  inf "memory/ DIPERTAHANKAN"
+  wrn "memory/ DIPERTAHANKAN"
 
-  box_selesai
+  box_selesai lepas
 }
 
 case "${1:-}" in

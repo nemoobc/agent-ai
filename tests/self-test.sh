@@ -51,7 +51,7 @@ p "▮ SELF-TEST: struktur kit lengkap" 213
 NSKILL=$(ls -1d "$DIR"/skills/*/ 2>/dev/null | wc -l | tr -d ' ')
 NCMD=$(ls -1 "$DIR"/command/*.md 2>/dev/null | wc -l | tr -d ' ')
 NWRAP=$(ls -1 "$DIR"/commands/*.sh 2>/dev/null | wc -l | tr -d ' ')
-[ "$NSKILL" -eq 63 ] && ok "63 skill terdeteksi ($NSKILL)" || bad "jumlah skill = $NSKILL, harusnya 63"
+[ "$NSKILL" -eq 64 ] && ok "64 skill terdeteksi ($NSKILL)" || bad "jumlah skill = $NSKILL, harusnya 64"
 [ "$NCMD" -eq 40 ] && ok "40 command terdeteksi" || bad "jumlah command = $NCMD, harusnya 40"
 [ "$NWRAP" -eq "$NCMD" ] && ok "wrapper commands/ lengkap ($NWRAP)" || bad "wrapper commands/ $NWRAP ≠ command $NCMD"
 [ ! -f "$DIR/command/allow-all.md" ] && ok "command allow-all tidak ada (built-in di opencode-termux)" || bad "command allow-all.md masih ada (harusnya sudah dihapus)"
@@ -191,20 +191,77 @@ p "▮ SELF-TEST: backup/restore opencode.json user (keamanan + privasi penuh)" 
 FH=$(mktemp -d)
 mkdir -p "$FH/.config/opencode"
 printf '{\n  "theme": "dark"\n}\n' > "$FH/.config/opencode/opencode.json"
-HOME="$FH" bash "$DIR/install.sh" --offline >/dev/null 2>&1 \
-  && grep -q devbrain "$FH/.config/opencode/opencode.json" \
+# PATH bersih: semua tool sistem TANPA binary opencode (deteksi mengikuti lingkungan nyata)
+# Cache dir simpan symlink — build sekali, reuse (menghemat self-test & mutation di perangkat ARM)
+MOCK_CACHE="${MOCK_CACHE:-${PREFIX:-/data/data/com.termux/files/usr}/tmp/opencode-mock-bin}"
+mock_path(){
+  local dir="$1"
+  [ -f "$dir/.mock-ready" ] && return 0
+  rm -rf "$dir"; mkdir -p "$dir/bin"
+  for d in /data/data/com.termux/files/usr/bin /usr/bin /usr/local/bin /bin; do
+    [ -d "$d" ] || continue
+    for t in "$d"/*; do
+      [ -x "$t" ] || continue
+      b=$(basename "$t")
+      case "$b" in opencode*|opencode-termux*) continue ;; esac
+      [ -e "$dir/bin/$b" ] || ln -s "$t" "$dir/bin/$b" 2>/dev/null
+    done
+  done
+  touch "$dir/.mock-ready"
+}
+CB="$MOCK_CACHE/cb"; mock_path "$CB"
+EXP=$(HOME="$FH" PATH="$CB/bin" DEV_BRAIN_NO_RUN=1 DIR_KIT="$DIR" bash -c 'source "$DIR_KIT/install.sh" 2>/dev/null; detect_version')
+INST_OK=0
+if [ "$EXP" = "v2" ]; then
+  HOME="$FH" PATH="$CB/bin" bash "$DIR/install.sh" --offline >/dev/null 2>&1 \
+    && grep -q devbrain "$FH/.config/opencode/opencode.json" \
+    && grep -q '"theme": "dark"' "$FH/.config/opencode/opencode.json" \
+    && grep -q '"permissions"' "$FH/.config/opencode/opencode.json" \
+    && grep -q '"effect": "ask"' "$FH/.config/opencode/opencode.json" \
+    && grep -q '"snapshots": false' "$FH/.config/opencode/opencode.json" \
+    && ls "$FH/.config/opencode/"opencode.json.bak.* >/dev/null 2>&1 \
+    && INST_OK=1
+else
+  HOME="$FH" PATH="$CB/bin" bash "$DIR/install.sh" --offline >/dev/null 2>&1 \
+    && grep -q devbrain "$FH/.config/opencode/opencode.json" \
+    && grep -q '"theme": "dark"' "$FH/.config/opencode/opencode.json" \
+    && grep -q '"permission"' "$FH/.config/opencode/opencode.json" \
+    && grep -q '"share": "disabled"' "$FH/.config/opencode/opencode.json" \
+    && grep -q '"snapshot": false' "$FH/.config/opencode/opencode.json" \
+    && grep -q '"autoupdate": false' "$FH/.config/opencode/opencode.json" \
+    && grep -q '"openTelemetry": false' "$FH/.config/opencode/opencode.json" \
+    && ls "$FH/.config/opencode/"opencode.json.bak.* >/dev/null 2>&1 \
+    && INST_OK=1
+fi
+[ "$INST_OK" -eq 1 ] \
+  && HOME="$FH" PATH="$CB/bin" bash "$DIR/install.sh" --uninstall --yes >/dev/null 2>&1 \
   && grep -q '"theme": "dark"' "$FH/.config/opencode/opencode.json" \
-  && grep -q '"permission"' "$FH/.config/opencode/opencode.json" \
-  && grep -q '"share": "disabled"' "$FH/.config/opencode/opencode.json" \
-  && grep -q '"snapshot": false' "$FH/.config/opencode/opencode.json" \
-  && grep -q '"autoupdate": false' "$FH/.config/opencode/opencode.json" \
-  && grep -q '"openTelemetry": false' "$FH/.config/opencode/opencode.json" \
-  && ls "$FH/.config/opencode/"opencode.json.bak.* >/dev/null 2>&1 \
-  && HOME="$FH" bash "$DIR/install.sh" --uninstall --yes >/dev/null 2>&1 \
-  && grep -q '"theme": "dark"' "$FH/.config/opencode/opencode.json" \
-  && ok "install tambah keamanan+privasi (merge, user config utuh) + backup + restore saat uninstall" \
-  || bad "keamanan/privasi/backup gagal (config harus utuh DI INSTALL + privasi aktif, bukan baru di restore)"
-rm -rf "$FH"
+  && ok "install tambah keamanan+privasi ($EXP) + backup + restore saat uninstall" \
+  || bad "keamanan/privasi/backup gagal ($EXP) (config harus utuh DI INSTALL + privasi aktif, bukan baru di restore)"
+rm -rf "$FH"    # cache mock ($CB/$DV) dipertahankan — reuse antar run
+
+p "▮ SELF-TEST: detect_version benar (resmi v2/v1 + channel Termux)" 213
+DV="$MOCK_CACHE/dv"; mock_path "$DV"
+# reset mock opencode* — cache dipakai ulang antar run, entri mock harus bersih dulu
+rm -f "$DV/bin/opencode" "$DV/bin/opencode-termux"; rm -rf "$DV/lib"
+BSH=$(command -v bash)
+# kasus 1: binary resmi opencode 2.x → v2
+printf '#!%s\necho "opencode/2.3.1"\n' "$BSH" > "$DV/bin/opencode"; chmod +x "$DV/bin/opencode"
+OUT=$(PATH="$DV/bin" HOME="$DV/fresh" DEV_BRAIN_NO_RUN=1 DIR_KIT="$DIR" bash -c 'source "$DIR_KIT/install.sh" 2>/dev/null; detect_version')
+[ "$OUT" = "v2" ] && ok "detect_version: opencode 2.x → v2 ($OUT)" || bad "detect_version: opencode 2.x → '$OUT' (harus v2)"
+# kasus 2: binary resmi opencode 0.x → v1
+printf '#!%s\necho "0.9.7"\n' "$BSH" > "$DV/bin/opencode"; chmod +x "$DV/bin/opencode"
+OUT=$(PATH="$DV/bin" HOME="$DV/fresh" DEV_BRAIN_NO_RUN=1 DIR_KIT="$DIR" bash -c 'source "$DIR_KIT/install.sh" 2>/dev/null; detect_version')
+[ "$OUT" = "v1" ] && ok "detect_version: opencode 0.x → v1 ($OUT)" || bad "detect_version: opencode 0.x → '$OUT' (harus v1)"
+# kasus 3: opencode-termux (wrapper bundel upstream 2.x) → v2 — persis situasi Termux nyata
+rm -f "$DV/bin/opencode"
+mkdir -p "$DV/lib/node_modules/opencode-termux/bin"
+printf '#!%s\nexit 0\n' "$BSH" > "$DV/lib/node_modules/opencode-termux/bin/opencode-termux.js"; chmod +x "$DV/lib/node_modules/opencode-termux/bin/opencode-termux.js"
+printf '{"name":"opencode-termux","version":"1.20.16","opencodeUpstream":"2.2.0"}\n' > "$DV/lib/node_modules/opencode-termux/package.json"
+ln -s "$DV/lib/node_modules/opencode-termux/bin/opencode-termux.js" "$DV/bin/opencode-termux"
+OUT=$(PATH="$DV/bin" HOME="$DV/fresh" DEV_BRAIN_NO_RUN=1 DIR_KIT="$DIR" bash -c 'source "$DIR_KIT/install.sh" 2>/dev/null; detect_version')
+[ "$OUT" = "v2" ] && ok "detect_version: opencode-termux upstream 2.2.0 → v2 ($OUT)" || bad "detect_version: opencode-termux → '$OUT' (harus v2)"
+rm -rf "$DV"
 
 p "▮ SELF-TEST: semua command/*.md punya Usage section" 213
 USING=0; MISSING=0
@@ -300,6 +357,25 @@ done
 p "▮ SELF-TEST: HUKUM 13 ada di AGENTS.md" 213
 grep -q 'ROUTER INTENSITAS' "$DIR/AGENTS.md" && ok "AGENTS.md: HUKUM 13 ROUTER INTENSITAS" || bad "AGENTS.md: HUKUM 13 hilang"
 grep -q 'NORMAL.*FULL.*ULTRA' "$DIR/AGENTS.md" && ok "AGENTS.md: 3 jalur (NORMAL/FULL/ULTRA)" || bad "AGENTS.md: 3 jalur tidak lengkap"
+
+p "▮ SELF-TEST: curl-install.sh one-liner installer" 213
+[ -f "$DIR/curl-install.sh" ] && bash -n "$DIR/curl-install.sh" && ok "curl-install.sh ada + syntax OK" || bad "curl-install.sh hilang/syntax rusak"
+CI=$(mktemp -d)
+mkdir -p "$CI/agent-ai"
+cp -r "$DIR/agents" "$DIR/command" "$DIR/commands" "$DIR/skills" "$DIR/memory" "$DIR/docs" "$DIR/tests" "$CI/agent-ai/" 2>/dev/null
+cp "$DIR/AGENTS.md" "$DIR/install.sh" "$DIR/curl-install.sh" "$DIR/README.md" "$DIR/LICENSE" "$DIR/VERSION" "$DIR/CHANGELOG.md" "$CI/agent-ai/" 2>/dev/null
+tar -czf "$CI/kit.tgz" -C "$CI" agent-ai 2>/dev/null
+HOME="$CI/h" AGENT_AI_URL="file://$CI/kit.tgz" bash "$DIR/curl-install.sh" --offline >/dev/null 2>&1 \
+  && [ -f "$CI/h/.config/opencode/AGENTS.md" ] \
+  && ok "curl-install.sh: install dari arsip lokal" || bad "curl-install.sh: gagal install dari arsip lokal"
+rm -rf "$CI"
+
+p "▮ SELF-TEST: skill wake-lock" 213
+[ -f "$DIR/skills/wake-lock/SKILL.md" ] && [ -f "$DIR/skills/wake-lock/run.sh" ] \
+  && bash -n "$DIR/skills/wake-lock/run.sh" \
+  && ok "skill wake-lock: file + syntax OK" || bad "skill wake-lock: file/syntax bermasalah"
+grep -q 'wake-lock' "$DIR/AGENTS.md" && grep -q 'wake-lock' "$DIR/agents/dev.md" \
+  && ok "doktrin wake-lock di AGENTS.md + agents/dev.md" || bad "doktrin wake-lock tidak lengkap"
 
 rm -rf "$FX"
 echo

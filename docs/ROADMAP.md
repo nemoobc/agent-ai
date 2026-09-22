@@ -26,15 +26,19 @@ Status: `[ ]` belum, `[~]` berjalan, `[x]` selesai.
 
 ## BERIKUTNYA (prioritas dampak × usaha)
 
-### [ ] v8.1 — KERJA LINTAS BAHASA
+### [x] v12.3.0 — INSTALLER SATU PERINTAH + WAKE-LOCK + RISET DOCS V2
+- **Dampak**: pemasangan lebih mudah (`curl | bash`), AI tidak matikan layar saat kerja panjang, pengetahuan opencode V2 terdokumentasi.
+- **Bukti selesai**: `curl-install.sh` diuji dari arsip lokal (self-test), skill `wake-lock` (on/off, no-op non-Termux) + aturan di agents/dev.md & AGENTS.md, `docs/OPENCODE-V2.md` dari docs resmi (tanggal + sumber).
+
+### [ ] v13 — KERJA LINTAS BAHASA
 - **Dampak**: kit dipakai di project non-bash (Python, JS, Go) — sekarang masih bash-centric.
 - **Bukti selesai**: contoh integrasi minimal di 1 bahasa non-shell + lint-kit cek.
 
-### [ ] v8.2 — RILIS OTOMATIS
+### [ ] v13.1 — RILIS OTOMATIS
 - **Dampak**: `/release` jadi satu perintah: bump → changelog → test penuh → zip → upload.
 - **Bukti selesai**: test-update memverifikasi rilis palsu dari versi apa pun.
 
-### [ ] v8.3 — BENCH BERAMBAT
+### [ ] v13.2 — BENCH BERAMBAT
 - **Dampak**: kit tidak boleh makin lambat antar versi; drift = alarm.
 - **Bukti selesai**: bench.sh punya baseline tersimpan dan hard-cap bertingkat.
 
