@@ -325,9 +325,19 @@ install(){
 
   # Sisihkan layout versi lain yang tersisa (deteksi lama/keliru) — aman, tidak dihapus
   if [ "$VER" = "v2" ]; then
-    for d in agent command commands; do
-      [ -d "$CFG/$d" ] && { mv "$CFG/$d" "$CFG/$d.v1.bak"; wrn "layout V1 sisa dipindah: $d → $d.v1.bak"; }
+    local saw_v1=0
+    for d in agent command; do
+      if [ -d "$CFG/$d" ]; then
+        mv "$CFG/$d" "$CFG/$d.v1.bak"
+        wrn "layout V1 sisa dipindah: $d → $d.v1.bak"
+        saw_v1=1
+      fi
     done
+    # commands/ folder V2 yang SAH — pindahkan hanya bila beneran sisa V1 (ada agent|command)
+    if [ "$saw_v1" -eq 1 ] && [ -d "$CFG/commands" ]; then
+      mv "$CFG/commands" "$CFG/commands.v1.bak"
+      wrn "layout V1 sisa dipindah: commands → commands.v1.bak"
+    fi
   else
     [ -d "$CFG/agents" ] && { mv "$CFG/agents" "$CFG/agents.v2.bak"; wrn "layout V2 sisa dipindah: agents → agents.v2.bak"; }
   fi
