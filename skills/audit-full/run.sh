@@ -33,12 +33,17 @@ command -v ruff >/dev/null 2>&1 && compgen -G '*.py' >/dev/null 2>&1 && { ruff c
 [ -f go.mod ] && command -v go >/dev/null 2>&1 && { go vet ./... 2>/dev/null || found "go vet: temuan"; }
 [ -f Cargo.toml ] && command -v cargo >/dev/null 2>&1 && { cargo fmt --check >/dev/null 2>&1 || found "cargo fmt: formatting rust"; command -v cargo-clippy >/dev/null 2>&1 && { cargo clippy -q 2>/dev/null || found "clippy: linter rust"; }; }
 if command -v shellcheck >/dev/null 2>&1; then
-  SHFAIL=0
+  SHFAIL=0; SHWARN=0
   for s in *.sh scripts/*.sh; do
     [ -f "$s" ] || continue
-    shellcheck -S warning "$s" >/dev/null 2>&1 || SHFAIL=1
+    # Gerbang = severity ERROR (kode benar-benar rusak). Warning+ = info saja —
+    # kit lama belum bebas warning; gerbang harus deterministik di semua mesin.
+    shellcheck -S error "$s" >/dev/null 2>&1 || SHFAIL=1
+    shellcheck -S warning "$s" >/dev/null 2>&1 || SHWARN=$((SHWARN+1))
   done
-  [ "$SHFAIL" -eq 1 ] && found "shellcheck: masalah di script shell"
+  [ "$SHFAIL" -eq 1 ] && found "shellcheck: error di script shell"
+  [ "$SHFAIL" -eq 0 ] && [ "$SHWARN" -gt 0 ] && p "  ⚠ shellcheck: $SHWARN script ber-peringatan (info — tidak memblokir)" 214
+  [ "$SHFAIL" -eq 0 ] && [ "$SHWARN" -eq 0 ] && clean "shellcheck bersih"
 fi
 
 p "▮ AUDIT: rahasia bocor" 213

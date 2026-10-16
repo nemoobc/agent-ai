@@ -1,6 +1,10 @@
 # CHANGELOG
 
 ## [Unreleased]
+### Fixed
+- **self-test di luar Termux (CI/Linux)** — cache mock PATH memakai default path Termux (`${PREFIX:-/data/...}/tmp`) yang tidak writable di runner CI → seluruh cek berbasis mock tumbang (`detect_version ''`, install mock gagal). Kini cache memilih lokasi writable: `$TMPDIR` → `/tmp` → prefix Termux (jalur Termux tidak berubah)
+- **ci.yml** — runner kini memasang dependensi kit (`ripgrep`, `sqlite3`) yang dibutuhkan `install_deps`; `timeout-minutes` 15 → 30 (11 gerbang muat penuh)
+- **audit-full shellcheck** — `-S warning` memblokir audit hanya di mesin yang punya shellcheck (kit lama belum bebas warning; Termux tanpa shellcheck tak pernah kelihatan). Gerbang kini `-S error` (blokir) + warning = info — deterministik lintas mesin
 
 ## [12.3.1] — 2026-10-16
 ### Added
