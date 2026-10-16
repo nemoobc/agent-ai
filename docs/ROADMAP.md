@@ -30,6 +30,10 @@ Status: `[ ]` belum, `[~]` berjalan, `[x]` selesai.
 - **Dampak**: pemasangan lebih mudah (`curl | bash`), AI tidak matikan layar saat kerja panjang, pengetahuan opencode V2 terdokumentasi.
 - **Bukti selesai**: `curl-install.sh` diuji dari arsip lokal (self-test), skill `wake-lock` (on/off, no-op non-Termux) + aturan di agents/dev.md & AGENTS.md, `docs/OPENCODE-V2.md` dari docs resmi (tanggal + sumber).
 
+### [x] v12.3.1 — BANGKITKAN GATE MATI + DETEKTOR HITUNGAN
+- **Dampak**: gerbang yang tak pernah bisa menyala (debug/marker git-guard & hotfix) diperbaiki jadi hidup; angka suite di README kini diuji lint langsung dari file, bukan kesepakatan; uninstall benar-benar melepas layout V2.
+- **Bukti selesai**: eval kasus 11 (5 perilaku git-guard) + mutasi 16–18 (gate & hitungan disabotase → tertangkap); lint section "angka suite README = kenyataan file"; self-test uninstall V2 + install_deps python3-only (339 ok).
+
 ### [ ] v13 — KERJA LINTAS BAHASA
 - **Dampak**: kit dipakai di project non-bash (Python, JS, Go) — sekarang masih bash-centric.
 - **Bukti selesai**: contoh integrasi minimal di 1 bahasa non-shell + lint-kit cek.

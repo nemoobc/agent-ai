@@ -10,6 +10,6 @@ Sumber: `/backlog` skill. Definisi selesai terukur di tiap item. Status: ANTRE /
 | 4 | Curl one-liner install & uninstall | 15 | `curl -fsSL …/curl-install.sh \| bash` pasang kit; `\| bash -s -- --uninstall` lepas — diuji dengan arsip lokal | SELESAI (12.3.0) |
 | 5 | termux-wake-lock otomatis saat AI kerja | 16 | skill wake-lock on/off + doktrin dev.md/AGENTS.md; on saat mulai tugas, off saat selesai; no-op non-Termux | SELESAI (12.3.0) |
 | 6 | Riset opencode.ai/v2/docs | 10 | docs/OPENCODE-V2.md memuat config, agents, skills, commands, permissions, cli.json + implikasi kit | SELESAI (12.3.0) |
-| 7 | Instalasi nyata di Termux diuji ulang | 12 | `bash install.sh --check` sehat di perangkat nyata setelah 12.3.0 | ANTRE |
+| 7 | Instalasi nyata di Termux diuji ulang | 12 | `bash install.sh --check` sehat di perangkat nyata setelah 12.3.0 | SELESAI (12.3.1 — sehat: 179 file, OpenCode v2, exit 0) |
 
 Skor = dampak (1–5) × usaha dibalik (1–5). Sumber: user, audit, perbaikan bug.

@@ -1,6 +1,6 @@
 <!--
   AGENT AI — Kit orkestrasi agent AI untuk opencode
-  v12.3.0 • 11 agent • 64 skill • 40 command • 13 hukum (HUKUM 10: angka ini = kenyataan di folder)
+  v12.3.1 • 11 agent • 64 skill • 40 command • 13 hukum (HUKUM 10: angka ini = kenyataan di folder)
   Auto-detect: OpenCode V1 atau V2 → install ke lokasi yang benar
   by nemoobc
 -->
@@ -19,7 +19,7 @@
 
 </div>
 
-![version](https://img.shields.io/badge/VERSION-12.3.0-blue?style=for-the-badge&logo=github)
+![version](https://img.shields.io/badge/VERSION-12.3.1-blue?style=for-the-badge&logo=github)
 ![agents](https://img.shields.io/badge/AGENTS-11-22c55e?style=for-the-badge&logo=robotframework)
 ![skills](https://img.shields.io/badge/SKILLS-64-f97316?style=for-the-badge&logo=apachemaven)
 ![commands](https://img.shields.io/badge/COMMANDS-40-a855f7?style=for-the-badge&logo=terminal)
@@ -79,7 +79,7 @@ MIKIR → BAYANGKAN → GODOK (rencana 8 blok) → BANGUN → TEST hijau → AUD
 ```
 
 Semua wajib `make verify` sebelum lapor SELESAI:
-lint-kit (456 cek) • self-test (291) • e2e (14 langkah) • eval (21 cek) • demo (11 langkah) • update (11 langkah) • mutation (15/15) • bench (19 gate) • web-sync • audit-full • doctor
+lint-kit (463 cek) • self-test (339) • e2e (14 langkah) • eval (27 cek) • demo (11 langkah) • update (11 langkah) • mutation (18/18) • bench (19 gate) • web-sync • audit-full • doctor
 
 ---
 
@@ -147,13 +147,13 @@ agent-ai/
 ├── skills/     64 skill (otomatis dipanggil)
 ├── command/    40 command (siap pakai)   ← .md panduan
 ├── commands/   40 script (siap dijalankan)
-├── tests/      8 test suite (lint, self-test, e2e, eval, demo, update, mutation, bench)
+├── tests/      9 test suite (lint, self-test, e2e, eval, demo, update, mutation, bench, web-sync)
 ├── web/        dashboard web kit (data.json di-generate build.js)
 ├── memory/     persistent memory
 ├── docs/       dokumentasi lengkap
 ├── Makefile    make verify (satu tombol)
 ├── install.sh  installer + uninstaller + health check
-└── VERSION     v12.3.0
+└── VERSION     v12.3.1
 ```
 
 ---
@@ -225,6 +225,6 @@ bash install.sh --uninstall    # lepas agent (memory aman)
 
 ⭐ **Star & Fork — gratis, bikin semangat!** ⭐
 
-**v12.3.0** • by [nemoobc](https://github.com/nemoobc)
+**v12.3.1** • by [nemoobc](https://github.com/nemoobc)
 
 </div>

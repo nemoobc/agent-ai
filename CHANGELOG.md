@@ -2,6 +2,26 @@
 
 ## [Unreleased]
 
+## [12.3.1] — 2026-10-16
+### Added
+- **eval kasus 11** — uji perilaku `git-guard` langsung: debug di src → BLOKIR, merge marker → BLOKIR, debug di file test → CLEAN (pengecualian), lockfile besar → CLEAN, sumber 1600 baris → BLOKIR (eval 21 → 27 cek)
+- **mutation 16–18** — detektor bukti-hitung kini diuji perusakan sendiri: filter debug git-guard dibutakan → eval; pola merge marker dilumpuhkan → eval; angka suite di README dibuat ngaco → lint (mutasi 15 → 18)
+- **lint "angka suite README = kenyataan file"** — eval/e2e/demo/update/mutation/bench + hitungan lint sendiri dibandingkan langsung dari file; angka bohong di README = lint MERAH (HUKUM 10 teruji, bukan kesepakatan)
+- **self-test diperluas** — syntax `bash -n` menjangkau `uninstall.sh`, `curl-install.sh`, `commands/*.sh` (+42); blok uninstall V2 di fake HOME (lepas, memory utuh, config pulih, non-interaktif ditolak); blok `install_deps` python3-only
+### Changed
+- Bump 12.3.1; self-test 291 → 339 ok; lint 456 → 463 cek; eval 21 → 27 cek; mutation 15 → 18 perusakan
+### Fixed
+- **git-guard — dua gate mati senyap**: filter debug & cek merge-marker memakai idiom ERE salah (`grep -E '^\+' | grep -v '^\+\+\+'` — `\+` di ERE = kuantor, seluruh baris `+` tersapu) → debug & marker apa pun LOLOS. Sekarang BRE literal + marker discan pada baris tambahan; dibuktikan hidup oleh eval kasus 11 + mutasi 16/17
+- **git-guard** — pengecualian file gerbang/test (`tests/`, `__tests__/`, `*.test.*`, `*.spec.*`, `*.e2e.mjs`) + ambang diff besar 1000 → 1500 dengan pengecualian lockfile (bun.lock, package-lock.json, pnpm-lock.yaml, yarn.lock)
+- **hotfix** — filter debug/secret staged memakai idiom mati yang sama → diperbaiki BRE literal
+- **route** — `penuh` tidak terdaftar di FULL_RE → "audit penuh…" salah klasifikasi NORMAL; kini FULL + kasus eval
+- **uninstall.sh buta layout V2** — hanya melepas layout V1: di instalasi V2 berkata "DILEPAS" padahal `agents/skills/commands` utuh. Kini delegasi tipis ke `install.sh --uninstall` (satu sumber, HUKUM 10) + `--check` pratinjau layout-aware + non-interaktif tanpa `--yes` MENOLAK
+- **install.sh `install_deps`** — sistem dengan `python3` tanpa alias `python` (apt/Debian) selamanya "dependensi kurang"; kini terima salah satu
+- **Makefile `zip`** — hardcode `/tmp` (tidak ada di Android/Termux) → `mktemp -d` portabel + guard pesan bila `zip` tidak terpasang
+- **perf** — dua blok scan mati yang menulis ke `/tmp` (tak pernah dibaca) dihapus
+- **audit-full** — scan TODO/FIXME menghitung artefak `*.min.js` → dikecualikan
+- **ci.yml** — syntax check kini juga mencakup `uninstall.sh`, `curl-install.sh`, `commands/*.sh`, `tests/*.sh`
+
 ## [12.3.0] — 2026-09-22
 ### Added
 - **install satu perintah** — `curl-install.sh`: unduh arsip GitHub → ekstrak → jalankan `install.sh` asli; mode default (install), `--check`, `--uninstall`, flag lanjut `--offline`/`--allow-all`. README: one-liner `curl -fsSL …/curl-install.sh | bash` + uninstall `| bash -s -- --uninstall`
