@@ -12,7 +12,7 @@ ok(){ p "  ✔ $1" 82; PASS=$((PASS+1)); }
 bad(){ p "  ✖ $1" 196; FAIL=$((FAIL+1)); }
 
 p "▮ SELF-TEST: syntax semua script" 213
-for s in "$DIR"/install.sh "$DIR"/skills/*/run.sh; do
+for s in "$DIR"/install.sh "$DIR"/uninstall.sh "$DIR"/curl-install.sh "$DIR"/skills/*/run.sh "$DIR"/commands/*.sh; do
   bash -n "$s" 2>/dev/null && ok "bash -n $(basename "$s")" || bad "bash -n $(basename "$s")"
 done
 [ -f "$DIR/command/plan.md" ] && ok "command plan ada" || bad "command plan hilang"
@@ -369,6 +369,48 @@ HOME="$CI/h" AGENT_AI_URL="file://$CI/kit.tgz" bash "$DIR/curl-install.sh" --off
   && [ -f "$CI/h/.config/opencode/AGENTS.md" ] \
   && ok "curl-install.sh: install dari arsip lokal" || bad "curl-install.sh: gagal install dari arsip lokal"
 rm -rf "$CI"
+
+p "▮ SELF-TEST: uninstall V2 + --check (fake HOME — config nyata tidak disentuh)" 213
+UFH=$(mktemp -d)
+mkdir -p "$UFH/.config/opencode/agents" "$UFH/.config/opencode/skills/spec" \
+         "$UFH/.config/opencode/commands" "$UFH/.config/opencode/docs" \
+         "$UFH/.config/opencode/memory"
+echo x > "$UFH/.config/opencode/agents/dev.md"
+echo y > "$UFH/.config/opencode/skills/spec/SKILL.md"
+echo z > "$UFH/.config/opencode/commands/audit.md"
+echo n > "$UFH/.config/opencode/memory/lessons.md"
+cp "$DIR/VERSION" "$UFH/.config/opencode/VERSION"
+echo doctrine > "$UFH/.config/opencode/AGENTS.md"
+printf '{\n  "devbrain": "granular"\n}\n' > "$UFH/.config/opencode/opencode.json"
+printf '{\n  "theme": "user-asli"\n}\n' > "$UFH/.config/opencode/opencode.json.bak.12345"
+OUT=$(HOME="$UFH" bash "$DIR/uninstall.sh" --check 2>&1)
+echo "$OUT" | grep -q 'agent: 1' \
+  && ok "uninstall --check: pratinjau layout V2 (agent: 1)" \
+  || bad "uninstall --check: pratinjau salah ($(echo "$OUT" | head -3 | tr '\n' ' '))"
+OUT2=$(HOME="$UFH" bash "$DIR/uninstall.sh" </dev/null 2>&1; echo "rc=$?")
+echo "$OUT2" | grep -q 'rc=1' && [ -d "$UFH/.config/opencode/agents" ] \
+  && ok "uninstall non-interaktif tanpa --yes → ditolak, tidak ada yang dilepas" \
+  || bad "uninstall non-interaktif tanpa --yes tidak ditolak (berbahaya)"
+HOME="$UFH" bash "$DIR/uninstall.sh" --yes >/dev/null 2>&1
+{ [ ! -d "$UFH/.config/opencode/agents" ] && [ ! -d "$UFH/.config/opencode/skills" ] \
+  && [ ! -d "$UFH/.config/opencode/commands" ] && [ ! -f "$UFH/.config/opencode/AGENTS.md" ] \
+  && [ ! -f "$UFH/.config/opencode/VERSION" ]; } \
+  && ok "uninstall V2: agents/skills/commands/doktrin terlepas (bug V1-only tertutup)" \
+  || bad "uninstall V2: sisa file tertinggal"
+[ -f "$UFH/.config/opencode/memory/lessons.md" ] \
+  && ok "uninstall V2: memory/ tetap aman" || bad "uninstall V2: memory hilang!"
+grep -q 'user-asli' "$UFH/.config/opencode/opencode.json" \
+  && ok "uninstall V2: config user dipulihkan dari backup" || bad "uninstall V2: config tidak dipulihkan"
+rm -rf "$UFH"
+
+p "▮ SELF-TEST: install_deps paham sistem python3-only" 213
+TBIN=$(mktemp -d); TRU=$(type -P true || echo /bin/true); BSH_D=$(command -v bash)
+for t in rg git curl node make jq sqlite3 python3; do ln -s "$TRU" "$TBIN/$t"; done
+OUTD=$(PATH="$TBIN" HOME="$TBIN/h" DEV_BRAIN_NO_RUN=1 DIR_KIT="$DIR" "$BSH_D" -c 'source "$DIR_KIT/install.sh" 2>/dev/null; install_deps' 2>&1)
+echo "$OUTD" | grep -q 'dependensi lengkap' \
+  && ok "deps: python3-only (tanpa alias python) → lengkap (kasus apt/Debian tertutup)" \
+  || bad "deps: python3-only salah dikira kurang: $(echo "$OUTD" | head -1)"
+rm -rf "$TBIN"
 
 p "▮ SELF-TEST: skill wake-lock" 213
 [ -f "$DIR/skills/wake-lock/SKILL.md" ] && [ -f "$DIR/skills/wake-lock/run.sh" ] \

@@ -56,7 +56,7 @@ bench_gate "eval"           bash "$DIR/tests/eval.sh"
 bench_gate "e2e-flow"       bash "$DIR/tests/e2e-flow.sh"
 bench_gate "run-demo"       bash "$DIR/tests/run-demo.sh"
 bench_gate "update-flow"    bash "$DIR/tests/test-update.sh"
-# mutation TIDAK diukur ulang: suite mandiri mutasi 15/15 sudah dijalankan
+# mutation TIDAK diukur ulang: suite mandiri mutasi 18/18 sudah dijalankan
 # `make verify` (bukan duplikat 20+ menit). Drift mutation tetap tertangkap
 # oleh mutation.sh itu sendiri; gate bench fokus pace gerbang umum.
 p "  ✔ mutation: PASS (mandiri di \`make verify\` — tidak diukur ulang; cap ${MUT_CAP}s)" 82

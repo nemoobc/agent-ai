@@ -170,6 +170,20 @@ for f in "$DIR"/command/*.md; do
     && ok "$name: ada ## Error Cases" || bad "$name: ## Error Cases hilang"
 done
 
+p "▮ LINT: angka suite di README = kenyataan file (HUKUM 10)" 213
+RMD="$DIR/README.md"
+rnum(){ grep -oE "$1" "$RMD" 2>/dev/null | head -1 | grep -oE '\([0-9]+' | tr -d '(' ; }
+fcnt(){ grep -oF "$1" "$2" 2>/dev/null | wc -l | tr -d ' '; }
+achk(){ if [ "$1" = "$2" ]; then ok "$3: README $1 = file $2"; else bad "$3: README ${1:-?} ≠ file $2"; fi; }
+achk "$(rnum 'eval \([0-9]+ cek\)')" "$(fcnt 'ok "' "$DIR/tests/eval.sh")" "eval cek"
+achk "$(rnum 'e2e \([0-9]+ langkah\)')" "$(fcnt 'ok "' "$DIR/tests/e2e-flow.sh")" "e2e langkah"
+achk "$(rnum 'demo \([0-9]+ langkah\)')" "$(fcnt 'ok "' "$DIR/tests/run-demo.sh")" "demo langkah"
+achk "$(rnum 'update \([0-9]+ langkah\)')" "$(fcnt 'ok "' "$DIR/tests/test-update.sh")" "update langkah"
+achk "$(rnum 'mutation \([0-9]+/[0-9]+\)')" "$(fcnt 'p "▮ MUTASI' "$DIR/tests/mutation.sh")" "mutation perusakan"
+achk "$(rnum 'bench \([0-9]+ gate\)')" "$(( $(fcnt 'bench_gate "' "$DIR/tests/bench.sh") + 1 ))" "bench gate"
+# self-test: jumlah ok dinamis (juga bergantung lingkungan npm) — tidak dicek statis di sini
+achk "$(rnum 'lint-kit \([0-9]+ cek\)')" "$((PASS + 1))" "lint-kit cek (termasuk cek ini)"
+
 echo
 if [ "$FAIL" -eq 0 ]; then p "LINT_KIT: LOLOS ($PASS cek)" 82; exit 0; fi
 p "LINT_KIT: $FAIL MASALAH" 196; exit 1
