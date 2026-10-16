@@ -45,8 +45,8 @@ install-check: ## Uji installer offline (deterministik)
 
 verify: lint test eval e2e demo update mutation bench web-sync audit doctor ## Gerbang penuh HUKUM 9
 
-zip: ## Buat arsip kit (tanpa .git)
-	@V=$$(cat VERSION); \
-	cd /tmp && rm -rf "agent-ai-v$$V" "agent-ai-v$$V.zip"; \
-	cd - >/dev/null && cp -r . "/tmp/agent-ai-v$$V" --parents $$(git ls-files 2>/dev/null || find . -type f -not -path './.git/*') >/dev/null 2>&1 || cp -r . "/tmp/agent-ai-v$$V"; \
-	cd "/tmp/agent-ai-v$$V" && rm -rf .git && cd /tmp && zip -rq "agent-ai-v$$V.zip" "agent-ai-v$$V" && echo "ZIP: /tmp/agent-ai-v$$V.zip"
+zip: ## Buat arsip kit (tanpa .git) — tmp portabel (Termux tanpa /tmp)
+	@command -v zip >/dev/null || { echo "ZIP: 'zip' tidak terpasang — pkg install zip / apt-get install zip"; exit 1; }; \
+	V=$$(cat VERSION); TMPD=$$(mktemp -d); \
+	cp -r . "$$TMPD/agent-ai-v$$V" --parents $$(git ls-files 2>/dev/null || find . -type f -not -path './.git/*') >/dev/null 2>&1 || cp -r . "$$TMPD/agent-ai-v$$V"; \
+	cd "$$TMPD/agent-ai-v$$V" && rm -rf .git && cd "$$TMPD" && zip -rq "agent-ai-v$$V.zip" "agent-ai-v$$V" && echo "ZIP: $$TMPD/agent-ai-v$$V.zip"

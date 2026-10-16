@@ -284,7 +284,13 @@ EOF
 install_deps(){
   local NEED=() c
   for c in rg git curl node python make jq sqlite3; do
-    command -v "$c" >/dev/null 2>&1 || NEED+=("$c")
+    if [ "$c" = "python" ]; then
+      # python3 sah untuk semua pemakaian kit — apt/Debian sering python3-only
+      # (bug nyata: cek `command -v python` saja → sistem sehat dikira kurang)
+      { command -v python3 >/dev/null 2>&1 || command -v python >/dev/null 2>&1; } || NEED+=("$c")
+    else
+      command -v "$c" >/dev/null 2>&1 || NEED+=("$c")
+    fi
   done
   [ ${#NEED[@]} -eq 0 ] && { ok "dependensi lengkap"; return 0; }
   wrn "dependensi kurang: ${NEED[*]}"
@@ -412,14 +418,20 @@ uninstall(){
     AGENT_DIR="$CFG/agent"; CMD_DIR="$CFG/command"; CMD_WRAP="$CFG/commands"
   fi
 
-  if [ "${ALLOW_YES:-0}" != "1" ] && [ -t 0 ]; then
-    local na; na=$(ls -1 "$AGENT_DIR" 2>/dev/null | wc -l | tr -d ' ')
-    local col="$Y"; anim_on || col=""
-    box "$col" \
-      "  ${Y}${B}⚠ LEPAS INSTALASI${N}${D} — agent ($na) + skills + commands + doktrin${N}" \
-      "  ${M}memory/ TETAP aman • config dipulihkan dari backup${N}"
-    printf "\n  Lanjut lepas? (y/N): "; read -r ans
-    case "$ans" in y|Y|yes|YES) ;; *) inf "dibatalkan"; box_selesai batal; return 1;; esac
+  if [ "${ALLOW_YES:-0}" != "1" ]; then
+    if [ -t 0 ]; then
+      local na; na=$(ls -1 "$AGENT_DIR" 2>/dev/null | wc -l | tr -d ' ')
+      local col="$Y"; anim_on || col=""
+      box "$col" \
+        "  ${Y}${B}⚠ LEPAS INSTALASI${N}${D} — agent ($na) + skills + commands + doktrin${N}" \
+        "  ${M}memory/ TETAP aman • config dipulihkan dari backup${N}"
+      printf "\n  Lanjut lepas? (y/N): "; read -r ans
+      case "$ans" in y|Y|yes|YES) ;; *) inf "dibatalkan"; box_selesai batal; return 1;; esac
+    else
+      # non-interaktif tanpa --yes: JANGAN lepas apa pun (tanpa konfirmasi sadar)
+      wrn "non-interaktif: tidak ada yang dilepas — ulangi dengan --yes untuk konfirmasi"
+      return 1
+    fi
   fi
 
   section "1/2" "MELEPAS"
@@ -437,6 +449,30 @@ uninstall(){
 
   [ -d "$CFG/memory" ] && wrn "memory/ DIPERTAHANKAN"
   echo; inf "pasang lagi: bash install.sh"; box_selesai lepas
+}
+
+uninstall_check(){
+  local VER AGENT_DIR CMD_DIR CMD_WRAP=""
+  inf "PRATINJAU UNINSTALL (--check) — belum ada yang dilepas"
+  [ ! -d "$CFG" ] && { inf "tidak ada instalasi: $CFG"; return 0; }
+  VER=$(detect_version)
+  if [ "$VER" = "v2" ]; then
+    AGENT_DIR="$CFG/agents"; CMD_DIR="$CFG/commands"
+  else
+    AGENT_DIR="$CFG/agent"; CMD_DIR="$CFG/command"; CMD_WRAP="$CFG/commands"
+  fi
+  local na ns nc nd
+  na=$(ls -1 "$AGENT_DIR" 2>/dev/null | wc -l | tr -d ' ')
+  ns=$(ls -1d "$CFG"/skills/*/ 2>/dev/null | wc -l | tr -d ' ')
+  nc=$(ls -1 "$CMD_DIR"/*.md 2>/dev/null | wc -l | tr -d ' ')
+  nd=$(ls -1 "$CFG/docs" 2>/dev/null | wc -l | tr -d ' ')
+  inf "layout: $VER → agent: $na | skill: $ns | command: $nc | docs: $nd"
+  inf "akan dilepas: $AGENT_DIR + $CFG/skills + $CMD_DIR + $CFG/docs + AGENTS.md + VERSION"
+  [ -n "$CMD_WRAP" ] && inf "akan dilepas: $CMD_WRAP (wrapper v1)"
+  local bak; bak=$(ls -1t "$CFG"/opencode.json.bak.* 2>/dev/null | head -n1)
+  if [ -n "${bak:-}" ]; then inf "config dipulihkan dari: $(basename "$bak")"; else inf "config: tanpa backup — marker devbrain dilepas bila ada"; fi
+  inf "memory/ DIPERTAHANKAN (tidak disentuh)"
+  return 0
 }
 
 # ═══════════════════════════════════════════════════════════
@@ -551,6 +587,7 @@ while [ $# -gt 0 ]; do
   shift
 done
 
+[ "$UNINSTALL" -eq 1 ] && [ "$CHECK" -eq 1 ] && { uninstall_check; exit $?; }
 [ "$CHECK" -eq 1 ] && { check_install; exit $?; }
 [ "$UPDATE" -eq 1 ] && { update; exit $?; }
 [ "$OFFLINE" -eq 1 ] && ANIM=0

@@ -16,7 +16,7 @@ jobs:
 
       - name: Syntax check semua script
         run: |
-          for s in install.sh skills/*/run.sh tests/self-test.sh tests/run-demo.sh; do
+          for s in install.sh uninstall.sh curl-install.sh skills/*/run.sh commands/*.sh tests/*.sh; do
             bash -n "$s" || exit 1
           done
           echo "syntax OK"
