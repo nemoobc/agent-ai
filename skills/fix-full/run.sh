@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 # AUTO FIX FULL — format + lint-fix + re-test
+set -u
+# Usage: bash skills/fix-full/run.sh [root]
 DIR="$(cd "$(dirname "$0")" && pwd)"
 ROOT="${1:-.}"; cd "$ROOT" 2>/dev/null || exit 1
 p(){ printf '\033[38;5;%sm%s\033[0m\n' "$2" "$1"; }

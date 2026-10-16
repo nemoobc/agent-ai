@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 # notify/run.sh — cek konfigurasi notifikasi yang tersedia
+# Usage: bash skills/notify/run.sh (tanpa argumen — cek kanal)
 set -u
 echo "  ▸ notification channels:"
 if [ -n "${SLACK_WEBHOOK_URL:-}" ]; then echo "  ✔ Slack webhook"; else echo "  · Slack: set SLACK_WEBHOOK_URL"; fi

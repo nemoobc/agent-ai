@@ -4,6 +4,7 @@
 #  punya BUKTI fisik. Baca laporan dari stdin atau $1=claim text.
 #  Exit 0 = semua klaim punya bukti. Exit 1 = ada klaim tanpa bukti.
 # ═════════════════════════════════════════════════════════════════
+# Usage: bash skills/trace/run.sh "<klaim>"
 set -u
 
 p()  { printf '\033[38;5;%sm%s\033[0m\n' "$2" "$1"; }

@@ -1,6 +1,8 @@
 # CHANGELOG
 
 ## [Unreleased]
+### Changed
+- **Agent/skill/command dipertajam (matang)** — sub-agent kini dijaga lint: frontmatter + section wajib (KEAHLIAN/FORMAT/GERBANG/INTEGRASI/MASTERY); `critic` & `researcher` melengkapi `INTEGRASI PIPELINE`; 16 run.sh skill seragam (`set -u` untuk 3 yang bolong — audit-full/fix-full/test-full; header `Usage:` untuk yang belum); 10 SKILL.md dapat blok `KAPAN DIPAKAI`; lint 463 → 641 cek (angka README ikut — HUKUM 10)
 ### Fixed
 - **self-test di luar Termux (CI/Linux)** — cache mock PATH memakai default path Termux (`${PREFIX:-/data/...}/tmp`) yang tidak writable di runner CI → seluruh cek berbasis mock tumbang (`detect_version ''`, install mock gagal). Kini cache memilih lokasi writable: `$TMPDIR` → `/tmp` → prefix Termux (jalur Termux tidak berubah)
 - **ci.yml** — runner kini memasang dependensi kit (`ripgrep`, `sqlite3`) yang dibutuhkan `install_deps`; `timeout-minutes` 15 → 30 (11 gerbang muat penuh)

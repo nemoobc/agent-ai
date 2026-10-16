@@ -7,6 +7,9 @@ description: DELIVER — jalur serah kerja tanpa git: zip → upload tmpfiles.or
 
 User bilang "jangan commit/push, upload aja" → skill ini.
 
+## KAPAN DIPAKAI
+- Saat user minta hasil dikirim/diarsipkan (zip) dan commit/push DILARANG: bungkus artefak + daftar tmpfiles, tanpa perintah git.
+
 ## JALANKAN
 ```bash
 bash skills/deliver/run.sh            # zip repo (tanpa .git) → upload tmpfiles.org → print link

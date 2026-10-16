@@ -5,6 +5,7 @@
 #  off : matikan wake-lock
 #  No-op (exit 0) di luar Termux / tanpa termux-wake-lock.
 # ═══════════════════════════════════════════════════════════
+# Usage: bash skills/wake-lock/run.sh [on|off]
 set -uo pipefail
 
 CMD="${1:-on}"

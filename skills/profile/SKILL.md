@@ -7,6 +7,9 @@ description: PROFILE — profil gaya komunikasi & kedalaman user (A/B/C + kedala
 
 DEV simpan di `memory/MEMORY.md` (bagian PROFIL). Script: `bash skills/profile/run.sh show` — tampilkan profil dari memori.
 
+## KAPAN DIPAKAI
+- Saat memulai kerja dengan user: muat profil tone & kedalaman (A/B/C, D1–D3); perbarui bila gaya komunikasi berubah.
+
 ## APA YANG DILAKUKAN
 Membangun profil komunikasi user: tone (A/B/C) dan kedalaman (D1-D3). Profile = personalisasi laporan tanpa mengorbankan kualitas kerja.
 

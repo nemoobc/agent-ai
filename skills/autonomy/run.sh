@@ -5,6 +5,7 @@
 #        $2=--set  → tulis level ke .opencode/memory/autonomy.txt
 #  Exit 0 selalu.
 # ═════════════════════════════════════════════════════════════════
+# Usage: bash skills/autonomy/run.sh [PENUH|TITIK|JANGAN] [--set]
 set -u
 
 p()   { printf '\033[38;5;%sm%s\033[0m\n' "$2" "$1"; }

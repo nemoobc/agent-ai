@@ -170,6 +170,46 @@ for f in "$DIR"/command/*.md; do
     && ok "$name: ada ## Error Cases" || bad "$name: ## Error Cases hilang"
 done
 
+p "▮ LINT: sub-agent punya frontmatter + section wajib" 213
+for f in "$DIR"/agents/*.md; do
+  name=$(basename "$f" .md)
+  [ "$name" = "dev" ] && continue
+  if grep -q '^description:' "$f" && grep -q '^mode:' "$f" \
+    && grep -qE '^## .*KEAHLIAN' "$f" && grep -qE '^## .*FORMAT' "$f" \
+    && grep -qE '^## .*GERBANG' "$f" && grep -qE '^## .*INTEGRASI' "$f" \
+    && grep -qE '^## MASTERY' "$f"; then
+    ok "$name: frontmatter+section lengkap"
+  else
+    bad "$name: frontmatter/section wajib kurang"
+  fi
+done
+
+p "▮ LINT: skill run.sh punya set -u + header Usage/Jalankan/Pemakaian" 213
+for f in "$DIR"/skills/*/run.sh; do
+  name=$(basename "$(dirname "$f")")
+  if grep -qE '^set -[a-z]*u' "$f" && head -15 "$f" | grep -qE 'Usage:|Jalankan|Pemakaian'; then
+    ok "$name: set+usage"
+  else
+    bad "$name: set -u atau usage hilang"
+  fi
+done
+
+p "▮ LINT: commands/*.sh punya set -u + Usage" 213
+for f in "$DIR"/commands/*.sh; do
+  name=$(basename "$f")
+  if grep -qE '^set -[a-z]*u' "$f" && head -15 "$f" | grep -qE 'Usage:|Jalankan|Pemakaian'; then
+    ok "$name: set+usage"
+  else
+    bad "$name: set -u atau Usage hilang"
+  fi
+done
+
+p "▮ LINT: SKILL.md nyebut KAPAN (kapan dipakai)" 213
+for f in "$DIR"/skills/*/SKILL.md; do
+  name=$(basename "$(dirname "$f")")
+  grep -qi 'kapan' "$f" && ok "$name: ada KAPAN" || bad "$name: KAPAN hilang"
+done
+
 p "▮ LINT: angka suite di README = kenyataan file (HUKUM 10)" 213
 RMD="$DIR/README.md"
 rnum(){ grep -oE "$1" "$RMD" 2>/dev/null | head -1 | grep -oE '\([0-9]+' | tr -d '(' ; }

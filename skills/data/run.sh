@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 # data/run.sh — cek tooling data science yang tersedia
+# Usage: bash skills/data/run.sh (tanpa argumen — cek tooling)
 set -u
 echo "  ▸ data science tools:"
 command -v python3 >/dev/null 2>&1 && echo "  ✔ python3: $(python3 --version 2>&1)" || echo "  · python3 tidak ada"

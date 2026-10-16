@@ -9,6 +9,7 @@
 #  Verifikasi: tidak ada 2 unit menyentuh file yang sama.
 #  Exit 0 selalu.
 # ═════════════════════════════════════════════════════════════════
+# Usage: bash skills/team/run.sh [status|split U1 '<file,file>' '<tugas>'|jalan U1]
 set -u
 
 p()   { printf '\033[38;5;%sm%s\033[0m\n' "$2" "$1"; }

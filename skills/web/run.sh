@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 # web/run.sh — cek tooling browser automation yang tersedia
+# Usage: bash skills/web/run.sh (tanpa argumen — cek tooling)
 set -u
 echo "  ▸ browser automation tools:"
 command -v playwright >/dev/null 2>&1 && echo "  ✔ playwright" || echo "  · playwright: npx playwright install"

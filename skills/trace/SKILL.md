@@ -5,6 +5,9 @@ description: TRACE — rantai bukti (HUKUM 11): setiap klaim di laporan wajib pu
 
 # TRACE (HUKUM 11)
 
+## KAPAN DIPAKAI
+- Sebelum lapor SELESAI: setiap klaim laporan wajib punya rantai bukti fisik (file:baris / exit code / output) — klaim tanpa bukti = dibuang (HUKUM 11).
+
 ## APA YANG DILAKUKAN
 Memverifikasi bahwa setiap klaim di laporan didukung oleh bukti fisik yang dapat diverifikasi. Trace = rantai bukti: klaim → bentuk bukti → sumber bukti → apa yang TIDAK dibuktikan.
 

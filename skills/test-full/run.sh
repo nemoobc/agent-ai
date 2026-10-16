@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 # AUTO TEST FULL — deteksi bahasa & jalankan semua test
+set -u
+# Usage: bash skills/test-full/run.sh [root]
 ROOT="${1:-.}"
 cd "$ROOT" 2>/dev/null || exit 1
 FAILED=0; RAN=0

@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 # monitor/run.sh — cek tooling monitoring yang tersedia
+# Usage: bash skills/monitor/run.sh [check|run <url>]
 set -u
 MODE="${1:-check}"
 echo "  ▸ monitoring tools:"

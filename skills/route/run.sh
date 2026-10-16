@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # route — router intensitas: NORMAL / FULL / ULTRA (sumber kebenaran pemicu)
 # exit 0 selalu; baris "JALUR:" = hasil. Dilarang edit di luar sini (HUKUM 10).
+# Usage: bash skills/route/run.sh "<prompt user>"
 set -u
 PROMPT="${1:-}"
 [ -z "$PROMPT" ] && { echo "JALUR: NORMAL (prompt kosong)"; exit 0; }

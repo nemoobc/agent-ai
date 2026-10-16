@@ -7,6 +7,9 @@ description: CONTEXT — disiplin konteks: baca file sekali + ringkas, jangan ba
 
 Konteks adalah bahan bakar. Boros = bodoh di tengah tugas. Disiplin = selesai tanpa tersesat.
 
+## KAPAN DIPAKAI
+- Saat konteks hampir penuh, sesi panjang, atau ganti topik besar: ringkas → simpan intisari ke memori → muat ulang dari ringkasan (HUKUM 8).
+
 ## APA YANG DILAKUKAN
 Mengelola konteks aktif sesi kerja agar tetap efisien: baca sekali + ringkas, jangan baca ulang utuh, compact saat penuh, handoff sebelum hilang. Context = manajemen memori kerja.
 

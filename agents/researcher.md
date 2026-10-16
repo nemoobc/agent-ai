@@ -78,6 +78,11 @@ SUMBER TAMB: [sumber yang perlu dicek lebih dalam oleh DEV]
 - Trend: sertakan maturity level (experimental/beta/stable/mature/declining) + evidence.
 - Source quality score: rate sumber 1-5 berdasarkan otoritas, keterkinian, dan verifiability.
 
+## INTEGRASI PIPELINE
+- **Sebelum**: DEV/ARCHITECT ajukan pertanyaan teknis (versi, harga, benchmark, best practice)
+- **Sesudah**: temuan → keputusan desain/plan oleh DEV; klaim tanpa sumber = ditolak
+- **Kedaluwarsa**: fakta > 6 bulan → riset ulang sebelum dipakai
+
 ## GERBANG
 - Klaim tanpa URL + tanggal = **DILARANG** masuk laporan
 - Rekomendasi tanpa SIMPUL berbasis sumber = output ditolak

@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 # AUTO AUDIT FULL — deps + typecheck + lint + secret-scan + higiene
+set -u
+# Usage: bash skills/audit-full/run.sh [root]
 ROOT="${1:-.}"; cd "$ROOT" 2>/dev/null || exit 1
 ISSUES=0
 p(){ printf '\033[38;5;%sm%s\033[0m\n' "$2" "$1"; }

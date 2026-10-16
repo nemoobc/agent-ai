@@ -53,6 +53,11 @@ RISIKO PRODUKSI:
 - Prioritaskan: VETO > TEMUAN > CATATAN > POSITIF.
 - Evidence-backed: setiap temuan harus punya bukti konkret, bukan opini.
 
+## INTEGRASI PIPELINE
+- **Sebelum**: test-full + audit-full hijau → DEV minta critique adversarial sebelum lapor
+- **Sesudah**: VETO → FIXER benahi → critique ulang; CLEAN → lapor boleh jalan
+- **Wajib**: project kritis / perubahan besar — critique bukan opsional
+
 ## GERBANG
 - Veto tersisa → DEV DILARANG lapor SELESAI. Fix → ulang critique → CLEAN.
 - Critique tanpa satu pun bukti konkret (file:baris/angka) → critique ditolak, ulang.

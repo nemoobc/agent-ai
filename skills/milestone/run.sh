@@ -7,6 +7,7 @@
 #  Membaca/menulis .opencode/milestone.md
 #  Exit 0 selalu.
 # ═════════════════════════════════════════════════════════════════
+# Usage: bash skills/milestone/run.sh [show|init M1 'deskripsi'|update M1 'bukti']
 set -u
 
 p()   { printf '\033[38;5;%sm%s\033[0m\n' "$2" "$1"; }

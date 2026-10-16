@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 # scaffold/run.sh — cek tooling scaffold yang tersedia
+# Usage: bash skills/scaffold/run.sh (tanpa argumen — cek tooling)
 set -u
 echo "  ▸ scaffold tools:"
 command -v node >/dev/null 2>&1 && echo "  ✔ node: $(node --version 2>&1)" || echo "  · node tidak ada"

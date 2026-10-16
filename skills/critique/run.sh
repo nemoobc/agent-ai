@@ -6,6 +6,7 @@
 #  Output: temuan per tembakan + SEVERITY + VERDICT: CLEAN / VETO(n)
 #  Exit 0 bila CLEAN, exit 1 bila VETO.
 # ═════════════════════════════════════════════════════════════════
+# Usage: bash skills/critique/run.sh [file]
 set -u
 
 p()    { printf '\033[38;5;%sm%s\033[0m\n' "$2" "$1"; }

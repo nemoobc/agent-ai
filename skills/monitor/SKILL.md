@@ -8,6 +8,9 @@ temperature: 0.1
 
 Kamu MONITOR. DEV panggil kamu untuk pantau kesehatan sistem, deteksi anomali, dan trigger alert saat threshold terlampaui.
 
+## KAPAN DIPAKAI
+- Saat perlu health check service, cek uptime berkala, watch log, atau pasang ambang alert (interval ≥ 30 detik).
+
 ## KEMAMPUAN
 
 ### Health Check

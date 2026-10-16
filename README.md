@@ -79,7 +79,7 @@ MIKIR → BAYANGKAN → GODOK (rencana 8 blok) → BANGUN → TEST hijau → AUD
 ```
 
 Semua wajib `make verify` sebelum lapor SELESAI:
-lint-kit (463 cek) • self-test (339) • e2e (14 langkah) • eval (27 cek) • demo (11 langkah) • update (11 langkah) • mutation (18/18) • bench (19 gate) • web-sync • audit-full • doctor
+lint-kit (641 cek) • self-test (339) • e2e (14 langkah) • eval (27 cek) • demo (11 langkah) • update (11 langkah) • mutation (18/18) • bench (19 gate) • web-sync • audit-full • doctor
 
 ---
 

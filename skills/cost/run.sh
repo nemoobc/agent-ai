@@ -6,6 +6,7 @@
 #  Output: laporan BEST/WAJAR/TERBURUK + PUTUSAN.
 #  Exit 0 selalu (keputusan di tangan user).
 # ═════════════════════════════════════════════════════════════════
+# Usage: bash skills/cost/run.sh [layanan]
 set -u
 
 p()   { printf '\033[38;5;%sm%s\033[0m\n' "$2" "$1"; }
