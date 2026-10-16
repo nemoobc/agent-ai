@@ -133,7 +133,7 @@ fi
 # Check for debug markers in staged files
 section "GUARD CHECK"
 if git rev-parse --git-dir >/dev/null 2>&1 && [ -n "$(git diff --cached --name-only 2>/dev/null)" ]; then
-  DEBUG_MARKERS=$(git diff --cached 2>/dev/null | grep '^+' | grep -vE '^\+\+\+' \
+  DEBUG_MARKERS=$(git diff --cached 2>/dev/null | grep '^+' | grep -v '^+++' \
     | grep -iE '(console\.log|debugger|TODO.*hotfix|FIXME|HACK|print\(|var_dump|dd\(|binding\.pry|byebug)' \
     | head -10)
 
@@ -145,7 +145,7 @@ if git rev-parse --git-dir >/dev/null 2>&1 && [ -n "$(git diff --cached --name-o
   fi
 
   # Check for hardcoded secrets
-  SECRET_PATTERNS=$(git diff --cached 2>/dev/null | grep '^+' | grep -vE '^\+\+\+' \
+  SECRET_PATTERNS=$(git diff --cached 2>/dev/null | grep '^+' | grep -v '^+++' \
     | grep -iE '(password\s*=\s*["\x27][^"\x27]{4,}|secret\s*=\s*["\x27][^"\x27]{4,}|api.?key\s*=\s*["\x27][^"\x27]{4,})' \
     | head -5)
 

@@ -61,14 +61,7 @@ section "1. N+1 QUERY — QUERY DALAM LOOP"
 
 N1_COUNT=0
 
-# Pattern: await/async query inside for/while loop
-grep -rn $EXCL \
-  --include='*.js' --include='*.ts' --include='*.jsx' --include='*.tsx' \
-  -E '(for|while|forEach|map|filter)\s*[\(\{]' . 2>/dev/null \
-  | grep -v '\.test\.\|\.spec\.' \
-  > /tmp/perf_loops.txt 2>/dev/null
-
-# Check if query patterns appear near loop lines
+# Cari query di dekat loop (perkiraan N+1)
 grep -rn $EXCL \
   --include='*.js' --include='*.ts' --include='*.jsx' --include='*.tsx' \
   -E 'await\s+[a-zA-Z]+\.(find|findOne|findMany|query|execute|select|fetch|get)\(' . 2>/dev/null \
@@ -86,12 +79,6 @@ grep -rn $EXCL \
     done
 
 # Python N+1
-grep -rn $EXCL \
-  --include='*.py' \
-  -E '(for .+ in |while )' . 2>/dev/null \
-  | grep -v '\.test\.' \
-  > /tmp/perf_py_loops.txt 2>/dev/null
-
 grep -rn $EXCL \
   --include='*.py' \
   -E '\.(filter|get|all|query|execute)\(|session\.query|cursor\.execute' . 2>/dev/null \

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # ═════════════════════════════════════════════════════════════════
 #  DOCTOR — diagnosa instalasi + kesehatan kit DEV-BRAIN
-#  Jalankan: bash ~/.config/opencode/skill/doctor/run.sh . [--fix]
+#  Jalankan: bash ~/.config/opencode/skills/doctor/run.sh . [--fix]
 #  Exit 0 = sehat, 1 = ada masalah
 # ═════════════════════════════════════════════════════════════════
 set -u
