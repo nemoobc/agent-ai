@@ -193,7 +193,14 @@ mkdir -p "$FH/.config/opencode"
 printf '{\n  "theme": "dark"\n}\n' > "$FH/.config/opencode/opencode.json"
 # PATH bersih: semua tool sistem TANPA binary opencode (deteksi mengikuti lingkungan nyata)
 # Cache dir simpan symlink — build sekali, reuse (menghemat self-test & mutation di perangkat ARM)
-MOCK_CACHE="${MOCK_CACHE:-${PREFIX:-/data/data/com.termux/files/usr}/tmp/opencode-mock-bin}"
+# Lokasi cache harus WRITABLE di semua env: Termux ($TMPDIR=$PREFIX/tmp) & Linux/CI (/tmp).
+MOCK_CACHE="${MOCK_CACHE:-}"
+if [ -z "$MOCK_CACHE" ]; then
+  for _mc in "${TMPDIR:-}" /tmp "${PREFIX:-/data/data/com.termux/files/usr}/tmp"; do
+    [ -n "$_mc" ] && [ -w "$_mc" ] && { MOCK_CACHE="$_mc/opencode-mock-bin"; break; }
+  done
+fi
+: "${MOCK_CACHE:=/tmp/opencode-mock-bin}"
 mock_path(){
   local dir="$1"
   [ -f "$dir/.mock-ready" ] && return 0
